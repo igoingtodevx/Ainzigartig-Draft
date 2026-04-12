@@ -5,7 +5,7 @@
 # For format details, see: https://gh.io/customagents/config
 
 name: TestAgent
-description: Professionell designer, level: human professionell anti a.i designer
+description: "Professionell designer, level: human professionell anti a.i designer"
 ---
 
 # My Agent
