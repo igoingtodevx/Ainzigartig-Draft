@@ -12,9 +12,8 @@ export const Navbar: React.FC = () => {
   return (
     <nav
       className={`fixed top-0 w-full z-50 transition-none ${
-        scrolled ? 'border-b border-faint/40' : 'border-b border-transparent'
+        scrolled ? 'border-b border-faint/40 bg-base' : 'border-b border-transparent bg-base'
       }`}
-      style={{ backgroundColor: 'var(--color-base, #F6F4F0)' }}
     >
       <div className="max-w-[1200px] mx-auto px-6 md:px-8">
         <div className="flex justify-between h-16 items-center">
