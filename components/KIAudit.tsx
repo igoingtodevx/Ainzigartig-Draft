@@ -75,11 +75,11 @@ const questions: Question[] = [
     label: 'Wann soll die erste KI-Lösung produktiv sein?',
     hint: 'Realistischer Zeitrahmen.',
     options: [
-      { value: 1, text: 'Schnellstmöglich' },
-      { value: 2, text: 'Innerhalb 1 Monat' },
+      { value: 5, text: 'Schnellstmöglich' },
+      { value: 4, text: 'Innerhalb 1 Monat' },
       { value: 3, text: 'Innerhalb 3 Monaten' },
-      { value: 4, text: '6–12 Monate' },
-      { value: 5, text: 'Noch unklar' },
+      { value: 2, text: '6–12 Monate' },
+      { value: 1, text: 'Noch unklar' },
     ],
   },
 ];

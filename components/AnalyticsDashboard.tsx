@@ -48,7 +48,7 @@ const Hero: React.FC = () => (
       {/* CTAs */}
       <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
         <a
-          href="#"
+          href="mailto:info@ainzigartig.de?subject=Analytics%20Dashboard%20Demo"
           className="relative px-8 py-3 text-sm font-bold bg-primary text-white border-2 border-primary hover:bg-primary-hover shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-200 flex items-center gap-2"
         >
           Kostenlose Demo anfragen
@@ -599,7 +599,7 @@ const FinalCTA: React.FC = () => (
       </p>
 
       <a
-        href="#"
+        href="mailto:info@ainzigartig.de?subject=Analytics%20Dashboard%20Demo"
         className="inline-flex items-center gap-2 px-8 py-3 text-sm font-bold bg-primary text-white border-2 border-primary hover:bg-primary-hover shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-200"
       >
         Kostenlose Demo anfragen

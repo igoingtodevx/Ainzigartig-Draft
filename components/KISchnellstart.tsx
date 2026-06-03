@@ -16,7 +16,7 @@ const steps = [
   {
     num: '03',
     title: 'Live & nutzbar',
-    desc: 'Am Tag 5 steht Ihr KI-Assistent. Sie testen, wir passen an. Danach: Entweder weiter mit uns oder完全 eigenständig.',
+    desc: 'Am Tag 5 steht Ihr KI-Assistent. Sie testen, wir passen an. Danach: Entweder weiter mit uns oder vollkommen eigenständig.',
   },
 ];
 
@@ -40,7 +40,7 @@ export const KISchnellstart: React.FC = () => {
 
           <h1 className="font-editorial text-3xl sm:text-5xl md:text-6xl leading-[1.08] text-ink mb-6">
             Ihr erster KI-Assistent<br />
-            <span className="text-accent">in 5 Tagen. Ab 2.500 €.</span>
+            <span className="text-accent">in 5 Tagen. Festpreis 2.500 €.</span>
           </h1>
 
           <p className="text-muted text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-10">
