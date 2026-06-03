@@ -15,26 +15,33 @@ export const Impressum: React.FC = () => {
         </h1>
 
         <div className="space-y-6 text-gray-300 text-sm leading-relaxed border border-gray-800 bg-[#150a26]/40 p-8 rounded-lg">
+          <div className="border border-yellow-600/40 bg-yellow-900/20 p-4 rounded">
+            <p className="text-yellow-400 text-xs font-bold uppercase tracking-wider mb-1">
+              ⚠️ Noch in Bearbeitung
+            </p>
+            <p className="text-gray-400 text-xs">
+              Die folgenden Angaben werden noch durch vollständige rechtliche Angaben ersetzt.
+              Für Anfragen wenden Sie sich bitte direkt an info@ainzigartig.de
+            </p>
+          </div>
+
           <div>
             <h2 className="text-lg font-bold text-white mb-2">Angaben gemäß § 5 TMG</h2>
-            <p>
-              [Firmenname einfügen]<br />
-              [Straße und Hausnummer]<br />
-              [PLZ Ort]<br />
-              Deutschland
+            <p className="text-gray-500 italic">
+              [Vollständige Angaben werden nach Rechtsprüfung ergänzt]
             </p>
           </div>
 
           <div>
             <h2 className="text-lg font-bold text-white mb-2">Vertreten durch</h2>
-            <p>[Name des Geschäftsführers / Inhabers einfügen]</p>
+            <p>[Wird nach Rechtsprüfung ergänzt]</p>
           </div>
 
           <div>
             <h2 className="text-lg font-bold text-white mb-2">Kontakt</h2>
             <p>
-              Telefon: [Telefonnummer einfügen]<br />
-              E-Mail: [E-Mail-Adresse einfügen]
+              E-Mail: info@ainzigartig.de<br />
+              
             </p>
           </div>
 
@@ -42,8 +49,8 @@ export const Impressum: React.FC = () => {
             <h2 className="text-lg font-bold text-white mb-2">Registereintrag</h2>
             <p>
               Eintragung im Handelsregister.<br />
-              Registergericht: [Amtsgericht einfügen]<br />
-              Registernummer: [HRB-Nummer einfügen]
+              Registergericht: [Wird ergänzt]<br />
+              Registernummer: [Wird ergänzt]
             </p>
           </div>
 
@@ -51,7 +58,7 @@ export const Impressum: React.FC = () => {
             <h2 className="text-lg font-bold text-white mb-2">Umsatzsteuer-ID</h2>
             <p>
               Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:<br />
-              [USt-IdNr. einfügen]
+              [Wird nach Rechtsprüfung ergänzt]
             </p>
           </div>
 

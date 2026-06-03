@@ -222,17 +222,17 @@ export const ROICalculator: React.FC = () => {
             </p>
           </div>
 
-          {/* Pull-quote stat — fills the right side, updates with input */}
+          {/* Pull-quote stat — team total, updates with input */}
           <aside className="lg:col-span-5">
             <div className="border-l-2 border-accent pl-6">
               <p className="text-xs text-muted font-body uppercase tracking-[0.2em] mb-4">
-                Ø pro Mitarbeiter · Jahr
+                Team · {mitarbeiter} Mitarbeiter · Jahr
               </p>
               <p className="font-editorial text-[clamp(2.5rem,5vw,4rem)] leading-[1.05] text-accent tabular-nums">
-                {eur(Math.round(((result.low + result.high) / 2) / Math.max(1, mitarbeiter)))}
+                {eur(Math.round(((result.low + result.high) / 2) * mitarbeiter))}
               </p>
               <p className="text-sm text-muted font-body mt-3 leading-relaxed">
-                Konservativ kalkuliert, branchen-üblicher Automatisierungsgrad.
+                Ø {eur(Math.round(((result.low + result.high) / 2)))} pro Mitarbeiter.
                 <br />
                 <span className="text-faint">Indikativ, keine Garantie.</span>
               </p>
@@ -320,7 +320,7 @@ export const ROICalculator: React.FC = () => {
               Geschätztes Einsparpotenzial
             </p>
             <div className="border-t border-faint/50 pt-6">
-              <p className="text-xs text-faint font-body mb-2">pro Jahr, konservativ korrigiert</p>
+              <p className="text-xs text-faint font-body mb-2">pro Jahr &amp; Mitarbeiter · konservativ korrigiert</p>
               <p className="font-editorial text-[clamp(2.5rem,6vw,4.5rem)] leading-[1.05] text-ink tabular-nums">
                 {eur(result.low)}<span className="text-muted"> – </span>
                 <br className="sm:hidden" />
@@ -362,7 +362,7 @@ export const ROICalculator: React.FC = () => {
             {/* CTA */}
             <div className="mt-10 pt-6 border-t border-faint/50">
               <a
-                href="#"
+                href="mailto:info@ainzigartig.de?subject=Erstgespr%C3%A4ch%20vereinbaren%20%E2%80%94%20Ainzigartig"
                 className="inline-flex items-center gap-2 text-sm text-accent font-body group"
               >
                 <span className="underline decoration-1 underline-offset-4 group-hover:decoration-2 transition-all duration-200">

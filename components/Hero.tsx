@@ -27,7 +27,7 @@ export const Hero: React.FC = () => {
 
           <div className="mt-8">
             <a
-              href="#"
+              href="mailto:info@ainzigartig.de?subject=Erstgespr%C3%A4ch%20vereinbaren%20%E2%80%94%20Ainzigartig"
               className="inline-flex items-center gap-2 text-sm text-accent font-body group"
             >
               <span className="underline decoration-1 underline-offset-4 group-hover:decoration-2 transition-all duration-200">

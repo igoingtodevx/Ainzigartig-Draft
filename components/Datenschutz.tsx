@@ -57,11 +57,16 @@ export const Datenschutz: React.FC = () => {
           <div>
             <h2 className="text-lg font-bold text-white mb-2">4. Hosting</h2>
             <p>
-              Diese Website wird bei Netlify gehostet. Details zum Umgang mit Ihren Daten finden Sie
-              in der Datenschutzerklärung von Netlify:
-              <a href="https://www.netlify.com/privacy/" target="_blank" rel="noopener noreferrer" className="text-neon-cyan hover:underline ml-1">
-                https://www.netlify.com/privacy/
+              Diese Website wird bei Vercel Inc. gehostet (San Francisco, USA). Vercel verarbeitet
+              Server-Log-Dateien zur Bereitstellung der Website. Details zum Umgang mit Ihren
+              Daten finden Sie in der Datenschutzerklärung von Vercel:
+              <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-neon-cyan hover:underline ml-1">
+                https://vercel.com/legal/privacy-policy
               </a>
+            </p>
+            <p className="mt-2 text-xs text-gray-500 italic">
+              Hinweis: Die Server-Anfragen werden über Vercels globales CDN verarbeitet. Einzelne
+              Anfragen können über Knotenpunkte in der EU geroutet werden.
             </p>
           </div>
 
@@ -114,8 +119,7 @@ export const Datenschutz: React.FC = () => {
           <div className="border-t border-gray-700 pt-4 mt-8">
             <p className="text-gray-500 text-xs">
               Stand: Februar 2026<br />
-              [PLATZHALTER — Bitte alle Angaben in eckigen Klammern durch echte Unternehmensdaten ersetzen.
-              Diese Datenschutzerklärung ersetzt keine Rechtsberatung.]
+              Datenschutzerklärung wird laufend aktualisiert. Fragen: info@ainzigartig.de
             </p>
           </div>
         </div>
