@@ -9,6 +9,13 @@ interface ServiceItem {
 
 const services: ServiceItem[] = [
   {
+    title: 'KI-Website-Analyse',
+    metric: 'Kostenlos · 60 Sekunden',
+    description:
+      'Geben Sie Ihre URL ein — KI analysiert Ihre Website und zeigt konkrete Einsparpotenziale. Sofort, ohne Anmeldung.',
+    href: '#/ki-analyse',
+  },
+  {
     title: 'KI-Schnellstart',
     metric: '5 Tage',
     description:

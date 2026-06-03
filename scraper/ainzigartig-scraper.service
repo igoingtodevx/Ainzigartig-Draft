@@ -1,0 +1,15 @@
+[Unit]
+Description=Ainzigartig Website Scraper
+After=network.target
+
+[Service]
+Type=simple
+User=deploy
+WorkingDirectory=/home/deploy/workspace/ainzigartig/scraper
+ExecStart=/usr/bin/python3 /home/deploy/workspace/ainzigartig/scraper/service.py
+Restart=always
+RestartSec=5
+Environment=PYTHONPATH=/home/deploy/.local/lib/python3.12/site-packages
+
+[Install]
+WantedBy=multi-user.target

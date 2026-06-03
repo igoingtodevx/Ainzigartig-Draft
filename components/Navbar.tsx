@@ -32,6 +32,12 @@ export const Navbar: React.FC = () => {
               Leistungen
             </a>
             <a
+              href="#/ki-analyse"
+              className="text-sm text-muted hover:text-ink transition-colors duration-200 font-body"
+            >
+              KI-Check
+            </a>
+            <a
               href="#/preise"
               className="text-sm text-muted hover:text-ink transition-colors duration-200 font-body"
             >

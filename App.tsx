@@ -17,6 +17,7 @@ import { ROICalculator } from './components/ROICalculator';
 import { KISchnellstart } from './components/KISchnellstart';
 import { KIAudit } from './components/KIAudit';
 import { PricingOverview } from './components/PricingOverview';
+import { KIAnalyse } from './components/KIAnalyse';
 
 function getRoute(): string {
   return window.location.hash.replace('#', '') || '/';
@@ -56,6 +57,8 @@ const App: React.FC = () => {
         return <KIAudit />;
       case '/preise':
         return <PricingOverview />;
+      case '/ki-analyse':
+        return <KIAnalyse />;
       default:
         return (
           <main>

@@ -3,5 +3,11 @@
   "framework": "vite",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "installCommand": "npm install"
+  "installCommand": "npm install",
+  "functions": {
+    "api/analyze.py": {
+      "runtime": "@vercel/python@3.1.2",
+      "maxDuration": 30
+    }
+  }
 }
