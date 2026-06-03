@@ -9,6 +9,7 @@ import requests
 from http.server import BaseHTTPRequestHandler
 
 SCRAPER_URL = os.environ.get("SCRAPER_URL", "http://138.68.96.190:8501")
+NVIDIA_API_KEY = os.environ.get("NVIDIA_API_KEY", "")
 OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY", "")
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
 
@@ -113,10 +114,31 @@ class handler(BaseHTTPRequestHandler):
                 word_count=scrape_data["word_count"],
             )
 
-            # Step 3: Call LLM (try OpenRouter first, then OpenAI)
+            # Step 3: Call LLM (NVIDIA NIM first, then OpenRouter, then OpenAI)
             llm_response = None
 
-            if OPENROUTER_API_KEY:
+            if NVIDIA_API_KEY:
+                try:
+                    llm_resp = requests.post(
+                        "https://integrate.api.nvidia.com/v1/chat/completions",
+                        headers={
+                            "Authorization": f"Bearer {NVIDIA_API_KEY}",
+                            "Content-Type": "application/json",
+                        },
+                        json={
+                            "model": "meta/llama-3.1-8b-instruct",
+                            "messages": [{"role": "user", "content": prompt}],
+                            "temperature": 0.3,
+                            "max_tokens": 2000,
+                        },
+                        timeout=30,
+                    )
+                    if llm_resp.status_code == 200:
+                        llm_response = llm_resp.json()["choices"][0]["message"]["content"]
+                except Exception:
+                    pass
+
+            if not llm_response and OPENROUTER_API_KEY:
                 try:
                     llm_resp = requests.post(
                         "https://openrouter.ai/api/v1/chat/completions",
