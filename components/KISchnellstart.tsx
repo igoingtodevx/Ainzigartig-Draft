@@ -40,7 +40,7 @@ export const KISchnellstart: React.FC = () => {
 
           <h1 className="font-editorial text-3xl sm:text-5xl md:text-6xl leading-[1.08] text-ink mb-6">
             Ihr erster KI-Assistent<br />
-            <span className="text-accent">in 5 Tagen. Festpreis 2.500 €.</span>
+            <span className="text-accent">in 5 Tagen. Preis: Auf Anfrage.</span>
           </h1>
 
           <p className="text-muted text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-10">
@@ -62,9 +62,9 @@ export const KISchnellstart: React.FC = () => {
       {/* Preis */}
       <section className="py-16 px-6 md:px-8 bg-ink/[0.03]">
         <div className="max-w-[1200px] mx-auto text-center">
-          <p className="text-xs uppercase tracking-[0.2em] text-faint mb-2">Festpreis</p>
-          <p className="font-editorial text-5xl md:text-7xl text-ink mb-2">2.500 €</p>
-          <p className="text-muted text-sm">zzgl. MwSt. · Einmalig · 5 Tage</p>
+          <p className="text-xs uppercase tracking-[0.2em] text-faint mb-2">Preis</p>
+          <p className="font-editorial text-3xl md:text-5xl text-ink mb-2">Auf Anfrage</p>
+          <p className="text-muted text-sm">Individuell · 5 Tage</p>
 
           <div className="mt-10 max-w-lg mx-auto text-left">
             <p className="text-xs uppercase tracking-[0.2em] text-faint mb-4">Enthalten</p>
@@ -112,7 +112,7 @@ export const KISchnellstart: React.FC = () => {
                 'Unternehmen mit 5–50 Mitarbeitenden',
                 'Mindestens ein wiederkehrender Prozess (Kundenservice, E-Mails, Angebote)',
                 'Team, das KI ausprobieren WILL',
-                'Budget unter 5.000 € für den Einstieg',
+                'Offen für einen Einstiegstest',
               ]},
               { label: '✗ Passt nicht', items: [
                 'Komplexe Enterprise-Integration (SAP, Oracle)',

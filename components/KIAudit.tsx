@@ -94,7 +94,7 @@ function getLevel(score: number): { label: string; color: string; recommendation
   if (score <= 30) return {
     label: 'KI-Neuling',
     color: 'text-orange-500',
-    recommendation: 'Starten Sie mit einem KI-Schnellstart: ein konkreter Use-Case, 5 Tage, 2.500 €. Danach wissen Sie ob KI für Sie passt.',
+    recommendation: 'Starten Sie mit einem KI-Schnellstart: ein konkreter Use-Case, 5 Tage, individuelles Angebot. Danach wissen Sie ob KI für Sie passt.',
   };
   if (score <= 60) return {
     label: 'KI-Bereit',

@@ -10,7 +10,7 @@ interface ServiceItem {
 const services: ServiceItem[] = [
   {
     title: 'KI-Schnellstart',
-    metric: 'Ab 2.500 € · 5 Tage',
+    metric: '5 Tage',
     description:
       'Ihr erster KI-Assistent in 5 Tagen. Fester Preis, klarer Scope, kein Risiko. Perfekt als Einstieg.',
     href: '#/ki-schnellstart',

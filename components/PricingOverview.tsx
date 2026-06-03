@@ -14,8 +14,8 @@ interface PricingItem {
 const pricing: PricingItem[] = [
   {
     name: 'KI-Schnellstart',
-    price: '2.500 €',
-    period: 'einmalig',
+    price: 'Auf Anfrage',
+    period: '',
     description: 'Ihr erster KI-Assistent in 5 Tagen. Perfekt zum Reinschnuppern.',
     features: [
       'KI-Assistent für 1 Use-Case',
@@ -28,8 +28,8 @@ const pricing: PricingItem[] = [
   },
   {
     name: 'KI-Audit',
-    price: '1.500 €',
-    period: 'einmalig',
+    price: 'Auf Anfrage',
+    period: '',
     description: '1–2 Tage Analyse: Wo verbirgt sich das größte Potential?',
     features: [
       'Prozess-Analyse',
@@ -42,8 +42,8 @@ const pricing: PricingItem[] = [
   },
   {
     name: 'KI-Workshop',
-    price: '2.000 €',
-    period: 'pro Tag',
+    price: 'Auf Anfrage',
+    period: '',
     description: 'Halber oder ganzer Tag: Ihr Team lernt KI-Tools konkret einzusetzen.',
     features: [
       'Hands-on, kein Theorie-Vortrag',
@@ -56,8 +56,8 @@ const pricing: PricingItem[] = [
   },
   {
     name: 'KI-Kundenservice',
-    price: '3.000 €',
-    period: '+ 200 €/Monat',
+    price: 'Auf Anfrage',
+    period: '',
     description: 'Chatbot oder Telefonassistent, der Ihr Unternehmen kennt.',
     features: [
       'Custom Chatbot / Voice Agent',
@@ -70,8 +70,8 @@ const pricing: PricingItem[] = [
   },
   {
     name: 'KI-Vertrieb',
-    price: '4.000 €',
-    period: '+ 300 €/Monat',
+    price: 'Auf Anfrage',
+    period: '',
     description: 'Lead-Qualifizierung, Follow-ups, Angebote — automatisiert.',
     features: [
       'Lead-Scoring & Qualifizierung',
@@ -84,8 +84,8 @@ const pricing: PricingItem[] = [
   },
   {
     name: 'Prozess-Automatisierung',
-    price: '2.500–8.000 €',
-    period: 'einmalig',
+    price: 'Auf Anfrage',
+    period: '',
     description: 'Ein kompletter Workflow, der manuelle Schritte ersetzt.',
     features: [
       'Individueller Automatisierungs-Workflow',
@@ -97,8 +97,8 @@ const pricing: PricingItem[] = [
   },
   {
     name: 'KI-Compliance-Paket',
-    price: '2.000 €',
-    period: 'einmalig',
+    price: 'Auf Anfrage',
+    period: '',
     description: 'DSGVO-konforme KI-Einführung. Keine Abmahnung, kein Risiko.',
     features: [
       'AVV & Datenschutz-Dokumentation',
@@ -112,7 +112,7 @@ const pricing: PricingItem[] = [
   {
     name: 'KI-Beratung',
     price: 'Auf Anfrage',
-    period: 'Tagessatz',
+    period: '',
     description: 'Strategische Beratung für komplexere Fragestellungen.',
     features: [
       'KI-Strategie & Roadmap',
