@@ -9,6 +9,20 @@ interface ServiceItem {
 
 const services: ServiceItem[] = [
   {
+    title: 'KI-Schnellstart',
+    metric: 'Ab 2.500 € · 5 Tage',
+    description:
+      'Ihr erster KI-Assistent in 5 Tagen. Fester Preis, klarer Scope, kein Risiko. Perfekt als Einstieg.',
+    href: '#/ki-schnellstart',
+  },
+  {
+    title: 'KI-Reifegrad-Check',
+    metric: '6 Fragen · 60 Sekunden',
+    description:
+      'Kostenloser Check: Wie reif ist Ihr Unternehmen für KI? Am Ende gibt es eine klare Empfehlung.',
+    href: '#/ki-audit',
+  },
+  {
     title: 'KI-Beratung für KMU',
     metric: 'Maßgeschneidert',
     description:
@@ -70,6 +84,13 @@ const services: ServiceItem[] = [
     description:
       'Wie viel Geld und Zeit spart KI in Ihrer Branche konkret? Branchen-spezifische Schätzung mit nachvollziehbarer Methodik. Keine Eingabe verlässt den Browser.',
     href: '#/roi-rechner',
+  },
+  {
+    title: 'Alle Preise ansehen',
+    metric: 'Transparent',
+    description:
+      'Alle Services mit Preisen, Paketen und was jeweils enthalten ist. Kein Versteck.',
+    href: '#/preise',
   },
 ];
 

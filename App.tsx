@@ -14,6 +14,9 @@ import { KIKundenservice } from './components/KIKundenservice';
 import { KIRecruiting } from './components/KIRecruiting';
 import { AnalyticsDashboard } from './components/AnalyticsDashboard';
 import { ROICalculator } from './components/ROICalculator';
+import { KISchnellstart } from './components/KISchnellstart';
+import { KIAudit } from './components/KIAudit';
+import { PricingOverview } from './components/PricingOverview';
 
 function getRoute(): string {
   return window.location.hash.replace('#', '') || '/';
@@ -47,6 +50,12 @@ const App: React.FC = () => {
         return <AnalyticsDashboard />;
       case '/roi-rechner':
         return <ROICalculator />;
+      case '/ki-schnellstart':
+        return <KISchnellstart />;
+      case '/ki-audit':
+        return <KIAudit />;
+      case '/preise':
+        return <PricingOverview />;
       default:
         return (
           <main>
