@@ -13,6 +13,7 @@ import { KIBeratung } from './components/KIBeratung';
 import { KIKundenservice } from './components/KIKundenservice';
 import { KIRecruiting } from './components/KIRecruiting';
 import { AnalyticsDashboard } from './components/AnalyticsDashboard';
+import { ROICalculator } from './components/ROICalculator';
 
 function getRoute(): string {
   return window.location.hash.replace('#', '') || '/';
@@ -44,6 +45,8 @@ const App: React.FC = () => {
         return <KIRecruiting />;
       case '/analytics-dashboard':
         return <AnalyticsDashboard />;
+      case '/roi-rechner':
+        return <ROICalculator />;
       default:
         return (
           <main>

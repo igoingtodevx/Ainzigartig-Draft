@@ -64,6 +64,13 @@ const services: ServiceItem[] = [
       'Alle relevanten KPIs an einem Ort. Mit KI-Analysen, die nicht nur zeigen was passiert, sondern warum.',
     href: '#/analytics-dashboard',
   },
+  {
+    title: 'ROI-Rechner',
+    metric: '60 Sekunden',
+    description:
+      'Wie viel Geld und Zeit spart KI in Ihrer Branche konkret? Branchen-spezifische Schätzung mit nachvollziehbarer Methodik. Keine Eingabe verlässt den Browser.',
+    href: '#/roi-rechner',
+  },
 ];
 
 const ServiceRow: React.FC<{

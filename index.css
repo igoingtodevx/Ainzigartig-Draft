@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Preserve the body / html / selection / scrollbar rules that were
+   previously inlined in index.html. The CDN is gone now. */
+html {
+  background-color: #f0ede3;
+  color: #1c1917;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: #f0ede3;
+  color: #1c1917;
+}
+
+::selection {
+  background-color: #1b4d3e;
+  color: #f0ede3;
+}
+
+a[href='#'] {
+  cursor: pointer;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

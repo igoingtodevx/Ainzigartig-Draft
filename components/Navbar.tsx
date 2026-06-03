@@ -32,6 +32,12 @@ export const Navbar: React.FC = () => {
               Leistungen
             </a>
             <a
+              href="#/roi-rechner"
+              className="text-sm text-muted hover:text-ink transition-colors duration-200 font-body"
+            >
+              ROI-Rechner
+            </a>
+            <a
               href="#"
               className="text-sm text-ink font-body underline decoration-accent decoration-1 underline-offset-4 hover:decoration-2 transition-all duration-200"
             >
