@@ -205,36 +205,61 @@ export const ROICalculator: React.FC = () => {
   return (
     <section className="min-h-screen pt-32 pb-16u px-6 md:px-8 bg-base text-ink font-body antialiased">
       <div className="max-w-[1200px] mx-auto">
-        {/* Header */}
-        <p className="text-xs text-muted font-body uppercase tracking-[0.2em] mb-6">
-          ROI-Rechner · 60 Sekunden
-        </p>
-        <h1 className="font-editorial text-[clamp(2rem,5vw,3.75rem)] leading-[1.1] text-ink max-w-3xl">
-          Was kostet Sie KI <em className="italic">nicht</em> zu nutzen?
-        </h1>
-        <div className="w-16 h-px bg-accent mt-8 mb-6" />
-        <p className="text-base text-muted font-body leading-relaxed max-w-2xl">
-          Eine konservative Schätzung dessen, was Ihr Team zurückgewinnen kann, wenn
-          repetitive Aufgaben in {industry.label} von KI übernommen werden. Beruht auf
-          Branchen-Medianwerten, nicht auf Hochrechnungen einzelner Leuchtturm-Projekte.
-        </p>
+        {/* Header — 2-col on desktop: copy left, pull-quote stat right */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8u items-end">
+          <div className="lg:col-span-7">
+            <p className="text-xs text-muted font-body uppercase tracking-[0.2em] mb-6">
+              ROI-Rechner · 60 Sekunden
+            </p>
+            <h1 className="font-editorial text-[clamp(2rem,5vw,3.75rem)] leading-[1.1] text-ink max-w-3xl">
+              Was kostet Sie KI <em className="italic">nicht</em> zu nutzen?
+            </h1>
+            <div className="w-16 h-px bg-accent mt-8 mb-6" />
+            <p className="text-base text-muted font-body leading-relaxed max-w-2xl">
+              Eine konservative Schätzung dessen, was Ihr Team zurückgewinnen kann, wenn
+              repetitive Aufgaben in {industry.label} von KI übernommen werden. Beruht auf
+              Branchen-Medianwerten, nicht auf Hochrechnungen einzelner Leuchtturm-Projekte.
+            </p>
+          </div>
+
+          {/* Pull-quote stat — fills the right side, updates with input */}
+          <aside className="lg:col-span-5">
+            <div className="border-l-2 border-accent pl-6">
+              <p className="text-xs text-muted font-body uppercase tracking-[0.2em] mb-4">
+                Ø pro Mitarbeiter · Jahr
+              </p>
+              <p className="font-editorial text-[clamp(2.5rem,5vw,4rem)] leading-[1.05] text-accent tabular-nums">
+                {eur(Math.round(((result.low + result.high) / 2) / Math.max(1, mitarbeiter)))}
+              </p>
+              <p className="text-sm text-muted font-body mt-3 leading-relaxed">
+                Konservativ kalkuliert, branchen-üblicher Automatisierungsgrad.
+                <br />
+                <span className="text-faint">Indikativ, keine Garantie.</span>
+              </p>
+            </div>
+          </aside>
+        </div>
 
         {/* Industry tabs */}
         <div className="mt-12u border-b border-faint/50">
           <div className="flex flex-wrap gap-x-6 gap-y-2 -mb-px">
-            {INDUSTRIES.map((ind) => (
-              <button
-                key={ind.id}
-                onClick={() => setActive(ind.id)}
-                className={`pb-3 text-sm font-body transition-all duration-200 border-b-2 ${
-                  active === ind.id
-                    ? 'border-accent text-ink'
-                    : 'border-transparent text-muted hover:text-ink'
-                }`}
-              >
-                {ind.label}
-              </button>
-            ))}
+            {INDUSTRIES.map((ind) => {
+              const isActive = active === ind.id;
+              return (
+                <button
+                  key={ind.id}
+                  onClick={() => setActive(ind.id)}
+                  aria-pressed={isActive}
+                  className={`pb-3 text-sm font-body transition-all duration-200 border-b-2 ${
+                    isActive
+                      ? 'border-accent text-ink font-medium'
+                      : 'border-transparent text-muted hover:text-ink hover:border-faint/60'
+                  }`}
+                >
+                  {ind.label}
+                </button>
+              );
+            })}
           </div>
         </div>
         <p className="text-xs text-faint font-body mt-3">{industry.blurb}</p>
