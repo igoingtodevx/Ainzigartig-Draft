@@ -163,10 +163,10 @@ export const LiveAgentDemo: React.FC = () => {
     setResult(null);
     setThinkingStep(0);
 
-    // Animate thinking steps during API call
+    // Animate thinking steps during API call — slower cadence masks the ~7-9s LLM roundtrip
     const stepInterval = setInterval(() => {
       setThinkingStep((s) => Math.min(s + 1, THINKING_STEPS.length - 1));
-    }, 600);
+    }, 1400);
 
     try {
       const resp = await fetch('/api/live-agent-demo', {
@@ -203,7 +203,7 @@ export const LiveAgentDemo: React.FC = () => {
 
     const stepInterval = setInterval(() => {
       setThinkingStep((s) => Math.min(s + 1, THINKING_STEPS.length - 1));
-    }, 800);
+    }, 1500);
 
     try {
       const buffer = await uploadedFile.arrayBuffer();
