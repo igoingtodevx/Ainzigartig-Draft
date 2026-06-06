@@ -3,7 +3,6 @@
 // Filters GitHub's repo list down to ~8 flagships with human-written taglines
 // (agency clients don't speak "repo" — they want to see what each thing does).
 
-const GITHUB_TOKEN=proces..._TOKEN || '';
 const USERNAME = 'igoingtodevx';
 const CACHE_TTL_SEC = 300; // 5 min
 
@@ -68,7 +67,7 @@ async function fetchRepos() {
     'Accept': 'application/vnd.github+json',
     'User-Agent': 'ainzigartig-projects-api',
   };
-  if (GITHUB_TOKEN) headers['Authorization'] = `Bearer ${GITHUB_TOKEN}`;
+  if (process.env.GITHUB_TOKEN) headers['Authorization'] = `Bearer ${process.env.GITHUB_TOKEN}`;
 
   const resp = await fetch(
     `https://api.github.com/users/${USERNAME}/repos?per_page=100&type=owner&sort=updated`,
