@@ -63,6 +63,8 @@ Antworte NUR mit diesem JSON-Schema (keine Markdown-Codeblocks):
 async function callOpenAIText(prompt) {
   if (!OPENAI_API_KEY) return null;
   try {
+    const ctrl = new AbortController();
+    const to = setTimeout(() => ctrl.abort(), 8000);
     const resp = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -79,7 +81,9 @@ async function callOpenAIText(prompt) {
         max_tokens: 2000,
         response_format: { type: 'json_object' },
       }),
+      signal: ctrl.signal,
     });
+    clearTimeout(to);
     if (resp.ok) {
       const data = await resp.json();
       return data.choices?.[0]?.message?.content || null;
@@ -121,6 +125,8 @@ async function callNvidiaText(prompt) {
 async function callOpenRouterText(prompt) {
   if (!OPENROUTER_API_KEY) return null;
   try {
+    const ctrl = new AbortController();
+    const to = setTimeout(() => ctrl.abort(), 8000);
     const resp = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -138,7 +144,9 @@ async function callOpenRouterText(prompt) {
         temperature: 0.2,
         max_tokens: 2000,
       }),
+      signal: ctrl.signal,
     });
+    clearTimeout(to);
     if (resp.ok) {
       const data = await resp.json();
       return data.choices?.[0]?.message?.content || null;
@@ -151,6 +159,8 @@ async function callOpenRouterText(prompt) {
 async function callOpenRouterMultimodal(fileBase64, mimeType, prompt) {
   if (!OPENROUTER_API_KEY) return null;
   try {
+    const ctrl = new AbortController();
+    const to = setTimeout(() => ctrl.abort(), 8000);
     const dataUrl = `data:${mimeType};base64,${fileBase64}`;
     const resp = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
@@ -175,7 +185,9 @@ async function callOpenRouterMultimodal(fileBase64, mimeType, prompt) {
         temperature: 0.2,
         max_tokens: 2000,
       }),
+      signal: ctrl.signal,
     });
+    clearTimeout(to);
     if (resp.ok) {
       const data = await resp.json();
       return data.choices?.[0]?.message?.content || null;
@@ -247,7 +259,8 @@ export default async function handler(req, res) {
       const text = (body.text || '').trim();
       if (!text) return sendJson(res, 400, { error: 'Text fehlt.' });
       const userPrompt = USER_PROMPT_TEMPLATE.replace('{document_content}', text.slice(0, 12000));
-      let raw = (await callNvidiaText(userPrompt)) || (await callOpenAIText(userPrompt));
+      // OpenAI first (fast, reliable JSON), OpenRouter fallback (also fast)
+      let raw = (await callOpenAIText(userPrompt)) || (await callOpenRouterText(userPrompt));
       if (!raw) return sendJson(res, 502, { error: 'LLM-Analyse fehlgeschlagen.' });
       const analysis = parseLLMJson(raw);
       if (!analysis) return sendJson(res, 502, { error: 'Antwort konnte nicht geparst werden.' });
