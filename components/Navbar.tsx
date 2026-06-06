@@ -50,6 +50,12 @@ export const Navbar: React.FC = () => {
               ROI-Rechner
             </a>
             <a
+              href="#/live-demo"
+              className="text-sm text-ink font-body underline decoration-accent decoration-1 underline-offset-4 hover:decoration-2 transition-all duration-200"
+            >
+              Live Demo
+            </a>
+            <a
               href="mailto:info@ainzigartig.de?subject=Erstgespr%C3%A4ch%20vereinbaren%20%E2%80%94%20Ainzigartig"
               className="text-sm text-ink font-body underline decoration-accent decoration-1 underline-offset-4 hover:decoration-2 transition-all duration-200"
             >

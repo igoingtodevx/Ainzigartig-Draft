@@ -18,6 +18,7 @@ import { KISchnellstart } from './components/KISchnellstart';
 import { KIAudit } from './components/KIAudit';
 import { PricingOverview } from './components/PricingOverview';
 import { KIAnalyse } from './components/KIAnalyse';
+import { LiveAgentDemo } from './components/LiveAgentDemo';
 
 function getRoute(): string {
   return window.location.hash.replace('#', '') || '/';
@@ -59,6 +60,8 @@ const App: React.FC = () => {
         return <PricingOverview />;
       case '/ki-analyse':
         return <KIAnalyse />;
+      case '/live-demo':
+        return <LiveAgentDemo />;
       default:
         return (
           <main>
