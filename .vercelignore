@@ -1,0 +1,4 @@
+# Vercel ignore rules — keep this in sync with what Vercel should/shouldn't deploy
+api/analyze.py
+api/__pycache__/
+**/__pycache__/
