@@ -19,6 +19,8 @@ import { KIAudit } from './components/KIAudit';
 import { PricingOverview } from './components/PricingOverview';
 import { KIAnalyse } from './components/KIAnalyse';
 import { LiveAgentDemo } from './components/LiveAgentDemo';
+import { Projects } from './components/Projects';
+import { ChatBot } from './components/ChatBot';
 
 function getRoute(): string {
   return window.location.hash.replace('#', '') || '/';
@@ -62,6 +64,8 @@ const App: React.FC = () => {
         return <KIAnalyse />;
       case '/live-demo':
         return <LiveAgentDemo />;
+      case '/projekte':
+        return <Projects />;
       default:
         return (
           <main>
@@ -81,6 +85,7 @@ const App: React.FC = () => {
       <Navbar />
       {renderPage()}
       <Footer />
+      <ChatBot />
     </div>
   );
 };

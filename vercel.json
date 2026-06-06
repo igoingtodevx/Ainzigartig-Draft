@@ -7,6 +7,12 @@
   "functions": {
     "api/live-agent-demo.js": {
       "maxDuration": 10
+    },
+    "api/chat.js": {
+      "maxDuration": 10
+    },
+    "api/projects.js": {
+      "maxDuration": 10
     }
   }
 }
