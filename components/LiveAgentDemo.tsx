@@ -264,13 +264,13 @@ export const LiveAgentDemo: React.FC = () => {
     <div className="min-h-screen bg-base text-ink font-body">
       {/* Hero */}
       <section className="pt-28 pb-12 px-6 md:px-8">
-        <div className="max-w-[1000px] mx-auto text-center">
+        <div className="max-w-[1000px] mx-auto px-4 sm:px-6 md:px-8">
           <span className="inline-block text-xs font-bold uppercase tracking-[0.25em] text-accent border border-accent/30 bg-accent/5 px-3 py-1 mb-6">
             Live Agent Demo
           </span>
-          <h1 className="font-editorial text-3xl sm:text-5xl md:text-6xl leading-[1.08] text-ink mb-6">
+          <h1 className="font-editorial text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05] text-ink mb-6 break-words">
             Schauen Sie unseren<br />
-            <span className="text-accent">Dokument-Agenten arbeiten.</span>
+            <span className="text-accent">Dokument-Agent arbeiten.</span>
           </h1>
           <p className="text-muted text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
             Rechnung, E-Mail, Angebot oder Vertrag — der Agent liest, strukturiert und schlaegt
