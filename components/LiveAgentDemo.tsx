@@ -1,4 +1,44 @@
 import React, { useState, useRef, useCallback } from 'react';
+import * as pdfjsLib from 'pdfjs-dist';
+import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
+
+// pdf.js worker setup — required for PDF rendering in the browser
+pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
+
+// Convert a File to a base64 string (no data URL prefix).
+function uint8ToBase64(bytes: Uint8Array): string {
+  let binary = '';
+  const chunk = 0x8000;
+  for (let i = 0; i < bytes.length; i += chunk) {
+    binary += String.fromCharCode.apply(null, Array.from(bytes.subarray(i, i + chunk)) as any);
+  }
+  return btoa(binary);
+}
+
+// Render the first N pages of a PDF to PNG dataURLs, return base64 arrays.
+// Renders at 2x scale for sharp OCR.
+async function pdfToImages(file: File, maxPages: number): Promise<{ base64: string; mime_type: string }[]> {
+  const bytes = new Uint8Array(await file.arrayBuffer());
+  const loadingTask = pdfjsLib.getDocument({ data: bytes });
+  const pdf = await loadingTask.promise;
+  const pageCount = Math.min(pdf.numPages, maxPages);
+  const results: { base64: string; mime_type: string }[] = [];
+  for (let i = 1; i <= pageCount; i++) {
+    const page = await pdf.getPage(i);
+    const viewport = page.getViewport({ scale: 2.0 });
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.ceil(viewport.width);
+    canvas.height = Math.ceil(viewport.height);
+    const ctx = canvas.getContext('2d');
+    if (!ctx) continue;
+    await page.render({ canvasContext: ctx, viewport, canvas }).promise;
+    const dataUrl = canvas.toDataURL('image/png');
+    const b64 = dataUrl.split(',', 2)[1] || '';
+    if (b64) results.push({ base64: b64, mime_type: 'image/png' });
+  }
+  await pdf.destroy();
+  return results;
+}
 
 const mailto = 'mailto:info@ainzigartig.de?subject=Live%20Agent%20Demo%20%E2%80%94%20fuer%20unser%20Unternehmen';
 
@@ -192,8 +232,8 @@ export const LiveAgentDemo: React.FC = () => {
   }, []);
 
   const runUpload = useCallback(async (uploadedFile: File) => {
-    if (uploadedFile.size > 4 * 1024 * 1024) {
-      setError('Datei zu gross (max 4 MB).');
+    if (uploadedFile.size > 6 * 1024 * 1024) {
+      setError('Datei zu gross (max 6 MB).');
       return;
     }
     setAnalyzing(true);
@@ -206,35 +246,46 @@ export const LiveAgentDemo: React.FC = () => {
     }, 1500);
 
     try {
-      const buffer = await uploadedFile.arrayBuffer();
-      const bytes = new Uint8Array(buffer);
-      let binary = '';
-      for (let i = 0; i < bytes.byteLength; i++) {
-        binary += String.fromCharCode(bytes[i]);
+      // Convert PDF to images (browser-side) so the server can send them
+      // directly to gpt-4o-mini vision — no server-side PDF library needed.
+      let images: { base64: string; mime_type: string }[];
+      if (uploadedFile.type === 'application/pdf') {
+        images = await pdfToImages(uploadedFile, 5);
+        if (images.length === 0) {
+          setError('PDF enthaelt keine lesbaren Seiten.');
+          setAnalyzing(false);
+          clearInterval(stepInterval);
+          return;
+        }
+      } else {
+        const bytes = new Uint8Array(await uploadedFile.arrayBuffer());
+        const b64 = uint8ToBase64(bytes);
+        images = [{ base64: b64, mime_type: uploadedFile.type }];
       }
-      const b64 = btoa(binary);
 
       const resp = await fetch('/api/live-agent-demo', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           mode: 'upload',
-          file_base64: b64,
-          mime_type: uploadedFile.type,
+          images,
           filename: uploadedFile.name,
         }),
       });
       const data = await resp.json();
       if (!resp.ok) {
         setError(data.error || 'Analyse fehlgeschlagen.');
+        setAnalyzing(false);
+        clearInterval(stepInterval);
         return;
       }
       setTimeout(() => {
         setResult(data);
         setAnalyzing(false);
       }, 200);
-    } catch (e) {
-      setError('Verbindung fehlgeschlagen. Bitte versuchen Sie es erneut.');
+    } catch (e: any) {
+      setError('Verbindung fehlgeschlagen. Bitte versuchen Sie es erneut.' + (e?.message ? ` (${e.message})` : ''));
+      setAnalyzing(false);
     } finally {
       clearInterval(stepInterval);
     }
