@@ -11,6 +11,9 @@
     "api/chat.js": {
       "maxDuration": 10
     },
+    "api/analyze.js": {
+      "maxDuration": 30
+    },
     "api/projects.js": {
       "maxDuration": 10
     }
