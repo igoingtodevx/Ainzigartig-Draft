@@ -24,6 +24,7 @@ import { Projects } from './components/Projects';
 import { ChatBot } from './components/ChatBot';
 import { RouteMeta } from './components/RouteMeta';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { NotFound } from './components/NotFound';
 
 const HomePage: React.FC = () => (
   <main>
@@ -90,6 +91,7 @@ const App: React.FC = () => {
           <Route path="/ki-analyse" element={<KIAnalyse />} />
           <Route path="/live-demo" element={<LiveAgentDemo />} />
           <Route path="/projekte" element={<Projects />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         </ErrorBoundary>
         <Footer />
