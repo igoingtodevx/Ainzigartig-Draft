@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { RouteMeta } from './RouteMeta';
 
 const mailto = 'mailto:info@ainzigartig.de?subject=KI-Schnellstart%20%E2%80%94%20Ich%20will%20starten';
 
@@ -31,6 +33,7 @@ const includes = [
 export const KISchnellstart: React.FC = () => {
   return (
     <div className="min-h-screen bg-base text-ink font-body">
+      <RouteMeta title="KI-Schnellstart | Ainzigartig" description="In 4 Wochen zur ersten KI-Lösung." />
       {/* Hero */}
       <section className="pt-28 pb-16 px-6 md:px-8">
         <div className="max-w-[1200px] mx-auto text-center">
@@ -49,13 +52,13 @@ export const KISchnellstart: React.FC = () => {
             trainiert auf Ihre Daten, integriert in Ihre Tools.
           </p>
 
-          <a
-            href={mailto}
+          <Link
+            to="/#kontakt"
             className="inline-flex items-center gap-2 px-8 py-3 bg-ink text-base text-sm font-bold hover:bg-ink/80 transition-colors"
           >
             Jetzt Erstgespräch vereinbaren
             <span className="material-symbols-outlined text-sm">arrow_forward</span>
-          </a>
+          </Link>
         </div>
       </section>
 
@@ -144,15 +147,15 @@ export const KISchnellstart: React.FC = () => {
         <p className="text-muted text-sm mb-8 max-w-lg mx-auto">
           30 Minuten. Klare Antwort ob KI für Sie passt — oder nicht. Kostenfrei, unverbindlich.
         </p>
-        <a
-          href={mailto}
+        <Link
+          to="/#kontakt"
           className="inline-flex items-center gap-2 text-sm text-accent font-body group"
         >
           <span className="underline decoration-1 underline-offset-4 group-hover:decoration-2 transition-all duration-200">
             Erstgespräch vereinbaren
           </span>
           <span className="material-symbols-outlined text-sm group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
-        </a>
+        </Link>
       </section>
     </div>
   );

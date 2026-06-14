@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { RouteMeta } from './RouteMeta';
 
 /* ───────────────────────────────────────────────────────────────────────────
    Projects — Ausgewählte Projekte, im selben Anwaltskanzlei-Look wie der
@@ -73,6 +74,7 @@ export const Projects: React.FC = () => {
 
   return (
     <section className="py-16u md:py-24 px-6 md:px-8">
+      <RouteMeta title="Projekte | Ainzigartig" description="Unsere aktuellen KI-Projekte auf GitHub." />
       <div className="max-w-[1200px] mx-auto">
         <div className="max-w-2xl mb-12u md:mb-16u">
           <p className="text-xs font-body uppercase tracking-[0.18em] text-muted mb-4u">

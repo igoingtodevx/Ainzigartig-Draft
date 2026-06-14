@@ -1,4 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
+import { Link } from 'react-router-dom';
+import { RouteMeta } from './RouteMeta';
 import * as pdfjsLib from 'pdfjs-dist';
 import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 
@@ -313,6 +315,7 @@ export const LiveAgentDemo: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-base text-ink font-body">
+      <RouteMeta title="Live Demo | Ainzigartig" description="Testen Sie unseren KI-Dokumentenagenten live." />
       {/* Hero */}
       <section className="pt-28 pb-12 px-6 md:px-8">
         <div className="max-w-[1000px] mx-auto px-4 sm:px-6 md:px-8">
@@ -536,13 +539,13 @@ export const LiveAgentDemo: React.FC = () => {
               >
                 Anderes Dokument testen
               </button>
-              <a
-                href={mailto}
+              <Link
+                to="/#kontakt"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-ink text-base text-sm font-bold hover:bg-ink/80 transition-colors"
               >
                 So etwas fuer unser Unternehmen?
                 <span className="material-symbols-outlined text-sm">arrow_forward</span>
-              </a>
+              </Link>
             </div>
           </div>
         </section>

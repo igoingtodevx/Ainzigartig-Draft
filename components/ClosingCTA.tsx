@@ -1,8 +1,9 @@
 import React from 'react';
+import { ContactForm } from './ContactForm';
 
 export const ClosingCTA: React.FC = () => {
   return (
-    <section className="py-16u md:py-[160px] px-6 md:px-8">
+    <section id="kontakt" className="py-16u md:py-[160px] px-6 md:px-8">
       <div className="max-w-[1200px] mx-auto">
         <div className="max-w-xl">
           <p className="font-editorial text-2xl md:text-3xl lg:text-[2.5rem] text-ink leading-[1.2]">
@@ -10,24 +11,13 @@ export const ClosingCTA: React.FC = () => {
             <br className="hidden md:block" />
             Unsere Einschätzung. Kein Pitch.
           </p>
-
-          <div className="mt-8">
-            <a
-              href="mailto:info@ainzigartig.de?subject=Erstgespr%C3%A4ch%20vereinbaren%20%E2%80%94%20Ainzigartig"
-              className="inline-flex items-center gap-2 text-sm text-accent font-body group"
-            >
-              <span className="underline decoration-1 underline-offset-4 group-hover:decoration-2 transition-all duration-200">
-                Gespräch vereinbaren
-              </span>
-              <span
-                className="transition-transform duration-200 group-hover:translate-x-1"
-                aria-hidden="true"
-              >
-                →
-              </span>
-            </a>
-          </div>
+          <p className="text-sm text-muted font-body leading-relaxed mt-4">
+            Schreiben Sie uns kurz, was Sie beschäftigt. Wir antworten innerhalb
+            von 24 Stunden — ehrlich, ob KI für Sie passt oder nicht.
+          </p>
         </div>
+
+        <ContactForm />
       </div>
     </section>
   );

@@ -1,13 +1,16 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { RouteMeta } from './RouteMeta';
 
 export const Datenschutz: React.FC = () => {
   return (
     <div className="min-h-screen bg-background-dark text-white font-mono pt-28 pb-20 px-4">
+      <RouteMeta title="Datenschutz | Ainzigartig" description="Unsere Datenschutzerklärung." />
       <div className="max-w-3xl mx-auto">
-        <a href="#/" className="text-neon-cyan text-sm hover:underline mb-8 inline-flex items-center gap-1">
+        <Link to="/" className="text-neon-cyan text-sm hover:underline mb-8 inline-flex items-center gap-1">
           <span className="material-symbols-outlined text-sm">arrow_back</span>
           Zurück zur Startseite
-        </a>
+        </Link>
 
         <h1 className="text-3xl font-bold text-white font-display mb-8 mt-4">
           <span className="text-neon-cyan mr-2">&gt;</span>

@@ -49,6 +49,7 @@ export const ChatBot: React.FC = () => {
   const [input, setInput] = useState('');
   const [busy, setBusy] = useState(false);
   const [cooldownUntil, setCooldownUntil] = useState(0);
+  const [, setTick] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -73,11 +74,19 @@ export const ChatBot: React.FC = () => {
     saveHistory(messages);
   }, [messages]);
 
-  // Cooldown ticker
+  // Cooldown ticker — re-renders once a second so the visible countdown
+  // in the send button decrements live.
   useEffect(() => {
     if (!cooldownUntil) return;
-    const t = setTimeout(() => setCooldownUntil(0), cooldownUntil - Date.now());
-    return () => clearTimeout(t);
+    const interval = setInterval(() => {
+      if (Date.now() >= cooldownUntil) {
+        setCooldownUntil(0);
+        clearInterval(interval);
+        return;
+      }
+      setTick((n) => n + 1);
+    }, 1000);
+    return () => clearInterval(interval);
   }, [cooldownUntil]);
 
   async function send(text?: string) {
@@ -264,19 +273,22 @@ export const ChatBot: React.FC = () => {
                 type="button"
                 onClick={() => send()}
                 disabled={!canSend}
-                aria-label="Nachricht senden"
-                className="flex-shrink-0 w-9 h-9 bg-accent hover:bg-accent-mid disabled:bg-faint disabled:cursor-not-allowed text-base rounded flex items-center justify-center transition-colors duration-200"
+                aria-label={cooldownSec > 0 ? `Bitte ${cooldownSec} Sekunden warten` : 'Nachricht senden'}
+                className={`flex-shrink-0 ${
+                  cooldownSec > 0
+                    ? 'px-3 h-9 bg-faint text-muted cursor-not-allowed text-xs font-body'
+                    : 'w-9 h-9 bg-accent hover:bg-accent-mid disabled:bg-faint disabled:cursor-not-allowed text-base'
+                } rounded flex items-center justify-center transition-colors duration-200`}
               >
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                  <path d="M2 7 L12 7 M8 3 L12 7 L8 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
+                {cooldownSec > 0 ? (
+                  <span>Bitte warten ({cooldownSec}s)</span>
+                ) : (
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <path d="M2 7 L12 7 M8 3 L12 7 L8 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                )}
               </button>
             </div>
-            {cooldownSec > 0 && (
-              <p className="text-[11px] text-muted font-body mt-2u">
-                Bitte {cooldownSec}s warten…
-              </p>
-            )}
           </div>
         </div>
       )}

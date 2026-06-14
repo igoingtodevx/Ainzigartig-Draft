@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { RouteMeta } from './RouteMeta';
 
 const mailto = 'mailto:info@ainzigartig.de?subject=KI-Analyse%20%E2%80%94%20N%C3%A4chste%20Schritte';
 
@@ -84,6 +86,7 @@ export const KIAnalyse: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-base text-ink font-body">
+      <RouteMeta title="KI-Website-Analyse | Ainzigartig" description="Kostenlose KI-Analyse Ihrer Unternehmenswebseite." />
       {/* Hero */}
       <section className="pt-28 pb-16 px-6 md:px-8">
         <div className="max-w-[800px] mx-auto text-center">
@@ -131,6 +134,23 @@ export const KIAnalyse: React.FC = () => {
               Keine Daten gespeichert. Ergebnis nur im Browser.
             </p>
           </div>
+
+          {/* Loading skeleton — visible while the API is in flight */}
+          {loading && (
+            <div className="max-w-3xl mx-auto mt-10 space-y-4" aria-busy="true" aria-label="Analyse läuft">
+              <div className="h-6 w-1/2 bg-faint/20 animate-pulse" />
+              <div className="border border-faint/30 p-5 space-y-3">
+                <div className="h-4 w-3/4 bg-faint/20 animate-pulse" />
+                <div className="h-4 w-1/2 bg-faint/20 animate-pulse" />
+                <div className="h-4 w-5/6 bg-faint/20 animate-pulse" />
+              </div>
+              <div className="h-4 w-full bg-faint/10 animate-pulse" />
+              <div className="h-4 w-2/3 bg-faint/10 animate-pulse" />
+              <p className="text-xs text-faint text-center pt-2">
+                Website wird gescannt und bewertet — dauert ca. 30–60 Sekunden.
+              </p>
+            </div>
+          )}
         </div>
       </section>
 
@@ -249,15 +269,15 @@ export const KIAnalyse: React.FC = () => {
               <p className="text-sm text-muted mb-4">
                 Wollen Sie die nächste Stufe sehen? Lassen Sie uns sprechen.
               </p>
-              <a
-                href={mailto}
+              <Link
+                to="/#kontakt"
                 className="inline-flex items-center gap-2 text-sm text-accent font-body group"
               >
                 <span className="underline decoration-1 underline-offset-4 group-hover:decoration-2 transition-all duration-200">
                   Kostenfreies Erstgespräch vereinbaren
                 </span>
                 <span className="material-symbols-outlined text-sm group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
-              </a>
+              </Link>
             </div>
           </div>
         </section>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export const Footer: React.FC = () => {
   return (
@@ -8,15 +9,15 @@ export const Footer: React.FC = () => {
           © 2026 Ainzigartig
         </span>
         <div className="flex gap-6 text-xs text-muted font-body">
-          <a href="#/" className="hover:text-ink transition-colors duration-200">
+          <Link to="/" className="hover:text-ink transition-colors duration-200">
             Startseite
-          </a>
-          <a href="#/impressum" className="hover:text-ink transition-colors duration-200">
+          </Link>
+          <Link to="/impressum" className="hover:text-ink transition-colors duration-200">
             Impressum
-          </a>
-          <a href="#/datenschutz" className="hover:text-ink transition-colors duration-200">
+          </Link>
+          <Link to="/datenschutz" className="hover:text-ink transition-colors duration-200">
             Datenschutz
-          </a>
+          </Link>
         </div>
       </div>
     </footer>

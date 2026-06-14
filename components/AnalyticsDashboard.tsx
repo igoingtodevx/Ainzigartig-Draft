@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { RouteMeta } from './RouteMeta';
 
 /* ───────────── small reusable bits ───────────── */
 
@@ -47,13 +49,13 @@ const Hero: React.FC = () => (
 
       {/* CTAs */}
       <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-        <a
-          href="mailto:info@ainzigartig.de?subject=Analytics%20Dashboard%20Demo"
+        <Link
+          to="/#kontakt"
           className="relative px-8 py-3 text-sm font-bold bg-primary text-white border-2 border-primary hover:bg-primary-hover shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-200 flex items-center gap-2"
         >
           Kostenlose Demo anfragen
           <span className="material-symbols-outlined text-sm">arrow_forward</span>
-        </a>
+        </Link>
         <a
           href="#problem"
           className="px-8 py-3 text-sm font-bold border-2 border-neon-pink/40 text-neon-pink hover:border-neon-pink hover:bg-neon-pink/5 transition-all duration-200 flex items-center gap-2"
@@ -598,13 +600,13 @@ const FinalCTA: React.FC = () => (
         In einer kostenlosen Demo bauen wir einen exemplarischen Blick auf Ihre Datensituation – mit echten Beispielen aus Ihrer Branche. Sie sehen konkret, welche Fragen das Dashboard beantwortet und welche Daten dafür nötig wären.
       </p>
 
-      <a
-        href="mailto:info@ainzigartig.de?subject=Analytics%20Dashboard%20Demo"
+      <Link
+        to="/#kontakt"
         className="inline-flex items-center gap-2 px-8 py-3 text-sm font-bold bg-primary text-white border-2 border-primary hover:bg-primary-hover shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-200"
       >
         Kostenlose Demo anfragen
         <span className="material-symbols-outlined text-sm">arrow_forward</span>
-      </a>
+      </Link>
 
       <p className="mt-6 text-xs text-gray-600 font-mono">
         Keine Verpflichtung. Keine Folge-E-Mail-Flut. Einfach zeigen, was möglich ist.
@@ -618,6 +620,7 @@ const FinalCTA: React.FC = () => (
 export const AnalyticsDashboard: React.FC = () => {
   return (
     <div className="min-h-screen bg-background-dark text-white font-mono relative">
+      <RouteMeta title="Analytics Dashboard | Ainzigartig" description="Datenbasierte Entscheidungen mit KI-gestützten Dashboards." />
       {/* Background effects */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#6B46C1_1px,transparent_1px)] [background-size:16px_16px]" />
@@ -628,10 +631,10 @@ export const AnalyticsDashboard: React.FC = () => {
 
       {/* Back link */}
       <div className="fixed top-24 left-4 sm:left-8 z-40">
-        <a href="#/" className="text-neon-cyan text-sm hover:underline inline-flex items-center gap-1 font-mono bg-background-dark/80 backdrop-blur-sm px-3 py-1.5 border border-neon-cyan/20 hover:border-neon-cyan/50 transition-colors">
+        <Link to="/" className="text-neon-cyan text-sm hover:underline inline-flex items-center gap-1 font-mono bg-background-dark/80 backdrop-blur-sm px-3 py-1.5 border border-neon-cyan/20 hover:border-neon-cyan/50 transition-colors">
           <span className="material-symbols-outlined text-sm">arrow_back</span>
           Zurück
-        </a>
+        </Link>
       </div>
 
       <div className="relative z-10">
