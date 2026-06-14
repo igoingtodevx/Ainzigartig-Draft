@@ -134,6 +134,23 @@ export const KIAnalyse: React.FC = () => {
               Keine Daten gespeichert. Ergebnis nur im Browser.
             </p>
           </div>
+
+          {/* Loading skeleton — visible while the API is in flight */}
+          {loading && (
+            <div className="max-w-3xl mx-auto mt-10 space-y-4" aria-busy="true" aria-label="Analyse läuft">
+              <div className="h-6 w-1/2 bg-faint/20 animate-pulse" />
+              <div className="border border-faint/30 p-5 space-y-3">
+                <div className="h-4 w-3/4 bg-faint/20 animate-pulse" />
+                <div className="h-4 w-1/2 bg-faint/20 animate-pulse" />
+                <div className="h-4 w-5/6 bg-faint/20 animate-pulse" />
+              </div>
+              <div className="h-4 w-full bg-faint/10 animate-pulse" />
+              <div className="h-4 w-2/3 bg-faint/10 animate-pulse" />
+              <p className="text-xs text-faint text-center pt-2">
+                Website wird gescannt und bewertet — dauert ca. 30–60 Sekunden.
+              </p>
+            </div>
+          )}
         </div>
       </section>
 

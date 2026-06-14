@@ -23,6 +23,7 @@ import { LiveAgentDemo } from './components/LiveAgentDemo';
 import { Projects } from './components/Projects';
 import { ChatBot } from './components/ChatBot';
 import { RouteMeta } from './components/RouteMeta';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 const HomePage: React.FC = () => (
   <main>
@@ -73,7 +74,8 @@ const App: React.FC = () => {
       <ScrollToHash />
       <div className="min-h-screen bg-base text-ink font-body antialiased overflow-x-hidden selection:bg-accent selection:text-base">
         <Navbar />
-        <Routes>
+        <ErrorBoundary>
+          <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/impressum" element={<Impressum />} />
           <Route path="/datenschutz" element={<Datenschutz />} />
@@ -89,6 +91,7 @@ const App: React.FC = () => {
           <Route path="/live-demo" element={<LiveAgentDemo />} />
           <Route path="/projekte" element={<Projects />} />
         </Routes>
+        </ErrorBoundary>
         <Footer />
         <ChatBot />
       </div>
