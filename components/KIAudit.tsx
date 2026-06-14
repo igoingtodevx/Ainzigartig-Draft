@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { RouteMeta } from './RouteMeta';
 
 const mailto = 'mailto:info@ainzigartig.de?subject=KI-Audit%20Ergebnis%20%E2%80%94%20N%C3%A4chste%20Schritte';
 
@@ -138,6 +140,7 @@ export const KIAudit: React.FC = () => {
   if (submitted && level) {
     return (
       <div className="min-h-screen bg-base text-ink font-body">
+        <RouteMeta title="KI-Audit | Ainzigartig" description="Ihr unabhängiges KI-Reifegradgutachten." />
         <section className="pt-28 pb-20 px-6 md:px-8">
           <div className="max-w-[800px] mx-auto text-center">
             <span className="inline-block text-xs font-bold uppercase tracking-[0.25em] text-accent border border-accent/30 bg-accent/5 px-3 py-1 mb-6">
@@ -173,13 +176,13 @@ export const KIAudit: React.FC = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href={mailto}
+              <Link
+                to="/#kontakt"
                 className="inline-flex items-center justify-center gap-2 px-8 py-3 bg-ink text-base text-sm font-bold hover:bg-ink/80 transition-colors"
               >
                 Ergebnis besprechen
                 <span className="material-symbols-outlined text-sm">arrow_forward</span>
-              </a>
+              </Link>
               <button
                 onClick={handleRestart}
                 className="inline-flex items-center justify-center gap-2 px-8 py-3 border border-faint/30 text-sm text-muted hover:border-ink/30 transition-colors cursor-pointer"
@@ -195,6 +198,7 @@ export const KIAudit: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-base text-ink font-body">
+      <RouteMeta title="KI-Audit | Ainzigartig" description="Ihr unabhängiges KI-Reifegradgutachten." />
       <section className="pt-28 pb-20 px-6 md:px-8">
         <div className="max-w-[800px] mx-auto">
           {/* Header */}

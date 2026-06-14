@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { RouteMeta } from './RouteMeta';
 
 const mailto = 'mailto:info@ainzigartig.de?subject=Preisanfrage%20%E2%80%94%20Ainzigartig';
 
@@ -139,6 +141,7 @@ const tierBadge: Record<string, string> = {
 export const PricingOverview: React.FC = () => {
   return (
     <div className="min-h-screen bg-base text-ink font-body">
+      <RouteMeta title="Preise | Ainzigartig" description="Transparente Preismodelle für jeden Bedarf." />
       {/* Hero */}
       <section className="pt-28 pb-16 px-6 md:px-8">
         <div className="max-w-[1200px] mx-auto text-center">
@@ -224,15 +227,15 @@ export const PricingOverview: React.FC = () => {
         <p className="text-muted text-sm mb-8 max-w-lg mx-auto">
           30 Minuten. Wir klären zusammen: Was passt zu Ihnen — und was nicht. Kostenfrei.
         </p>
-        <a
-          href={mailto}
+        <Link
+          to="/#kontakt"
           className="inline-flex items-center gap-2 text-sm text-accent font-body group"
         >
           <span className="underline decoration-1 underline-offset-4 group-hover:decoration-2 transition-all duration-200">
             Erstgespräch vereinbaren
           </span>
           <span className="material-symbols-outlined text-sm group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
-        </a>
+        </Link>
       </section>
     </div>
   );

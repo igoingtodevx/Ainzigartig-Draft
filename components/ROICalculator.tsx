@@ -1,4 +1,6 @@
 import React, { useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
+import { RouteMeta } from './RouteMeta';
 
 /* ───────────────────────────────────────────────────────────────────────────
    ROICalculator — Branchen-spezifischer ROI-Rechner für den Mittelstand.
@@ -204,6 +206,7 @@ export const ROICalculator: React.FC = () => {
 
   return (
     <section className="min-h-screen pt-32 pb-16u px-6 md:px-8 bg-base text-ink font-body antialiased">
+      <RouteMeta title="ROI-Rechner | Ainzigartig" description="Berechnen Sie Ihren KI-Mehrwert." />
       <div className="max-w-[1200px] mx-auto">
         {/* Header — 2-col on desktop: copy left, pull-quote stat right */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8u items-end">
@@ -361,8 +364,8 @@ export const ROICalculator: React.FC = () => {
 
             {/* CTA */}
             <div className="mt-10 pt-6 border-t border-faint/50">
-              <a
-                href="mailto:info@ainzigartig.de?subject=Erstgespr%C3%A4ch%20vereinbaren%20%E2%80%94%20Ainzigartig"
+              <Link
+                to="/#kontakt"
                 className="inline-flex items-center gap-2 text-sm text-accent font-body group"
               >
                 <span className="underline decoration-1 underline-offset-4 group-hover:decoration-2 transition-all duration-200">
@@ -374,7 +377,7 @@ export const ROICalculator: React.FC = () => {
                 >
                   →
                 </span>
-              </a>
+              </Link>
               <p className="text-xs text-faint font-body mt-2">
                 Mit Ihrer konkreten Zahl im Kopf. Kein Pitch, keine Folgetermine außer Sie
                 wollen.

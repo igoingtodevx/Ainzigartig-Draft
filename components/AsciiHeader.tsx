@@ -161,14 +161,14 @@ export const AsciiHeader: React.FC = () => {
       {/* CTA Buttons */}
       <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 px-4">
         <a
-          href="#"
+          href="/#kontakt"
           className="inline-flex items-center gap-2 px-8 py-3 text-sm font-bold uppercase tracking-wider bg-primary text-white border-2 border-primary hover:bg-primary-hover shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-200 font-mono"
         >
           Kostenloses Erstgespräch buchen
           <span className="material-symbols-outlined text-base">calendar_month</span>
         </a>
         <a
-          href="#"
+          href="/live-demo"
           className="inline-flex items-center gap-2 px-8 py-3 text-sm font-bold uppercase tracking-wider text-neon-cyan border-2 border-neon-cyan/40 hover:border-neon-cyan hover:bg-neon-cyan/5 transition-all duration-200 font-mono"
         >
           Demo ansehen

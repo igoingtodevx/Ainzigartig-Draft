@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { Services } from './components/Services';
@@ -21,72 +22,77 @@ import { KIAnalyse } from './components/KIAnalyse';
 import { LiveAgentDemo } from './components/LiveAgentDemo';
 import { Projects } from './components/Projects';
 import { ChatBot } from './components/ChatBot';
+import { RouteMeta } from './components/RouteMeta';
 
-function getRoute(): string {
-  return window.location.hash.replace('#', '') || '/';
+const HomePage: React.FC = () => (
+  <main>
+    <RouteMeta
+      title="Ainzigartig – KI-Beratung für den Mittelstand"
+      description="Wir helfen Mittelstandsunternehmen, KI gewinnbringend einzusetzen."
+    />
+    <Hero />
+    <Services />
+    <CaseStudies />
+    <TeamSection />
+    <HomeFAQ />
+    <ClosingCTA />
+  </main>
+);
+
+function ScrollToHash() {
+  const { hash, pathname } = useLocation();
+  useEffect(() => {
+    if (!hash) {
+      window.scrollTo(0, 0);
+      return;
+    }
+    const id = hash.replace('#', '');
+    let cancelled = false;
+    const tryScroll = (attempt: number) => {
+      if (cancelled) return;
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+      if (attempt < 10) {
+        setTimeout(() => tryScroll(attempt + 1), 50);
+      }
+    };
+    tryScroll(0);
+    return () => {
+      cancelled = true;
+    };
+  }, [hash, pathname]);
+  return null;
 }
 
 const App: React.FC = () => {
-  const [route, setRoute] = useState(getRoute());
-
-  useEffect(() => {
-    const onHashChange = () => {
-      setRoute(getRoute());
-      window.scrollTo(0, 0);
-    };
-    window.addEventListener('hashchange', onHashChange);
-    return () => window.removeEventListener('hashchange', onHashChange);
-  }, []);
-
-  const renderPage = () => {
-    switch (route) {
-      case '/impressum':
-        return <Impressum />;
-      case '/datenschutz':
-        return <Datenschutz />;
-      case '/ki-beratung':
-        return <KIBeratung />;
-      case '/ki-kundenservice':
-        return <KIKundenservice />;
-      case '/ki-recruiting':
-        return <KIRecruiting />;
-      case '/analytics-dashboard':
-        return <AnalyticsDashboard />;
-      case '/roi-rechner':
-        return <ROICalculator />;
-      case '/ki-schnellstart':
-        return <KISchnellstart />;
-      case '/ki-audit':
-        return <KIAudit />;
-      case '/preise':
-        return <PricingOverview />;
-      case '/ki-analyse':
-        return <KIAnalyse />;
-      case '/live-demo':
-        return <LiveAgentDemo />;
-      case '/projekte':
-        return <Projects />;
-      default:
-        return (
-          <main>
-            <Hero />
-            <Services />
-            <CaseStudies />
-            <TeamSection />
-            <HomeFAQ />
-            <ClosingCTA />
-          </main>
-        );
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-base text-ink font-body antialiased overflow-x-hidden selection:bg-accent selection:text-base">
-      <Navbar />
-      {renderPage()}
-      <Footer />
-      <ChatBot />
-    </div>
+    <BrowserRouter>
+      <ScrollToHash />
+      <div className="min-h-screen bg-base text-ink font-body antialiased overflow-x-hidden selection:bg-accent selection:text-base">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/impressum" element={<Impressum />} />
+          <Route path="/datenschutz" element={<Datenschutz />} />
+          <Route path="/ki-beratung" element={<KIBeratung />} />
+          <Route path="/ki-kundenservice" element={<KIKundenservice />} />
+          <Route path="/ki-recruiting" element={<KIRecruiting />} />
+          <Route path="/analytics-dashboard" element={<AnalyticsDashboard />} />
+          <Route path="/roi-rechner" element={<ROICalculator />} />
+          <Route path="/ki-schnellstart" element={<KISchnellstart />} />
+          <Route path="/ki-audit" element={<KIAudit />} />
+          <Route path="/preise" element={<PricingOverview />} />
+          <Route path="/ki-analyse" element={<KIAnalyse />} />
+          <Route path="/live-demo" element={<LiveAgentDemo />} />
+          <Route path="/projekte" element={<Projects />} />
+        </Routes>
+        <Footer />
+        <ChatBot />
+      </div>
+    </BrowserRouter>
   );
 };
 

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { RouteMeta } from './RouteMeta';
 
 const mailto = 'mailto:info@ainzigartig.de?subject=KI-Analyse%20%E2%80%94%20N%C3%A4chste%20Schritte';
 
@@ -84,6 +86,7 @@ export const KIAnalyse: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-base text-ink font-body">
+      <RouteMeta title="KI-Website-Analyse | Ainzigartig" description="Kostenlose KI-Analyse Ihrer Unternehmenswebseite." />
       {/* Hero */}
       <section className="pt-28 pb-16 px-6 md:px-8">
         <div className="max-w-[800px] mx-auto text-center">
@@ -249,15 +252,15 @@ export const KIAnalyse: React.FC = () => {
               <p className="text-sm text-muted mb-4">
                 Wollen Sie die nächste Stufe sehen? Lassen Sie uns sprechen.
               </p>
-              <a
-                href={mailto}
+              <Link
+                to="/#kontakt"
                 className="inline-flex items-center gap-2 text-sm text-accent font-body group"
               >
                 <span className="underline decoration-1 underline-offset-4 group-hover:decoration-2 transition-all duration-200">
                   Kostenfreies Erstgespräch vereinbaren
                 </span>
                 <span className="material-symbols-outlined text-sm group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
-              </a>
+              </Link>
             </div>
           </div>
         </section>
