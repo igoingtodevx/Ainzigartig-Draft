@@ -1,6 +1,7 @@
 """
 Vercel Serverless Function: Website KI-Analyse
-Calls VPS scraper → sends to LLM → returns structured analysis
+Calls VPS scraper → sends content to OpenAI → returns structured analysis
+Single-backend: OpenAI gpt-4o-mini with response_format=json_object.
 """
 
 import os
@@ -9,8 +10,6 @@ import requests
 from http.server import BaseHTTPRequestHandler
 
 SCRAPER_URL = os.environ.get("SCRAPER_URL", "http://138.68.96.190:8501")
-NVIDIA_API_KEY = os.environ.get("NVIDIA_API_KEY", "")
-OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY", "")
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
 
 ANALYSIS_PROMPT = """Du bist ein KI-Berater für den deutschen Mittelstand. Analysiere die folgende Website und erstelle eine strukturierte KI-Potenzial-Analyse.
@@ -51,26 +50,21 @@ Antworte NUR mit validem JSON in diesem Format:
   "tool_suggestion": "<Welches KI-Tool passt am besten: Chatbot, Automatisierung, etc.>"
 }}
 
-Wichtig: Sei konkret und praktisch. Keine Buzzwords. Bezogene auf die ECHTE Website."""
+Wichtig: Sei konkret und praktisch. Keine Buzzwords. Bezogen auf die ECHTE Website."""
 
 
 class handler(BaseHTTPRequestHandler):
     def do_POST(self):
         try:
-            # Read request body
             content_length = int(self.headers.get("Content-Length", 0))
             body = json.loads(self.rfile.read(content_length))
             url = body.get("url", "").strip()
 
             if not url:
-                self.send_response(400)
-                self.send_header("Content-Type", "application/json")
-                self.send_header("Access-Control-Allow-Origin", "*")
-                self.end_headers()
-                self.wfile.write(json.dumps({"error": "URL required"}).encode())
+                self._send_json(400, {"error": "URL required"})
                 return
 
-            # Step 1: Scrape website via VPS
+            # Step 1: Scrape website via VPS scraper
             try:
                 scrape_resp = requests.post(
                     f"{SCRAPER_URL}/scrape",
@@ -79,31 +73,19 @@ class handler(BaseHTTPRequestHandler):
                 )
                 if scrape_resp.status_code != 200:
                     error_detail = scrape_resp.json().get("detail", "Scraping failed")
-                    self.send_response(502)
-                    self.send_header("Content-Type", "application/json")
-                    self.send_header("Access-Control-Allow-Origin", "*")
-                    self.end_headers()
-                    self.wfile.write(json.dumps({"error": f"Scraping failed: {error_detail}"}).encode())
+                    self._send_json(502, {"error": f"Scraping failed: {error_detail}"})
                     return
                 scrape_data = scrape_resp.json()
             except requests.exceptions.Timeout:
-                self.send_response(504)
-                self.send_header("Content-Type", "application/json")
-                self.send_header("Access-Control-Allow-Origin", "*")
-                self.end_headers()
-                self.wfile.write(json.dumps({"error": "Website scraping timed out"}).encode())
+                self._send_json(504, {"error": "Website scraping timed out"})
                 return
             except Exception as e:
-                self.send_response(502)
-                self.send_header("Content-Type", "application/json")
-                self.send_header("Access-Control-Allow-Origin", "*")
-                self.end_headers()
-                self.wfile.write(json.dumps({"error": f"Scraper unreachable: {str(e)[:100]}"}).encode())
+                self._send_json(502, {"error": f"Scraper unreachable: {str(e)[:100]}"})
                 return
 
             # Step 2: Build prompt
             prompt = ANALYSIS_PROMPT.format(
-                markdown=scrape_data["markdown"][:15000],  # Limit for context
+                markdown=scrape_data["markdown"][:15000],
                 url=url,
                 title=scrape_data["title"],
                 technologies=", ".join(scrape_data["technologies"]) or "Keine erkannt",
@@ -114,101 +96,65 @@ class handler(BaseHTTPRequestHandler):
                 word_count=scrape_data["word_count"],
             )
 
-            # Step 3: Call LLM (NVIDIA NIM first, then OpenRouter, then OpenAI)
-            llm_response = None
-
-            if NVIDIA_API_KEY:
-                try:
-                    llm_resp = requests.post(
-                        "https://integrate.api.nvidia.com/v1/chat/completions",
-                        headers={
-                            "Authorization": f"Bearer {NVIDIA_API_KEY}",
-                            "Content-Type": "application/json",
-                        },
-                        json={
-                            "model": "meta/llama-3.1-8b-instruct",
-                            "messages": [{"role": "user", "content": prompt}],
-                            "temperature": 0.3,
-                            "max_tokens": 2000,
-                        },
-                        timeout=30,
-                    )
-                    if llm_resp.status_code == 200:
-                        llm_response = llm_resp.json()["choices"][0]["message"]["content"]
-                except Exception:
-                    pass
-
-            if not llm_response and OPENROUTER_API_KEY:
-                try:
-                    llm_resp = requests.post(
-                        "https://openrouter.ai/api/v1/chat/completions",
-                        headers={
-                            "Authorization": f"Bearer {OPENROUTER_API_KEY}",
-                            "Content-Type": "application/json",
-                        },
-                        json={
-                            "model": "google/gemini-2.5-flash",
-                            "messages": [{"role": "user", "content": prompt}],
-                            "temperature": 0.3,
-                            "max_tokens": 2000,
-                        },
-                        timeout=30,
-                    )
-                    if llm_resp.status_code == 200:
-                        llm_response = llm_resp.json()["choices"][0]["message"]["content"]
-                except Exception:
-                    pass
-
-            if not llm_response and OPENAI_API_KEY:
-                try:
-                    llm_resp = requests.post(
-                        "https://api.openai.com/v1/chat/completions",
-                        headers={
-                            "Authorization": f"Bearer {OPENAI_API_KEY}",
-                            "Content-Type": "application/json",
-                        },
-                        json={
-                            "model": "gpt-4o-mini",
-                            "messages": [{"role": "user", "content": prompt}],
-                            "temperature": 0.3,
-                            "max_tokens": 2000,
-                        },
-                        timeout=30,
-                    )
-                    if llm_resp.status_code == 200:
-                        llm_response = llm_resp.json()["choices"][0]["message"]["content"]
-                except Exception:
-                    pass
-
-            if not llm_response:
-                self.send_response(502)
-                self.send_header("Content-Type", "application/json")
-                self.send_header("Access-Control-Allow-Origin", "*")
-                self.end_headers()
-                self.wfile.write(json.dumps({"error": "LLM analysis failed"}).encode())
+            # Step 3: Call OpenAI
+            if not OPENAI_API_KEY:
+                self._send_json(500, {"error": "Server-Konfigurationsfehler."})
                 return
 
-            # Step 4: Parse LLM response as JSON
             try:
-                # Extract JSON from response (might be wrapped in markdown code block)
+                llm_resp = requests.post(
+                    "https://api.openai.com/v1/chat/completions",
+                    headers={
+                        "Authorization": f"Bearer {OPENAI_API_KEY}",
+                        "Content-Type": "application/json",
+                    },
+                    json={
+                        "model": "gpt-4o-mini",
+                        "messages": [{"role": "user", "content": prompt}],
+                        "temperature": 0.3,
+                        "max_tokens": 2000,
+                        "response_format": {"type": "json_object"},
+                    },
+                    timeout=30,
+                )
+                if llm_resp.status_code != 200:
+                    err = llm_resp.text[:200]
+                    print(f"OpenAI analyze error: {llm_resp.status} {err}")
+                    self._send_json(502, {"error": "LLM analysis failed"})
+                    return
+                llm_response = llm_resp.json()["choices"][0]["message"]["content"]
+            except requests.exceptions.Timeout:
+                self._send_json(504, {"error": "LLM analysis timed out"})
+                return
+            except Exception as e:
+                print(f"OpenAI analyze exception: {e}")
+                self._send_json(502, {"error": "LLM analysis failed"})
+                return
+
+            # Step 4: Parse JSON — response_format=json_object guarantees validity,
+            # but we keep a defensive fallback for malformed edge cases.
+            try:
+                analysis = json.loads(llm_response)
+            except json.JSONDecodeError:
+                # Last-ditch: try to extract JSON from a code fence
                 json_str = llm_response
                 if "```json" in json_str:
-                    json_str = json_str.split("```json")[1].split("```")[0]
+                    json_str = json_str.split("```json", 2)[1].split("```", 1)[0]
                 elif "```" in json_str:
-                    json_str = json_str.split("```")[1].split("```")[0]
-                analysis = json.loads(json_str.strip())
-            except json.JSONDecodeError:
-                analysis = {
-                    "score": 50,
-                    "score_label": "Mittel",
-                    "summary": llm_response[:500],
-                    "opportunities": [],
-                    "missing_basics": [],
-                    "recommendation": llm_response[:500],
-                    "tool_suggestion": "KI-Beratung",
-                }
+                    json_str = json_str.split("```", 2)[1].split("```", 1)[0]
+                try:
+                    analysis = json.loads(json_str.strip())
+                except json.JSONDecodeError:
+                    analysis = {
+                        "score": 50,
+                        "score_label": "Mittel",
+                        "summary": llm_response[:500],
+                        "opportunities": [],
+                        "missing_basics": [],
+                        "recommendation": llm_response[:500],
+                        "tool_suggestion": "KI-Beratung",
+                    }
 
-            # Add scrape metadata
             result = {
                 "url": url,
                 "scrape": {
@@ -220,33 +166,34 @@ class handler(BaseHTTPRequestHandler):
                 "analysis": analysis,
             }
 
-            self.send_response(200)
-            self.send_header("Content-Type", "application/json")
-            self.send_header("Access-Control-Allow-Origin", "*")
-            self.end_headers()
-            self.wfile.write(json.dumps(result).encode())
+            self._send_json(200, result)
 
         except Exception as e:
-            self.send_response(500)
-            self.send_header("Content-Type", "application/json")
-            self.send_header("Access-Control-Allow-Origin", "*")
-            self.end_headers()
-            self.wfile.write(json.dumps({"error": f"Internal error: {str(e)[:200]}"}).encode())
+            self._send_json(500, {"error": f"Internal error: {str(e)[:200]}"})
 
     def do_OPTIONS(self):
-        self.send_response(200)
-        self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "POST, OPTIONS")
-        self.send_header("Access-Control-Allow-Headers", "Content-Type")
-        self.end_headers()
+        self._send_json(200, {}, extra_headers={
+            "Access-Control-Allow-Methods": "POST, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type",
+        })
 
     def do_GET(self):
         if self.path == "/health":
-            self.send_response(200)
-            self.send_header("Content-Type", "application/json")
-            self.send_header("Access-Control-Allow-Origin", "*")
-            self.end_headers()
-            self.wfile.write(json.dumps({"status": "ok"}).encode())
+            self._send_json(200, {
+                "status": "ok",
+                "service": "analyze",
+                "backend": "openai-only",
+                "has_openai": bool(OPENAI_API_KEY),
+            })
         else:
-            self.send_response(404)
-            self.end_headers()
+            self._send_json(404, {"error": "Not found"})
+
+    def _send_json(self, status, data, extra_headers=None):
+        self.send_response(status)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Access-Control-Allow-Origin", "*")
+        if extra_headers:
+            for k, v in extra_headers.items():
+                self.send_header(k, v)
+        self.end_headers()
+        self.wfile.write(json.dumps(data).encode())
