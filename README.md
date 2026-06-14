@@ -55,12 +55,12 @@ Drei Variablen, in den Vercel-Projekt-Einstellungen unter **Settings → Environ
 
 | Var | Required | Wo es verwendet wird | Was passiert ohne |
 |---|---|---|---|
-| `OPENAI_API_KEY` | ✅ | `api/chat.js`, `api/analyze.py`, `api/live-agent-demo.js` | Alle 3 Endpunkte → 500/502 |
+| `OPENAI_API_KEY` | ✅ | `api/chat.js`, `api/analyze.js`, `api/live-agent-demo.js` | Alle 3 Endpunkte → 500/502 |
 | `RESEND_API_KEY` | ✅ | `api/contact.js` | Contact-Form → 500 |
 | `CONTACT_EMAIL` | optional | `api/contact.js` — Empfänger der Form-Submissions. Default: `florian.schupp@student.uni-siegen.de` | Default greift |
 | `GITHUB_TOKEN` | optional | `api/projects.js` — höhere GitHub-API-Rate-Limits | Funktioniert ohne, aber 60/h statt 5000/h |
 | `CHAT_ENABLED` | optional | `api/chat.js` — setze auf `"false"` um den Chat zu killen | Chat läuft normal |
-| `SCRAPER_URL` | optional | `api/analyze.py` — wo der VPS-Scraper läuft. Default: `http://138.68.96.190:8501` | Default greift |
+| `SCRAPER_URL` | optional | `api/analyze.js` — wo der VPS-Scraper läuft. Default: `http://138.68.96.190:8501` | Default greift |
 
 **Nicht mehr nötig (entfernt):** `GEMINI_API_KEY`, `NVIDIA_API_KEY`, `OPENROUTER_API_KEY`.
 
@@ -124,7 +124,7 @@ PDFs werden client-seitig via `pdfjs-dist` zu Bildern gerendert (max. 5 Seiten),
 Das Projekt erwartet eine `vercel.json` mit:
 
 - `framework: "vite"` (statisches Frontend in `dist/`)
-- `functions` für `api/*.js` (Node.js Runtime) und `api/analyze.py` (Python Runtime via `vercel-python`)
+- `functions` für `api/*.js` (Node.js Runtime)
 - `rewrites` für SPA-Routing (siehe `vercel.json`)
 
 Custom Domain: `ainzigartig.de`. DNS ist nicht Teil dieses Repos.
@@ -137,7 +137,7 @@ Custom Domain: `ainzigartig.de`. DNS ist nicht Teil dieses Repos.
 .
 ├── api/                       Vercel Serverless Functions
 │   ├── chat.js                Chat-Assistent "Edi"
-│   ├── analyze.py             Website KI-Analyse (mit VPS-Scraper)
+│   ├── analyze.js              Website KI-Analyse (mit VPS-Scraper)
 │   ├── live-agent-demo.js     Dokument-Analyse (Text + Vision)
 │   ├── projects.js            GitHub-Projekte
 │   ├── contact.js             Kontaktformular → E-Mail
