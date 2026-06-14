@@ -58,7 +58,7 @@ Drei Variablen, in den Vercel-Projekt-Einstellungen unter **Settings → Environ
 | `OPENAI_API_KEY` | ✅ | `api/chat.js`, `api/analyze.js`, `api/live-agent-demo.js` | Alle 3 Endpunkte → 500/502 |
 | `RESEND_API_KEY` | ✅ | `api/contact.js` | Contact-Form → 500 |
 | `CONTACT_EMAIL` | optional | `api/contact.js` — Empfänger der Form-Submissions. Default: `florian.schupp@student.uni-siegen.de` | Default greift |
-| `GITHUB_TOKEN` | optional | `api/projects.js` — höhere GitHub-API-Rate-Limits | Funktioniert ohne, aber 60/h statt 5000/h |
+| `GITHUB_TOKEN` | optional | `api/projects.js` — GitHub-PAT für 5000/h Rate-Limit statt 60/h. **Aktuell gesetzt** auf Vercel. | Funktioniert ohne, aber 60/h statt 5000/h |
 | `CHAT_ENABLED` | optional | `api/chat.js` — setze auf `"false"` um den Chat zu killen | Chat läuft normal |
 | `SCRAPER_URL` | optional | `api/analyze.js` — wo der VPS-Scraper läuft. Default: `http://138.68.96.190:8501` | Default greift |
 
