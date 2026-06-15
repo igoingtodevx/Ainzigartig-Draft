@@ -38,7 +38,12 @@ async function pdfToImages(file: File, maxPages: number): Promise<{ base64: stri
     const b64 = dataUrl.split(',', 2)[1] || '';
     if (b64) results.push({ base64: b64, mime_type: 'image/png' });
   }
-  await pdf.destroy();
+  // pdfjs-dist@6 removed the legacy destroy() in favor of cleanup() on PDFDocumentProxy
+  if (typeof (pdf as any).destroy === 'function') {
+    await (pdf as any).destroy();
+  } else if (typeof (pdf as any).cleanup === 'function') {
+    await (pdf as any).cleanup();
+  }
   return results;
 }
 
@@ -286,6 +291,7 @@ export const LiveAgentDemo: React.FC = () => {
         setAnalyzing(false);
       }, 200);
     } catch (e: any) {
+      console.error('Live agent runUpload error:', e);
       setError('Verbindung fehlgeschlagen. Bitte versuchen Sie es erneut.' + (e?.message ? ` (${e.message})` : ''));
       setAnalyzing(false);
     } finally {
