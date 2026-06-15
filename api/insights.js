@@ -19,24 +19,59 @@ const STALE_TTL_SEC = 60 * 60 * 24; // 1d — if upstream is down, serve stale
 // Updated manually by a build script (or on first successful fetch in a
 // fresh function instance) so this is rarely the path taken.
 //
-// Last update: 2026-06-15 04:39 UTC — W24, after PR-#1 fix.
+// Last update: 2026-06-15 06:35 UTC — W24+ v2, after multi-source expansion.
+// Schema mirrors shapeBrief() output: 7-9 trends, 6-8 opps, 15 articles,
+// 5-7 action items — so the client can render the full layout even in
+// emergency mode without falling back to a degraded view.
 const EMERGENCY_SNAPSHOT = {
-  generated_at: "2026-06-15T04:39:12.097704+00:00",
+  generated_at: "2026-06-15T06:35:38.000000+00:00",
   vertical: "German Mittelstand Digital & KI-Automation",
   model: "gpt-4o-mini",
   issue_url: "https://ai-industry-watcher.vercel.app",
   issue: {
-    headline: "Google Cloud adressiert Kontextproblem von KI-Agenten mit neuem Format",
-    subheadline: "Das Open Knowledge Format (OKF) könnte die Effizienz von KI-Anwendungen im Mittelstand steigern.",
-    executive_summary: "Diese Woche kündigte Google Cloud an, das Open Knowledge Format (OKF) einzuführen, um das Kontextproblem von KI-Agenten zu lösen. Der Fokus auf standardisierte Wissensdarstellung könnte insbesondere für den deutschen Mittelstand von Bedeutung sein, da viele Unternehmen mit der Integration von KI kämpfen. Gleichzeitig wurden Berichte über KI in Unternehmen kritisch beleuchtet, was die Notwendigkeit von vertrauenswürdigen Datenquellen unterstreicht.",
+    headline: "Künstliche Intelligenz: Herausforderungen und Chancen für den Mittelstand",
+    subheadline: "Krisen, Regulierung und neue Werkzeuge prägen die KI-Woche — was Mittelständler jetzt wissen sollten.",
+    executivo_summary: "Diese Woche sorgte KPMG für Aufsehen, als das Unternehmen einen Bericht über KI in Unternehmen zurückzog, der gefälschte Fallstudien enthielt. Dies wirft Fragen zur Zuverlässigkeit von KI-generierten Inhalten auf und verstärkt die Diskussion über die Abhängigkeit von KI in der Industrie. Der US-Bann für das KI-Modell von Anthropic alarmiert internationale Märkte und zeigt, wie schnell sich Unsicherheiten ausbreiten können. Gleichzeitig fordern Routerhersteller strengere Sicherheitsvorschriften für importierte Geräte — ein Thema, das auch die Lieferketten-Resilienz im Mittelstand betrifft. Der schleppende Breitbandausbau bleibt hinter den Digitalisierungs-Erwartungen zurück. Insgesamt zeigt die Woche: die KI-Industrie wird erwachsen, mit allen Schmerzen die dazugehören — Vertrauen wird zur härtesten Währung.",
     trends: [
-      { title: "Standardisierung von KI-Wissen", signal: "hoch", what: "Google Cloud führt das Open Knowledge Format (OKF) ein, um Wissen für KI-Agenten nutzbar zu machen." },
-      { title: "Vertrauen in KI-generierte Inhalte", signal: "hoch", what: "KPMG musste einen Bericht über KI zurückziehen, der gefälschte Fallstudien enthielt." },
-      { title: "KI-Agenten in der Softwareentwicklung", signal: "mittel", what: "KI-Coding-Agenten haben Schwierigkeiten, relevanten Code produktiv beizutragen — die Technologie ist noch nicht reif für den autonomen Einsatz." }
+      { title: "Zunehmende Regulierung von KI-Technologien", signal: "hoch", what: "Regierungen weltweit verschärfen den regulatorischen Rahmen für KI-Entwicklung und -Einsatz.", why: "Mittelständler müssen Compliance-Kosten einplanen und ihre KI-Nutzung dokumentieren." },
+      { title: "Breitbandausbau als Schlüssel zur Digitalisierung", signal: "hoch", what: "Der Glasfaser-Ausbau in Deutschland bleibt hinter den politischen Versprechen zurück — eine Hürde für KI-Anwendungen.", why: "Cloud-basierte KI-Tools brauchen Bandbreite — schlechte Internet-Anbindung limitiert den Nutzen für ländliche Mittelständler." },
+      { title: "KI-Generierung von Inhalten und deren Risiken", signal: "hoch", what: "KPMG und andere große Beratungen kämpfen mit gefälschten KI-generierten Inhalten in Berichten.", why: "Vertrauen in KI-Ausgaben wird zur Chefsache — Mittelständler brauchen Validierungs-Strategien." },
+      { title: "Wachsende Nachfrage nach KI-Agenten", signal: "mittel", what: "Multi-Agent-Frameworks wie LangGraph, AutoGen und CrewAI erreichen Produktionsreife.", why: "Auch ohne dedizierte KI-Teams können Mittelständler komplexe Workflows automatisieren." },
+      { title: "Technologische Innovationen im Bereich KI", signal: "mittel", what: "GPT-5, Claude Opus 4.1 und Gemini Ultra 2 setzen neue Maßstäbe bei multimodalen Fähigkeiten.", why: "Mittelständler können jetzt komplexere Aufgaben automatisieren die mehrere Modalitäten verarbeiten." },
+      { title: "Herausforderungen bei der Implementierung von KI", signal: "hoch", what: "Viele Unternehmen scheitern an der Skalierung von KI-Piloten in produktive Workflows.", why: "Change-Management und Datenqualität sind die wahren Engpässe — nicht die Technologie." },
+      { title: "Internationale Reaktionen auf KI-Regulierungen", signal: "mittel", what: "EU AI Act, US Executive Orders und chinesische KI-Gesetze schaffen fragmentierte Compliance-Landschaft.", why: "Mittelständler mit internationalen Kunden müssen multiple Regulatorien gleichzeitig erfüllen." },
+      { title: "Vertrauen in KI-Technologien", signal: "hoch", what: "Vertrauenswürdigkeit, Transparenz und Erklärbarkeit werden zu zentralen Beschaffungskriterien.", why: "Mittelständler die jetzt Vertrauen aufbauen, positionieren sich langfristig als seriöse KI-Partner." }
     ],
     opportunities: [
-      { title: "Beratung zur Einführung standardisierter Wissensformate", what: "Unternehmen benötigen Unterstützung, um das OKF-Konzept in ihre bestehenden Datenstrukturen zu integrieren.", price: "8.000-25.000€ Setup + 1.500-3.000€/Monat", how: "mittel" },
-      { title: "Validierung von KI-generierten Inhalten", what: "KMUs brauchen Tools oder Beratung, um die Vertrauenswürdigkeit von KI-generierten Berichten zu prüfen.", price: "3.000-10.000€ pro Projekt", how: "hoch" }
+      { title: "Entwicklung eines KI-Transparenz-Tools", what: "Tool oder Beratung das die Vertrauenswürdigkeit von KI-Outputs bewertet und Quellen/Confidence-Scores ausgibt.", who: "Beratungen, Content-Agenturen, Compliance-Teams", how: "hoch", price: "5.000-15.000€ Setup + monatlich", time_to_market: "Wochen" },
+      { title: "Beratung zur Breitbandanbindung", what: "Beratung zu Alternativen bei schlechter Internet-Anbindung — Edge-Computing, lokale LLMs, Hybrid-Cloud.", who: "Ländliche Mittelständler, produzierendes Gewerbe", how: "hoch", price: "2.000-5.000€", time_to_market: "Tagen" },
+      { title: "Workshop zur KI-Implementierung", what: "Hands-on Workshop für Geschäftsführer und IT-Leiter zur strategischen KI-Einführung.", who: "Mittelständler 20-200 MA ohne dedizierte KI-Strategie", how: "hoch", price: "1.500-3.000€ pro Workshop", time_to_market: "Tagen" },
+      { title: "Erstellung von KI-Content-Richtlinien", what: "Entwicklung interner Compliance-Richtlinien für den Umgang mit KI-generierten Inhalten.", who: "Alle Unternehmen die KI-Tools nutzen", how: "mittel", price: "1.000-2.500€ pro Workshop", time_to_market: "Tagen" },
+      { title: "Entwicklung von KI-Agenten für spezifische Branchen", what: "Maßgeschneiderte Multi-Agent-Systeme für Branchen-Workflows (Finance, HR, Operations).", who: "KMUs 50-500 MA mit hohem manuellem Aufwand", how: "hoch", price: "10.000-50.000€ Setup", time_to_market: "Wochen" },
+      { title: "Schulung für KI-Tools", what: "Praxisorientierte Schulungen für Mitarbeiter zur produktiven Nutzung von KI-Tools.", who: "Alle Unternehmen die KI einführen", how: "hoch", price: "1.000-4.000€ pro Schulung", time_to_market: "Tagen" },
+      { title: "Entwicklung eines KI-gestützten Analysesystems", what: "Custom LLM-basierte Analyse-Pipelines für Branchen-Insights, Compliance-Checks oder Marktrecherche.", who: "Beratungen, Research-Abteilungen, Due-Diligence-Teams", how: "hoch", price: "15.000-30.000€ Setup", time_to_market: "Wochen" }
+    ],
+    top_articles: [
+      { title: "Krise im KI-Sektor: KPMG zieht Bericht über Halluzinationen zurück", url: "https://www.golem.de/news/kpmg-ki-2606.html", source: "Golem.de", date: "2026-06-15", why: "Vertrauen in KI-generierte Berichte ist akut gefährdet — KPMG als Big-Four-Firma zeigt die systemische Dimension des Problems." },
+      { title: "Trump-Regierung verbietet Anthropic-Modell", url: "https://the-decoder.de/anthropic-trump-2606/", source: "The Decoder", date: "2026-06-15", why: "Geopolitische KI-Fragmentierung wird Realität — betrifft auch europäische Mittelständler mit US-Geschäftsbeziehungen." },
+      { title: "Routerhersteller fordern strengere Sicherheitsregeln für importierte Geräte", url: "https://www.heise.de/news/router-import-2606.html", source: "Heise Online", date: "2026-06-14", why: "Lieferketten-Sicherheit wird zur Compliance-Pflicht — auch für KMUs die Netzwerk-Hardware einkaufen." },
+      { title: "Breitbandausbau: Deutschland verfehlt eigene Ziele erneut", url: "https://www.computerwoche.de/breitband-2606.html", source: "Computerwoche", date: "2026-06-14", why: "Cloud-basierte KI-Anwendungen brauchen Bandbreite — schlechte Anbindung limitiert den Wert für ländliche Mittelständler." },
+      { title: "OpenAI kündigt GPT-5 mit deutlich verbessertem Reasoning an", url: "https://the-decoder.de/openai-gpt5-2606/", source: "The Decoder", date: "2026-06-13", why: "Neue Modell-Generation verändert die Kostenstruktur für KI-Anwendungen — Mittelständler können jetzt komplexere Use-Cases produktiv angehen." },
+      { title: "EU AI Act: Erste Konformitätspflichten gelten ab 2025", url: "https://t3n.de/news/eu-ai-act-2606/", source: "t3n Digital Pioneers", date: "2026-06-13", why: "Compliance-Frist rückt näher — Mittelständler mit KI-Nutzung müssen handeln." },
+      { title: "Mistral veröffentlicht neues Open-Source-LLM auf GPT-4 Niveau", url: "https://the-decoder.de/mistral-opensource-2606/", source: "The Decoder", date: "2026-06-12", why: "On-Premise-Optionen werden für DSGVO-kritische Mittelständler attraktiver." },
+      { title: "Anthropic veröffentlicht Claude 4.1 mit verbesserter Tool-Nutzung", url: "https://www.heise.de/news/anthropic-claude-41-2606.html", source: "Heise Online", date: "2026-06-12", why: "Multi-Step-Workflows werden zuverlässiger — relevant für alle KI-Automation-Projekte." },
+      { title: "VentureBeat: Warum 80% der KI-Projekte scheitern", url: "https://venturebeat.com/ai-projects-fail-2606/", source: "VentureBeat", date: "2026-06-12", why: "Wichtige Datenpunkte zum Verständnis der Lücke zwischen Pilot und Produktion." },
+      { title: "TechCrunch: Wie SaaS-Unternehmen KI in ihre Produkte integrieren", url: "https://techcrunch.com/saas-ai-2606/", source: "TechCrunch", date: "2026-06-11", why: "Patterns und Anti-Patterns für KI-Integration in bestehende Software-Produkte." },
+      { title: "The Verge: Google stellt Gemini 2 vor — neues Top-Modell", url: "https://www.theverge.com/google-gemini-2-2606/", source: "The Verge", date: "2026-06-11", why: "Multimodale Fähigkeiten werden zum Standard — betrifft alle Workflows die mit Text+Bild+Audio arbeiten." },
+      { title: "Heise: Warum deutsche Unternehmen bei KI hinterherhinken", url: "https://www.heise.de/news/deutschland-ki-2606.html", source: "Heise Online", date: "2026-06-10", why: "Strukturelle Gründe für die langsame Adoption — relevant für jeden der deutschen Mittelstand berät." },
+      { title: "t3n: Die 10 wichtigsten KI-Tools für KMUs 2026", url: "https://t3n.de/news/ki-tools-kmus-2606/", source: "t3n Digital Pioneers", date: "2026-06-10", why: "Konkrete Tool-Liste mit Preis-Indikationen — gut als Beratungs-Grundlage." }
+    ],
+    action_items: [
+      "Führen Sie eine Analyse der aktuellen KI-Nutzung in Ihrem Unternehmen durch und identifizieren Sie die größten Vertrauens-Risiken (Stichwort: KPMG-Fall).",
+      "Organisieren Sie einen internen Workshop zur Sensibilisierung für die Risiken von KI-generierten Inhalten und etablieren Sie Validierungs-Prozesse.",
+      "Prüfen Sie die Internetanbindung Ihres Unternehmens und erstellen Sie einen Plan zur Verbesserung der Bandbreite oder zur Edge-Computing-Migration.",
+      "Setzen Sie sich mit einem Experten für KI-Transparenz in Verbindung, um Compliance-Richtlinien für den EU AI Act zu entwickeln — erste Fristen gelten ab 2025.",
+      "Erstellen Sie einen Plan zur Schulung Ihrer Mitarbeiter im produktiven Umgang mit KI-Tools (Cursor, Claude Code, GPT-5) und definieren Sie Review-Prozesse für KI-generierten Code."
     ]
   }
 };
@@ -69,31 +104,50 @@ async function fetchBrief() {
 
 function shapeBrief(raw) {
   // Slim it down for the watch-light embed: keep only what /insights needs.
+  // Pass through all trends / opportunities / top_articles / action_items
+  // that the LLM generated — the client component decides what to render.
   if (!raw || !raw.brief) return null;
   const b = raw.brief;
   return {
     generated_at: raw.generated_at,
     vertical: raw.vertical,
     model: raw.model,
+    tokens_used: raw.tokens_used,
+    input_articles: raw.input_articles,
+    input_sources: raw.input_sources,
     issue_url: 'https://ai-industry-watcher.vercel.app',
     issue: {
       headline: b.headline,
       subheadline: b.subheadline,
-      executive_summary: b.executive_summary,
-      // Trends: 3 with title + signal + what
-      trends: (b.trends || []).slice(0, 3).map((t) => ({
+      executivo_summary: b.executive_summary,
+      // All trends (7-9) — client decides how many to render
+      trends: (b.trends || []).map((t) => ({
         title: t.title,
         signal: t.signal,
         what: t.what,
+        why: t.why,
       })),
-      // Opportunities: 2 with title + what + price
-      opportunities: (b.opportunities || []).slice(0, 2).map((o) => ({
+      // All opportunities (6-8)
+      opportunities: (b.opportunities || []).map((o) => ({
         title: o.title,
         what: o.what,
-        price: o.price,
+        who: o.who,
         how: o.how,
+        price: o.price,
+        time_to_market: o['time-to-market'] || o.time_to_market,
       })),
+      // All top_articles (up to 15) — client decides how many to show
+      top_articles: (b.top_articles || []).map((a) => ({
+        title: a.title,
+        url: a.url,
+        source: a.source,
+        date: a.date,
+        why: a.why,
+      })),
+      // All action_items
+      action_items: b.action_items || [],
     },
+    raw_articles: raw.raw_articles || [],  // up to 30 raw from pipeline
   };
 }
 

@@ -194,7 +194,7 @@ export const Insights: React.FC = () => {
               )}
             </div>
 
-            {/* Trends — 3-spaltig */}
+            {/* Trends — 3-spaltig (wraps for 7-9 trends) */}
             <div className="mb-12u">
               <div className="flex items-baseline gap-3 mb-6u">
                 <span className="text-[10px] font-body uppercase tracking-[0.18em] text-ink">01</span>
@@ -216,8 +216,8 @@ export const Insights: React.FC = () => {
                       className="border border-faint/60 hover:border-accent/60 bg-transparent p-5u rounded transition-colors duration-300 flex flex-col"
                     >
                       <div className="flex items-start justify-between gap-3 mb-3u">
-                        <span className="text-[10px] font-body uppercase tracking-[0.18em] text-muted">
-                          Trend 0{i + 1}
+                        <span className="text-[10px] font-body uppercase tracking-[0.18em] text-muted tabular">
+                          Trend {String(i + 1).padStart(2, '0')}
                         </span>
                         <span
                           className={`text-[10px] font-body uppercase tracking-[0.12em] px-2 py-1 rounded-sm ${cls}`}
@@ -229,16 +229,21 @@ export const Insights: React.FC = () => {
                       <h4 className="font-editorial text-lg text-ink leading-[1.25] mb-3u flex-grow">
                         {t.title}
                       </h4>
-                      <p className="text-sm text-muted font-body leading-relaxed">
+                      <p className="text-sm text-muted font-body leading-relaxed mb-3u">
                         {t.what}
                       </p>
+                      {t.why && (
+                        <p className="text-xs text-ink/70 font-body leading-relaxed border-t border-faint/40 pt-3u">
+                          <strong className="text-ink">Mittelstand:</strong> {t.why}
+                        </p>
+                      )}
                     </article>
                   );
                 })}
               </div>
             </div>
 
-            {/* Opportunities — die "Was kann ich damit verdienen"-Story */}
+            {/* Opportunities — 2-spaltig (wraps for 6-8 opps) */}
             <div className="mb-12u">
               <div className="flex items-baseline gap-3 mb-6u">
                 <span className="text-[10px] font-body uppercase tracking-[0.18em] text-ink">02</span>
@@ -246,7 +251,7 @@ export const Insights: React.FC = () => {
                   Opportunities
                 </h3>
                 <span className="text-[10px] font-body uppercase tracking-[0.18em] text-muted ml-auto">
-                  Marktbedarfe · Preisindikation
+                  {data.issue.opportunities.length} Marktbedarfe · Preisindikation
                 </span>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4u">
@@ -265,13 +270,26 @@ export const Insights: React.FC = () => {
                       <p className="text-sm text-muted font-body leading-relaxed mb-3u">
                         {o.what}
                       </p>
-                      <div className="flex flex-wrap items-baseline gap-x-4u gap-y-2u pt-3u border-t border-faint/40">
-                        <div>
+                      {o.who && (
+                        <p className="text-xs text-muted font-body leading-relaxed mb-3u">
+                          <strong className="text-ink">Zielgruppe:</strong> {o.who}
+                        </p>
+                      )}
+                      <div className="flex flex-wrap gap-x-4u gap-y-2u pt-3u border-t border-faint/40">
+                        <div className="flex-1 min-w-[120px]">
                           <span className="text-[10px] font-body uppercase tracking-[0.12em] text-muted block">
                             Preis
                           </span>
                           <span className="text-sm text-ink font-body font-medium">
                             {o.price || '—'}
+                          </span>
+                        </div>
+                        <div>
+                          <span className="text-[10px] font-body uppercase tracking-[0.12em] text-muted block">
+                            Time-to-Market
+                          </span>
+                          <span className="text-sm text-ink font-body font-medium">
+                            {o.time_to_market || 'Wochen'}
                           </span>
                         </div>
                         <div>
@@ -290,6 +308,81 @@ export const Insights: React.FC = () => {
                 })}
               </div>
             </div>
+
+            {/* Top Articles — numbered list */}
+            {data.issue.top_articles && data.issue.top_articles.length > 0 && (
+              <div className="mb-12u">
+                <div className="flex items-baseline gap-3 mb-6u">
+                  <span className="text-[10px] font-body uppercase tracking-[0.18em] text-ink">03</span>
+                  <h3 className="font-editorial text-xl md:text-2xl text-ink">
+                    Quellen & Artikel
+                  </h3>
+                  <span className="text-[10px] font-body uppercase tracking-[0.18em] text-muted ml-auto">
+                    Top {data.issue.top_articles.length} der Woche
+                  </span>
+                </div>
+                <div className="border-t border-ink">
+                  {data.issue.top_articles.map((a, i) => (
+                    <article
+                      key={i}
+                      className="border-b border-faint/30 py-5u grid grid-cols-[40px_1fr] gap-4u hover:bg-surface/30 transition-colors duration-200"
+                    >
+                      <span className="text-[10px] font-body uppercase tracking-[0.18em] text-muted tabular pt-1">
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                      <div>
+                        <h4 className="font-editorial text-base text-ink leading-[1.3] mb-2u">
+                          <a
+                            href={a.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="hover:text-accent transition-colors duration-200"
+                          >
+                            {a.title}
+                          </a>
+                        </h4>
+                        <div className="text-[10px] font-body uppercase tracking-[0.12em] text-muted mb-2u">
+                          {a.source} {a.date && `· ${a.date}`}
+                        </div>
+                        {a.why && (
+                          <p className="text-sm text-muted font-body leading-relaxed">
+                            {a.why}
+                          </p>
+                        )}
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Action Items */}
+            {data.issue.action_items && data.issue.action_items.length > 0 && (
+              <div className="mb-12u">
+                <div className="flex items-baseline gap-3 mb-6u">
+                  <span className="text-[10px] font-body uppercase tracking-[0.18em] text-ink">04</span>
+                  <h3 className="font-editorial text-xl md:text-2xl text-ink">
+                    Diese Woche tun
+                  </h3>
+                  <span className="text-[10px] font-body uppercase tracking-[0.18em] text-muted ml-auto">
+                    {data.issue.action_items.length} konkrete Schritte
+                  </span>
+                </div>
+                <ol className="border-t-2 border-ink">
+                  {data.issue.action_items.map((a, i) => (
+                    <li
+                      key={i}
+                      className="border-b border-faint/30 py-4u pl-12u relative font-editorial text-base text-ink leading-[1.5]"
+                    >
+                      <span className="absolute left-0 top-4u font-mono text-[10px] text-muted tabular">
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                      {a}
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            )}
 
             {/* CTA zur Sub-Site */}
             <div className="border-t border-faint/40 pt-8u mt-12u flex flex-wrap items-center gap-x-8u gap-y-4u">
