@@ -22,6 +22,8 @@ import { PricingOverview } from './components/PricingOverview';
 import { KIAnalyse } from './components/KIAnalyse';
 import { LiveAgentDemo } from './components/LiveAgentDemo';
 import { Projects } from './components/Projects';
+import { Insights } from './components/Insights';
+import { InsightsTeaser } from './components/InsightsTeaser';
 import { ChatBot } from './components/ChatBot';
 import { RouteMeta } from './components/RouteMeta';
 import { ErrorBoundary } from './components/ErrorBoundary';
@@ -37,6 +39,7 @@ const HomePage: React.FC = () => (
     <Services />
     <CaseStudies />
     <TeamSection />
+    <InsightsTeaser />
     <HomeFAQ />
     <ClosingCTA />
   </main>
@@ -92,6 +95,7 @@ const App: React.FC = () => {
           <Route path="/ki-analyse" element={<KIAnalyse />} />
           <Route path="/live-demo" element={<LiveAgentDemo />} />
           <Route path="/projekte" element={<Projects />} />
+          <Route path="/insights" element={<Insights />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         </ErrorBoundary>
