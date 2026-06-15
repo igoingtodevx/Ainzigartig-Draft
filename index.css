@@ -33,3 +33,58 @@ a[href='#'] {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* ============================================
+   FORBIDDEN TOKENS — Do not use
+   Inspired by kami (紙) + Atelier Zero design systems.
+   These are the rules the Anwaltskanzlei-look lives by.
+   - #ffffff as page background (use #f0ede3 cream)
+   - #000000 anywhere (use #1c1917 near-black)
+   - Cool blue-grays (slate-*, #f8f9fa, #f3f4f6)
+   - Second saturated accent
+   - Hard drop shadows
+   - backdrop-filter / mix-blend-mode
+   ============================================ */
+
+/* Snippet 3 — Tabular-nums for any numerical data
+   Issue numbers, dates, prices, percentages — anything that
+   stacks vertically or sits in tables. Per kami DESIGN.md:
+   "stacks and tables, yes; sentences, no." */
+.issue-num,
+.stat-value,
+.tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1, "ss01" 1;
+}
+
+/* Snippet 6 — Print styles
+   Ainzigartig produces consulting reports; people will print/PDF
+   the insights page. 5 lines, instantly more professional than
+   99% of marketing sites. */
+@media print {
+  html, body { background: #fff; }
+  .no-print, nav, footer { display: none !important; }
+  article, section { break-inside: avoid; page-break-inside: avoid; }
+  h1, h2, h3 { break-after: avoid; }
+  a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    opacity: 0.5;
+    word-break: break-all;
+  }
+}
+
+/* Snippet (Bonus from Subagent-3) — prefers-reduced-motion
+   WCAG 2.3.3: motion-trigger sensitivity. We kill the
+   underline-in + translate-x animations; keep the rest. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .group:hover .group-hover\:translate-x-0\.5,
+  .group:hover .group-hover\:translate-x-1 {
+    transform: none !important;
+  }
+}

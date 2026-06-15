@@ -174,13 +174,13 @@ export const Insights: React.FC = () => {
             {/* Headline-Block — die "Was zählt"-Story */}
             <div className="border-t-2 border-ink pt-6u pb-12u mb-12u">
               <div className="flex flex-wrap items-baseline gap-x-4u gap-y-2u mb-6u">
-                <span className="text-[10px] font-body uppercase tracking-[0.18em] text-ink">
+                <span className="text-[10px] font-body uppercase tracking-[0.18em] text-ink tabular">
                   № {issueWeek(data.generated_at)}
                 </span>
                 <span className="text-[10px] font-body uppercase tracking-[0.18em] text-muted">
                   {data.vertical || '—'}
                 </span>
-                <span className="text-[10px] font-body uppercase tracking-[0.18em] text-muted">
+                <span className="text-[10px] font-body uppercase tracking-[0.18em] text-muted tabular">
                   {timeAgo(data.generated_at)}
                 </span>
               </div>
