@@ -8,6 +8,7 @@ const NAV_ITEMS = [
   { label: 'ROI-Rechner', to: '/roi-rechner' },
   { label: 'Live Demo', to: '/live-demo' },
   { label: 'Projekte', to: '/projekte' },
+  { label: 'Insights', to: '/insights' },
   { label: 'Gespräch vereinbaren', to: '/#kontakt', isHash: true },
 ];
 
