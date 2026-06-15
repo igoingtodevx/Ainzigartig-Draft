@@ -120,6 +120,22 @@ export default async function handler(req, res) {
     const raw = await fetchBrief();
     const shaped = shapeBrief(raw);
     if (!shaped) throw new Error('Upstream payload missing brief');
+
+    // Stale-data detection: if upstream returns data older than our
+    // emergency snapshot, the Sub-Site has a stale Vercel deploy and
+    // we should serve our embedded fresh version instead.
+    if (EMERGENCY_SNAPSHOT.generated_at) {
+      const upstreamGen = Date.parse(shaped.generated_at);
+      const fallbackGen = Date.parse(EMERGENCY_SNAPSHOT.generated_at);
+      if (!isNaN(upstreamGen) && !isNaN(fallbackGen) && fallbackGen > upstreamGen) {
+        res.setHeader('X-Cache', 'EMERGENCY-SNAPSHOT');
+        res.setHeader('X-Cache-Reason', `Upstream stale: ${shaped.generated_at} < ${EMERGENCY_SNAPSHOT.generated_at}`);
+        // still cache the upstream so we don't hammer it
+        cache = { at: now, data: shaped, stale: true };
+        return sendJson(res, 200, EMERGENCY_SNAPSHOT);
+      }
+    }
+
     cache = { at: now, data: shaped, stale: false };
     res.setHeader('X-Cache', 'MISS');
     return sendJson(res, 200, shaped);
