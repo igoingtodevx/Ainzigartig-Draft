@@ -67,10 +67,10 @@ export const InsightsTeaser: React.FC = () => {
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6u">
           <div className="flex-1 min-w-0">
             <div className="flex flex-wrap items-baseline gap-x-3u gap-y-1u mb-3u">
-              <span className="text-[10px] font-body uppercase tracking-[0.18em] text-ink">
+              <span className="text-[10px] font-body uppercase tracking-[0.18em] text-ink tabular">
                 Diese Woche · № {issueWeek(data.generated_at)}
               </span>
-              <span className="text-[10px] font-body uppercase tracking-[0.18em] text-muted">
+              <span className="text-[10px] font-body uppercase tracking-[0.18em] text-muted tabular">
                 {timeAgo(data.generated_at)}
               </span>
             </div>

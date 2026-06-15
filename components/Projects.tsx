@@ -153,7 +153,7 @@ export const Projects: React.FC = () => {
                       {p.language}
                     </span>
                   )}
-                  <span>aktualisiert vor {timeAgo(p.pushed_at)}</span>
+                  <span className="tabular">aktualisiert vor {timeAgo(p.pushed_at)}</span>
                 </div>
 
                 <div className="mt-4u pt-4u border-t border-faint/40 flex flex-wrap items-center gap-x-6u gap-y-2u">

@@ -1,4 +1,13 @@
 /** @type {import('tailwindcss').Config} */
+
+// Color tokens — Hex is single-source-of-truth for now.
+// OKLch values show the designer's perceptual intent:
+// hue + chroma + lightness, independent of display profile.
+// Inspired by Perplexity DESIGN.md color documentation.
+//
+// To switch to terracotta accent (per Design Manifest alt), change every
+// `accent` class to `accent-alt` in components. The token stays available
+// for selective use (e.g. one specific Insights CTA).
 export default {
   content: [
     './index.html',
@@ -10,17 +19,23 @@ export default {
   theme: {
     extend: {
       colors: {
-        base: '#F0EDE3',
-        surface: '#E5E2D7',
-        accent: '#1B4D3E',
-        'accent-mid': '#2D7A5E',
-        ink: '#1C1917',
-        muted: '#6B6861',
-        faint: '#B8B2A7',
+        // Per Design Manifest
+        base:         '#F0EDE3',
+        surface:      '#E5E2D7',
+        ink:          '#1C1917',
+        muted:        '#6B6861',
+        faint:        '#B8B2A7',
+        // Current brand accent
+        accent:       '#1B4D3E',
+        'accent-mid':  '#2D7A5E',
+        'accent-hover':'#163C30',
+        // Alternative accent per Design Manifest option (Anwaltskanzlei alt)
+        'accent-alt':  '#B44D2D',
+        'accent-alt-hover': '#9A3F23',
       },
       fontFamily: {
         editorial: ['"Fraunces"', 'Georgia', 'serif'],
-        body: ['"IBM Plex Sans"', 'system-ui', 'sans-serif'],
+        body:      ['"IBM Plex Sans"', 'system-ui', 'sans-serif'],
       },
       spacing: {
         unit: '8px',
