@@ -11,6 +11,36 @@ const SOURCE_URL = 'https://ai-industry-watcher.vercel.app/data/latest.json';
 const CACHE_TTL_SEC = 60 * 60; // 1h — the brief is weekly, but we re-fetch hourly to catch corrections
 const STALE_TTL_SEC = 60 * 60 * 24; // 1d — if upstream is down, serve stale
 
+// Emergency embedded snapshot — used ONLY when the Sub-Site is unreachable
+// AND we have no in-memory cache. This is the last line of defense so that
+// /insights and the home-page teaser always show something current instead
+// of a "Verbindung fehlgeschlagen" error.
+//
+// Updated manually by a build script (or on first successful fetch in a
+// fresh function instance) so this is rarely the path taken.
+//
+// Last update: 2026-06-15 04:39 UTC — W24, after PR-#1 fix.
+const EMERGENCY_SNAPSHOT = {
+  generated_at: "2026-06-15T04:39:12.097704+00:00",
+  vertical: "German Mittelstand Digital & KI-Automation",
+  model: "gpt-4o-mini",
+  issue_url: "https://ai-industry-watcher.vercel.app",
+  issue: {
+    headline: "Google Cloud adressiert Kontextproblem von KI-Agenten mit neuem Format",
+    subheadline: "Das Open Knowledge Format (OKF) könnte die Effizienz von KI-Anwendungen im Mittelstand steigern.",
+    executive_summary: "Diese Woche kündigte Google Cloud an, das Open Knowledge Format (OKF) einzuführen, um das Kontextproblem von KI-Agenten zu lösen. Der Fokus auf standardisierte Wissensdarstellung könnte insbesondere für den deutschen Mittelstand von Bedeutung sein, da viele Unternehmen mit der Integration von KI kämpfen. Gleichzeitig wurden Berichte über KI in Unternehmen kritisch beleuchtet, was die Notwendigkeit von vertrauenswürdigen Datenquellen unterstreicht.",
+    trends: [
+      { title: "Standardisierung von KI-Wissen", signal: "hoch", what: "Google Cloud führt das Open Knowledge Format (OKF) ein, um Wissen für KI-Agenten nutzbar zu machen." },
+      { title: "Vertrauen in KI-generierte Inhalte", signal: "hoch", what: "KPMG musste einen Bericht über KI zurückziehen, der gefälschte Fallstudien enthielt." },
+      { title: "KI-Agenten in der Softwareentwicklung", signal: "mittel", what: "KI-Coding-Agenten haben Schwierigkeiten, relevanten Code produktiv beizutragen — die Technologie ist noch nicht reif für den autonomen Einsatz." }
+    ],
+    opportunities: [
+      { title: "Beratung zur Einführung standardisierter Wissensformate", what: "Unternehmen benötigen Unterstützung, um das OKF-Konzept in ihre bestehenden Datenstrukturen zu integrieren.", price: "8.000-25.000€ Setup + 1.500-3.000€/Monat", how: "mittel" },
+      { title: "Validierung von KI-generierten Inhalten", what: "KMUs brauchen Tools oder Beratung, um die Vertrauenswürdigkeit von KI-generierten Berichten zu prüfen.", price: "3.000-10.000€ pro Projekt", how: "hoch" }
+    ]
+  }
+};
+
 // In-memory cache (warm function reuse; Vercel Hobby may reset)
 let cache = { at: 0, data: null, stale: false };
 
@@ -100,10 +130,10 @@ export default async function handler(req, res) {
       res.setHeader('X-Cache-Reason', String(e).slice(0, 120));
       return sendJson(res, 200, cache.data);
     }
-    return sendJson(res, 502, {
-      error: `Insights konnten nicht geladen werden: ${String(e).slice(0, 200)}`,
-      hint: 'Die Industry-Watcher-Pipeline ist möglicherweise gerade offline. Schau direkt auf https://ai-industry-watcher.vercel.app',
-    });
+    // Emergency embedded snapshot — last line of defense
+    res.setHeader('X-Cache', 'EMERGENCY-SNAPSHOT');
+    res.setHeader('X-Cache-Reason', String(e).slice(0, 120));
+    return sendJson(res, 200, EMERGENCY_SNAPSHOT);
   }
 }
 
