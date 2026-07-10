@@ -1,5 +1,5 @@
 // Vercel Serverless Function (Node.js): Live Agent Demo
-// Analyzes a German business document (text or image(s)) using OpenAI gpt-4o-mini.
+// Analyzes a German business document (text or image(s)) using OpenAI gpt-5.4-mini.
 // All paths use OpenAI — no OpenRouter, no NVIDIA.
 // PDF inputs are pre-rendered to images client-side via pdf.js.
 
@@ -93,7 +93,7 @@ async function callOpenAIText(prompt) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'gpt-5.4-mini',
         messages: [
           { role: 'system', content: SYSTEM_PROMPT },
           { role: 'user', content: prompt },
@@ -138,7 +138,7 @@ async function callOpenAIVision(images, prompt) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'gpt-5.4-mini',
         messages: [
           { role: 'system', content: SYSTEM_PROMPT },
           { role: 'user', content },

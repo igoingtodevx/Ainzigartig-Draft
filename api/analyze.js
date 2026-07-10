@@ -1,5 +1,5 @@
 // Vercel Serverless Function (Node.js): Website KI-Analyse
-// Calls VPS scraper → sends content to OpenAI gpt-4o-mini → returns structured analysis
+// Calls VPS scraper → sends content to OpenAI gpt-5.4-mini → returns structured analysis
 // Migrated from Python to Node.js to match the rest of the API surface and
 // avoid the Vercel Python runtime's historical instability. Frontend contract
 // is unchanged.
@@ -152,7 +152,7 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'gpt-5.4-mini',
         messages: [{ role: 'user', content: prompt }],
         temperature: 0.3,
         max_tokens: 2000,

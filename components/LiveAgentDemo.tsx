@@ -254,7 +254,7 @@ export const LiveAgentDemo: React.FC = () => {
 
     try {
       // Convert PDF to images (browser-side) so the server can send them
-      // directly to gpt-4o-mini vision — no server-side PDF library needed.
+      // directly to gpt-5.4-mini vision — no server-side PDF library needed.
       let images: { base64: string; mime_type: string }[];
       if (uploadedFile.type === 'application/pdf') {
         images = await pdfToImages(uploadedFile, 5);

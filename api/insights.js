@@ -23,7 +23,7 @@ const STALE_TTL_SEC = 60 * 60 * 24; // 1d — if upstream is down, serve stale
 const EMERGENCY_SNAPSHOT = {
   generated_at: "2026-06-15T04:39:12.097704+00:00",
   vertical: "German Mittelstand Digital & KI-Automation",
-  model: "gpt-4o-mini",
+  model: "gpt-5.4-mini",
   issue_url: "https://ai-industry-watcher.vercel.app",
   issue: {
     headline: "Google Cloud adressiert Kontextproblem von KI-Agenten mit neuem Format",

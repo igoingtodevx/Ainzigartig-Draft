@@ -24,7 +24,7 @@ Backend: Vercel Serverless Functions. Eine AI-Abhängigkeit (OpenAI). Eine E-Mai
 |---|---|
 | Frontend | React 19, TypeScript, Vite 6, Tailwind 3, React Router 6 |
 | Hosting | Vercel (static + functions) |
-| AI | OpenAI `gpt-4o-mini` (chat, vision, structured JSON) |
+| AI | OpenAI `gpt-5.4-mini` (chat, vision, structured JSON) |
 | Email | Resend (contact form → inbox) |
 | Analytics | Vercel Analytics |
 | Scraper | Standalone FastAPI auf VPS (nur für `/ki-analyse` benötigt) |
@@ -92,9 +92,9 @@ Drei Variablen, in den Vercel-Projekt-Einstellungen unter **Settings → Environ
 
 | Endpoint | Method | Provider | Was es tut |
 |---|---|---|---|
-| `/api/chat` | POST | OpenAI `gpt-4o-mini` | Chat-Assistent "Edi" |
-| `/api/analyze` | POST | OpenAI `gpt-4o-mini` + VPS Scraper | Website KI-Analyse |
-| `/api/live-agent-demo` | POST | OpenAI `gpt-4o-mini` (text + vision) | Dokument-Analyse |
+| `/api/chat` | POST | OpenAI `gpt-5.4-mini` | Chat-Assistent "Edi" |
+| `/api/analyze` | POST | OpenAI `gpt-5.4-mini` + VPS Scraper | Website KI-Analyse |
+| `/api/live-agent-demo` | POST | OpenAI `gpt-5.4-mini` (text + vision) | Dokument-Analyse |
 | `/api/projects` | GET | GitHub REST | Kuratierte Repo-Liste |
 | `/api/contact` | POST | Resend | Kontaktformular → E-Mail |
 | `/api/chat/health` | GET | – | Health check |
@@ -107,7 +107,7 @@ Alle AI-Endpoints verwenden dasselbe `OPENAI_API_KEY` und denselben Provider —
 
 Persönlichkeit lebt im `SYSTEM_PROMPT` in `api/chat.js`. Persona-Details editieren ist ein One-File-Change, kein Frontend-Rebuild nötig. Wissensbasis liegt in `api/company-context.md` — das ist die einzige Quelle der Wahrheit, was Edi weiß. Updates dort sind sofort nach Redeploy live.
 
-Edi nutzt `gpt-4o-mini` mit `temperature: 0.85`, `presence_penalty: 0.3` für abwechslungsreiche Antworten. Kein `response_format: json_object` (Edi redet frei, nicht strukturiert).
+Edi nutzt `gpt-5.4-mini` mit `temperature: 0.85`, `presence_penalty: 0.3` für abwechslungsreiche Antworten. Kein `response_format: json_object` (Edi redet frei, nicht strukturiert).
 
 ### Rate limiting
 
@@ -115,7 +115,7 @@ Im-memory, per IP. Heuristik: max 1 Request / 5s, max 30 Requests / Stunde. Cold
 
 ### Live-Dokumenten-Agent
 
-PDFs werden client-seitig via `pdfjs-dist` zu Bildern gerendert (max. 5 Seiten), dann als Base64-Data-URLs an die `/api/live-agent-demo` geschickt. Der OpenAI-Aufruf nutzt `gpt-4o-mini` mit `response_format: { type: "json_object" }` für garantiert parsebares JSON. Die App hat drei Beispiel-Dokumente (Rechnung, E-Mail, Angebot) für Demo-Zwecke — siehe `SAMPLE_INVOICE`, `SAMPLE_EMAIL`, `SAMPLE_OFFER` in `components/LiveAgentDemo.tsx`.
+PDFs werden client-seitig via `pdfjs-dist` zu Bildern gerendert (max. 5 Seiten), dann als Base64-Data-URLs an die `/api/live-agent-demo` geschickt. Der OpenAI-Aufruf nutzt `gpt-5.4-mini` mit `response_format: { type: "json_object" }` für garantiert parsebares JSON. Die App hat drei Beispiel-Dokumente (Rechnung, E-Mail, Angebot) für Demo-Zwecke — siehe `SAMPLE_INVOICE`, `SAMPLE_EMAIL`, `SAMPLE_OFFER` in `components/LiveAgentDemo.tsx`.
 
 ---
 
