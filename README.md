@@ -21,8 +21,8 @@ npm run build
 ## Wichtige Produktentscheidungen
 
 - **Edi** ist ein serverseitig angebundener Gesprächsassistent. Er ersetzt keine verbindliche Fach-, Rechts- oder Datenschutzberatung.
-- **Live-Agent-Demo** ist eine Sandbox. Uploads und automatische Aktionen sind standardmäßig deaktiviert.
-- **Website Opportunity Audit** bietet standardmäßig eine Musteranalyse. Die Prüfung externer URLs wird erst nach expliziter Freischaltung mit einem gehärteten Scraper aktiv.
+- **Live-Agent-Demo** analysiert bei aktivierter Funktion hochgeladene PDF- oder Bilddokumente ohne persistenten Dateispeicher; die Auswertung führt nie automatisch eine Aktion aus.
+- **Website Opportunity Audit** bietet eine Musteranalyse und kann nach expliziter Freischaltung öffentliche HTML-Seiten direkt, mit URL-, Redirect-, Größen- und Timeout-Schutz prüfen.
 - **Industry Watcher** zeigt nur einen aktuellen, serverseitig bezogenen Brief. Bei Ausfall wird kein alter oder erfundener Inhalt ersetzt.
 
 Die vollständige Entscheidungsmatrix steht in [SHOWCASE_AUDIT.md](SHOWCASE_AUDIT.md). Fehlende Betreiber- und Betriebsentscheidungen stehen in [OWNER_INPUT_REQUIRED.md](OWNER_INPUT_REQUIRED.md).
@@ -38,9 +38,8 @@ Kopiere `.env.example` in eine lokale, nicht eingecheckte Umgebungsdatei oder se
 | `OPENAI_API_KEY` | serverseitig für Edi, Live-Agent und optionalen Opportunity Audit. |
 | `OPENAI_CHAT_MODEL`, `OPENAI_AUDIT_MODEL` | serverseitige Modellwahl. |
 | `RESEND_API_KEY`, `CONTACT_EMAIL`, `CONTACT_FROM_EMAIL` | Kontaktformular. `CONTACT_FROM_EMAIL` ist optional; bis zur Domain-Verifizierung wird Resends Onboarding-Absender genutzt. |
-| `VITE_DOCUMENT_UPLOADS_ENABLED`, `DOCUMENT_UPLOADS_ENABLED` | nur nach Speicher-, Lösch-, Malware- und Datenschutzkonzept aktivieren. |
-| `VITE_EXTERNAL_AUDIT_ENABLED`, `EXTERNAL_AUDIT_ENABLED` | nur gemeinsam aktivieren, nachdem der Scraper sicher betrieben wird. |
-| `SCRAPER_URL`, `SCRAPER_SHARED_SECRET` | gehärteter, authentifizierter Scraper für externe Website-Prüfungen. Kein Default-Endpunkt. |
+| `VITE_DOCUMENT_UPLOADS_ENABLED`, `DOCUMENT_UPLOADS_ENABLED` | schaltet die Analyse eigener Dokumente ein; die UI weist auf die Übertragung an OpenAI hin. |
+| `VITE_EXTERNAL_AUDIT_ENABLED`, `EXTERNAL_AUDIT_ENABLED` | schaltet die Prüfung öffentlicher HTML-Websites ein. Beide Variablen müssen gesetzt sein. |
 | `INDUSTRY_WATCHER_URL` | Quelle des aktuellen Industry-Watcher-Briefs. |
 
 ## Veröffentlichungsgate
