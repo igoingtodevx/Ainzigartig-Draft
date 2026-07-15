@@ -115,6 +115,7 @@ async function callOpenAIText(prompt) {
       return { text: data.choices?.[0]?.message?.content || '' };
     }
     const errText = await resp.text().catch(() => '');
+    console.error('OpenAI text analysis request failed', { status: resp.status, detail: errText.slice(0, 500) });
     return { error: `openai_${resp.status}`, detail: errText.slice(0, 200) };
   } catch (e) {
     return { error: 'timeout_or_network', detail: String(e).slice(0, 200) };
@@ -160,6 +161,7 @@ async function callOpenAIVision(images, prompt) {
       return { text: data.choices?.[0]?.message?.content || '' };
     }
     const errText = await resp.text().catch(() => '');
+    console.error('OpenAI vision analysis request failed', { status: resp.status, detail: errText.slice(0, 500) });
     return { error: `openai_${resp.status}`, detail: errText.slice(0, 200) };
   } catch (e) {
     return { error: 'timeout_or_network', detail: String(e).slice(0, 200) };

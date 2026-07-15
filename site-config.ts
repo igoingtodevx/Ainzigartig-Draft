@@ -15,8 +15,10 @@ export const siteConfig = {
 
 export const legalDetailsComplete = Object.values(siteConfig.legal).every(Boolean);
 export const isPublicationReady = siteConfig.mode === 'production' && legalDetailsComplete;
-export const documentUploadsEnabled = isPublicationReady && env.VITE_DOCUMENT_UPLOADS_ENABLED === 'true';
-export const externalWebsiteAuditsEnabled = isPublicationReady && env.VITE_EXTERNAL_AUDIT_ENABLED === 'true';
+// Product capabilities are configured independently from the still-open legal metadata.
+// This lets a live preview demonstrate the real system without fabricating provider details.
+export const documentUploadsEnabled = env.VITE_DOCUMENT_UPLOADS_ENABLED === 'true';
+export const externalWebsiteAuditsEnabled = env.VITE_EXTERNAL_AUDIT_ENABLED === 'true';
 
 export const publicationMessage =
   'Diese Vorschau ist noch nicht als öffentliches Angebot freigegeben. Betreiber-, Kontakt- und Datenschutzhinweise werden erst nach verbindlicher Klärung veröffentlicht.';

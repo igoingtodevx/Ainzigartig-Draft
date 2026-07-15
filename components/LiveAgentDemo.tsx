@@ -13,11 +13,14 @@ function uint8ToBase64(bytes: Uint8Array): string {
   return btoa(binary);
 }
 
-// Render the first N pages of a PDF to PNG dataURLs, return base64 arrays.
-// Renders at 2x scale for sharp OCR.
+const MAX_FILE_BYTES = 6 * 1024 * 1024;
+const MAX_IMAGE_BYTES = 4 * 1024 * 1024;
+const MAX_TOTAL_IMAGE_BYTES = 8 * 1024 * 1024;
+
+// Render the first N pages of a PDF to compact JPEG dataURLs, return base64 arrays.
+// This keeps the request within the serverless payload limit while preserving readable text.
 async function pdfToImages(file: File, maxPages: number): Promise<{ base64: string; mime_type: string }[]> {
-  // The PDF engine is deliberately lazy-loaded: uploads are disabled in the public preview,
-  // so ordinary visitors should not download a large worker just to view the demo.
+  // The PDF engine is lazy-loaded so the initial demo page stays fast.
   const pdfjsLib = await import('pdfjs-dist');
   const { default: pdfjsWorker } = await import('pdfjs-dist/build/pdf.worker.min.mjs?url');
   pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
@@ -28,16 +31,16 @@ async function pdfToImages(file: File, maxPages: number): Promise<{ base64: stri
   const results: { base64: string; mime_type: string }[] = [];
   for (let i = 1; i <= pageCount; i++) {
     const page = await pdf.getPage(i);
-    const viewport = page.getViewport({ scale: 2.0 });
+    const viewport = page.getViewport({ scale: 1.5 });
     const canvas = document.createElement('canvas');
     canvas.width = Math.ceil(viewport.width);
     canvas.height = Math.ceil(viewport.height);
     const ctx = canvas.getContext('2d');
     if (!ctx) continue;
     await page.render({ canvasContext: ctx, viewport, canvas }).promise;
-    const dataUrl = canvas.toDataURL('image/png');
+    const dataUrl = canvas.toDataURL('image/jpeg', 0.86);
     const b64 = dataUrl.split(',', 2)[1] || '';
-    if (b64) results.push({ base64: b64, mime_type: 'image/png' });
+    if (b64) results.push({ base64: b64, mime_type: 'image/jpeg' });
   }
   // pdfjs-dist@6 removed the legacy destroy() in favor of cleanup() on PDFDocumentProxy
   if (typeof (pdf as any).destroy === 'function') {
@@ -241,7 +244,7 @@ export const LiveAgentDemo: React.FC = () => {
   }, []);
 
   const runUpload = useCallback(async (uploadedFile: File) => {
-    if (uploadedFile.size > 6 * 1024 * 1024) {
+    if (uploadedFile.size > MAX_FILE_BYTES) {
       setError('Datei zu gross (max 6 MB).');
       return;
     }
@@ -255,8 +258,8 @@ export const LiveAgentDemo: React.FC = () => {
     }, 1500);
 
     try {
-      // Convert PDF to images (browser-side) so the server can send them
-      // directly to gpt-4o-mini vision — no server-side PDF library needed.
+      // Convert PDFs in the browser. The analysis endpoint receives page images,
+      // so no server-side PDF parser or persistent file store is needed.
       let images: { base64: string; mime_type: string }[];
       if (uploadedFile.type === 'application/pdf') {
         images = await pdfToImages(uploadedFile, 5);
@@ -270,6 +273,13 @@ export const LiveAgentDemo: React.FC = () => {
         const bytes = new Uint8Array(await uploadedFile.arrayBuffer());
         const b64 = uint8ToBase64(bytes);
         images = [{ base64: b64, mime_type: uploadedFile.type }];
+      }
+
+      const imageSizes = images.map((image) => Math.floor(image.base64.length * 0.75));
+      if (imageSizes.some((size) => size > MAX_IMAGE_BYTES) || imageSizes.reduce((total, size) => total + size, 0) > MAX_TOTAL_IMAGE_BYTES) {
+        setError('Das aufbereitete Dokument ist für eine einzelne Analyse zu groß. Bitte laden Sie weniger Seiten oder eine kleinere Datei hoch.');
+        setAnalyzing(false);
+        return;
       }
 
       const resp = await fetch('/api/live-agent-demo', {
@@ -359,8 +369,9 @@ export const LiveAgentDemo: React.FC = () => {
               }`}
             >
               <span className="material-symbols-outlined text-4xl text-muted mb-3 block">upload_file</span>
-              <p className="text-sm text-ink mb-1">PDF, PNG oder JPG hochladen (max 4 MB)</p>
+              <p className="text-sm text-ink mb-1">PDF, PNG, JPG oder WebP hochladen (max. 6 MB)</p>
               <p className="text-xs text-faint">Rechnung, E-Mail-Screenshot, Angebot, Vertrag — was Sie gerade haben</p>
+              <p className="text-xs text-faint mt-3 max-w-xl mx-auto">Die Datei wird nur für diese Analyse verarbeitet und nicht in dieser Anwendung gespeichert. Für die KI-Auswertung wird sie an OpenAI übertragen. Bitte laden Sie keine unnötigen besonders sensiblen oder vertraulichen Daten hoch.</p>
               <input
                 ref={fileInputRef}
                 type="file"
