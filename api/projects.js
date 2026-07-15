@@ -21,18 +21,6 @@ const CURATED = {
     status: 'live',
     live_url: '',
   },
-  'viral-script-generator': {
-    tagline: 'YouTube/TikTok-Skripte aus einem Thema generieren. Hook + Story + CTA-Struktur, getuned auf Retainment.',
-    category: 'Content',
-    status: 'live',
-    live_url: '',
-  },
-  'get-shit-done': {
-    tagline: 'Aufgaben-Tracker mit KI-Priorisierung. Was heute, was diese Woche, was nie. Fokus statt Feature-Liste.',
-    category: 'Productivity',
-    status: 'beta',
-    live_url: '',
-  },
   'aegis-mission-control': {
     tagline: 'Operations-Dashboard für autonome KI-Agenten. Tasks, Logs, Health, Inter-Agent-Kommunikation.',
     category: 'Infrastructure',
@@ -63,20 +51,34 @@ const CURATED = {
 let cache = { at: 0, data: null };
 
 async function fetchRepos() {
-  const headers = {
+  const baseHeaders = {
     'Accept': 'application/vnd.github+json',
     'User-Agent': 'ainzigartig-projects-api',
   };
-  if (process.env.GITHUB_TOKEN) headers['Authorization'] = `Bearer ${process.env.GITHUB_TOKEN}`;
+  const url = `https://api.github.com/users/${USERNAME}/repos?per_page=100&type=owner&sort=updated`;
+  const authenticatedHeaders = process.env.GITHUB_TOKEN
+    ? { ...baseHeaders, Authorization: `Bearer ${process.env.GITHUB_TOKEN}` }
+    : baseHeaders;
 
-  const resp = await fetch(
-    `https://api.github.com/users/${USERNAME}/repos?per_page=100&type=owner&sort=updated`,
-    { headers }
-  );
+  let resp = await fetch(url, { headers: authenticatedHeaders });
+  if ((resp.status === 401 || resp.status === 403) && process.env.GITHUB_TOKEN) {
+    resp = await fetch(url, { headers: baseHeaders });
+  }
   if (!resp.ok) {
     throw new Error(`GitHub API ${resp.status}`);
   }
   return await resp.json();
+}
+
+function fallbackProjects() {
+  return Object.entries(CURATED).map(([name, metadata]) => ({
+    name,
+    url: `https://github.com/${USERNAME}/${name}`,
+    language: null,
+    stars: 0,
+    pushed_at: '',
+    ...metadata,
+  }));
 }
 
 function sendJson(res, status, data) {
@@ -130,8 +132,9 @@ export default async function handler(req, res) {
     cache = { at: now, data: { projects, count: projects.length } };
     res.setHeader('X-Cache', 'MISS');
     return sendJson(res, 200, cache.data);
-  } catch (e) {
-    return sendJson(res, 502, { error: `Projekte konnten nicht geladen werden: ${String(e).slice(0, 200)}` });
+  } catch {
+    const projects = fallbackProjects();
+    return sendJson(res, 200, { projects, count: projects.length, source: 'curated-fallback' });
   }
 }
 
