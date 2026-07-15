@@ -108,13 +108,13 @@ export const KISchnellstart: React.FC = () => {
 
           <div className="grid md:grid-cols-2 gap-6">
             {[
-              { label: '✓ Passt', items: [
+              { label: 'Geeignet', items: [
                 'Ein klarer wiederkehrender Prozess (z. B. Anfragen, Dokumente, Angebotsvorbereitung)',
                 'Eine verantwortliche Person für fachliche Freigaben',
                 'Zugang zu den benötigten Informationen und Systemen',
                 'Bereitschaft, Wirkung und Risiken zu prüfen',
               ]},
-              { label: '✗ Passt nicht', items: [
+              { label: 'Nicht geeignet', items: [
                 'Unklare Prozessverantwortung oder keine Testfälle',
                 'Ungeklärte Daten- oder Zugriffsrechte',
                 'Kritische Entscheidungen ohne menschliche Freigabe',
@@ -125,7 +125,7 @@ export const KISchnellstart: React.FC = () => {
                 <ul className="space-y-2">
                   {col.items.map((item) => (
                     <li key={item} className="text-sm text-muted leading-relaxed flex items-start gap-2">
-                      <span className="text-accent mt-0.5">{col.label === '✓ Passt' ? '→' : '→'}</span>
+                      <span className="w-4 h-px bg-accent mt-2 flex-shrink-0" aria-hidden="true" />
                       {item}
                     </li>
                   ))}

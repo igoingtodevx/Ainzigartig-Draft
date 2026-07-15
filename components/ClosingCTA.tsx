@@ -7,13 +7,13 @@ export const ClosingCTA: React.FC = () => {
       <div className="max-w-[1200px] mx-auto">
         <div className="max-w-xl">
           <p className="font-editorial text-2xl md:text-3xl lg:text-[2.5rem] text-ink leading-[1.2]">
-            30 Minuten. Ihre Situation.{' '}
+            30 Minuten. Ihr Vorhaben.{' '}
             <br className="hidden md:block" />
-            Unsere Einschätzung. Kein Pitch.
+            Eine klare technische Einschätzung.
           </p>
           <p className="text-sm text-muted font-body leading-relaxed mt-4">
-            Schreiben Sie uns kurz, was Sie beschäftigt. Wir antworten innerhalb
-            von 24 Stunden — ehrlich, ob KI für Sie passt oder nicht.
+            Beschreiben Sie kurz den Prozess, das Produkt oder die Idee. Wir melden uns mit
+            einer ersten Einordnung zu Machbarkeit, sinnvoller Tiefe und nächstem Schritt.
           </p>
         </div>
 

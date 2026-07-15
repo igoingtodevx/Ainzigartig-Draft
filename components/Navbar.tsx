@@ -3,9 +3,8 @@ import { Link } from 'react-router-dom';
 
 const NAV_ITEMS = [
   { label: 'Leistungen', to: '/#services', isHash: true },
-  { label: 'Arbeitsproben', to: '/projekte' },
-  { label: 'Opportunity Audit', to: '/ki-analyse' },
-  { label: 'Live-Agent-Demo', to: '/live-demo' },
+  { label: 'Systeme', to: '/projekte' },
+  { label: 'Live-Werkzeuge', to: '/#live-systeme', isHash: true },
   { label: 'Insights', to: '/insights' },
   { label: 'Gespräch anfragen', to: '/#kontakt', isHash: true },
 ];
@@ -41,7 +40,7 @@ export const Navbar: React.FC = () => {
                 key={item.to}
                 to={item.to}
                 className={
-                  item.label === 'Live-Agent-Demo' || item.label === 'Gespräch anfragen'
+                  item.label === 'Gespräch anfragen'
                     ? 'text-sm text-ink font-body underline decoration-accent decoration-1 underline-offset-4 hover:decoration-2 transition-all duration-200'
                     : 'text-sm text-muted hover:text-ink transition-colors duration-200 font-body'
                 }

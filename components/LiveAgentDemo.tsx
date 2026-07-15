@@ -337,20 +337,20 @@ export const LiveAgentDemo: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-base text-ink font-body">
-      <RouteMeta title="Live Demo | Ainzigartig" description="Testen Sie unseren KI-Dokumentenagenten live." />
+      <RouteMeta title="Dokument-Agent | Ainzigartig" description="PDFs und Bilder live analysieren, Kerndaten extrahieren und nächste Schritte strukturieren." />
       {/* Hero */}
       <section className="pt-28 pb-12 px-6 md:px-8">
         <div className="max-w-[1000px] mx-auto px-4 sm:px-6 md:px-8">
           <span className="inline-block text-xs font-bold uppercase tracking-[0.25em] text-accent border border-accent/30 bg-accent/5 px-3 py-1 mb-6">
-            Live Agent Demo
+            Dokument-Agent
           </span>
           <h1 className="font-editorial text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05] text-ink mb-6 break-words">
-            Schauen Sie unseren<br />
-            <span className="text-accent">Dokument-Agent arbeiten.</span>
+            Dokumente verstehen.<br />
+            <span className="text-accent">Nächste Schritte vorbereiten.</span>
           </h1>
           <p className="text-muted text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-            Ein Service-Desk-Agent zeigt an anonymisierten Beispielen, wie er Informationen strukturiert,
-            Risiken markiert und eine Übergabe vorbereitet. Er führt keine Aktion selbst aus.
+            Laden Sie eine Rechnung, ein Angebot, eine E-Mail oder einen Vertrag hoch. Der Agent extrahiert
+            relevante Daten, erkennt Risiken und strukturiert die Bearbeitung für eine menschliche Freigabe.
           </p>
         </div>
       </section>
@@ -370,8 +370,7 @@ export const LiveAgentDemo: React.FC = () => {
             >
               <span className="material-symbols-outlined text-4xl text-muted mb-3 block">upload_file</span>
               <p className="text-sm text-ink mb-1">PDF, PNG, JPG oder WebP hochladen (max. 6 MB)</p>
-              <p className="text-xs text-faint">Rechnung, E-Mail-Screenshot, Angebot, Vertrag — was Sie gerade haben</p>
-              <p className="text-xs text-faint mt-3 max-w-xl mx-auto">Die Datei wird nur für diese Analyse verarbeitet und nicht in dieser Anwendung gespeichert. Für die KI-Auswertung wird sie an OpenAI übertragen. Bitte laden Sie keine unnötigen besonders sensiblen oder vertraulichen Daten hoch.</p>
+              <p className="text-xs text-faint">Rechnung, E-Mail-Screenshot, Angebot oder Vertrag</p>
               <input
                 ref={fileInputRef}
                 type="file"
@@ -383,6 +382,7 @@ export const LiveAgentDemo: React.FC = () => {
               <span className="material-symbols-outlined text-accent">privacy_tip</span>
               <p className="text-sm text-muted leading-relaxed">Eigene Dokumente bleiben in dieser öffentlichen Vorschau deaktiviert. Für eine Produktivversion gehören private Speicherung, Löschfristen, Zugriffskonzept und Auftragsverarbeitung zuerst verbindlich geklärt.</p>
             </div>}
+            {documentUploadsEnabled && <p className="text-xs text-faint leading-relaxed -mt-5 mb-8 max-w-3xl">Die Datei wird für diese Analyse an OpenAI übertragen und in dieser Anwendung nicht dauerhaft gespeichert. Keine unnötigen besonders sensiblen oder vertraulichen Daten hochladen.</p>}
 
             {/* Or sample */}
             <div className="text-center mb-4">

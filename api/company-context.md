@@ -1,46 +1,41 @@
 # AINZIGARTIG — Company Knowledge Base
-# Used by the chat assistant "Edi" (api/chat.js). This is his only source of truth.
-# Edit and redeploy to update what the AI knows.
 
-## ÜBER UNS
+## Positionierung
 
-- Kleine KI-Beratung für den deutschen Mittelstand (5–50 Mitarbeiter, manchmal bis 200).
-- Fokus auf nachvollziehbare, praktische KI-Workflows für kleine und mittelständische Teams.
-- Wir verkaufen keine Software, keine Lizenzen, keine Stundenpakete. Wir beraten, bauen, begleiten.
+- Ainzigartig ist eine technische AI- und Digital-Agency für mittelständische Unternehmen.
+- Die Arbeit verbindet Beratung, Produktentwicklung, Software Engineering, KI-Agenten, Automatisierung, Integrationen, Analytics und Optimierung.
+- Der Anspruch ist ein funktionsfähiges System im realen Arbeitsprozess, nicht nur eine Präsentation oder allgemeine Empfehlung.
 
-## WIE WIR ARBEITEN
+## Leistungsfelder
 
-- Wir beginnen mit einem klar eingegrenzten Use-Case und prüfen Nutzen, Datenlage und Risiken vor einer Umsetzung.
-- Herstellerunabhängig. Wir empfehlen, was zu Ihnen passt, nicht was uns Provision bringt.
-- Direkt und ehrlich. Wenn KI für Sie nicht passt, sagen wir das — und woanders ist auch nicht immer alles Gold.
-- Kommunikation: kurz, ohne Bullshit-Bingo, Sie verstehen was wir tun.
+1. Websites und digitale Produkte: Unternehmenswebsites, Landingpages, Portale, interne Tools und Web-Apps mit Frontend und Backend.
+2. KI-Agenten und Chatbots: Produkt- und Serviceberatung, Wissensassistenten, Dokumenten- und Anfrage-Triage sowie kontrollierte Übergaben.
+3. Prozessautomatisierung und Integrationen: CRM, ERP, E-Mail, Dokumente, APIs, Freigaben und wiederkehrende Operations-Workflows.
+4. Decision Intelligence und Analytics: KPI-Systeme, Dashboards, Budget- und Szenariomodelle sowie Markt- und Branchensignale.
+5. AI Strategy und Business Cases: Use-Case-Auswahl, Prozessanalyse, Daten- und Integrationsprüfung, Nutzen-, KPI- und Risikologik.
+6. Growth und Revenue Operations: Funnels, Lead-Qualifizierung, Conversion-Experimente, CRM-Flows und Marketing-Steuerung.
 
-## WOFÜR WIR GUT SIND
+## Arbeitsweise
 
-Vier Kernleistungen, alles mit konkreten Referenzen aus Mittelstands-Projekten:
+- Ainzigartig beginnt bei Prozess, Ziel und Nutzer, nicht bei einem Modell- oder Produktnamen.
+- Anforderungen, Datenflüsse, Verantwortlichkeiten, Kontrollpunkte und menschliche Übergaben werden vor produktiven Aktionen geklärt.
+- Werkzeuge werden nach Aufgabe, Integration, Betrieb und Risiko ausgewählt.
+- Aussagen zu Zeit, Kosten, Datenschutz, Hosting und messbarer Wirkung werden erst nach einem konkreten Scope getroffen.
 
-1. **KI-Beratung** — Strategische KI-Integration, vom Reifegrad-Check bis zur Tool-Auswahl.
-2. **KI-Schnellstart** — Ein klar eingegrenzter erster Assistent; Umfang und Zeitplan ergeben sich aus Datenlage und Integrationen.
-3. **KI-Kundenservice** — Chatbot- oder Triage-Konzept auf Basis einer geprüften Wissensbasis; Hosting und Datenschutz werden pro Projekt festgelegt.
-4. **KI-Recruiting / Analytics / Vertriebs-Automatisierung** — repetitive Workflows ersetzen, Daten nutzbar machen.
+## Sichtbare Systeme
 
-## WOFÜR WIR NICHT GUT SIND
+- Website Opportunity Audit für öffentliche Websites.
+- Dokument-Agent für PDFs und Bilder.
+- Industry Watcher für aktuelle KI-Signale mit Quellen.
+- Der Website-Assistent Edi für Fragen zur Agency.
+- Weitere Arbeitsproben auf der Seite „Systeme“.
 
-- Komplexe Enterprise-Integration (SAP R/3, Oracle, IBM-Stack).
-- AGI-Forschung, eigene Modell-Entwicklung.
-- Anything that violates DSGVO.
+## Grenzen
 
-## STANDARDS
+- Keine verbindliche Rechts-, Datenschutz-, Steuer- oder Fachberatung durch den Chatbot.
+- Keine erfundenen Preise, Termine, Kennzahlen, Kundennamen oder technischen Zusagen.
+- Keine Aussage, ein Vorhaben sei DSGVO-konform, bevor der konkrete Datenfluss und Betrieb geprüft wurden.
 
-- Keine Zusage zu Zeit, Kosten, Datenschutz- oder Leistungsniveau ohne geprüften Projektumfang.
+## Kontakt
 
-## HÄUFIGE FRAGEN
-
-- "Was kostet das?" → Kommt auf Team-Größe, Branche und Use-Case an. Im Erstgespräch klären wir das in 30 Minuten. Konkrete Zahlen ohne Briefing nennen wir nicht.
-- "Läuft das DSGVO-konform?" → Ja, EU-Server, klare AVV, kein Training auf Ihren Daten durch Dritte.
-- "Brauchen wir ein Entwicklerteam?" → Nein. Wir liefern fertige Lösungen.
-
-## KONTAKT
-
-- Kontaktformular auf der Startseite (Anker #kontakt).
-- E-Mail: hallo@ainzigartig.de (oder die im Kontaktformular-Empfänger konfigurierte Adresse).
+- Für konkrete Anfragen auf das Kontaktformular am Ende der Startseite verweisen.

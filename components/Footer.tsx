@@ -8,7 +8,7 @@ export const Footer: React.FC = () => {
         <span className="text-xs text-faint font-body">
           © 2026 Ainzigartig
         </span>
-        <div className="flex gap-6 text-xs text-muted font-body">
+        <div className="flex flex-wrap gap-x-6 gap-y-3 text-xs text-muted font-body">
           <Link to="/" className="hover:text-ink transition-colors duration-200">
             Startseite
           </Link>

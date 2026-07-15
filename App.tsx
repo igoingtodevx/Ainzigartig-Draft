@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { Analytics } from '@vercel/analytics/react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
+import { ProductShowcase } from './components/ProductShowcase';
 import { Services } from './components/Services';
 import { CaseStudies } from './components/CaseStudies';
 import { TeamSection } from './components/TeamSection';
@@ -28,15 +29,16 @@ import { ChatBot } from './components/ChatBot';
 import { RouteMeta } from './components/RouteMeta';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { NotFound } from './components/NotFound';
-import { isPublicationReady, publicationMessage } from './site-config';
+import { isPublicationReady } from './site-config';
 
 const HomePage: React.FC = () => (
   <main>
     <RouteMeta
-      title="Ainzigartig – KI-Systeme für den Mittelstand"
-      description="Wir gestalten KI-Strategie, integrierte Systeme und messbare Entscheidungsgrundlagen."
+      title="Ainzigartig – Websites, KI-Agenten & Automatisierung"
+      description="Ainzigartig entwickelt Websites, Web-Apps, KI-Agenten, Automatisierungen und Entscheidungswerkzeuge für mittelständische Unternehmen."
     />
     <Hero />
+    <ProductShowcase />
     <Services />
     <CaseStudies />
     <TeamSection />
@@ -91,11 +93,6 @@ const App: React.FC = () => {
     <BrowserRouter>
       <ScrollToHash />
       <div className="min-h-screen bg-base text-ink font-body antialiased overflow-x-hidden selection:bg-accent selection:text-base">
-        {!isPublicationReady && (
-          <div className="bg-ink text-base px-6 py-2 text-center text-[11px] tracking-[0.04em]" role="status">
-            {publicationMessage}
-          </div>
-        )}
         <Navbar />
         <ErrorBoundary>
           <Routes>

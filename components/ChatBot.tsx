@@ -17,7 +17,7 @@ const SUGGESTIONS = [
   'Was macht Ainzigartig genau?',
   'Wie schnell sind erste Ergebnisse sichtbar?',
   'Was kostet eine Zusammenarbeit?',
-  'Arbeitet ihr auch in der Schweiz / Österreich?',
+  'Arbeiten Sie auch in der Schweiz oder Österreich?',
 ];
 
 const STORAGE_KEY = 'ainzigartig.chat.history.v1';
@@ -53,6 +53,12 @@ export const ChatBot: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    const openChat = () => setOpen(true);
+    window.addEventListener('ainzigartig:open-chat', openChat);
+    return () => window.removeEventListener('ainzigartig:open-chat', openChat);
+  }, []);
 
   // Auto-scroll to bottom on new messages
   useEffect(() => {

@@ -69,49 +69,35 @@ export const KIAnalyse: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-base text-ink font-body">
-      <RouteMeta title="Website Opportunity Audit | Ainzigartig" description="Ein beispielhafter Audit für digitale Kontakt- und Informationswege." />
-      <section className="pt-28 pb-16 px-6 md:px-8">
-        <div className="max-w-[820px] mx-auto text-center">
+      <RouteMeta title="Website Opportunity Audit | Ainzigartig" description="Öffentliche Website analysieren und konkrete digitale Chancen priorisieren." />
+      <section className="pt-32 pb-20 md:pt-40 md:pb-24 px-6 md:px-8">
+        <div className="max-w-[900px] mx-auto text-center">
           <span className="inline-block text-xs font-bold uppercase tracking-[0.25em] text-accent border border-accent/30 bg-accent/5 px-3 py-1 mb-6">
             Opportunity Audit
           </span>
           <h1 className="font-editorial text-3xl sm:text-5xl md:text-6xl leading-[1.08] text-ink mb-6">
-            Von der Website-Beobachtung<br />
-            <span className="text-accent">zur prüfbaren Chance.</span>
+            Was Ihre Website über<br />
+            <span className="text-accent">digitale Chancen verrät.</span>
           </h1>
           <p className="text-muted text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-8">
-            Der Audit macht aus öffentlichen Signalen mögliche nächste Schritte. Keine Reifegrad-Show,
-            keine erfundenen Einsparungen – und keine automatische Umsetzung.
+            Geben Sie eine öffentliche URL ein. Der Audit untersucht Inhalte, Kontaktwege und erkennbare
+            Technologien und priorisiert mögliche Verbesserungen und KI-Anwendungsfälle.
           </p>
 
-          <div className="max-w-xl mx-auto border border-faint/30 p-5 text-left">
-            <p className="text-sm text-ink font-medium mb-1">Musteranalyse ansehen</p>
-            <p className="text-xs text-muted leading-relaxed mb-4">
-              Eine realistische, aber fiktive Auswertung: Beobachtung, Lösungsidee, Annahmen und nächster Prüfschritt.
-            </p>
-            <button
-              onClick={() => runAudit('sample')}
-              disabled={loading}
-              className="w-full px-6 py-3 bg-ink text-base text-sm font-bold hover:bg-ink/80 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
-            >
-              {loading ? 'Audit wird vorbereitet…' : 'Musteranalyse starten'}
-            </button>
-          </div>
-
           {externalWebsiteAuditsEnabled ? (
-            <div className="max-w-xl mx-auto mt-4 text-left">
-              <label htmlFor="audit-url" className="block text-xs uppercase tracking-[0.16em] text-faint mb-2">Öffentliche Website prüfen</label>
-              <div className="flex gap-3">
+            <div className="max-w-2xl mx-auto border border-faint/50 p-5 md:p-7 text-left">
+              <label htmlFor="audit-url" className="block text-xs uppercase tracking-[0.16em] text-muted mb-3">Öffentliche Website</label>
+              <div className="flex flex-col sm:flex-row gap-3">
                 <input id="audit-url" type="url" value={url} onChange={(event) => setUrl(event.target.value)}
-                  placeholder="https://ihre-website.de" className="flex-1 px-4 py-3 border border-faint/30 bg-transparent text-ink text-sm font-body placeholder:text-faint/50 focus:outline-none focus:border-accent transition-colors"
+                  placeholder="https://ihre-website.de" className="flex-1 px-4 py-3 border border-faint/60 bg-transparent text-ink text-sm font-body placeholder:text-faint focus:outline-none focus:border-accent transition-colors"
                   onKeyDown={(event) => event.key === 'Enter' && runAudit('external')} />
                 <button onClick={() => runAudit('external')} disabled={loading || !url.trim()}
-                  className="px-6 py-3 border border-ink text-ink text-sm font-bold hover:bg-ink hover:text-base disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer">
-                  Prüfen
+                  className="px-7 py-3 bg-ink text-base text-sm font-medium hover:bg-accent disabled:opacity-35 disabled:cursor-not-allowed transition-colors cursor-pointer">
+                  Website analysieren
                 </button>
               </div>
               <p className="text-xs text-faint mt-3 leading-relaxed">
-                Nur öffentliche Seiten. Der angegebene Inhalt wird zur Auswertung an den konfigurierten Audit-Service und das Sprachmodell übertragen. Bitte keine vertraulichen URLs eingeben.
+                Es werden ausschließlich öffentlich abrufbare HTML-Inhalte verarbeitet und zur KI-Auswertung an OpenAI übertragen. Keine Login- oder internen URLs eingeben.
               </p>
             </div>
           ) : (
@@ -119,6 +105,10 @@ export const KIAnalyse: React.FC = () => {
               Die Prüfung externer URLs wird erst nach einem kontrollierten Betriebs- und Datenschutz-Setup freigeschaltet. Die Musteranalyse zeigt bereits die tatsächliche Ergebnislogik.
             </p>
           )}
+
+          <button onClick={() => runAudit('sample')} disabled={loading} className="mt-5 text-sm text-accent underline underline-offset-4 disabled:opacity-40">
+            Stattdessen Musteranalyse öffnen
+          </button>
         </div>
       </section>
 
@@ -168,7 +158,7 @@ export const KIAnalyse: React.FC = () => {
             </div>
           </div>}
 
-          {result.analysis.missing_basics.length > 0 && <div className="mb-8"><h2 className="font-editorial text-xl text-ink mb-4">Offene Prüfpunkte</h2><ul className="space-y-2">{result.analysis.missing_basics.map((item, index) => <li key={`${item}-${index}`} className="flex items-start gap-2 text-sm text-muted"><span className="text-orange-500 mt-0.5">⚠</span>{item}</li>)}</ul></div>}
+          {result.analysis.missing_basics.length > 0 && <div className="mb-8"><h2 className="font-editorial text-xl text-ink mb-4">Offene Prüfpunkte</h2><ul className="space-y-2 border-t border-faint/50">{result.analysis.missing_basics.map((item, index) => <li key={`${item}-${index}`} className="grid grid-cols-[28px_1fr] gap-3 border-b border-faint/50 py-3 text-sm text-muted"><span className="text-[10px] text-faint tabular-nums pt-1">{String(index + 1).padStart(2, '0')}</span>{item}</li>)}</ul></div>}
 
           <div className="border border-accent/30 bg-accent/[0.03] p-6 mb-8"><p className="text-xs uppercase tracking-[0.2em] text-faint mb-3">Nächster sinnvoller Schritt</p><p className="text-sm text-ink leading-relaxed">{result.analysis.recommendation}</p>{result.analysis.tool_suggestion && <p className="text-xs text-accent font-medium mt-3">Möglicher Ansatz: {result.analysis.tool_suggestion}</p>}</div>
 

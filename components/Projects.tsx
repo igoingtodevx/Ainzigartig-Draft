@@ -117,22 +117,21 @@ export const Projects: React.FC = () => {
       <div className="max-w-[1200px] mx-auto">
         <div className="max-w-2xl mb-12u md:mb-16u">
           <p className="text-xs font-body uppercase tracking-[0.18em] text-muted mb-4u">
-            Aus der Werkstatt
+            Systeme & Arbeitsproben
           </p>
           <h1 className="font-editorial text-3xl md:text-5xl text-ink leading-[1.1] mb-4u">
-            Was wir bauen, bevor wir es verkaufen.
+            Was wir bauen. Und wie wir denken.
           </h1>
           <p className="text-base text-muted font-body leading-relaxed">
-            Ausgewählte Systeme, Arbeitsproben und öffentliche Experimente. Wir trennen
-            bewusst zwischen veröffentlichbaren Demos und abstrahierter Umsetzungserfahrung,
-            wenn Details vertraulich bleiben müssen.
+            Öffentliche Produkte, Live-Werkzeuge und ausgewählte Umsetzungserfahrung aus
+            Customer Interaction, Growth, Analytics und Applied AI.
           </p>
         </div>
 
         <div className="mb-16u">
           <div className="flex flex-wrap items-baseline justify-between gap-3 mb-6u">
             <h2 className="font-editorial text-2xl md:text-3xl text-ink">Ausgewählte Arbeitsproben</h2>
-            <span className="text-xs text-faint font-body uppercase tracking-[0.16em]">Abstrahiert · Details auf Anfrage</span>
+            <span className="text-xs text-faint font-body uppercase tracking-[0.16em]">Kundendetails vertraulich</span>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4u">
             {capabilityProofs.map((proof) => (
@@ -144,16 +143,8 @@ export const Projects: React.FC = () => {
               </article>
             ))}
           </div>
-          <p className="mt-5u max-w-3xl text-xs text-faint font-body leading-relaxed">Die Beschreibungen sind aus Vertraulichkeitsgründen abstrahiert. Sie enthalten keine Kundennamen, Kennzahlen, Quellcode oder Aussagen über Ergebnisse, die nicht öffentlich freigegeben sind.</p>
+          <p className="mt-5u max-w-3xl text-xs text-faint font-body leading-relaxed">Kundennamen und vertrauliche Betriebsdaten bleiben geschützt. Architektur, Systemlogik und umgesetzte Fähigkeiten werden so konkret wie möglich beschrieben.</p>
         </div>
-
-        {error && (
-          <div className="border border-faint bg-surface p-6u rounded">
-            <p className="text-sm text-muted font-body">
-              Projekte konnten nicht geladen werden: {error}
-            </p>
-          </div>
-        )}
 
         {!projects && !error && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4u">
@@ -254,7 +245,7 @@ export const Projects: React.FC = () => {
         )}
 
         <div className="mt-16u pt-6u border-t border-faint/40 max-w-xl">
-          <p className="text-sm text-muted font-body leading-relaxed">Öffentliche Repositories und Live-Demos ergänzen die abstrahierten Arbeitsproben. Ein Link bedeutet: Das Artefakt ist öffentlich; eine Arbeitsprobe bedeutet: Die zugrundeliegende Fähigkeit wurde gebaut, Details bleiben geschützt.</p>
+          <p className="text-sm text-muted font-body leading-relaxed">Öffentliche Repositories und Live-Systeme machen Teile der Arbeit direkt prüfbar. Weitere Projektdetails können in einem konkreten Gespräch eingeordnet werden.</p>
         </div>
       </div>
     </section>
