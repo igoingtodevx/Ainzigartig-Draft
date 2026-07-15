@@ -68,10 +68,10 @@ const Hero: React.FC = () => (
       {/* Trust bar */}
       <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-xs md:text-sm text-gray-400 font-mono">
         {[
-          'Echtzeit-Daten aus allen relevanten Quellen',
-          'Keine Data-Science-Kenntnisse nötig',
-          'DSGVO-konform & EU-Serverstandorte',
-          'Live in 1–2 Wochen',
+          'Datenquellen und Kennzahlen zuerst klären',
+          'Entscheidungsfragen statt Dashboard-Dekoration',
+          'Zugriffe, Aufbewahrung und Datenschutz bewusst gestalten',
+          'Umfang nach Daten- und Integrationscheck',
         ].map((item) => (
           <span key={item} className="flex items-center gap-1.5">
             <span className="text-neon-pink">✓</span> {item}
@@ -87,10 +87,10 @@ const Hero: React.FC = () => (
 /* ───────────── STAT BAR ───────────── */
 
 const stats = [
-  { value: 'Echtzeit', label: 'statt wöchentliche Excel-Reports', color: 'text-neon-pink' },
-  { value: '1 Ort', label: 'für alle Vertriebs- und Recruiting-KPIs', color: 'text-neon-cyan' },
-  { value: '3x', label: 'schnellere Entscheidungsfindung im Management', color: 'text-neon-yellow' },
-  { value: 'Ø 6 Std.', label: 'pro Woche gespart durch automatisiertes Reporting', color: 'text-neon-pink' },
+  { value: 'Klarheit', label: 'welche Frage welche Kennzahl beantworten soll', color: 'text-neon-pink' },
+  { value: '1 Modell', label: 'Begriffe und Datenquellen nachvollziehbar verbinden', color: 'text-neon-cyan' },
+  { value: 'Signale', label: 'Abweichungen sichtbar und besprechbar machen', color: 'text-neon-yellow' },
+  { value: 'Review', label: 'Datenqualität vor Automatisierung prüfen', color: 'text-neon-pink' },
 ];
 
 const StatBar: React.FC = () => (
@@ -284,11 +284,11 @@ const Prozess: React.FC = () => (
     <div className="max-w-4xl mx-auto text-center">
       <SectionLabel>Wie es läuft</SectionLabel>
       <SectionHeadline>
-        In zwei Wochen von Datenchaos<br className="hidden sm:block" />
-        zu klaren Entscheidungsgrundlagen.
+        Von verteilten Datenquellen<br className="hidden sm:block" />
+        zu belastbaren Entscheidungsgrundlagen.
       </SectionHeadline>
       <LeadText>
-        Kein monatelanges BI-Projekt. Wir haben klare Prozesse für den Aufbau – und bringen Erfahrung aus vergleichbaren Implementierungen mit.
+        Wir beginnen mit Entscheidung, Datenquelle, Definition und Verantwortung. Der Umfang ergibt sich daraus – nicht aus einer pauschalen Lieferzeit.
       </LeadText>
 
       <div className="mt-14 space-y-0 text-left relative">
@@ -459,12 +459,12 @@ const Zielgruppe: React.FC = () => (
 /* ───────────── VERGLEICH ───────────── */
 
 const comparisonRows = [
-  { label: 'Reporting', before: 'Manuell, wöchentlich', after: 'Automatisch, in Echtzeit' },
-  { label: 'Datenbasis', before: 'Mehrere Systeme, inkonsistent', after: 'Eine Quelle, immer aktuell' },
-  { label: 'Reaktionszeit', before: 'Wochen nach dem Problem', after: 'Sofort per Alert' },
+  { label: 'Reporting', before: 'Manuell, uneinheitlich', after: 'klarer Rhythmus und Eigentümer' },
+  { label: 'Datenbasis', before: 'Mehrere Systeme, inkonsistent', after: 'Begriffe und Quellen dokumentiert' },
+  { label: 'Reaktionszeit', before: 'Probleme spät sichtbar', after: 'relevante Abweichungen gezielt markieren' },
   { label: 'Entscheidungsgrundlage', before: 'Bauchgefühl & Excel', after: 'KI-gestützte Analyse' },
   { label: 'Managementblick', before: 'Vergangenheit', after: 'Gegenwart & Trends' },
-  { label: 'Reportingaufwand', before: 'Ø 6 Std./Woche', after: 'Unter 30 Minuten' },
+  { label: 'Reportingaufwand', before: 'wiederkehrende manuelle Arbeit', after: 'Potenzial erst nach Prozessmessung bewerten' },
 ];
 
 const Vergleich: React.FC = () => (

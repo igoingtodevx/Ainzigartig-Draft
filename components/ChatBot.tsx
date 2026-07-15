@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
    ChatBot — Globaler AINZIGARTIG Assistent.
    Floating button bottom-right, öffnet ein Side-Panel.
    Anwaltskanzlei-Design: Cream + Deep Green, IBM Plex Sans, keine Schatten.
-   Backend: /api/chat → Gemini 2.5 Flash (mit Rate-Limit & Cooldown).
+   Backend: /api/chat → serverseitiger KI-Provider (mit Rate-Limit & Cooldown).
    ─────────────────────────────────────────────────────────────────────────── */
 
 interface ChatMessage {
@@ -142,6 +142,15 @@ export const ChatBot: React.FC = () => {
     }
   }
 
+  function clearHistory() {
+    setMessages([]);
+    try {
+      sessionStorage.removeItem(STORAGE_KEY);
+    } catch {
+      // Storage may be unavailable.
+    }
+  }
+
   const cooldownSec = cooldownUntil ? Math.max(0, Math.ceil((cooldownUntil - Date.now()) / 1000)) : 0;
   const canSend = input.trim().length >= 2 && !busy && cooldownSec === 0;
 
@@ -186,12 +195,16 @@ export const ChatBot: React.FC = () => {
             <div>
               <p className="text-sm font-body text-ink">Ainzigartig Assistent</p>
               <p className="text-[11px] font-body text-muted mt-1">
-                Antwortet zu unseren Services und Abläufen
+                KI-gestützt · bitte keine vertraulichen Daten eingeben
               </p>
             </div>
             <span className="text-[10px] font-body uppercase tracking-[0.12em] text-accent border border-accent/30 rounded-sm px-2 py-1">
               live
             </span>
+          </div>
+          <div className="px-4 py-2 border-b border-faint/50 flex items-center justify-between gap-3">
+            <p className="text-[10px] text-muted">Verlauf bleibt nur in dieser Browser-Sitzung.</p>
+            <button type="button" onClick={clearHistory} className="text-[10px] text-accent hover:underline">Verlauf löschen</button>
           </div>
 
           {/* Messages */}

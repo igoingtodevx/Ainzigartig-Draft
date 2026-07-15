@@ -88,10 +88,10 @@ const Hero: React.FC = () => (
 /* ───────────── STAT BAR ───────────── */
 
 const stats = [
-  { value: '60%', label: 'schnellere Zeit bis zur Einstellung', color: 'text-neon-yellow' },
-  { value: '80%', label: 'weniger manuelle Sichtungszeit', color: 'text-neon-cyan' },
-  { value: '3x', label: 'mehr Bewerbungen – gleicher Aufwand', color: 'text-neon-pink' },
-  { value: 'Ø 11 Tage', label: 'bis zur qualifizierten Vorauswahl statt 4–6 Wochen', color: 'text-neon-yellow' },
+  { value: 'Struktur', label: 'Kriterien vor der Sichtung festlegen', color: 'text-neon-yellow' },
+  { value: 'Review', label: 'Vorauswahl nachvollziehbar prüfen', color: 'text-neon-cyan' },
+  { value: 'Übergabe', label: 'Fachentscheider gezielt einbinden', color: 'text-neon-pink' },
+  { value: 'Schutz', label: 'Datenschutz und Fairness mitdenken', color: 'text-neon-yellow' },
 ];
 
 const StatBar: React.FC = () => (
@@ -285,11 +285,11 @@ const Prozess: React.FC = () => (
     <div className="max-w-4xl mx-auto text-center">
       <SectionLabel>Wie es läuft</SectionLabel>
       <SectionHeadline>
-        Aufgesetzt in zwei Wochen.<br className="hidden sm:block" />
-        Ergebnisse ab der ersten Stelle.
+        Vom Anforderungsprofil<br className="hidden sm:block" />
+        zum prüfbaren Auswahlprozess.
       </SectionHeadline>
       <LeadText>
-        Kein monatelanges Einführungsprojekt. Wir analysieren Ihre bestehenden Prozesse, integrieren die KI in Ihre Infrastruktur und trainieren das System auf Ihre Anforderungsprofile – schnell und ohne großen internen Aufwand.
+        Wir analysieren vorhandene Schritte, Daten und Entscheidungspunkte. Erst dann wird ein unterstützender Workflow mit fachlicher Kontrolle gestaltet.
       </LeadText>
 
       <div className="mt-14 space-y-0 text-left relative">
@@ -344,8 +344,8 @@ const useCases = [
     category: 'Schnelle Besetzung',
     icon: 'bolt',
     title: 'Wenn eine Stelle gestern hätte besetzt sein sollen',
-    text: 'KI verkürzt die Vorauswahl von Wochen auf Tage. Gerade bei dringendem Bedarf entscheidet das, ob die Stelle intern oder extern besetzt werden kann.',
-    result: 'Reaktionszeit als Wettbewerbsvorteil',
+    text: 'Ein klarer Workflow kann eingehende Unterlagen einordnen und den nächsten fachlichen Schritt vorbereiten. Die finale Auswahl bleibt eine verantwortete Entscheidung.',
+    result: 'Verlässliche Übergabe statt ungeprüfter Automatisierung',
     color: 'yellow' as const,
   },
   {
@@ -460,12 +460,12 @@ const Zielgruppe: React.FC = () => (
 /* ───────────── VERGLEICH ───────────── */
 
 const comparisonRows = [
-  { label: 'CV-Sichtung', before: '2–5 Tage manuell', after: 'Minuten, automatisch' },
+  { label: 'CV-Sichtung', before: 'Uneinheitlich und manuell', after: 'Kriteriengestützt mit Review' },
   { label: 'Kandidatenvergleich', before: 'Subjektiv, inkonsistent', after: 'Strukturiert, nachvollziehbar' },
-  { label: 'Erste Rückmeldung', before: 'Oft nach Tagen', after: 'Automatisch innerhalb von Stunden' },
-  { label: 'Parallele Stellen', before: 'Kaum skalierbar', after: 'Beliebig skalierbar' },
-  { label: 'Bewerberdaten', before: 'Verteilt in E-Mail-Postfächern', after: 'Zentral, strukturiert, DSGVO-konform' },
-  { label: 'Besetzungsdauer', before: 'Ø 6–10 Wochen', after: 'Ø 3–5 Wochen' },
+  { label: 'Erste Rückmeldung', before: 'manuell nach Priorität', after: 'klarer Eingangs- und Übergabeprozess' },
+  { label: 'Parallele Stellen', before: 'schwer vergleichbar', after: 'einheitliche Kriterien pro Rolle' },
+  { label: 'Bewerberdaten', before: 'Verteilt in E-Mail-Postfächern', after: 'Zugriffe und Löschung bewusst gestalten' },
+  { label: 'Besetzungsdauer', before: 'ohne klare Transparenz', after: 'als Messgröße im Prozess beobachten' },
 ];
 
 const Vergleich: React.FC = () => (

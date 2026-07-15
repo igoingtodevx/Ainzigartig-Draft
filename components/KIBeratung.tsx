@@ -41,7 +41,7 @@ const Hero: React.FC = () => (
       </h1>
 
       <p className="text-gray-400 text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-mono mb-10">
-        Wir helfen kleinen und mittelständischen Unternehmen dabei, konkrete KI-Anwendungen zu finden und umzusetzen – die wirklich Zeit sparen, Kosten senken und Ihr Team entlasten. Kein Buzzword-Bingo, kein Pilotprojekt, das im Nichts endet.
+        Wir helfen kleinen und mittelständischen Unternehmen, konkrete KI-Anwendungen zu priorisieren, zu bauen und kontrolliert zu betreiben. Ausgangspunkt sind Prozesse, Daten, Verantwortung und ein messbarer Zweck – nicht Buzzwords.
       </p>
 
       {/* CTAs */}
@@ -50,7 +50,7 @@ const Hero: React.FC = () => (
           to="/#kontakt"
           className="relative px-8 py-3 text-sm font-bold bg-primary text-white border-2 border-primary hover:bg-primary-hover shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-200 flex items-center gap-2"
         >
-          Kostenloses Erstgespräch buchen
+          Gespräch anfragen
           <span className="material-symbols-outlined text-sm">arrow_forward</span>
         </Link>
         <a
@@ -65,10 +65,10 @@ const Hero: React.FC = () => (
       {/* Trust bar */}
       <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-xs md:text-sm text-gray-400 font-mono">
         {[
-          'Kein Sales-Pitch – echtes Gespräch',
-          'DSGVO-konform von Anfang an',
-          'Herstellerunabhängig',
-          '30 Min. kostenlos',
+          'Klarer Blick auf Nutzen und Grenzen',
+          'Daten- und Datenschutzfragen zuerst klären',
+          'Werkzeuge nach Anforderungen bewerten',
+          'Nächsten Schritt gemeinsam festlegen',
         ].map((item) => (
           <span key={item} className="flex items-center gap-1.5">
             <span className="text-neon-cyan">✓</span> {item}
@@ -126,7 +126,7 @@ const Problem: React.FC = () => (
         Kaum einer sagt Ihnen, was Sie damit konkret anfangen sollen.
       </SectionHeadline>
       <LeadText>
-        Als KMU haben Sie weder Zeit noch Budget, um monatelang zu experimentieren. Sie brauchen keine Theorie – Sie brauchen Ergebnisse.
+        Als KMU brauchen Sie keine allgemeine Theorie. Sie brauchen einen Weg, der Nutzen, Aufwand, Daten, Risiken und Betrieb konkret gegeneinander abwägt.
       </LeadText>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12 text-left">
@@ -165,7 +165,7 @@ const leistungen = [
   },
   {
     title: 'DSGVO-Check',
-    text: 'Jeder Use Case wird auf datenschutzrechtliche Compliance geprüft. Sie wissen genau, was erlaubt ist – und was nicht.',
+    text: 'Datenschutz, Zugriffsrechte und Aufbewahrung werden als Projektanforderungen sichtbar gemacht. Rechtsberatung oder eine verbindliche Compliance-Freigabe ersetzen wir nicht.',
     icon: 'verified_user',
   },
   {
@@ -174,8 +174,8 @@ const leistungen = [
     icon: 'rocket_launch',
   },
   {
-    title: 'Herstellerunabhängige Beratung',
-    text: 'Wir verdienen kein Geld mit Tool-Empfehlungen. Was wir empfehlen, empfehlen wir weil es für Sie das Richtige ist.',
+    title: 'Anforderungsorientierte Auswahl',
+    text: 'Modelle und Werkzeuge werden gegen Datenfluss, Integrationen, Kosten, Betrieb und Risiko geprüft – nicht nach Markennamen ausgewählt.',
     icon: 'balance',
   },
 ];
@@ -220,7 +220,7 @@ const Angebot: React.FC = () => (
         <span className="text-4xl">🛡️</span>
         <div>
           <h4 className="text-sm font-bold text-neon-yellow font-display mb-2 uppercase tracking-wider">
-            DSGVO-Konformität ist bei uns keine Fußnote.
+            Datenschutz ist eine Projektanforderung, kein Werbeversprechen.
           </h4>
           <p className="text-gray-400 text-sm leading-relaxed font-mono">
             Viele Unternehmen nutzen KI-Tools, ohne sich über die Datenverarbeitung Gedanken zu machen. Wir stellen sicher, dass Ihre KI-Strategie rechtssicher ist – mit Serverstandorten in der EU, klaren Verträgen und praxistauglichen Datenschutzlösungen.
@@ -236,8 +236,8 @@ const Angebot: React.FC = () => (
 const steps = [
   {
     num: '01',
-    title: 'Kostenloses Erstgespräch (30 Min.)',
-    text: 'Wir lernen Ihr Unternehmen kennen, verstehen Ihre aktuellen Herausforderungen und klären, ob und wie wir helfen können. Kein Pitch, keine versteckten Absichten.',
+    title: 'Erstes Orientierungsgespräch',
+    text: 'Wir klären Ausgangslage, mögliche Prozessgrenze und offene Voraussetzungen. Daraus folgt ein sinnvoller nächster Schritt oder die ehrliche Empfehlung, noch nicht zu starten.',
   },
   {
     num: '02',
@@ -376,7 +376,7 @@ const UseCases: React.FC = () => (
       <SectionLabel>Beispiele aus der Praxis</SectionLabel>
       <SectionHeadline>Was KI für KMU konkret leisten kann.</SectionHeadline>
       <LeadText>
-        Das sind reale Anwendungsfälle – keine Zukunftsmusik, keine Millionen-Budgets nötig.
+        Das sind typische Anwendungsmuster. Ob sie passen, entscheidet sich erst an Prozess, Daten, Verantwortlichkeiten und Integrationsumfeld.
       </LeadText>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-14 text-left">
@@ -418,7 +418,7 @@ const FinalCTA: React.FC = () => (
         <span className="text-neon-cyan text-glow-cyan">konkret einzusetzen?</span>
       </h2>
       <p className="text-gray-400 font-mono text-sm md:text-base mb-8 max-w-xl mx-auto">
-        30 Minuten, kostenlos, ohne Verpflichtung. Wir besprechen, wo KI bei Ihnen den größten Unterschied machen kann.
+        Wir besprechen, welcher Einstieg sinnvoll ist – und welche Voraussetzungen vorher noch geklärt werden müssen.
       </p>
 
       <Link
@@ -431,8 +431,8 @@ const FinalCTA: React.FC = () => (
 
       <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mt-8 text-xs text-gray-500 font-mono">
         <span>✓ Kein Sales-Pitch</span>
-        <span>✓ DSGVO-konform</span>
-        <span>✓ Herstellerunabhängig</span>
+        <span>✓ Datenschutz projektbezogen prüfen</span>
+        <span>✓ Anforderungen vor Toolauswahl</span>
       </div>
     </div>
   </section>

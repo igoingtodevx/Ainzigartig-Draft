@@ -12,6 +12,12 @@ export const Footer: React.FC = () => {
           <Link to="/" className="hover:text-ink transition-colors duration-200">
             Startseite
           </Link>
+          <Link to="/projekte" className="hover:text-ink transition-colors duration-200">
+            Arbeitsproben
+          </Link>
+          <Link to="/preise" className="hover:text-ink transition-colors duration-200">
+            Zusammenarbeit
+          </Link>
           <Link to="/impressum" className="hover:text-ink transition-colors duration-200">
             Impressum
           </Link>

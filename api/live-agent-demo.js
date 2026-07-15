@@ -4,6 +4,11 @@
 // PDF inputs are pre-rendered to images client-side via pdf.js.
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY || '';
+const OPENAI_MODEL = process.env.OPENAI_DOCUMENT_MODEL || 'gpt-5.4-mini';
+const DOCUMENT_UPLOADS_ENABLED = process.env.DOCUMENT_UPLOADS_ENABLED === 'true';
+const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000;
+const MAX_REQUESTS_PER_HOUR = 12;
+const rateLimitMap = new Map();
 
 const SYSTEM_PROMPT = `Du bist der "Ainzigartig Dokument-Agent" — ein intelligenter KI-Assistent fuer den deutschen Mittelstand.
 Deine Aufgabe: Eingehende Dokumente (Rechnungen, E-Mails, Angebote, Vertraege, Bestellungen, Mahnungen, Lieferscheine) lesen, verstehen, strukturieren und die naechsten Schritte vorschlagen.
@@ -93,7 +98,7 @@ async function callOpenAIText(prompt) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: OPENAI_MODEL,
         messages: [
           { role: 'system', content: SYSTEM_PROMPT },
           { role: 'user', content: prompt },
@@ -138,7 +143,7 @@ async function callOpenAIVision(images, prompt) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: OPENAI_MODEL,
         messages: [
           { role: 'system', content: SYSTEM_PROMPT },
           { role: 'user', content },
@@ -181,9 +186,50 @@ function parseLLMJson(raw) {
 
 
 function sendJson(res, status, data) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Content-Type', 'application/json');
   res.status(status).json(data);
+}
+
+function getClientIP(req) {
+  const forwarded = req.headers?.['x-forwarded-for'];
+  return typeof forwarded === 'string' ? forwarded.split(',')[0].trim() : req.socket?.remoteAddress || 'unknown';
+}
+
+function checkRateLimit(ip) {
+  const now = Date.now();
+  const current = rateLimitMap.get(ip);
+  if (!current || now - current.startedAt > RATE_LIMIT_WINDOW_MS) {
+    rateLimitMap.set(ip, { startedAt: now, count: 1 });
+    return true;
+  }
+  if (current.count >= MAX_REQUESTS_PER_HOUR) return false;
+  current.count += 1;
+  return true;
+}
+
+function normalizeAnalysis(value) {
+  if (!value || typeof value !== 'object') return null;
+  const confidence = ['Hoch', 'Mittel', 'Niedrig'].includes(value.confidence) ? value.confidence : 'Niedrig';
+  const actions = Array.isArray(value.suggested_actions) ? value.suggested_actions.slice(0, 4).flatMap((action) =>
+    action && typeof action === 'object' && typeof action.title === 'string'
+      ? [{ title: action.title.slice(0, 160), priority: ['Hoch', 'Mittel', 'Niedrig'].includes(action.priority) ? action.priority : 'Mittel', details: String(action.details || '').slice(0, 500) }]
+      : [],
+  ) : [];
+  const risks = Array.isArray(value.risk_flags) ? value.risk_flags.slice(0, 4).flatMap((risk) =>
+    risk && typeof risk === 'object' && typeof risk.message === 'string'
+      ? [{ level: ['Hoch', 'Mittel', 'Info'].includes(risk.level) ? risk.level : 'Info', message: risk.message.slice(0, 500) }]
+      : [],
+  ) : [];
+  if (!String(value.document_type || '').trim() || !String(value.summary || '').trim() || actions.length === 0) return null;
+  const keyFields = value.key_fields && typeof value.key_fields === 'object'
+    ? Object.fromEntries(Object.entries(value.key_fields).slice(0, 12).map(([key, field]) => [String(key).slice(0, 80), String(field).slice(0, 400)]))
+    : {};
+  return {
+    document_type: String(value.document_type).slice(0, 100), document_type_icon: String(value.document_type_icon || 'description').replace(/[^a-z0-9_]/gi, '').slice(0, 40), confidence,
+    key_fields: keyFields, suggested_actions: actions, risk_flags: risks, summary: String(value.summary).slice(0, 1000),
+    agent_reasoning: String(value.agent_reasoning || 'Erkennungsbasis wurde aus sichtbaren Dokumentmerkmalen abgeleitet.').slice(0, 400),
+    execution_status: 'Keine Aktion wurde automatisch ausgeführt.',
+  };
 }
 
 
@@ -201,13 +247,6 @@ function validateImage(img) {
 
 
 export default async function handler(req, res) {
-  if (req.method === 'OPTIONS') {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    return res.status(200).end();
-  }
-
   if (req.method === 'GET' && (req.url === '/health' || req.url === '/api/live-agent-demo/health')) {
     return sendJson(res, 200, {
       status: 'ok',
@@ -219,6 +258,10 @@ export default async function handler(req, res) {
 
   if (req.method !== 'POST') {
     return sendJson(res, 405, { error: 'Method not allowed' });
+  }
+
+  if (!checkRateLimit(getClientIP(req))) {
+    return sendJson(res, 429, { error: 'Demo-Limit erreicht. Bitte in einer Stunde erneut versuchen.' });
   }
 
   try {
@@ -233,14 +276,17 @@ export default async function handler(req, res) {
       if (result.error) {
         return sendJson(res, 502, { error: `LLM fehlgeschlagen: ${result.error}` });
       }
-      const analysis = parseLLMJson(result.text);
-      if (!analysis || Object.keys(analysis).length === 0) {
+      const analysis = normalizeAnalysis(parseLLMJson(result.text));
+      if (!analysis) {
         return sendJson(res, 502, { error: 'Antwort konnte nicht geparst werden.' });
       }
       return sendJson(res, 200, analysis);
     }
 
     if (mode === 'upload') {
+      if (!DOCUMENT_UPLOADS_ENABLED) {
+        return sendJson(res, 503, { error: 'Eigene Dokumente sind in dieser Vorschau bewusst deaktiviert. Bitte nutzen Sie die anonymisierten Beispiele.' });
+      }
       // New: client sends pre-rendered images (PDFs already converted in browser)
       const images = body.images;
       if (!Array.isArray(images) || images.length === 0) {
@@ -258,8 +304,8 @@ export default async function handler(req, res) {
       if (result.error) {
         return sendJson(res, 502, { error: `LLM fehlgeschlagen: ${result.error}` });
       }
-      const analysis = parseLLMJson(result.text);
-      if (!analysis || Object.keys(analysis).length === 0) {
+      const analysis = normalizeAnalysis(parseLLMJson(result.text));
+      if (!analysis) {
         return sendJson(res, 502, { error: 'Antwort konnte nicht geparst werden.' });
       }
       return sendJson(res, 200, analysis);

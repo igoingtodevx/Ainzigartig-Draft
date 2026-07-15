@@ -21,6 +21,45 @@ interface Project {
   live_url: string;
 }
 
+const capabilityProofs = [
+  {
+    category: 'Customer Interaction',
+    title: 'Service-Agent & Sales-Funnel',
+    description: 'Landingpage, Unterseiten und qualifizierender Funnel für einen KI-gestützten Service-Use-Case — vom ersten Interesse bis zur strukturierten Anfrage.',
+    proof: 'Produktoberfläche, Beratungslogik und Funnel als zusammenhängendes System gedacht.',
+  },
+  {
+    category: 'Growth System',
+    title: 'Experimentation & CRO Agent',
+    description: 'Systemkonzept für A/B-Tests mit Datenbank, Oberfläche für Conversion-Verantwortliche und Kontextschicht für strukturierte Testhypothesen.',
+    proof: 'Nicht nur Analyse, sondern ein Workflow für Experimente und nächste Entscheidungen.',
+  },
+  {
+    category: 'Decision Intelligence',
+    title: 'Marketing-Budget-Modell',
+    description: 'Internes Entscheidungswerkzeug zur Budgetallokation anhand von Marktparametern und Grenzkosten.',
+    proof: 'Controlling-Logik wird als nutzbare Oberfläche statt als statische Auswertung gebaut.',
+  },
+  {
+    category: 'Applied AI',
+    title: 'Multimodale Design-Evaluation',
+    description: 'Datensatzabhängiger Ansatz, um Produktdesigns für neue Märkte strukturiert zu evaluieren.',
+    proof: 'Modellqualität, Datengrundlage und Entscheidungskriterium werden gemeinsam gedacht.',
+  },
+  {
+    category: 'Digital Product',
+    title: 'Vertragsberater für Energie',
+    description: 'Digitaler Beratungsfluss zur strukturierten Auswahl von Strom- und Gasverträgen — mit klaren Fragen statt undurchsichtiger Vergleichslogik.',
+    proof: 'Komplexe Auswahl wird als verständliche, kontrollierbare Customer Journey übersetzt.',
+  },
+  {
+    category: 'Revenue Operations',
+    title: 'Lead-Qualification Workflow',
+    description: 'Recherche, Qualifizierung, Clusterung und Content-Routing für Leads mit CRM-Anschluss.',
+    proof: 'Marketing- und Vertriebsarbeit werden über einen nachvollziehbaren Datenfluss verbunden.',
+  },
+];
+
 const STATUS_LABEL: Record<Project['status'], string> = {
   live: 'live',
   beta: 'beta',
@@ -84,11 +123,28 @@ export const Projects: React.FC = () => {
             Was wir bauen, bevor wir es verkaufen.
           </h1>
           <p className="text-base text-muted font-body leading-relaxed">
-            Jedes Projekt entsteht aus einem realen Problem — entweder für
-            unsere Kunden oder für uns selbst. Hier sind die, die wir öffentlich
-            zeigen. Jedes einzelne läuft live, ist ehrlich benannt und darf
-            kritisiert werden.
+            Ausgewählte Systeme, Arbeitsproben und öffentliche Experimente. Wir trennen
+            bewusst zwischen veröffentlichbaren Demos und abstrahierter Umsetzungserfahrung,
+            wenn Details vertraulich bleiben müssen.
           </p>
+        </div>
+
+        <div className="mb-16u">
+          <div className="flex flex-wrap items-baseline justify-between gap-3 mb-6u">
+            <h2 className="font-editorial text-2xl md:text-3xl text-ink">Ausgewählte Arbeitsproben</h2>
+            <span className="text-xs text-faint font-body uppercase tracking-[0.16em]">Abstrahiert · Details auf Anfrage</span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4u">
+            {capabilityProofs.map((proof) => (
+              <article key={proof.title} className="border border-faint/60 bg-transparent p-6u rounded flex flex-col">
+                <span className="text-[10px] font-body uppercase tracking-[0.18em] text-muted mb-3u">{proof.category}</span>
+                <h3 className="font-editorial text-xl text-ink leading-tight mb-3u">{proof.title}</h3>
+                <p className="text-sm text-muted font-body leading-relaxed mb-5u flex-grow">{proof.description}</p>
+                <p className="pt-4u border-t border-faint/40 text-xs text-accent font-body leading-relaxed">{proof.proof}</p>
+              </article>
+            ))}
+          </div>
+          <p className="mt-5u max-w-3xl text-xs text-faint font-body leading-relaxed">Die Beschreibungen sind aus Vertraulichkeitsgründen abstrahiert. Sie enthalten keine Kundennamen, Kennzahlen, Quellcode oder Aussagen über Ergebnisse, die nicht öffentlich freigegeben sind.</p>
         </div>
 
         {error && (
@@ -198,11 +254,7 @@ export const Projects: React.FC = () => {
         )}
 
         <div className="mt-16u pt-6u border-t border-faint/40 max-w-xl">
-          <p className="text-sm text-muted font-body leading-relaxed">
-            Wir zeigen nur, was tatsächlich gebaut wurde. Keine Mockups, keine
-            Konzepte, keine Versprechen. Wenn ein Projekt hier auftaucht, läuft
-            es irgendwo live.
-          </p>
+          <p className="text-sm text-muted font-body leading-relaxed">Öffentliche Repositories und Live-Demos ergänzen die abstrahierten Arbeitsproben. Ein Link bedeutet: Das Artefakt ist öffentlich; eine Arbeitsprobe bedeutet: Die zugrundeliegende Fähigkeit wurde gebaut, Details bleiben geschützt.</p>
         </div>
       </div>
     </section>

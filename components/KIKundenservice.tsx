@@ -54,7 +54,7 @@ const Hero: React.FC = () => (
           to="/#kontakt"
           className="relative px-8 py-3 text-sm font-bold bg-primary text-white border-2 border-primary hover:bg-primary-hover shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-200 flex items-center gap-2"
         >
-          Kostenlose Demo ansehen
+          Demo ansehen
           <span className="material-symbols-outlined text-sm">arrow_forward</span>
         </Link>
         <a
@@ -69,10 +69,10 @@ const Hero: React.FC = () => (
       {/* Trust bar */}
       <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-xs md:text-sm text-gray-400 font-mono">
         {[
-          'Trainiert auf Ihren Daten – nicht auf generischem Wissen',
-          'DSGVO-konform & Daten bleiben bei Ihnen',
-          'Live in 2–4 Wochen',
-          'Kein Entwickler-Team nötig',
+          'Wissensbasis und Antworten werden gemeinsam geprüft',
+          'Datenfluss und Datenschutz werden vorab geklärt',
+          'Umfang nach Prozess- und Integrationscheck',
+          'Menschliche Übergabe für komplexe Fälle',
         ].map((item) => (
           <span key={item} className="flex items-center gap-1.5">
             <span className="text-neon-cyan">✓</span> {item}
@@ -88,10 +88,10 @@ const Hero: React.FC = () => (
 /* ───────────── STAT BAR ───────────── */
 
 const stats = [
-  { value: '80%', label: 'der Anfragen automatisch beantwortet', color: 'text-neon-cyan' },
-  { value: '24/7', label: 'Erreichbarkeit ohne Mehrkosten', color: 'text-neon-pink' },
-  { value: '< 3 Sek.', label: 'durchschnittliche Antwortzeit', color: 'text-neon-yellow' },
-  { value: '2–4 Wo.', label: 'bis zur Livestellung', color: 'text-neon-cyan' },
+  { value: 'Triage', label: 'Routinefälle strukturieren und einordnen', color: 'text-neon-cyan' },
+  { value: 'Übergabe', label: 'komplexe Fälle gezielt an Menschen geben', color: 'text-neon-pink' },
+  { value: 'Wissen', label: 'freigegebene Informationen konsistent nutzen', color: 'text-neon-yellow' },
+  { value: 'Kontrolle', label: 'Antworten testen und nachschärfen', color: 'text-neon-cyan' },
 ];
 
 const StatBar: React.FC = () => (
@@ -282,11 +282,11 @@ const Prozess: React.FC = () => (
     <div className="max-w-4xl mx-auto text-center">
       <SectionLabel>Wie es läuft</SectionLabel>
       <SectionHeadline>
-        In vier Wochen live –<br className="hidden sm:block" />
-        ohne IT-Projekt.
+        Vom Supportprozess<br className="hidden sm:block" />
+        zur kontrollierten Automatisierung.
       </SectionHeadline>
       <LeadText>
-        Sie brauchen kein eigenes Entwicklerteam und keine aufwendige Infrastruktur. Wir bringen alles mit und übergeben ein fertiges, laufendes System.
+        Umfang und Betrieb richten sich nach Wissensbasis, Systemen, Datenfluss und gewünschter menschlicher Übergabe.
       </LeadText>
 
       <div className="mt-14 space-y-0 text-left relative">
@@ -418,7 +418,7 @@ const targetAudience = [
 
 const notFor = [
   'Unternehmen mit unter 5 Support-Anfragen täglich – der Aufwand wäre größer als der Nutzen, das sagen wir Ihnen lieber direkt.',
-  'Wer einen „fertigen Bot von der Stange" sucht, der morgen läuft – gute Qualität braucht 2–4 Wochen Aufbau.',
+  'Wer einen Bot ohne geprüfte Wissensbasis, Testfälle und Verantwortliche sofort produktiv schalten möchte.',
   'Unternehmen, die keine Wissensbasis haben und auch nicht bereit sind, eine aufzubauen – ohne strukturiertes Wissen kann kein Assistent gut antworten.',
 ];
 
@@ -458,12 +458,12 @@ const Zielgruppe: React.FC = () => (
 /* ───────────── VERGLEICH ───────────── */
 
 const comparisonRows = [
-  { label: 'Erreichbarkeit', before: 'Mo–Fr, 9–17 Uhr', after: '24/7, 365 Tage' },
-  { label: 'Antwortzeit', before: 'Minuten bis Stunden', after: 'Unter 3 Sekunden' },
-  { label: 'Routineanfragen', before: 'Manuell bearbeitet', after: 'Automatisch gelöst' },
+  { label: 'Erreichbarkeit', before: 'Uneinheitliche Eingangskanäle', after: 'klarer digitaler Einstieg nach Freigabe' },
+  { label: 'Antwortzeit', before: 'manuell priorisiert', after: 'Routinefälle vorstrukturiert' },
+  { label: 'Routineanfragen', before: 'Manuell bearbeitet', after: 'mit Regeln und Review unterstützt' },
   { label: 'Teamauslastung', before: 'Gebunden durch Routinefälle', after: 'Frei für komplexe Fälle' },
-  { label: 'Skalierung', before: 'Mehr Anfragen = mehr Personal', after: 'Mehr Anfragen = gleiche Kosten' },
-  { label: 'Qualitätskonsistenz', before: 'Schwankt je nach Tag & Person', after: 'Gleichbleibend hoch' },
+  { label: 'Skalierung', before: 'mehr Volumen erhöht manuelle Last', after: 'Wirkung wird pro Prozess gemessen' },
+  { label: 'Qualitätskonsistenz', before: 'Schwankt je nach Fall', after: 'Antworten sind test- und nachsteuerbar' },
 ];
 
 const Vergleich: React.FC = () => (

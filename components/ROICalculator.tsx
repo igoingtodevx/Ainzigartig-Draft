@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { RouteMeta } from './RouteMeta';
 
 /* ───────────────────────────────────────────────────────────────────────────
-   ROICalculator — Branchen-spezifischer ROI-Rechner für den Mittelstand.
+   Opportunity-Szenarien — Annahmenbasierter Rechner für wiederkehrende Prozesse.
 
    Design-Prinzipien (per Subagent-Validierung):
    - Range-Output (€-Spanne), KEIN einzelner Wert → verteidigbar gegen §5 UWG
@@ -206,13 +206,13 @@ export const ROICalculator: React.FC = () => {
 
   return (
     <section className="min-h-screen pt-32 pb-16u px-6 md:px-8 bg-base text-ink font-body antialiased">
-      <RouteMeta title="ROI-Rechner | Ainzigartig" description="Berechnen Sie Ihren KI-Mehrwert." />
+      <RouteMeta title="Opportunity-Szenarien | Ainzigartig" description="Ein annahmenbasierter Rechner für mögliche Prozessverbesserungen." />
       <div className="max-w-[1200px] mx-auto">
         {/* Header — 2-col on desktop: copy left, pull-quote stat right */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8u items-end">
           <div className="lg:col-span-7">
             <p className="text-xs text-muted font-body uppercase tracking-[0.2em] mb-6">
-              ROI-Rechner · 60 Sekunden
+              Opportunity-Szenario · Eingaben bleiben im Browser
             </p>
             <h1 className="font-editorial text-[clamp(2rem,5vw,3.75rem)] leading-[1.1] text-ink max-w-3xl">
               Was kostet Sie KI <em className="italic">nicht</em> zu nutzen?
@@ -357,8 +357,8 @@ export const ROICalculator: React.FC = () => {
                 <span>Monat 12</span>
               </div>
               <p className="text-[10px] text-faint font-body mt-3 leading-relaxed">
-                Annahme: 6–8 Wochen Einrichtung, lineares Hochfahren der Nutzung, volle
-                Wirkung ab Monat 6. Konservativ kalkuliert.
+                Szenario-Annahme: schrittweise Einführung und Nutzung. Zeitpunkt und Wirkung
+                hängen von Prozess, Daten, Integration und Team-Adoption ab.
               </p>
             </div>
 
@@ -394,24 +394,24 @@ export const ROICalculator: React.FC = () => {
           <div className="space-y-3 text-xs text-muted font-body leading-relaxed">
             <p>
               <strong className="text-ink">Berechnung:</strong> Wochenstunden × 52 ×
-              Branchen-Automatisierungsgrad × Vollkostensatz. Konservativ korrigiert um
-              15 % Implementierungs- und Tool-Overhead.
+              der hier gewählten Automatisierungsannahme × Vollkostensatz. Die Darstellung
+              ist ein Szenario, keine Prognose oder Wirtschaftlichkeitszusage.
             </p>
             <p>
-              <strong className="text-ink">Quellen Automatisierungsgrad:</strong> Bitkom
-              Mittelstands-Report 2024 (n = 605), McKinsey "State of AI 2024" (Mittelstands-Segment),
-              eigene Projekterfahrung aus 14 Mittelstands-Piloten 2023–2025.
+              <strong className="text-ink">Einordnung:</strong> Die voreingestellten Spannen
+              sind bewusst nur Startwerte. Für eine belastbare Rechnung müssen Prozesszeiten,
+              Fehlerkosten, Lizenzkosten, Integrationsaufwand und Verantwortung gemeinsam geprüft werden.
             </p>
             <p>
-              <strong className="text-ink">Hinweis:</strong> Indicative Schätzung, keine
-              Garantie. Die tatsächlichen Einsparungen hängen von Tool-Auswahl, Datenqualität,
-              Team-Adoption und Prozess-Reife ab. Vollständige Methodik & Studienquellen
-              auf Anfrage.
+              <strong className="text-ink">Hinweis:</strong> Keine Garantie. Die tatsächliche
+              Wirkung hängt insbesondere von Prozessgestaltung, Datenqualität, Team-Adoption,
+              Integration und laufendem Betrieb ab.
             </p>
             <p>
               <strong className="text-ink">Datenschutz:</strong> Diese Berechnung läuft
-              vollständig in Ihrem Browser. Es werden keine Eingaben an Server übertragen,
-              keine Cookies gesetzt, kein Tracking.
+              für die Berechnung ausschließlich im Browser verwendet. Sie werden durch diesen
+              Rechner nicht an einen Anwendungsserver übertragen. Angaben zum Website-Betrieb
+              stehen in der Datenschutzerklärung.
             </p>
           </div>
         </div>

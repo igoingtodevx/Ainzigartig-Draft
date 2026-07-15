@@ -19,12 +19,12 @@ const INITIAL: ContactFormState = {
 };
 
 const SERVICE_OPTIONS = [
-  'KI-Beratung',
-  'KI-Kundenservice',
-  'KI-Recruiting',
-  'Analytics',
-  'KI-Audit',
-  'KI-Schnellstart',
+  'Opportunity Design & KI-Strategie',
+  'KI-Systeme & Automatisierung',
+  'Decision Intelligence & Optimierung',
+  'Website Opportunity Audit',
+  'Live-Agent-Demo / Dokumentenworkflow',
+  'Arbeitsprobe oder konkrete Branchenfrage',
   'Sonstiges',
 ];
 
@@ -80,8 +80,8 @@ export const ContactForm: React.FC = () => {
         <span className="material-symbols-outlined text-accent text-4xl mb-3 block">check_circle</span>
         <p className="font-editorial text-xl text-ink mb-2">Vielen Dank.</p>
         <p className="text-sm text-muted leading-relaxed">
-          Wir haben Ihre Anfrage erhalten und melden uns innerhalb von 24 Stunden
-          mit einer ehrlichen Einschätzung — keine Folgetermine, kein Pitch.
+          Wir haben Ihre Anfrage erhalten. Sobald die Zustellung für diese Veröffentlichung
+          freigegeben ist, melden wir uns mit einer ehrlichen ersten Einschätzung.
         </p>
       </div>
     );
@@ -199,9 +199,7 @@ export const ContactForm: React.FC = () => {
             </>
           )}
         </button>
-        <p className="text-xs text-faint font-body">
-          Antwort innerhalb von 24 Stunden. Keine Folgetermine, kein Pitch.
-        </p>
+        <p className="text-xs text-faint font-body">Bitte keine vertraulichen Informationen in dieses Formular schreiben.</p>
       </div>
     </form>
   );

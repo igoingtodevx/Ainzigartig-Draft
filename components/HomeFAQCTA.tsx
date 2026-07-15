@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const faqItems = [
   {
     q: 'Für welche Unternehmen arbeitet ihr?',
-    a: 'Inhabergeführt, 5 bis 150 Mitarbeiter, deutschsprachiger Raum. Branchenübergreifend, mit Schwerpunkt auf Dienstleistung, Handel und B2B.',
+    a: 'Vor allem mit Teams, die einen klaren Prozess verbessern oder ein digitales Produkt bauen wollen. Branche und Größe sind weniger wichtig als ein greifbarer Ausgangspunkt und ein verantwortlicher Ansprechpartner.',
   },
   {
     q: 'Müssen wir technisches Vorwissen mitbringen?',
@@ -11,15 +11,15 @@ const faqItems = [
   },
   {
     q: 'Was kostet eine Zusammenarbeit?',
-    a: 'Das hängt vom Umfang ab. Das Erstgespräch ist kostenlos. Danach legen wir transparent auf den Tisch, was es kosten würde — bevor Sie sich entscheiden.',
+    a: 'Das hängt vom Scope ab. Nach einer ersten Einordnung sollten Umfang, Annahmen, Zuständigkeiten und Kosten transparent feststehen, bevor eine Umsetzung beginnt.',
   },
   {
     q: 'Arbeitet ihr herstellerunabhängig?',
-    a: 'Ja. Keine Provisionen von Toolanbietern. Was wir empfehlen, empfehlen wir weil es für Sie das Richtige ist.',
+    a: 'Wir wählen Werkzeuge nach Aufgabe, Datenfluss, Betrieb und Risiko aus. Eine Empfehlung wird begründet — nicht als allgemeines Tool-Versprechen verkauft.',
   },
   {
     q: 'Wie schnell sehen wir Ergebnisse?',
-    a: 'Erste Ergebnisse — ein laufender Chatbot, ein automatisiertes Screening — sind typischerweise in zwei bis vier Wochen sichtbar.',
+    a: 'Das hängt von Datenlage, Integrationen und Freigaben ab. Ein guter erster Schritt ist bewusst klein genug, um Nutzen und Risiken früh sichtbar zu machen.',
   },
 ];
 

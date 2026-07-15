@@ -1,40 +1,28 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { RouteMeta } from './RouteMeta';
-
-const mailto = 'mailto:info@ainzigartig.de?subject=KI-Analyse%20%E2%80%94%20N%C3%A4chste%20Schritte';
+import { externalWebsiteAuditsEnabled } from '../site-config';
 
 interface Opportunity {
   title: string;
+  evidence: string;
   description: string;
   impact: string;
   effort: string;
-  estimated_savings: string;
+  assumptions: string;
 }
 
 interface AnalysisResult {
+  mode: 'sample' | 'external';
   url: string;
-  scrape: {
-    title: string;
-    technologies: string[];
-    word_count: number;
-    response_time_ms: number;
-  };
+  scrape: { title: string; technologies: string[]; word_count: number; response_time_ms: number };
   analysis: {
-    score: number;
-    score_label: string;
     summary: string;
     opportunities: Opportunity[];
     missing_basics: string[];
     recommendation: string;
     tool_suggestion: string;
   };
-}
-
-function getScoreColor(score: number): string {
-  if (score <= 30) return 'text-orange-500';
-  if (score <= 60) return 'text-accent';
-  return 'text-green-600';
 }
 
 function getImpactColor(impact: string): string {
@@ -55,28 +43,23 @@ export const KIAnalyse: React.FC = () => {
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const handleAnalyze = async () => {
-    if (!url.trim()) return;
-
+  const runAudit = async (mode: 'sample' | 'external') => {
+    if (mode === 'external' && !url.trim()) return;
     setLoading(true);
     setError(null);
     setResult(null);
-
     try {
       const response = await fetch('/api/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: url.trim() }),
+        body: JSON.stringify(mode === 'sample' ? { mode } : { url: url.trim() }),
       });
-
       const data = await response.json();
-
       if (!response.ok) {
-        setError(data.error || 'Analyse fehlgeschlagen');
+        setError(data.error || 'Das Audit konnte nicht abgeschlossen werden.');
         return;
       }
-
-      setResult(data);
+      setResult(data as AnalysisResult);
     } catch {
       setError('Verbindung fehlgeschlagen. Bitte versuchen Sie es erneut.');
     } finally {
@@ -86,201 +69,111 @@ export const KIAnalyse: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-base text-ink font-body">
-      <RouteMeta title="KI-Website-Analyse | Ainzigartig" description="Kostenlose KI-Analyse Ihrer Unternehmenswebseite." />
-      {/* Hero */}
+      <RouteMeta title="Website Opportunity Audit | Ainzigartig" description="Ein beispielhafter Audit für digitale Kontakt- und Informationswege." />
       <section className="pt-28 pb-16 px-6 md:px-8">
-        <div className="max-w-[800px] mx-auto text-center">
+        <div className="max-w-[820px] mx-auto text-center">
           <span className="inline-block text-xs font-bold uppercase tracking-[0.25em] text-accent border border-accent/30 bg-accent/5 px-3 py-1 mb-6">
-            Kostenlose KI-Analyse
+            Opportunity Audit
           </span>
-
           <h1 className="font-editorial text-3xl sm:text-5xl md:text-6xl leading-[1.08] text-ink mb-6">
-            Was kann KI für<br />
-            <span className="text-accent">Ihre Website tun?</span>
+            Von der Website-Beobachtung<br />
+            <span className="text-accent">zur prüfbaren Chance.</span>
           </h1>
-
-          <p className="text-muted text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-10">
-            Geben Sie Ihre URL ein. KI analysiert Ihre Website und zeigt konkrete
-            Einsparpotenziale — in unter 60 Sekunden.
+          <p className="text-muted text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-8">
+            Der Audit macht aus öffentlichen Signalen mögliche nächste Schritte. Keine Reifegrad-Show,
+            keine erfundenen Einsparungen – und keine automatische Umsetzung.
           </p>
 
-          {/* URL Input */}
-          <div className="max-w-xl mx-auto">
-            <div className="flex gap-3">
-              <input
-                type="url"
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
-                placeholder="https://ihre-website.de"
-                className="flex-1 px-4 py-3 border border-faint/30 bg-transparent text-ink text-sm font-body placeholder:text-faint/50 focus:outline-none focus:border-accent transition-colors"
-                onKeyDown={(e) => e.key === 'Enter' && handleAnalyze()}
-              />
-              <button
-                onClick={handleAnalyze}
-                disabled={loading || !url.trim()}
-                className="px-6 py-3 bg-ink text-base text-sm font-bold hover:bg-ink/80 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
-              >
-                {loading ? (
-                  <span className="flex items-center gap-2">
-                    <span className="animate-spin material-symbols-outlined text-sm">refresh</span>
-                    Analysiere…
-                  </span>
-                ) : (
-                  'Analysieren'
-                )}
-              </button>
-            </div>
-            <p className="text-xs text-faint mt-3">
-              Keine Daten gespeichert. Ergebnis nur im Browser.
+          <div className="max-w-xl mx-auto border border-faint/30 p-5 text-left">
+            <p className="text-sm text-ink font-medium mb-1">Musteranalyse ansehen</p>
+            <p className="text-xs text-muted leading-relaxed mb-4">
+              Eine realistische, aber fiktive Auswertung: Beobachtung, Lösungsidee, Annahmen und nächster Prüfschritt.
             </p>
+            <button
+              onClick={() => runAudit('sample')}
+              disabled={loading}
+              className="w-full px-6 py-3 bg-ink text-base text-sm font-bold hover:bg-ink/80 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
+            >
+              {loading ? 'Audit wird vorbereitet…' : 'Musteranalyse starten'}
+            </button>
           </div>
 
-          {/* Loading skeleton — visible while the API is in flight */}
-          {loading && (
-            <div className="max-w-3xl mx-auto mt-10 space-y-4" aria-busy="true" aria-label="Analyse läuft">
-              <div className="h-6 w-1/2 bg-faint/20 animate-pulse" />
-              <div className="border border-faint/30 p-5 space-y-3">
-                <div className="h-4 w-3/4 bg-faint/20 animate-pulse" />
-                <div className="h-4 w-1/2 bg-faint/20 animate-pulse" />
-                <div className="h-4 w-5/6 bg-faint/20 animate-pulse" />
+          {externalWebsiteAuditsEnabled ? (
+            <div className="max-w-xl mx-auto mt-4 text-left">
+              <label htmlFor="audit-url" className="block text-xs uppercase tracking-[0.16em] text-faint mb-2">Öffentliche Website prüfen</label>
+              <div className="flex gap-3">
+                <input id="audit-url" type="url" value={url} onChange={(event) => setUrl(event.target.value)}
+                  placeholder="https://ihre-website.de" className="flex-1 px-4 py-3 border border-faint/30 bg-transparent text-ink text-sm font-body placeholder:text-faint/50 focus:outline-none focus:border-accent transition-colors"
+                  onKeyDown={(event) => event.key === 'Enter' && runAudit('external')} />
+                <button onClick={() => runAudit('external')} disabled={loading || !url.trim()}
+                  className="px-6 py-3 border border-ink text-ink text-sm font-bold hover:bg-ink hover:text-base disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer">
+                  Prüfen
+                </button>
               </div>
-              <div className="h-4 w-full bg-faint/10 animate-pulse" />
-              <div className="h-4 w-2/3 bg-faint/10 animate-pulse" />
-              <p className="text-xs text-faint text-center pt-2">
-                Website wird gescannt und bewertet — dauert ca. 30–60 Sekunden.
+              <p className="text-xs text-faint mt-3 leading-relaxed">
+                Nur öffentliche Seiten. Der angegebene Inhalt wird zur Auswertung an den konfigurierten Audit-Service und das Sprachmodell übertragen. Bitte keine vertraulichen URLs eingeben.
               </p>
             </div>
+          ) : (
+            <p className="max-w-xl mx-auto mt-5 text-xs text-faint leading-relaxed">
+              Die Prüfung externer URLs wird erst nach einem kontrollierten Betriebs- und Datenschutz-Setup freigeschaltet. Die Musteranalyse zeigt bereits die tatsächliche Ergebnislogik.
+            </p>
           )}
         </div>
       </section>
 
-      {/* Error */}
-      {error && (
-        <section className="px-6 md:px-8 pb-12">
-          <div className="max-w-[800px] mx-auto">
-            <div className="border border-red-300 bg-red-50 p-6 text-center">
-              <p className="text-sm text-red-700">{error}</p>
-              <button
-                onClick={() => setError(null)}
-                className="mt-3 text-xs text-red-500 underline cursor-pointer"
-              >
-                Erneut versuchen
-              </button>
-            </div>
+      {loading && (
+        <section className="px-6 md:px-8 pb-12" aria-busy="true" aria-label="Audit läuft">
+          <div className="max-w-3xl mx-auto space-y-4">
+            <div className="h-6 w-1/2 bg-faint/20 animate-pulse" />
+            <div className="border border-faint/30 p-5 space-y-3"><div className="h-4 w-3/4 bg-faint/20 animate-pulse" /><div className="h-4 w-5/6 bg-faint/20 animate-pulse" /></div>
           </div>
         </section>
       )}
 
-      {/* Results */}
+      {error && (
+        <section className="px-6 md:px-8 pb-12"><div className="max-w-[800px] mx-auto border border-red-300 bg-red-50 p-6 text-center">
+          <p className="text-sm text-red-700">{error}</p>
+          <button onClick={() => setError(null)} className="mt-3 text-xs text-red-500 underline cursor-pointer">Schließen</button>
+        </div></section>
+      )}
+
       {result && (
-        <section className="px-6 md:px-8 pb-20">
-          <div className="max-w-[1000px] mx-auto">
-            {/* Header */}
-            <div className="border border-faint/30 p-6 mb-8">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div>
-                  <p className="text-xs text-faint uppercase tracking-[0.2em] mb-1">Analysiert</p>
-                  <p className="text-sm text-ink font-medium">{result.url}</p>
-                  {result.scrape.title && (
-                    <p className="text-xs text-muted mt-1">{result.scrape.title}</p>
-                  )}
-                </div>
-                <div className="text-right">
-                  <p className={`font-editorial text-4xl ${getScoreColor(result.analysis.score)}`}>
-                    {result.analysis.score}
-                  </p>
-                  <p className="text-xs text-faint">{result.analysis.score_label} · KI-Reifegrad</p>
-                </div>
+        <section className="px-6 md:px-8 pb-20"><div className="max-w-[1000px] mx-auto">
+          <div className="border border-faint/30 p-6 mb-8">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div>
+                <p className="text-xs text-faint uppercase tracking-[0.2em] mb-1">{result.mode === 'sample' ? 'Musteranalyse' : 'Öffentliche Website geprüft'}</p>
+                <p className="text-sm text-ink font-medium">{result.url}</p>
+                {result.scrape.title && <p className="text-xs text-muted mt-1">{result.scrape.title}</p>}
               </div>
-
-              {/* Tech + Meta */}
-              <div className="mt-4 pt-4 border-t border-faint/20 flex flex-wrap gap-4 text-xs text-muted">
-                {result.scrape.technologies.length > 0 && (
-                  <span>Technologien: {result.scrape.technologies.join(', ')}</span>
-                )}
-                <span>{result.scrape.word_count.toLocaleString()} Wörter</span>
-                <span>{result.scrape.response_time_ms}ms Antwortzeit</span>
-              </div>
+              <p className="text-xs text-faint max-w-[230px] md:text-right">Hinweise, keine Entscheidung: Prozess, Daten und Verantwortung werden erst im gemeinsamen Check geklärt.</p>
             </div>
-
-            {/* Summary */}
-            <div className="mb-8">
-              <p className="text-sm text-ink leading-relaxed">{result.analysis.summary}</p>
-            </div>
-
-            {/* Opportunities */}
-            {result.analysis.opportunities.length > 0 && (
-              <div className="mb-8">
-                <h2 className="font-editorial text-xl text-ink mb-4">KI-Chancen für Ihre Website</h2>
-                <div className="space-y-4">
-                  {result.analysis.opportunities.map((opp, i) => (
-                    <div key={i} className="border border-faint/30 p-5">
-                      <div className="flex items-start justify-between gap-4 mb-2">
-                        <h3 className="font-editorial text-base text-ink">{opp.title}</h3>
-                        <div className="flex gap-2 shrink-0">
-                          <span className={`text-xs px-2 py-0.5 ${getImpactColor(opp.impact)}`}>
-                            {opp.impact}
-                          </span>
-                          <span className={`text-xs px-2 py-0.5 ${getEffortColor(opp.effort)}`}>
-                            {opp.effort}
-                          </span>
-                        </div>
-                      </div>
-                      <p className="text-xs text-muted leading-relaxed mb-2">{opp.description}</p>
-                      {opp.estimated_savings && (
-                        <p className="text-xs text-accent font-medium">
-                          → {opp.estimated_savings}
-                        </p>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Missing Basics */}
-            {result.analysis.missing_basics.length > 0 && (
-              <div className="mb-8">
-                <h2 className="font-editorial text-xl text-ink mb-4">Fehlende Grundlagen</h2>
-                <ul className="space-y-2">
-                  {result.analysis.missing_basics.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-muted">
-                      <span className="text-orange-500 mt-0.5">⚠</span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {/* Recommendation */}
-            <div className="border border-accent/30 bg-accent/[0.03] p-6 mb-8">
-              <p className="text-xs uppercase tracking-[0.2em] text-faint mb-3">Empfehlung</p>
-              <p className="text-sm text-ink leading-relaxed mb-2">{result.analysis.recommendation}</p>
-              {result.analysis.tool_suggestion && (
-                <p className="text-xs text-accent font-medium mt-3">
-                  Passendes Tool: {result.analysis.tool_suggestion}
-                </p>
-              )}
-            </div>
-
-            {/* CTA */}
-            <div className="text-center">
-              <p className="text-sm text-muted mb-4">
-                Wollen Sie die nächste Stufe sehen? Lassen Sie uns sprechen.
-              </p>
-              <Link
-                to="/#kontakt"
-                className="inline-flex items-center gap-2 text-sm text-accent font-body group"
-              >
-                <span className="underline decoration-1 underline-offset-4 group-hover:decoration-2 transition-all duration-200">
-                  Kostenfreies Erstgespräch vereinbaren
-                </span>
-                <span className="material-symbols-outlined text-sm group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
-              </Link>
-            </div>
+            {result.mode === 'external' && <div className="mt-4 pt-4 border-t border-faint/20 flex flex-wrap gap-4 text-xs text-muted">
+              {result.scrape.technologies.length > 0 && <span>Technologien: {result.scrape.technologies.join(', ')}</span>}
+              <span>{result.scrape.word_count.toLocaleString()} Wörter ausgewertet</span>
+            </div>}
           </div>
-        </section>
+
+          <p className="text-sm text-ink leading-relaxed mb-8">{result.analysis.summary}</p>
+
+          {result.analysis.opportunities.length > 0 && <div className="mb-8">
+            <h2 className="font-editorial text-xl text-ink mb-4">Mögliche Hebel</h2><div className="space-y-4">
+              {result.analysis.opportunities.map((opp, index) => <div key={`${opp.title}-${index}`} className="border border-faint/30 p-5">
+                <div className="flex items-start justify-between gap-4 mb-2"><h3 className="font-editorial text-base text-ink">{opp.title}</h3><div className="flex gap-2 shrink-0"><span className={`text-xs px-2 py-0.5 ${getImpactColor(opp.impact)}`}>{opp.impact}</span><span className={`text-xs px-2 py-0.5 ${getEffortColor(opp.effort)}`}>{opp.effort}</span></div></div>
+                <p className="text-xs text-muted leading-relaxed mb-3">{opp.description}</p>
+                <p className="text-xs text-ink/80 leading-relaxed border-l-2 border-accent/40 pl-3"><span className="font-medium">Beobachtung: </span>{opp.evidence}</p>
+                {opp.assumptions && <p className="text-xs text-faint leading-relaxed mt-3"><span className="font-medium">Vor einer Entscheidung prüfen: </span>{opp.assumptions}</p>}
+              </div>)}
+            </div>
+          </div>}
+
+          {result.analysis.missing_basics.length > 0 && <div className="mb-8"><h2 className="font-editorial text-xl text-ink mb-4">Offene Prüfpunkte</h2><ul className="space-y-2">{result.analysis.missing_basics.map((item, index) => <li key={`${item}-${index}`} className="flex items-start gap-2 text-sm text-muted"><span className="text-orange-500 mt-0.5">⚠</span>{item}</li>)}</ul></div>}
+
+          <div className="border border-accent/30 bg-accent/[0.03] p-6 mb-8"><p className="text-xs uppercase tracking-[0.2em] text-faint mb-3">Nächster sinnvoller Schritt</p><p className="text-sm text-ink leading-relaxed">{result.analysis.recommendation}</p>{result.analysis.tool_suggestion && <p className="text-xs text-accent font-medium mt-3">Möglicher Ansatz: {result.analysis.tool_suggestion}</p>}</div>
+
+          <div className="text-center"><p className="text-sm text-muted mb-4">Von der Hypothese zum belastbaren Prozessdesign.</p><Link to="/#kontakt" className="inline-flex items-center gap-2 text-sm text-accent font-body group"><span className="underline decoration-1 underline-offset-4 group-hover:decoration-2 transition-all duration-200">Gespräch anfragen</span><span className="material-symbols-outlined text-sm group-hover:translate-x-0.5 transition-transform">arrow_forward</span></Link></div>
+        </div></section>
       )}
     </div>
   );

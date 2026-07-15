@@ -28,12 +28,13 @@ import { ChatBot } from './components/ChatBot';
 import { RouteMeta } from './components/RouteMeta';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { NotFound } from './components/NotFound';
+import { isPublicationReady, publicationMessage } from './site-config';
 
 const HomePage: React.FC = () => (
   <main>
     <RouteMeta
-      title="Ainzigartig – KI-Beratung für den Mittelstand"
-      description="Wir helfen Mittelstandsunternehmen, KI gewinnbringend einzusetzen."
+      title="Ainzigartig – KI-Systeme für den Mittelstand"
+      description="Wir gestalten KI-Strategie, integrierte Systeme und messbare Entscheidungsgrundlagen."
     />
     <Hero />
     <Services />
@@ -74,10 +75,27 @@ function ScrollToHash() {
 }
 
 const App: React.FC = () => {
+  useEffect(() => {
+    if (!isPublicationReady) {
+      let robots = document.querySelector('meta[name="robots"]');
+      if (!robots) {
+        robots = document.createElement('meta');
+        robots.setAttribute('name', 'robots');
+        document.head.appendChild(robots);
+      }
+      robots.setAttribute('content', 'noindex, nofollow');
+    }
+  }, []);
+
   return (
     <BrowserRouter>
       <ScrollToHash />
       <div className="min-h-screen bg-base text-ink font-body antialiased overflow-x-hidden selection:bg-accent selection:text-base">
+        {!isPublicationReady && (
+          <div className="bg-ink text-base px-6 py-2 text-center text-[11px] tracking-[0.04em]" role="status">
+            {publicationMessage}
+          </div>
+        )}
         <Navbar />
         <ErrorBoundary>
           <Routes>

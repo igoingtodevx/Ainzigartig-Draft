@@ -122,10 +122,9 @@ export const Insights: React.FC = () => {
             Was diese Woche in der KI-Branche zählt.
           </h1>
           <p className="text-base text-muted font-body leading-relaxed">
-            Jede Woche kuratieren wir 9 Quellen (Heise, Golem, The Decoder,
-            t3n, The Verge u.a.) per LLM zu einem knappen Briefing. Hier ist
-            die Kurzfassung — die volle Analyse mit Preisen, Quellen und
-            Action Items liegt auf der{' '}
+            Der Industry Watcher verdichtet aktuelle, verlinkte Quellen zu einem
+            knappen Briefing. Hier ist die Kurzfassung; die vollständige Ausgabe
+            mit Quellen und Prüfpunkten liegt auf der{' '}
             <a
               href="https://ai-industry-watcher.vercel.app"
               target="_blank"
@@ -251,7 +250,7 @@ export const Insights: React.FC = () => {
                   Opportunities
                 </h3>
                 <span className="text-[10px] font-body uppercase tracking-[0.18em] text-muted ml-auto">
-                  {data.issue.opportunities.length} Marktbedarfe · Preisindikation
+                  {data.issue.opportunities.length} Marktbeobachtungen · als Hypothesen prüfen
                 </span>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4u">
@@ -276,20 +275,12 @@ export const Insights: React.FC = () => {
                         </p>
                       )}
                       <div className="flex flex-wrap gap-x-4u gap-y-2u pt-3u border-t border-faint/40">
-                        <div className="flex-1 min-w-[120px]">
-                          <span className="text-[10px] font-body uppercase tracking-[0.12em] text-muted block">
-                            Preis
-                          </span>
-                          <span className="text-sm text-ink font-body font-medium">
-                            {o.price || '—'}
-                          </span>
-                        </div>
                         <div>
                           <span className="text-[10px] font-body uppercase tracking-[0.12em] text-muted block">
-                            Time-to-Market
+                            Umsetzungsannahme
                           </span>
                           <span className="text-sm text-ink font-body font-medium">
-                            {o.time_to_market || 'Wochen'}
+                            {o.time_to_market || 'offen'}
                           </span>
                         </div>
                         <div>

@@ -1,11 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { RouteMeta } from './RouteMeta';
-import * as pdfjsLib from 'pdfjs-dist';
-import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
-
-// pdf.js worker setup — required for PDF rendering in the browser
-pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
+import { documentUploadsEnabled } from '../site-config';
 
 // Convert a File to a base64 string (no data URL prefix).
 function uint8ToBase64(bytes: Uint8Array): string {
@@ -20,6 +16,11 @@ function uint8ToBase64(bytes: Uint8Array): string {
 // Render the first N pages of a PDF to PNG dataURLs, return base64 arrays.
 // Renders at 2x scale for sharp OCR.
 async function pdfToImages(file: File, maxPages: number): Promise<{ base64: string; mime_type: string }[]> {
+  // The PDF engine is deliberately lazy-loaded: uploads are disabled in the public preview,
+  // so ordinary visitors should not download a large worker just to view the demo.
+  const pdfjsLib = await import('pdfjs-dist');
+  const { default: pdfjsWorker } = await import('pdfjs-dist/build/pdf.worker.min.mjs?url');
+  pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
   const bytes = new Uint8Array(await file.arrayBuffer());
   const loadingTask = pdfjsLib.getDocument({ data: bytes });
   const pdf = await loadingTask.promise;
@@ -73,6 +74,7 @@ interface AnalysisResult {
   risk_flags: Risk[];
   summary: string;
   agent_reasoning: string;
+  execution_status?: string;
 }
 
 const SAMPLE_INVOICE = `Buerotechnik Mueller GmbH
@@ -300,6 +302,10 @@ export const LiveAgentDemo: React.FC = () => {
   }, []);
 
   const handleFileSelect = (selectedFile: File) => {
+    if (!documentUploadsEnabled) {
+      setError('Eigene Dokumente sind in dieser Vorschau bewusst deaktiviert. Bitte nutzen Sie die anonymisierten Beispiele.');
+      return;
+    }
     setFile(selectedFile);
     runUpload(selectedFile);
   };
@@ -333,8 +339,8 @@ export const LiveAgentDemo: React.FC = () => {
             <span className="text-accent">Dokument-Agent arbeiten.</span>
           </h1>
           <p className="text-muted text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-            Rechnung, E-Mail, Angebot oder Vertrag — der Agent liest, strukturiert und schlaegt
-            naechste Schritte vor. Sie sehen den Prozess live. Keine Anmeldung, keine Daten gespeichert.
+            Ein Service-Desk-Agent zeigt an anonymisierten Beispielen, wie er Informationen strukturiert,
+            Risiken markiert und eine Übergabe vorbereitet. Er führt keine Aktion selbst aus.
           </p>
         </div>
       </section>
@@ -343,8 +349,7 @@ export const LiveAgentDemo: React.FC = () => {
       {!result && !analyzing && (
         <section className="px-6 md:px-8 pb-16">
           <div className="max-w-[1000px] mx-auto">
-            {/* Drop zone */}
-            <div
+            {documentUploadsEnabled ? <div
               onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
               onDragLeave={() => setDragOver(false)}
               onDrop={handleDrop}
@@ -363,7 +368,10 @@ export const LiveAgentDemo: React.FC = () => {
                 className="hidden"
                 onChange={(e) => e.target.files?.[0] && handleFileSelect(e.target.files[0])}
               />
-            </div>
+            </div> : <div className="border border-faint/30 bg-ink/[0.02] p-6 mb-8 flex gap-3">
+              <span className="material-symbols-outlined text-accent">privacy_tip</span>
+              <p className="text-sm text-muted leading-relaxed">Eigene Dokumente bleiben in dieser öffentlichen Vorschau deaktiviert. Für eine Produktivversion gehören private Speicherung, Löschfristen, Zugriffskonzept und Auftragsverarbeitung zuerst verbindlich geklärt.</p>
+            </div>}
 
             {/* Or sample */}
             <div className="text-center mb-4">
@@ -493,7 +501,7 @@ export const LiveAgentDemo: React.FC = () => {
             {/* Suggested actions */}
             {result.suggested_actions && result.suggested_actions.length > 0 && (
               <div className="mb-6">
-                <p className="text-xs text-faint uppercase tracking-[0.2em] mb-3">Naechste Schritte</p>
+              <p className="text-xs text-faint uppercase tracking-[0.2em] mb-3">Vorgeschlagene Übergabe</p>
                 <div className="space-y-3">
                   {result.suggested_actions.map((a, i) => (
                     <div key={i} className="border border-faint/30 p-4 flex gap-3">
@@ -528,11 +536,18 @@ export const LiveAgentDemo: React.FC = () => {
               </div>
             )}
 
-            {/* Agent reasoning */}
+            {result.execution_status && (
+              <div className="mb-6 border border-faint/30 bg-ink/[0.02] p-4 flex gap-2">
+                <span className="material-symbols-outlined text-accent text-base">person_check</span>
+                <p className="text-xs text-muted">{result.execution_status} Eine verantwortliche Person prüft die Vorschläge vor jeder Übergabe.</p>
+              </div>
+            )}
+
+            {/* Recognition basis, not internal reasoning */}
             {result.agent_reasoning && (
               <div className="mb-8 text-center">
                 <p className="text-xs text-faint italic">
-                  Agent-Logik: {result.agent_reasoning}
+                  Erkennungsbasis: {result.agent_reasoning}
                 </p>
               </div>
             )}

@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { RouteMeta } from './RouteMeta';
 
-const mailto = 'mailto:info@ainzigartig.de?subject=KI-Audit%20Ergebnis%20%E2%80%94%20N%C3%A4chste%20Schritte';
-
 interface Question {
   id: string;
   label: string;
@@ -94,19 +92,19 @@ function getScore(answers: Record<string, number>): number {
 
 function getLevel(score: number): { label: string; color: string; recommendation: string } {
   if (score <= 30) return {
-    label: 'KI-Neuling',
+    label: 'Klarer Startpunkt',
     color: 'text-orange-500',
-    recommendation: 'Starten Sie mit einem KI-Schnellstart: ein konkreter Use-Case, 5 Tage, individuelles Angebot. Danach wissen Sie ob KI für Sie passt.',
+    recommendation: 'Wählen Sie einen wiederkehrenden Prozess mit klarer Verantwortung. Dokumentieren Sie Eingang, Entscheidung, Übergabe und eine Messgröße, bevor Sie eine Lösung auswählen.',
   };
   if (score <= 60) return {
-    label: 'KI-Bereit',
+    label: 'Geeignet für einen fokussierten Pilot',
     color: 'text-accent',
-    recommendation: 'Sie haben die Grundlagen. Ein KI-Audit (1–2 Tage) identifiziert die Top 3 Use-Cases mit ROI-Schätzung. Danach: gezielte Umsetzung.',
+    recommendation: 'Ihre Angaben deuten auf mehrere mögliche Anknüpfungspunkte hin. Priorisieren Sie einen Prozess nach Nutzen, Datenzugang, Integrationsaufwand und Risiko – nicht nur nach technischer Machbarkeit.',
   };
   return {
-    label: 'KI-Reif',
+    label: 'Basis für systematischen Ausbau',
     color: 'text-green-500',
-    recommendation: 'Sie sind besser aufgestellt als 80% der KMUs. Jetzt geht es um Optimierung und Skalierung. Sprechen wir über die nächsten Schritte.',
+    recommendation: 'Bei mehreren vorhandenen Werkzeugen wird die Systemgrenze entscheidend: klären Sie Datenverantwortung, menschliche Freigaben, Messung und Betrieb, bevor Sie weitere Automatisierung verbinden.',
   };
 }
 
@@ -140,17 +138,16 @@ export const KIAudit: React.FC = () => {
   if (submitted && level) {
     return (
       <div className="min-h-screen bg-base text-ink font-body">
-        <RouteMeta title="KI-Audit | Ainzigartig" description="Ihr unabhängiges KI-Reifegradgutachten." />
+        <RouteMeta title="KI-Orientierungscheck | Ainzigartig" description="Ein kurzer, nicht verbindlicher Einstieg in die Priorisierung von KI-Anwendungsfällen." />
         <section className="pt-28 pb-20 px-6 md:px-8">
           <div className="max-w-[800px] mx-auto text-center">
             <span className="inline-block text-xs font-bold uppercase tracking-[0.25em] text-accent border border-accent/30 bg-accent/5 px-3 py-1 mb-6">
-              Ihr KI-Reifegrad
+              Ihre Orientierung
             </span>
 
-            <p className={`font-editorial text-5xl md:text-7xl mb-2 ${level.color}`}>{score}</p>
-            <p className="font-editorial text-2xl text-ink mb-2">{level.label}</p>
+            <p className={`font-editorial text-3xl md:text-5xl mb-2 ${level.color}`}>{level.label}</p>
             <p className="text-faint text-xs uppercase tracking-[0.2em] mb-10">
-              KI-Reifegrad-Score · {questions.length} Fragen
+              Unverbindliches Antwortprofil · {questions.length} Fragen
             </p>
 
             <div className="border border-faint/30 bg-ink/[0.03] p-8 text-left mb-10">
@@ -198,19 +195,19 @@ export const KIAudit: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-base text-ink font-body">
-      <RouteMeta title="KI-Audit | Ainzigartig" description="Ihr unabhängiges KI-Reifegradgutachten." />
+        <RouteMeta title="KI-Orientierungscheck | Ainzigartig" description="Ein kurzer, nicht verbindlicher Einstieg in die Priorisierung von KI-Anwendungsfällen." />
       <section className="pt-28 pb-20 px-6 md:px-8">
         <div className="max-w-[800px] mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
             <span className="inline-block text-xs font-bold uppercase tracking-[0.25em] text-accent border border-accent/30 bg-accent/5 px-3 py-1 mb-6">
-              KI-Reifegrad-Check
+              KI-Orientierungscheck
             </span>
             <h1 className="font-editorial text-3xl sm:text-4xl text-ink mb-4">
-              Wie reif ist Ihr Unternehmen für KI?
+              Wo wäre ein sinnvoller Einstieg für KI?
             </h1>
             <p className="text-muted text-sm max-w-lg mx-auto">
-              6 Fragen. 60 Sekunden. Am Ende wissen Sie: Was ist machbar, was ist priorität, und was kostet es.
+              Sechs Fragen als Gesprächsvorbereitung. Das Ergebnis ersetzt keine Prozess-, Daten- oder Wirtschaftlichkeitsprüfung.
             </p>
           </div>
 

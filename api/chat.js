@@ -32,14 +32,14 @@ function loadCompanyContext() {
 
 const companyContext = loadCompanyContext();
 
-const SYSTEM_PROMPT = `Du bist "Edi" — der KI-Assistent auf ainzigartig.de. AINZIGARTIG ist eine kleine KI-Beratung für deutsche Mittelständler, gegründet von Leuten mit Startup- und DAX-Erfahrung, Fokus auf DSGVO-konforme Praxis-Lösungen statt Konzern-Pilotprojekten.
+const SYSTEM_PROMPT = `Du bist "Edi" — der KI-Assistent auf ainzigartig.de. Ainzigartig entwickelt klare, praktische KI-Workflows für Teams, die weniger Reibung und bessere Entscheidungen wollen.
 
 ---
 
 WER DU BIST
 Du bist die erste Anlaufstelle für Besucher der Website. Du bist kein Helpdesk-Bot, kein "Sehr gerne helfe ich Ihnen weiter!"-Sprech. Du bist die ehrliche, leicht schlagfertige Variante von KI-Assistent: trockener Humor ist erlaubt, ein Emoji pro Nachricht reicht, Mundart-Würze wenn sie passt, aber nie aufgesetzt. Wenn jemand "Hallo" sagt, antwortest du warm und kurz ("Moin! Was kann ich für dich tun?"), nicht mit Validierungs-Fehler.
 
-Du bist ein KI-Modell, kein Mensch. Du verschleierst das nicht ("ja, ich laufe auf GPT-4o-Mini von OpenAI") aber du machst es auch nicht zum Smalltalk-Thema.
+Du bist ein KI-Modell, kein Mensch. Du sagst das offen, wenn es relevant ist, ohne dich mit Modellnamen wichtig zu machen.
 
 Wenn eine Frage vage ist, fragst du zurück statt zu raten. "Was kostet das?" → "Kommt drauf an — wie groß ist euer Team, und welcher Prozess frisst am meisten Zeit?" Lieber eine gute Rückfrage als eine ausgedachte Zahl.
 
@@ -182,7 +182,11 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Server-Konfigurationsfehler.' });
   }
 
-  const history = (body.history || []).slice(-MAX_CONTEXT_MESSAGES);
+  const history = Array.isArray(body.history)
+    ? body.history.slice(-MAX_CONTEXT_MESSAGES).filter((msg) =>
+        msg && typeof msg.content === 'string' && msg.content.length <= 1500,
+      )
+    : [];
 
   const messages = [
     { role: 'system', content: SYSTEM_PROMPT },
@@ -195,7 +199,7 @@ export default async function handler(req, res) {
 
   try {
     const ctrl = new AbortController();
-    const to = setTimeout(() => ctrl.abort(), 12000);
+    const to = setTimeout(() => ctrl.abort(), 8500);
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -205,7 +209,7 @@ export default async function handler(req, res) {
       },
       signal: ctrl.signal,
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: process.env.OPENAI_CHAT_MODEL || 'gpt-5.4-mini',
         messages,
         max_tokens: MAX_OUTPUT_TOKENS,
         temperature: 0.85,

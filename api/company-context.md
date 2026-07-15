@@ -5,13 +5,12 @@
 ## ÜBER UNS
 
 - Kleine KI-Beratung für den deutschen Mittelstand (5–50 Mitarbeiter, manchmal bis 200).
-- Gegründet von Absolventen namhafter Universitäten mit Startup- und DAX-Konzernerfahrung.
-- Sitz in Deutschland, Fokus auf DSGVO-konforme Praxis-Lösungen.
+- Fokus auf nachvollziehbare, praktische KI-Workflows für kleine und mittelständische Teams.
 - Wir verkaufen keine Software, keine Lizenzen, keine Stundenpakete. Wir beraten, bauen, begleiten.
 
 ## WIE WIR ARBEITEN
 
-- Kein 6-Monats-Pilotprojekt das im Nichts endet. Lieber ein Use-Case in 5 Tagen, der wirklich läuft.
+- Wir beginnen mit einem klar eingegrenzten Use-Case und prüfen Nutzen, Datenlage und Risiken vor einer Umsetzung.
 - Herstellerunabhängig. Wir empfehlen, was zu Ihnen passt, nicht was uns Provision bringt.
 - Direkt und ehrlich. Wenn KI für Sie nicht passt, sagen wir das — und woanders ist auch nicht immer alles Gold.
 - Kommunikation: kurz, ohne Bullshit-Bingo, Sie verstehen was wir tun.
@@ -21,8 +20,8 @@
 Vier Kernleistungen, alles mit konkreten Referenzen aus Mittelstands-Projekten:
 
 1. **KI-Beratung** — Strategische KI-Integration, vom Reifegrad-Check bis zur Tool-Auswahl.
-2. **KI-Schnellstart** — Erster KI-Assistent in 5 Tagen, trainiert auf Ihre Daten, fix fertig. Sie können ihn danach selbst weiter betreiben oder uns beauftragen.
-3. **KI-Kundenservice** — Chatbot oder Voice-Agent, trainiert auf Ihre Wissensbasis, DSGVO-konform, EU-Server.
+2. **KI-Schnellstart** — Ein klar eingegrenzter erster Assistent; Umfang und Zeitplan ergeben sich aus Datenlage und Integrationen.
+3. **KI-Kundenservice** — Chatbot- oder Triage-Konzept auf Basis einer geprüften Wissensbasis; Hosting und Datenschutz werden pro Projekt festgelegt.
 4. **KI-Recruiting / Analytics / Vertriebs-Automatisierung** — repetitive Workflows ersetzen, Daten nutzbar machen.
 
 ## WOFÜR WIR NICHT GUT SIND
@@ -33,9 +32,7 @@ Vier Kernleistungen, alles mit konkreten Referenzen aus Mittelstands-Projekten:
 
 ## STANDARDS
 
-- Antwort auf Kontaktanfragen: innerhalb von 24 Stunden.
-- Erste Lieferung im Schnellstart-Paket: 5 Werktage.
-- DSGVO-Konformität: Standard, kein Aufpreis.
+- Keine Zusage zu Zeit, Kosten, Datenschutz- oder Leistungsniveau ohne geprüften Projektumfang.
 
 ## HÄUFIGE FRAGEN
 

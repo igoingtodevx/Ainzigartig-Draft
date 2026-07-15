@@ -7,28 +7,25 @@ Deployed on VPS, called by Vercel serverless function.
 import requests
 from bs4 import BeautifulSoup
 import html2text
-from fastapi import FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI, Header, HTTPException
 from pydantic import BaseModel
 import uvicorn
+import os
+import secrets
 import time
 import re
+import ipaddress
+import socket
 from urllib.parse import urljoin, urlparse
 
 app = FastAPI(title="Ainzigartig Scraper")
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["POST"],
-    allow_headers=["*"],
-)
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
     "Accept-Language": "de-DE,de;q=0.9,en;q=0.8",
 }
+SCRAPER_SHARED_SECRET = os.environ.get("SCRAPER_SHARED_SECRET", "")
 
 class ScrapeRequest(BaseModel):
     url: str
@@ -49,6 +46,52 @@ class ScrapeResult(BaseModel):
     has_privacy_policy: bool
     response_time_ms: int
     status_code: int
+
+
+def validate_public_url(url: str) -> str:
+    """Allow only public HTTP(S) targets; guard every redirect separately."""
+    parsed = urlparse(url)
+    try:
+        port = parsed.port
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid URL port")
+    if parsed.scheme not in ("http", "https") or not parsed.hostname or parsed.username or parsed.password:
+        raise HTTPException(status_code=400, detail="Only public HTTP(S) URLs are allowed")
+    if port and port not in (80, 443):
+        raise HTTPException(status_code=400, detail="Only standard web ports are allowed")
+
+    hostname = parsed.hostname.lower()
+    if hostname == "localhost" or hostname.endswith((".localhost", ".local")):
+        raise HTTPException(status_code=400, detail="Only public URLs are allowed")
+
+    try:
+        addresses = {record[4][0] for record in socket.getaddrinfo(hostname, None, type=socket.SOCK_STREAM)}
+    except socket.gaierror:
+        raise HTTPException(status_code=400, detail="Could not resolve hostname")
+
+    if not addresses:
+        raise HTTPException(status_code=400, detail="Could not resolve hostname")
+
+    for address in addresses:
+        ip = ipaddress.ip_address(address)
+        if not ip.is_global:
+            raise HTTPException(status_code=400, detail="Only public URLs are allowed")
+    return parsed.geturl()
+
+
+def fetch_public_url(url: str) -> requests.Response:
+    """Fetch at most three redirects and revalidate each redirect destination."""
+    current_url = validate_public_url(url)
+    for _ in range(4):
+        response = requests.get(current_url, headers=HEADERS, timeout=(4, 10), allow_redirects=False)
+        if response.is_redirect or response.is_permanent_redirect:
+            location = response.headers.get("location")
+            if not location:
+                raise HTTPException(status_code=502, detail="Invalid redirect")
+            current_url = validate_public_url(urljoin(current_url, location))
+            continue
+        return response
+    raise HTTPException(status_code=502, detail="Too many redirects")
 
 
 def detect_technologies(soup: BeautifulSoup, html: str) -> list[str]:
@@ -127,21 +170,19 @@ def extract_images(soup: BeautifulSoup) -> list[dict]:
 
 
 @app.post("/scrape")
-async def scrape(req: ScrapeRequest):
+async def scrape(req: ScrapeRequest, x_audit_scraper_key: str | None = Header(default=None)):
+    if not SCRAPER_SHARED_SECRET or not x_audit_scraper_key or not secrets.compare_digest(x_audit_scraper_key, SCRAPER_SHARED_SECRET):
+        raise HTTPException(status_code=403, detail="Scraper access denied")
     url = req.url.strip()
     if not url.startswith("http"):
         url = "https://" + url
 
-    # Validate URL
-    parsed = urlparse(url)
-    if not parsed.netloc:
-        raise HTTPException(status_code=400, detail="Invalid URL")
-
     start = time.time()
 
     try:
-        resp = requests.get(url, headers=HEADERS, timeout=15, allow_redirects=True)
+        resp = fetch_public_url(url)
         status_code = resp.status_code
+        url = resp.url
     except requests.exceptions.Timeout:
         raise HTTPException(status_code=504, detail="Website timed out after 15s")
     except requests.exceptions.ConnectionError:
