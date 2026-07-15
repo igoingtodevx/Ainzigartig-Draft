@@ -211,7 +211,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: process.env.OPENAI_CHAT_MODEL || 'gpt-5.4-mini',
         messages,
-        max_tokens: MAX_OUTPUT_TOKENS,
+        max_completion_tokens: MAX_OUTPUT_TOKENS,
         temperature: 0.85,
         top_p: 0.95,
         presence_penalty: 0.3,

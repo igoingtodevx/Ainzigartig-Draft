@@ -265,7 +265,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: OPENAI_AUDIT_MODEL,
         messages: [{ role: 'user', content: prompt }],
-        temperature: 0.2, max_tokens: 1400, response_format: { type: 'json_object' }, store: false,
+        temperature: 0.2, max_completion_tokens: 1400, response_format: { type: 'json_object' }, store: false,
       }),
       signal: AbortSignal.timeout(10000),
     });
