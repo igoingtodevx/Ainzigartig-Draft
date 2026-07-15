@@ -37,7 +37,7 @@ Kopiere `.env.example` in eine lokale, nicht eingecheckte Umgebungsdatei oder se
 | `VITE_LEGAL_*` | reale Betreiber- und Kontaktangaben für Impressum/Datenschutz. |
 | `OPENAI_API_KEY` | serverseitig für Edi, Live-Agent und optionalen Opportunity Audit. |
 | `OPENAI_CHAT_MODEL`, `OPENAI_AUDIT_MODEL` | serverseitige Modellwahl. |
-| `RESEND_API_KEY`, `CONTACT_EMAIL`, `CONTACT_FROM_EMAIL` | Kontaktformular. Ohne vollständige Konfiguration lehnt der Endpunkt ab. |
+| `RESEND_API_KEY`, `CONTACT_EMAIL`, `CONTACT_FROM_EMAIL` | Kontaktformular. `CONTACT_FROM_EMAIL` ist optional; bis zur Domain-Verifizierung wird Resends Onboarding-Absender genutzt. |
 | `VITE_DOCUMENT_UPLOADS_ENABLED`, `DOCUMENT_UPLOADS_ENABLED` | nur nach Speicher-, Lösch-, Malware- und Datenschutzkonzept aktivieren. |
 | `VITE_EXTERNAL_AUDIT_ENABLED`, `EXTERNAL_AUDIT_ENABLED` | nur gemeinsam aktivieren, nachdem der Scraper sicher betrieben wird. |
 | `SCRAPER_URL`, `SCRAPER_SHARED_SECRET` | gehärteter, authentifizierter Scraper für externe Website-Prüfungen. Kein Default-Endpunkt. |

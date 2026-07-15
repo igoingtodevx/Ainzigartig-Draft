@@ -1,12 +1,14 @@
 import { Resend } from "resend";
 
 const RECIPIENT = process.env.CONTACT_EMAIL;
-const FROM = process.env.CONTACT_FROM_EMAIL;
+// Resend's onboarding sender keeps the existing student-inbox contact flow
+// working until the agency domain is verified. A custom sender wins once set.
+const FROM = process.env.CONTACT_FROM_EMAIL || "onboarding@resend.dev";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).end();
 
-  if (!process.env.RESEND_API_KEY || !RECIPIENT || !FROM) {
+  if (!process.env.RESEND_API_KEY || !RECIPIENT) {
     return res.status(503).json({ error: "Das Kontaktformular ist noch nicht für den Versand freigegeben." });
   }
 
