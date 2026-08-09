@@ -1,49 +1,51 @@
 # AINZIGARTIG — Company Knowledge Base
-# Used by the chat assistant "Edi" (api/chat.js). This is his only source of truth.
-# Edit and redeploy to update what the AI knows.
+# Used by the chat assistant "Edi" (api/chat.js). This is the assistant's factual source of truth.
+# Edit and redeploy when positioning, contact details or services change.
 
 ## ÜBER UNS
 
-- Kleine KI-Beratung für den deutschen Mittelstand (5–50 Mitarbeiter, manchmal bis 200).
-- Gegründet von Absolventen namhafter Universitäten mit Startup- und DAX-Konzernerfahrung.
-- Sitz in Deutschland, Fokus auf DSGVO-konforme Praxis-Lösungen.
-- Wir verkaufen keine Software, keine Lizenzen, keine Stundenpakete. Wir beraten, bauen, begleiten.
+- Ainzigartig ist eine kleine KI-Beratung für kleine und mittelständische Unternehmen im deutschsprachigen Raum.
+- Wir verbinden technische Umsetzung, Automatisierung und Business-Verständnis in einem kleinen Team.
+- Wir beraten, bauen und begleiten individuelle KI-Lösungen; wir sind kein eigener Foundation-Model- oder Lizenzanbieter.
+- Datenschutz, Hosting, Modellanbieter und Datenflüsse werden passend zum konkreten Projekt bewertet und transparent gemacht.
 
 ## WIE WIR ARBEITEN
 
-- Kein 6-Monats-Pilotprojekt das im Nichts endet. Lieber ein Use-Case in 5 Tagen, der wirklich läuft.
-- Herstellerunabhängig. Wir empfehlen, was zu Ihnen passt, nicht was uns Provision bringt.
-- Direkt und ehrlich. Wenn KI für Sie nicht passt, sagen wir das — und woanders ist auch nicht immer alles Gold.
-- Kommunikation: kurz, ohne Bullshit-Bingo, Sie verstehen was wir tun.
+- Lieber ein klar abgegrenzter, testbarer Use Case als ein monatelanges KI-Konzept ohne produktiven Nutzen.
+- Herstellerunabhängig: Modelle und Tools werden nach Anwendungsfall, Qualität, Datenschutz, Kosten und Integrationsaufwand ausgewählt.
+- Direkt und ehrlich: Wenn ein KI-Einsatz für einen Prozess keinen sinnvollen Business Case hat, sagen wir das.
+- Verständliche Kommunikation ohne unnötigen Fachjargon.
 
-## WOFÜR WIR GUT SIND
+## KERNLEISTUNGEN
 
-Vier Kernleistungen, alles mit konkreten Referenzen aus Mittelstands-Projekten:
+1. **KI-Beratung** — Use-Case-Identifikation, Priorisierung, Tool- und Architekturentscheidungen sowie Umsetzungsplanung.
+2. **KI-Schnellstart** — Ein bewusst kleiner, klar gescopter KI-Assistent mit 5 Tagen als Zielrahmen, sofern Datenlage und Integrationsaufwand dazu passen.
+3. **KI-Kundenservice** — Chat- und Wissensassistenten auf Basis freigegebener Unternehmensinhalte und Prozesse.
+4. **Automatisierung** — Dokumentenverarbeitung, Recruiting-Unterstützung, Analytics, Vertriebs- und Backoffice-Workflows.
 
-1. **KI-Beratung** — Strategische KI-Integration, vom Reifegrad-Check bis zur Tool-Auswahl.
-2. **KI-Schnellstart** — Erster KI-Assistent in 5 Tagen, trainiert auf Ihre Daten, fix fertig. Sie können ihn danach selbst weiter betreiben oder uns beauftragen.
-3. **KI-Kundenservice** — Chatbot oder Voice-Agent, trainiert auf Ihre Wissensbasis, DSGVO-konform, EU-Server.
-4. **KI-Recruiting / Analytics / Vertriebs-Automatisierung** — repetitive Workflows ersetzen, Daten nutzbar machen.
+## WAS MAN AUF DER WEBSITE AUSPROBIEREN KANN
 
-## WOFÜR WIR NICHT GUT SIND
+- KI-Website-Analyse: liest eine URL aus und erstellt eine strukturierte Potenzialanalyse.
+- Dokument-Agent: verarbeitet Beispieltexte sowie hochgeladene PDFs und Bilder und extrahiert Felder, nächste Schritte und Risiken.
+- KI-Reifegrad-Check: sechs Fragen zur ersten Orientierung.
+- ROI-Rechner: branchenspezifische Modellrechnung mit konservativen Bandbreiten.
+- Projekte/Werkstatt: öffentlich gezeigte technische Projekte und Experimente.
 
-- Komplexe Enterprise-Integration (SAP R/3, Oracle, IBM-Stack).
-- AGI-Forschung, eigene Modell-Entwicklung.
-- Anything that violates DSGVO.
+## WAS WIR NICHT BEHAUPTEN
 
-## STANDARDS
-
-- Antwort auf Kontaktanfragen: innerhalb von 24 Stunden.
-- Erste Lieferung im Schnellstart-Paket: 5 Werktage.
-- DSGVO-Konformität: Standard, kein Aufpreis.
+- Keine erfundenen Kundenreferenzen oder garantierten Einsparquoten.
+- Keine pauschale Garantie, dass jedes Setup automatisch DSGVO-konform ist.
+- Keine vollautomatisierten Personal- oder Geschäftsentscheidungen ohne menschliche Verantwortung.
+- Keine Zusage zu konkreten Preisen oder Lieferterminen ohne Scope.
 
 ## HÄUFIGE FRAGEN
 
-- "Was kostet das?" → Kommt auf Team-Größe, Branche und Use-Case an. Im Erstgespräch klären wir das in 30 Minuten. Konkrete Zahlen ohne Briefing nennen wir nicht.
-- "Läuft das DSGVO-konform?" → Ja, EU-Server, klare AVV, kein Training auf Ihren Daten durch Dritte.
-- "Brauchen wir ein Entwicklerteam?" → Nein. Wir liefern fertige Lösungen.
+- "Was kostet das?" → Das hängt von Scope, Datenlage und Integrationen ab. Im Erstgespräch lässt sich die Größenordnung meist schnell einordnen.
+- "Wie sieht es mit Datenschutz aus?" → Das hängt vom Setup ab. Hosting, Modellanbieter, Auftragsverarbeitung und Datenflüsse werden vor produktiver Nutzung transparent festgelegt.
+- "Brauchen wir ein Entwicklerteam?" → Nicht zwingend. Ainzigartig kann eine Lösung umsetzen und dokumentiert übergeben; bei komplexeren Integrationen kann interne IT sinnvoll sein.
+- "Wie schnell geht das?" → Kleine Prototypen können schnell entstehen. Produktive Integrationen hängen von Scope, Daten und Schnittstellen ab.
 
 ## KONTAKT
 
-- Kontaktformular auf der Startseite (Anker #kontakt).
-- E-Mail: hallo@ainzigartig.de (oder die im Kontaktformular-Empfänger konfigurierte Adresse).
+- Bis eine eigene Ainzigartig-Domain und Geschäftsadresse final eingerichtet sind, ausschließlich auf das Kontaktformular der Website verweisen (Startseite, Anker #kontakt).
+- Keine E-Mail-Adresse oder Domain erfinden oder nennen, wenn sie nicht in dieser Datei ausdrücklich als aktiv hinterlegt ist.
