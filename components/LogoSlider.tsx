@@ -1,54 +1,42 @@
 import React from 'react';
 
-const placeholderLogos = [
-  { name: 'TechCorp', initials: 'TC' },
-  { name: 'MittelstandPlus', initials: 'M+' },
-  { name: 'DataFlow', initials: 'DF' },
-  { name: 'CloudNine', initials: 'C9' },
-  { name: 'InnoVate', initials: 'IV' },
-  { name: 'ScaleUp', initials: 'SU' },
-  { name: 'ProzessHQ', initials: 'PQ' },
-  { name: 'SmartOps', initials: 'SO' },
+const technologies = [
+  'OpenAI',
+  'Anthropic',
+  'n8n',
+  'Make',
+  'LangChain',
+  'LlamaIndex',
+  'Supabase',
+  'Vercel',
 ];
 
-const LogoItem: React.FC<{ name: string; initials: string }> = ({ name, initials }) => (
-  <div className="flex-shrink-0 flex items-center gap-2 px-6 opacity-40 hover:opacity-70 transition-opacity duration-300 select-none">
-    <div className="w-8 h-8 border border-gray-600 flex items-center justify-center text-[10px] font-bold text-gray-400 bg-terminal-bg/40 rounded">
-      {initials}
-    </div>
-    <span className="text-sm font-display text-gray-500 tracking-wider whitespace-nowrap">{name}</span>
+const TechItem: React.FC<{ name: string }> = ({ name }) => (
+  <div className="flex-shrink-0 flex items-center gap-3 px-5 py-2 opacity-75 hover:opacity-100 transition-all duration-200 select-none hover:-translate-y-0.5">
+    <span className="w-2 h-2 rounded-full bg-accent border border-ink/20" />
+    <span className="text-[1rem] md:text-[1.08rem] font-body font-bold text-ink tracking-[-0.01em] whitespace-nowrap">
+      {name}
+    </span>
   </div>
 );
 
 export const LogoSlider: React.FC = () => {
-  // Double the logos for seamless infinite scroll
-  const doubled = [...placeholderLogos, ...placeholderLogos];
+  const doubled = [...technologies, ...technologies];
 
   return (
-    <div className="mt-16 w-full max-w-5xl mx-auto">
-      <p className="text-center text-[10px] uppercase tracking-[0.3em] text-gray-600 font-mono mb-6">
-        Vertraut von innovativen Unternehmen
-      </p>
-
-      <div className="relative overflow-hidden">
-        {/* Fade edges */}
-        <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-24 bg-gradient-to-r from-background-dark to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-24 bg-gradient-to-l from-background-dark to-transparent z-10 pointer-events-none" />
-
-        {/* Scrolling track */}
-        <div className="flex animate-[scroll_25s_linear_infinite] hover:[animation-play-state:paused]">
-          {doubled.map((logo, i) => (
-            <LogoItem key={`${logo.name}-${i}`} {...logo} />
-          ))}
+    <section className="py-10 md:py-12 border-b border-ink/10 bg-base relative z-10 overflow-hidden">
+      <div className="max-w-[1140px] mx-auto px-6">
+        <p className="text-center text-[0.72rem] uppercase tracking-[0.12em] text-light font-body font-semibold mb-6">
+          Wir arbeiten mit führenden KI-Technologien
+        </p>
+        <div className="marquee-mask overflow-hidden">
+          <div className="flex w-max animate-marquee hover:[animation-play-state:paused]">
+            {doubled.map((name, index) => (
+              <TechItem key={`${name}-${index}`} name={name} />
+            ))}
+          </div>
         </div>
       </div>
-
-      <style>{`
-        @keyframes scroll {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-      `}</style>
-    </div>
+    </section>
   );
 };
