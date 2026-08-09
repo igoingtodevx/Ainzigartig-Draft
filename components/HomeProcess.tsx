@@ -1,25 +1,28 @@
 import React from 'react';
+import analyzeIllustration from '../Assets/svg/Gemini_Generated_Image_tn5b60tn5b60tn5b.svg';
+import prioritizeIllustration from '../Assets/Generated image 2.png';
+import implementIllustration from '../Assets/Generated image 1.png';
 
 const steps = [
   {
     number: '1',
     title: 'Kennenlernen',
     text: 'Wir lernen Ihr Unternehmen, Ihre Prozesse und den konkreten Business Case kennen. Daraus entwickeln wir sinnvolle KI-Anwendungsfälle statt generischer Ideen.',
-    image: '/Assets/svg/Gemini_Generated_Image_tn5b60tn5b60tn5b.svg',
+    image: analyzeIllustration,
     alt: 'Illustration zum Kennenlernen und Analysieren',
   },
   {
     number: '2',
     title: 'Priorisieren',
     text: 'KI muss einen klaren Nutzen haben. Deshalb priorisieren wir nach Wirkung, Aufwand, Risiko und ROI und legen offen, womit sich der Start wirklich lohnt.',
-    image: '/Assets/Generated image 2.png',
+    image: prioritizeIllustration,
     alt: 'Illustration zur Priorisierung von KI-Anwendungsfällen',
   },
   {
     number: '3',
     title: 'Umsetzen',
     text: 'Wir bauen die Lösung nah an Ihren bestehenden Prozessen und Systemen, testen mit echten Fällen und bringen sie in einen Zustand, den Ihr Team tatsächlich nutzen kann.',
-    image: '/Assets/Generated image 1.png',
+    image: implementIllustration,
     alt: 'Illustration zur Umsetzung einer KI-Lösung',
   },
 ];
@@ -51,12 +54,7 @@ export const HomeProcess: React.FC = () => (
               </div>
 
               <div className="brand-card bg-surface-soft/70 min-h-[240px] md:min-h-[280px] p-5 md:p-7 flex items-center justify-center overflow-hidden">
-                <img
-                  src={step.image}
-                  alt={step.alt}
-                  className="w-full h-full max-h-[260px] object-contain"
-                  loading="lazy"
-                />
+                <img src={step.image} alt={step.alt} className="w-full h-full max-h-[260px] object-contain" loading="lazy" />
               </div>
             </article>
           ))}
