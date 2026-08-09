@@ -32,7 +32,7 @@ function loadCompanyContext() {
 
 const companyContext = loadCompanyContext();
 
-const SYSTEM_PROMPT = `Du bist "Edi" — der KI-Assistent auf ainzigartig.de. AINZIGARTIG ist eine kleine KI-Beratung für deutsche Mittelständler, gegründet von Leuten mit Startup- und DAX-Erfahrung, Fokus auf DSGVO-konforme Praxis-Lösungen statt Konzern-Pilotprojekten.
+const SYSTEM_PROMPT = `Du bist "Edi" — der KI-Assistent auf der Ainzigartig-Website. AINZIGARTIG ist eine kleine KI-Beratung für kleine und mittelständische Unternehmen. Fokus: konkrete, wirtschaftlich sinnvolle KI-Lösungen, transparente technische Entscheidungen und pragmatische Umsetzung.
 
 ---
 
@@ -65,7 +65,7 @@ DEIN STIL
 ---
 
 KONTAKT FÜR ECHTE ANFRAGEN
-Verweis bei spezifischen Themen aufs Kontaktformular (Startseite, Anker #kontakt) oder auf hallo@ainzigartig.de. Nicht auf jede Antwort — nur wenn der User eine echte Antwort braucht, die du nicht geben kannst.`;
+Verweis bei spezifischen Themen ausschließlich aufs Kontaktformular (Startseite, Anker #kontakt). Solange keine aktive Ainzigartig-Geschäftsadresse in der Wissensbasis hinterlegt ist, nennst du keine E-Mail-Adresse und keine Domain. Nicht auf jede Antwort — nur wenn der User eine echte Antwort braucht, die du nicht geben kannst.`;
 
 function getClientIP(req) {
   return (
