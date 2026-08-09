@@ -2,89 +2,164 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Preserve the body / html / selection / scrollbar rules that were
-   previously inlined in index.html. The CDN is gone now. */
+:root {
+  --bg: #FAF8F5;
+  --card: #FFFFFF;
+  --ink: #1A1918;
+  --muted: #52504C;
+  --light: #7A7873;
+  --accent: #ECA867;
+  --accent-hover: #E3944C;
+  --border: rgba(26, 25, 24, 0.12);
+  --shadow-sm: 0 4px 12px rgba(26, 25, 24, 0.04);
+  --shadow-md: 0 12px 32px rgba(26, 25, 24, 0.08);
+  --shadow-lg: 0 20px 48px rgba(26, 25, 24, 0.12);
+}
+
 html {
-  background-color: #f0ede3;
-  color: #1c1917;
+  scroll-behavior: smooth;
+  background: var(--bg);
+  color: var(--ink);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background-color: #f0ede3;
-  color: #1c1917;
+  margin: 0;
+  min-width: 320px;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Marvin's paper/grain surface, now global across every React route. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('/Assets/grain.png');
+  background-repeat: repeat;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: .42;
+}
+
+h1, h2, h3, h4 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 ::selection {
-  background-color: #1b4d3e;
-  color: #f0ede3;
+  background: var(--accent);
+  color: var(--ink);
 }
 
-a[href='#'] {
+button, a, input, textarea, select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button, a[href] {
   cursor: pointer;
 }
 
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
+*:focus-visible {
+  outline: 2px solid var(--accent-hover);
+  outline-offset: 3px;
 }
 
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+/* Reusable brand primitives used by new + existing pages. */
+.brand-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1.8px solid var(--ink);
+  border-radius: 9999px;
+  padding: 12px 24px;
+  font-weight: 600;
+  transition: transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s cubic-bezier(.16,1,.3,1), background-color .3s ease;
 }
 
-/* ============================================
-   FORBIDDEN TOKENS — Do not use
-   Inspired by kami (紙) + Atelier Zero design systems.
-   These are the rules the Anwaltskanzlei-look lives by.
-   - #ffffff as page background (use #f0ede3 cream)
-   - #000000 anywhere (use #1c1917 near-black)
-   - Cool blue-grays (slate-*, #f8f9fa, #f3f4f6)
-   - Second saturated accent
-   - Hard drop shadows
-   - backdrop-filter / mix-blend-mode
-   ============================================ */
+.brand-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
 
-/* Snippet 3 — Tabular-nums for any numerical data
-   Issue numbers, dates, prices, percentages — anything that
-   stacks vertically or sits in tables. Per kami DESIGN.md:
-   "stacks and tables, yes; sentences, no." */
+.brand-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  box-shadow: var(--shadow-sm);
+  transition: transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s cubic-bezier(.16,1,.3,1), border-color .3s ease;
+}
+
+.brand-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(26,25,24,.22);
+}
+
+.hand-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.hand-underline::after {
+  content: '';
+  position: absolute;
+  left: -2%;
+  right: -2%;
+  bottom: -8px;
+  height: 9px;
+  border-top: 5px solid var(--accent);
+  border-radius: 55% 45% 60% 40%;
+  transform: rotate(-1deg);
+  opacity: .95;
+}
+
+.marquee-mask {
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
 .issue-num,
 .stat-value,
 .tabular {
   font-variant-numeric: tabular-nums;
-  font-feature-settings: "tnum" 1, "ss01" 1;
+  font-feature-settings: 'tnum' 1, 'ss01' 1;
 }
 
-/* Snippet 6 — Print styles
-   Ainzigartig produces consulting reports; people will print/PDF
-   the insights page. 5 lines, instantly more professional than
-   99% of marketing sites. */
+/* Compatibility cleanup for legacy functional pages. Their JSX can keep its
+   old class names while the visual result is now Ainzigartig instead of neon. */
+.text-white { color: var(--ink) !important; }
+.text-gray-300, .text-gray-400 { color: var(--muted) !important; }
+.text-gray-500, .text-gray-600 { color: var(--light) !important; }
+.border-gray-700, .border-gray-800 { border-color: var(--border) !important; }
+.bg-gray-800, .bg-gray-900 { background-color: var(--card) !important; }
+.text-glow-cyan, .text-glow-pink { text-shadow: none !important; }
+
 @media print {
   html, body { background: #fff; }
-  .no-print, nav, footer { display: none !important; }
+  body::after, .no-print, nav, footer { display: none !important; }
   article, section { break-inside: avoid; page-break-inside: avoid; }
   h1, h2, h3 { break-after: avoid; }
-  a[href]::after {
-    content: " (" attr(href) ")";
-    font-size: 0.8em;
-    opacity: 0.5;
-    word-break: break-all;
-  }
 }
 
-/* Snippet (Bonus from Subagent-3) — prefers-reduced-motion
-   WCAG 2.3.3: motion-trigger sensitivity. We kill the
-   underline-in + translate-x animations; keep the rest. */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-  }
-  .group:hover .group-hover\:translate-x-0\.5,
-  .group:hover .group-hover\:translate-x-1 {
-    transform: none !important;
+    scroll-behavior: auto !important;
   }
 }
