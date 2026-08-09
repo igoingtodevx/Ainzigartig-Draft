@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import heroVideo from '../Assets/Add_a_minimal_animation_to_the.mp4';
+import heroPoster from '../Assets/Gemini_Generated_Image_anzdlsanzdlsanzd.png';
 
 export const Hero: React.FC = () => {
   return (
@@ -10,10 +12,10 @@ export const Hero: React.FC = () => {
         loop
         muted
         playsInline
-        poster="/Assets/Gemini_Generated_Image_anzdlsanzdlsanzd.png"
+        poster={heroPoster}
         aria-hidden="true"
       >
-        <source src="/Assets/Add_a_minimal_animation_to_the.mp4" type="video/mp4" />
+        <source src={heroVideo} type="video/mp4" />
       </video>
 
       <div className="absolute inset-0 bg-white/40 pointer-events-none" />
