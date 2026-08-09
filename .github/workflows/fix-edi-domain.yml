@@ -1,0 +1,41 @@
+name: Fix Edi Domain References
+
+on:
+  push:
+    branches: [finish-marvin-design]
+    paths: ['.github/workflows/fix-edi-domain.yml']
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: finish-marvin-design
+      - name: Remove unowned domain and absolute compliance claims
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('api/chat.js')
+          text = p.read_text()
+          text = text.replace(
+            'Du bist "Edi" — der KI-Assistent auf ainzigartig.de. AINZIGARTIG ist eine kleine KI-Beratung für deutsche Mittelständler, gegründet von Leuten mit Startup- und DAX-Erfahrung, Fokus auf DSGVO-konforme Praxis-Lösungen statt Konzern-Pilotprojekten.',
+            'Du bist "Edi" — der KI-Assistent auf der Ainzigartig-Website. AINZIGARTIG ist eine kleine KI-Beratung für kleine und mittelständische Unternehmen. Fokus: konkrete, wirtschaftlich sinnvolle KI-Lösungen, transparente technische Entscheidungen und pragmatische Umsetzung.'
+          )
+          text = text.replace(
+            'Verweis bei spezifischen Themen aufs Kontaktformular (Startseite, Anker #kontakt) oder auf hallo@ainzigartig.de. Nicht auf jede Antwort — nur wenn der User eine echte Antwort braucht, die du nicht geben kannst.',
+            'Verweis bei spezifischen Themen ausschließlich aufs Kontaktformular (Startseite, Anker #kontakt). Solange keine aktive Ainzigartig-Geschäftsadresse in der Wissensbasis hinterlegt ist, nennst du keine E-Mail-Adresse und keine Domain. Nicht auf jede Antwort — nur wenn der User eine echte Antwort braucht, die du nicht geben kannst.'
+          )
+          p.write_text(text)
+          PY
+      - name: Commit
+        run: |
+          git rm .github/workflows/fix-edi-domain.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add api/chat.js
+          git commit -m "content: remove unowned Ainzigartig domain from Edi"
+          git push origin HEAD:finish-marvin-design
