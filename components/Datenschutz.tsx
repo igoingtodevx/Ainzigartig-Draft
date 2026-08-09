@@ -2,131 +2,51 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { RouteMeta } from './RouteMeta';
 
-export const Datenschutz: React.FC = () => {
-  return (
-    <div className="min-h-screen bg-base text-white font-body pt-28 pb-20 px-4">
-      <RouteMeta title="Datenschutz | Ainzigartig" description="Unsere Datenschutzerklärung." />
-      <div className="max-w-3xl mx-auto">
-        <Link to="/" className="text-accent-hover text-sm hover:underline mb-8 inline-flex items-center gap-1">
-          <span className="material-symbols-outlined text-sm">arrow_back</span>
-          Zurück zur Startseite
-        </Link>
+export const Datenschutz: React.FC = () => (
+  <main className="min-h-screen bg-base text-ink font-body pt-36 pb-24 px-6">
+    <RouteMeta title="Datenschutz | Ainzigartig" description="Datenschutzinformationen zu Ainzigartig." />
+    <div className="max-w-[820px] mx-auto">
+      <Link to="/" className="inline-flex items-center gap-2 text-sm font-semibold text-muted hover:text-ink transition-colors mb-10">
+        <span className="material-symbols-outlined text-[18px]">arrow_back</span>
+        Startseite
+      </Link>
 
-        <h1 className="text-3xl font-bold text-white font-editorial mb-8 mt-4">
-          <span className="text-accent-hover mr-2">&gt;</span>
-          Datenschutzerklärung
-        </h1>
+      <p className="text-xs uppercase tracking-[0.14em] font-semibold text-light mb-3">Rechtliches</p>
+      <h1 className="font-editorial text-[clamp(2.8rem,6vw,4.3rem)] leading-[1.02] tracking-[-0.03em] mb-8">Datenschutz</h1>
 
-        <div className="space-y-6 text-muted text-sm leading-relaxed border border-ink/10 bg-[#150a26]/40 p-8 rounded-lg">
-          <div>
-            <h2 className="text-lg font-bold text-white mb-2">1. Datenschutz auf einen Blick</h2>
-            <h3 className="text-md font-bold text-gray-200 mb-1 mt-3">Allgemeine Hinweise</h3>
-            <p>
-              Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren
-              personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene
-              Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.
-            </p>
-          </div>
+      <div className="rounded-[26px] border border-[#B77A36]/25 bg-accent/12 p-5 md:p-6 mb-6">
+        <p className="text-xs uppercase tracking-[0.12em] font-bold text-[#8B5A24] mb-2">Pre-Launch-Hinweis</p>
+        <p className="text-sm text-muted leading-relaxed">
+          Die technische Website steht bereits, die endgültigen Unternehmens-, Domain- und Vertragsdaten jedoch noch nicht. Deshalb ist diese Seite bewusst als Arbeitsstand gekennzeichnet und muss vor dem öffentlichen Livegang anhand des finalen Setups rechtlich geprüft und vervollständigt werden.
+        </p>
+      </div>
 
-          <div>
-            <h2 className="text-lg font-bold text-white mb-2">2. Verantwortliche Stelle</h2>
-            <p>
-              [Firmenname einfügen]<br />
-              [Straße und Hausnummer]<br />
-              [PLZ Ort]<br />
-              Deutschland<br /><br />
-              Telefon: [Telefonnummer einfügen]<br />
-              E-Mail: [E-Mail-Adresse einfügen]
-            </p>
-          </div>
+      <div className="brand-card bg-surface p-6 md:p-8 space-y-7">
+        <section>
+          <h2 className="font-editorial text-2xl mb-2">Was technisch bereits feststeht</h2>
+          <ul className="space-y-3 text-sm text-muted leading-relaxed">
+            <li className="flex gap-3"><span className="text-accent-hover">01</span><span>Die Website wird über Vercel bereitgestellt.</span></li>
+            <li className="flex gap-3"><span className="text-accent-hover">02</span><span>Der integrierte Assistent „Edi“ nutzt aktuell serverseitig die OpenAI API.</span></li>
+            <li className="flex gap-3"><span className="text-accent-hover">03</span><span>Weitere KI-Demos können Inhalte an externe Modell-APIs übermitteln, wenn ein Besucher die jeweilige Funktion aktiv nutzt.</span></li>
+            <li className="flex gap-3"><span className="text-accent-hover">04</span><span>Das Kontaktformular übermittelt die eingegebenen Kontaktdaten an das serverseitige Kontakt-Backend.</span></li>
+          </ul>
+        </section>
 
-          <div>
-            <h2 className="text-lg font-bold text-white mb-2">3. Datenerfassung auf dieser Website</h2>
-            <h3 className="text-md font-bold text-gray-200 mb-1 mt-3">Server-Log-Dateien</h3>
-            <p>
-              Der Provider der Seiten erhebt und speichert automatisch Informationen in so genannten
-              Server-Log-Dateien, die Ihr Browser automatisch an uns übermittelt. Dies sind:
-            </p>
-            <ul className="list-none mt-2 space-y-1 pl-4">
-              <li>— Browsertyp und Browserversion</li>
-              <li>— verwendetes Betriebssystem</li>
-              <li>— Referrer URL</li>
-              <li>— Hostname des zugreifenden Rechners</li>
-              <li>— Uhrzeit der Serveranfrage</li>
-              <li>— IP-Adresse</li>
-            </ul>
-          </div>
+        <section className="pt-6 border-t border-ink/10">
+          <h2 className="font-editorial text-2xl mb-2">Was vor Livegang ergänzt werden muss</h2>
+          <p className="text-sm text-muted leading-relaxed">
+            Verantwortliche Stelle, endgültige Hosting- und Anbieterinformationen, konkrete Datenflüsse der produktiv aktivierten KI-Funktionen, Rechtsgrundlagen, Aufbewahrungsfristen, Betroffenenrechte, Kontaktadresse und gegebenenfalls weitere eingesetzte Analyse- oder Drittanbieter-Dienste.
+          </p>
+        </section>
 
-          <div>
-            <h2 className="text-lg font-bold text-white mb-2">4. Hosting</h2>
-            <p>
-              Diese Website wird bei Vercel Inc. gehostet (San Francisco, USA). Vercel verarbeitet
-              Server-Log-Dateien zur Bereitstellung der Website. Details zum Umgang mit Ihren
-              Daten finden Sie in der Datenschutzerklärung von Vercel:
-              <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-accent-hover hover:underline ml-1">
-                https://vercel.com/legal/privacy-policy
-              </a>
-            </p>
-            <p className="mt-2 text-xs text-light italic">
-              Hinweis: Die Server-Anfragen werden über Vercels globales CDN verarbeitet. Einzelne
-              Anfragen können über Knotenpunkte in der EU geroutet werden.
-            </p>
-          </div>
-
-          <div>
-            <h2 className="text-lg font-bold text-white mb-2">5. KI-Chat-Funktion</h2>
-            <p>
-              Auf dieser Website verwenden wir eine KI-gestützte Chat-Funktion. Die Eingaben werden
-              an Google Gemini (Google LLC) zur Verarbeitung übermittelt. Es werden keine
-              personenbezogenen Daten gespeichert. Die IP-Adresse wird temporär zur Ratenbegrenzung
-              verwendet und nicht dauerhaft gespeichert.
-            </p>
-            <p className="mt-2">
-              Weitere Informationen finden Sie in der Datenschutzerklärung von Google:
-              <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-accent-hover hover:underline ml-1">
-                https://policies.google.com/privacy
-              </a>
-            </p>
-          </div>
-
-          <div>
-            <h2 className="text-lg font-bold text-white mb-2">6. Ihre Rechte</h2>
-            <p>Sie haben jederzeit das Recht:</p>
-            <ul className="list-none mt-2 space-y-1 pl-4">
-              <li>— Auskunft über Ihre gespeicherten Daten zu erhalten (Art. 15 DSGVO)</li>
-              <li>— Berichtigung unrichtiger Daten zu verlangen (Art. 16 DSGVO)</li>
-              <li>— Löschung Ihrer Daten zu verlangen (Art. 17 DSGVO)</li>
-              <li>— Einschränkung der Verarbeitung zu verlangen (Art. 18 DSGVO)</li>
-              <li>— Datenübertragbarkeit zu verlangen (Art. 20 DSGVO)</li>
-              <li>— Widerspruch gegen die Verarbeitung einzulegen (Art. 21 DSGVO)</li>
-            </ul>
-          </div>
-
-          <div>
-            <h2 className="text-lg font-bold text-white mb-2">7. Cookies</h2>
-            <p>
-              Diese Website verwendet keine Cookies zu Tracking- oder Analysezwecken.
-              [Bitte anpassen, falls Cookies verwendet werden.]
-            </p>
-          </div>
-
-          <div>
-            <h2 className="text-lg font-bold text-white mb-2">8. Änderung der Datenschutzerklärung</h2>
-            <p>
-              Wir behalten uns vor, diese Datenschutzerklärung anzupassen, damit sie stets den
-              aktuellen rechtlichen Anforderungen entspricht oder um Änderungen unserer Leistungen
-              umzusetzen.
-            </p>
-          </div>
-
-          <div className="border-t border-ink/10 pt-4 mt-8">
-            <p className="text-light text-xs">
-              Stand: Februar 2026<br />
-              Datenschutzerklärung wird laufend aktualisiert. Fragen: info@ainzigartig.de
-            </p>
-          </div>
-        </div>
+        <section className="pt-6 border-t border-ink/10">
+          <h2 className="font-editorial text-2xl mb-2">Kontakt während der Preview</h2>
+          <p className="text-sm text-muted leading-relaxed">
+            Bis eine eigene Ainzigartig-Domain samt Geschäftsadresse final eingerichtet ist, wird auf dieser Preview keine erfundene E-Mail-Adresse angegeben.
+          </p>
+          <Link to="/#kontakt" className="brand-pill mt-4 bg-ink text-white hover:bg-[#33312E] text-sm">Zum Kontaktformular</Link>
+        </section>
       </div>
     </div>
-  );
-};
+  </main>
+);
