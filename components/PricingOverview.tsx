@@ -2,241 +2,122 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { RouteMeta } from './RouteMeta';
 
-const mailto = 'mailto:info@ainzigartig.de?subject=Preisanfrage%20%E2%80%94%20Ainzigartig';
-
 interface PricingItem {
   name: string;
-  price: string;
-  period: string;
   description: string;
   features: string[];
-  tier: 'Einstieg' | 'Kern' | 'Premium';
+  tier: 'Einstieg' | 'Kern' | 'Strategie';
 }
 
 const pricing: PricingItem[] = [
   {
     name: 'KI-Schnellstart',
-    price: 'Auf Anfrage',
-    period: '',
-    description: 'Ihr erster KI-Assistent in 5 Tagen. Perfekt zum Reinschnuppern.',
-    features: [
-      'KI-Assistent für 1 Use-Case',
-      'Trainiert auf Ihren Daten',
-      'Integration in bestehende Tools',
-      '5 Tage Umsetzung',
-      'Nachbesserung inklusive',
-    ],
+    description: 'Ein klar abgegrenzter erster KI-Assistent als pragmatischer Einstieg.',
+    features: ['1 klarer Use Case', 'Arbeit mit Ihren Daten', 'Integration in vorhandene Abläufe', '5 Tage Zielrahmen', 'Nachbesserung inklusive'],
     tier: 'Einstieg',
   },
   {
     name: 'KI-Audit',
-    price: 'Auf Anfrage',
-    period: '',
-    description: '1–2 Tage Analyse: Wo verbirgt sich das größte Potential?',
-    features: [
-      'Prozess-Analyse',
-      'Top 3 Use-Cases mit ROI-Schätzung',
-      'Priorisierte Umsetzungs-Roadmap',
-      'Tool-Empfehlungen',
-      '15–20 Seiten Bericht',
-    ],
+    description: 'Wir identifizieren, priorisieren und bewerten konkrete KI-Potenziale im Unternehmen.',
+    features: ['Prozessanalyse', 'Top-Use-Cases', 'ROI-/Aufwandsschätzung', 'Priorisierte Roadmap', 'Tool-Empfehlungen'],
     tier: 'Einstieg',
   },
   {
     name: 'KI-Workshop',
-    price: 'Auf Anfrage',
-    period: '',
-    description: 'Halber oder ganzer Tag: Ihr Team lernt KI-Tools konkret einzusetzen.',
-    features: [
-      'Hands-on, kein Theorie-Vortrag',
-      'Mit echten Daten aus Ihrem Betrieb',
-      '5–15 Teilnehmende',
-      'Prompt-Library als Nachschlagewerk',
-      'Vor-Workshop-Abstimmung',
-    ],
+    description: 'Hands-on mit konkreten Aufgaben und Daten aus Ihrem Arbeitsalltag.',
+    features: ['Halber oder ganzer Tag', 'Praxis statt Folienmarathon', '5–15 Teilnehmende', 'Prompt-/Workflow-Vorlagen', 'Vorab-Abstimmung'],
     tier: 'Einstieg',
   },
   {
     name: 'KI-Kundenservice',
-    price: 'Auf Anfrage',
-    period: '',
-    description: 'Chatbot oder Telefonassistent, der Ihr Unternehmen kennt.',
-    features: [
-      'Custom Chatbot / Voice Agent',
-      'Trainiert auf Ihr Wissen',
-      'Website, WhatsApp, E-Mail',
-      'DSGVO-konform',
-      'Monatliche Optimierung',
-    ],
-    tier: 'Kern',
-  },
-  {
-    name: 'KI-Vertrieb',
-    price: 'Auf Anfrage',
-    period: '',
-    description: 'Lead-Qualifizierung, Follow-ups, Angebote — automatisiert.',
-    features: [
-      'Lead-Scoring & Qualifizierung',
-      'Automatische Follow-up-E-Mails',
-      'Angebotsgenerierung',
-      'CRM-Integration',
-      'Performance-Dashboard',
-    ],
+    description: 'Chat- oder Wissensassistenten auf Basis Ihrer Inhalte und Prozesse.',
+    features: ['Custom Chatbot / Assistent', 'RAG / Wissensbasis', 'Website & weitere Kanäle', 'Messbare Qualitätsmetriken', 'Optionale laufende Optimierung'],
     tier: 'Kern',
   },
   {
     name: 'Prozess-Automatisierung',
-    price: 'Auf Anfrage',
-    period: '',
-    description: 'Ein kompletter Workflow, der manuelle Schritte ersetzt.',
-    features: [
-      'Individueller Automatisierungs-Workflow',
-      'n8n / Make / Zapier',
-      'Dokumentation & Monitoring',
-      'Retainer-Option',
-    ],
+    description: 'Wiederkehrende Arbeitsschritte werden verbunden, automatisiert und nachvollziehbar gemacht.',
+    features: ['Individueller Workflow', 'n8n / Make / APIs', 'Dokumentation', 'Monitoring', 'Retainer optional'],
     tier: 'Kern',
   },
   {
-    name: 'KI-Compliance-Paket',
-    price: 'Auf Anfrage',
-    period: '',
-    description: 'DSGVO-konforme KI-Einführung. Keine Abmahnung, kein Risiko.',
-    features: [
-      'AVV & Datenschutz-Dokumentation',
-      'AI-Tool-Vetting',
-      'Mitarbeiter-Richtlinien',
-      'Einwilligungs-Flows',
-      'Checkliste für Audit',
-    ],
+    name: 'KI-Vertrieb',
+    description: 'Unterstützung für Qualifizierung, Follow-ups und Informationsaufbereitung im Vertrieb.',
+    features: ['Lead-Scoring', 'Follow-up-Flows', 'CRM-Integration', 'Recherche & Enrichment', 'Performance-Auswertung'],
     tier: 'Kern',
+  },
+  {
+    name: 'KI-Governance & Datenschutz',
+    description: 'Technische und organisatorische Anforderungen werden vor der Umsetzung in das Setup übersetzt.',
+    features: ['Tool- und Datenfluss-Vetting', 'AVV-/Anbieter-Check', 'Rollen & Richtlinien', 'Dokumentation', 'Umsetzbare Guardrails'],
+    tier: 'Strategie',
   },
   {
     name: 'KI-Beratung',
-    price: 'Auf Anfrage',
-    period: '',
-    description: 'Strategische Beratung für komplexere Fragestellungen.',
-    features: [
-      'KI-Strategie & Roadmap',
-      'Vendor-Auswahl',
-      'Implementierungs-Begleitung',
-      'Workshops für Führungskräfte',
-    ],
-    tier: 'Premium',
+    description: 'Strategie und Umsetzungsbegleitung für komplexere KI-Vorhaben.',
+    features: ['Use-Case-Portfolio', 'Roadmap', 'Vendor-Auswahl', 'Architektur-Entscheidungen', 'Begleitung der Umsetzung'],
+    tier: 'Strategie',
   },
 ];
 
-const tierColors: Record<string, string> = {
-  Einstieg: 'border-accent/30 bg-accent/[0.03]',
-  Kern: 'border-ink/10 bg-ink/[0.02]',
-  Premium: 'border-faint/20 bg-faint/[0.02]',
-};
+const tierOrder = ['Einstieg', 'Kern', 'Strategie'] as const;
 
-const tierBadge: Record<string, string> = {
-  Einstieg: 'text-accent border-accent/30',
-  Kern: 'text-ink border-ink/20',
-  Premium: 'text-muted border-faint/30',
-};
+export const PricingOverview: React.FC = () => (
+  <div className="min-h-screen bg-base text-ink font-body">
+    <RouteMeta title="Leistungen & Preise | Ainzigartig" description="Leistungspakete und Projektmodelle von Ainzigartig." />
 
-export const PricingOverview: React.FC = () => {
-  return (
-    <div className="min-h-screen bg-base text-ink font-body">
-      <RouteMeta title="Preise | Ainzigartig" description="Transparente Preismodelle für jeden Bedarf." />
-      {/* Hero */}
-      <section className="pt-28 pb-16 px-6 md:px-8">
-        <div className="max-w-[1200px] mx-auto text-center">
-          <span className="inline-block text-xs font-bold uppercase tracking-[0.25em] text-accent border border-accent/30 bg-accent/5 px-3 py-1 mb-6">
-            Preise & Leistungen
-          </span>
-
-          <h1 className="font-editorial text-3xl sm:text-5xl md:text-6xl leading-[1.08] text-ink mb-6">
-            KI muss nicht teuer sein.<br />
-            <span className="text-muted">Sie muss nur passen.</span>
-          </h1>
-
-          <p className="text-muted text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-10">
-           transparente Preise, klare Pakete. Kein Versteck, kein „Rufen Sie uns an".
-            Wählen Sie was zu Ihnen passt — oder starten Sie mit einem unverbindlichen Gespräch.
-          </p>
-        </div>
-      </section>
-
-      {/* Pricing Grid */}
-      <section className="pb-20 px-6 md:px-8">
-        <div className="max-w-[1200px] mx-auto">
-          {/* Tier labels */}
-          <div className="grid grid-cols-3 gap-4 mb-6 max-w-3xl mx-auto">
-            {(['Einstieg', 'Kern', 'Premium'] as const).map((tier) => (
-              <div key={tier} className="text-center">
-                <span className={`inline-block text-xs font-bold uppercase tracking-[0.2em] border px-3 py-1 ${tierBadge[tier]}`}>
-                  {tier}
-                </span>
-              </div>
-            ))}
-          </div>
-
-          {/* Cards */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {pricing.map((item) => (
-              <div
-                key={item.name}
-                className={`border p-6 ${tierColors[item.tier]} flex flex-col`}
-              >
-                <div className="mb-4">
-                  <p className="text-xs text-faint uppercase tracking-[0.15em] mb-1">{item.tier}</p>
-                  <h3 className="font-editorial text-lg text-ink">{item.name}</h3>
-                </div>
-
-                <div className="mb-4">
-                  <span className="font-editorial text-2xl text-ink">{item.price}</span>
-                  <span className="text-xs text-faint ml-1">{item.period}</span>
-                </div>
-
-                <p className="text-xs text-muted leading-relaxed mb-5">{item.description}</p>
-
-                <ul className="space-y-2 mt-auto">
-                  {item.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-xs text-muted">
-                      <span className="material-symbols-outlined text-accent text-sm mt-px">check</span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Hinweis */}
-      <section className="py-12 px-6 md:px-8 bg-ink/[0.03]">
-        <div className="max-w-[800px] mx-auto text-center">
-          <p className="text-xs text-faint leading-relaxed">
-            Alle Preise zzgl. MwSt. · Unverbindliche Preisauskunft · Individuelle Angebote nach Bedarf.
-            <br />
-            DSGVO-Konformität ist in allen Paketen enthalten.
-          </p>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-20 px-6 md:px-8 text-center">
-        <h2 className="font-editorial text-2xl md:text-3xl text-ink mb-4">
-          Nicht sicher, was Sie brauchen?
-        </h2>
-        <p className="text-muted text-sm mb-8 max-w-lg mx-auto">
-          30 Minuten. Wir klären zusammen: Was passt zu Ihnen — und was nicht. Kostenfrei.
+    <section className="pt-36 pb-20 px-6">
+      <div className="max-w-[900px] mx-auto text-center">
+        <p className="text-xs uppercase tracking-[0.14em] font-semibold text-light mb-3">Leistungen & Rahmen</p>
+        <h1 className="font-editorial text-[clamp(2.8rem,6vw,4.7rem)] leading-[1.02] tracking-[-0.035em] font-normal">
+          Kein Paket-Zirkus.<br /><span className="text-muted">Ein Scope, der zu Ihrem Problem passt.</span>
+        </h1>
+        <p className="text-base md:text-lg text-muted leading-relaxed max-w-2xl mx-auto mt-6">
+          Wir zeigen transparent, was enthalten ist. Den Preis nennen wir nach einem kurzen Scope-Check, weil Integrationen, Datenlage und Sicherheitsanforderungen den Aufwand stärker bestimmen als ein hübscher Paketname.
         </p>
-        <Link
-          to="/#kontakt"
-          className="inline-flex items-center gap-2 text-sm text-accent font-body group"
-        >
-          <span className="underline decoration-1 underline-offset-4 group-hover:decoration-2 transition-all duration-200">
-            Erstgespräch vereinbaren
-          </span>
-          <span className="material-symbols-outlined text-sm group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
-        </Link>
-      </section>
-    </div>
-  );
-};
+      </div>
+    </section>
+
+    <section className="pb-24 px-6">
+      <div className="max-w-[1140px] mx-auto">
+        <div className="flex flex-wrap justify-center gap-2 mb-10">
+          {tierOrder.map((tier) => (
+            <span key={tier} className="rounded-full border border-ink/15 bg-surface px-4 py-2 text-xs font-semibold text-muted">{tier}</span>
+          ))}
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {pricing.map((item) => (
+            <article key={item.name} className="brand-card bg-surface p-6 md:p-7 flex flex-col min-h-[330px]">
+              <div className="flex items-start justify-between gap-3 mb-5">
+                <span className="text-[0.68rem] uppercase tracking-[0.12em] font-semibold text-light">{item.tier}</span>
+                <span className="rounded-full bg-accent/20 border border-accent/40 px-3 py-1 text-[0.68rem] font-semibold text-ink">individuell</span>
+              </div>
+              <h2 className="font-editorial text-2xl text-ink leading-tight">{item.name}</h2>
+              <p className="text-sm text-muted leading-relaxed mt-3 mb-6">{item.description}</p>
+              <ul className="mt-auto space-y-2.5">
+                {item.features.map((feature) => (
+                  <li key={feature} className="flex items-start gap-2.5 text-xs text-muted leading-relaxed">
+                    <span className="material-symbols-outlined text-[16px] text-accent-hover mt-px">check</span>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section className="pb-24 px-6">
+      <div className="max-w-[900px] mx-auto rounded-[30px] bg-ink text-white px-7 py-10 md:px-12 md:py-12 flex flex-col md:flex-row gap-8 md:items-center md:justify-between">
+        <div>
+          <p className="text-xs uppercase tracking-[0.12em] font-semibold text-white/45 mb-2">Nächster Schritt</p>
+          <h2 className="font-editorial text-3xl md:text-4xl leading-tight text-white">Scope klären, dann Preis.</h2>
+          <p className="text-sm text-white/60 mt-3 max-w-xl">30 Minuten reichen meistens, um einzuschätzen, ob ein Projekt Sinn ergibt und in welcher Größenordnung es liegt.</p>
+        </div>
+        <Link to="/#kontakt" className="brand-pill bg-accent border-accent text-ink hover:bg-accent-mid shrink-0">Erstgespräch buchen</Link>
+      </div>
+    </section>
+  </div>
+);
