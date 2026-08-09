@@ -1,0 +1,115 @@
+name: Normalize Legacy UI
+
+on:
+  push:
+    branches:
+      - finish-marvin-design
+    paths:
+      - '.github/workflows/normalize-legacy-ui.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  normalize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: finish-marvin-design
+
+      - name: Normalize legacy visual classes and risky claims
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          files = [
+              'components/KIKundenservice.tsx',
+              'components/KIBeratung.tsx',
+              'components/KIRecruiting.tsx',
+              'components/AnalyticsDashboard.tsx',
+              'components/Impressum.tsx',
+              'components/Datenschutz.tsx',
+              'components/AsciiHeader.tsx',
+              'components/BackgroundEffects.tsx',
+          ]
+
+          replacements = {
+              'font-mono': 'font-body',
+              'font-display': 'font-editorial',
+              'bg-background-dark': 'bg-base',
+              'bg-terminal-bg': 'bg-surface',
+              'text-gray-300': 'text-muted',
+              'text-gray-400': 'text-muted',
+              'text-gray-500': 'text-light',
+              'text-gray-600': 'text-light',
+              'text-neon-cyan': 'text-accent-hover',
+              'text-neon-pink': 'text-accent-hover',
+              'text-neon-yellow': 'text-[#B77A36]',
+              'border-gray-800': 'border-ink/10',
+              'border-gray-700': 'border-ink/10',
+              'bg-gray-900': 'bg-surface-soft',
+              'bg-gray-800': 'bg-surface',
+              'from-background-dark': 'from-base',
+              'to-background-dark': 'to-base',
+              'border-neon-cyan/20': 'border-accent/25',
+              'border-neon-cyan/30': 'border-accent/30',
+              'border-neon-cyan/40': 'border-accent/40',
+              'border-neon-cyan/50': 'border-accent/45',
+              'border-neon-cyan/60': 'border-accent/50',
+              'border-neon-pink/20': 'border-accent/25',
+              'border-neon-pink/30': 'border-accent/30',
+              'border-neon-pink/40': 'border-accent/40',
+              'border-neon-pink/50': 'border-accent/45',
+              'border-neon-pink/60': 'border-accent/50',
+              'border-neon-yellow/20': 'border-accent/25',
+              'border-neon-yellow/30': 'border-accent/30',
+              'border-neon-yellow/40': 'border-accent/40',
+              'bg-neon-cyan/5': 'bg-accent/10',
+              'bg-neon-pink/5': 'bg-accent/10',
+              'bg-neon-yellow/5': 'bg-accent/10',
+              'bg-neon-cyan/10': 'bg-accent/15',
+              'bg-neon-pink/10': 'bg-accent/15',
+              'bg-neon-yellow/10': 'bg-accent/15',
+              'text-glow-cyan': '',
+              'text-glow-pink': '',
+          }
+
+          for name in files:
+              p = Path(name)
+              if not p.exists():
+                  continue
+              text = p.read_text()
+              for old, new in replacements.items():
+                  text = text.replace(old, new)
+              p.write_text(text)
+
+          # Claims that were too absolute for a public agency site.
+          p = Path('components/KIKundenservice.tsx')
+          text = p.read_text()
+          text = text.replace(
+              'Ein KI-Chatbot, der Ihre Wissensbasis kennt, beantwortet bis zu 80% der eingehenden Anfragen automatisch – rund um die Uhr, auf dem Niveau Ihrer besten Mitarbeiter. Ihr Team kümmert sich um die Fälle, bei denen es wirklich gebraucht wird.',
+              'Ein KI-Chatbot, der Ihre Wissensbasis kennt, kann wiederkehrende Anfragen automatisiert beantworten – rund um die Uhr und auf Basis Ihrer freigegebenen Inhalte. Ihr Team kümmert sich um die Fälle, bei denen menschliche Aufmerksamkeit wirklich gebraucht wird.'
+          )
+          text = text.replace("{ value: '80%', label: 'der Anfragen automatisch beantwortet'", "{ value: 'Automatisch', label: 'wiederkehrende Anfragen bearbeiten'")
+          text = text.replace('DSGVO-konform & Daten bleiben bei Ihnen', 'Datenschutz & Hosting passend zum Setup')
+          text = text.replace(
+              "a: 'Ausschließlich auf EU-Servern. Wir nutzen keine Dienste, die Daten in die USA oder in Drittländer übertragen. Das gesamte Setup ist DSGVO-konform dokumentiert.',",
+              "a: 'Das hängt vom gewählten Setup ab. Hosting, Modellanbieter, Auftragsverarbeitung und Datenflüsse werden vor der Umsetzung transparent festgelegt und passend zu Ihren Datenschutzanforderungen gewählt.',"
+          )
+          p.write_text(text)
+
+          # Recruiting: avoid implying bias-free automated hiring decisions.
+          p = Path('components/KIRecruiting.tsx')
+          text = p.read_text().replace('Kein Bias', 'Nachvollziehbare Kriterien').replace('kein Bias', 'nachvollziehbare Kriterien')
+          p.write_text(text)
+          PY
+
+      - name: Commit normalization
+        run: |
+          git rm .github/workflows/normalize-legacy-ui.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add components
+          git commit -m "style: normalize legacy pages to Marvin design language"
+          git push origin HEAD:finish-marvin-design
