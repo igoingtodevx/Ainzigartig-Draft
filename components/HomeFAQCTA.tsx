@@ -3,69 +3,62 @@ import React, { useState } from 'react';
 const faqItems = [
   {
     q: 'Für welche Unternehmen arbeitet ihr?',
-    a: 'Inhabergeführt, 5 bis 150 Mitarbeiter, deutschsprachiger Raum. Branchenübergreifend, mit Schwerpunkt auf Dienstleistung, Handel und B2B.',
+    a: 'Vor allem mit kleinen und mittelständischen Unternehmen im deutschsprachigen Raum. Entscheidend ist weniger die Branche als ein konkreter Prozess, ein wiederkehrendes Problem oder ein klarer KI-Anwendungsfall.',
   },
   {
     q: 'Müssen wir technisches Vorwissen mitbringen?',
-    a: 'Nein. Wir erklären alles verständlich und begleiten Sie so, dass Ihr Team am Ende eigenständig mit den Lösungen umgehen kann.',
+    a: 'Nein. Wir übersetzen technische Möglichkeiten in konkrete Entscheidungen und bauen die Lösung so, dass Ihr Team sie im Alltag nutzen kann.',
   },
   {
     q: 'Was kostet eine Zusammenarbeit?',
-    a: 'Das hängt vom Umfang ab. Das Erstgespräch ist kostenlos. Danach legen wir transparent auf den Tisch, was es kosten würde — bevor Sie sich entscheiden.',
+    a: 'Das hängt vom Scope ab. Das Erstgespräch ist kostenlos. Danach bekommen Sie eine klare Einschätzung zu Aufwand, sinnvoller Projektgröße und Kosten, bevor Sie sich entscheiden.',
   },
   {
     q: 'Arbeitet ihr herstellerunabhängig?',
-    a: 'Ja. Keine Provisionen von Toolanbietern. Was wir empfehlen, empfehlen wir weil es für Sie das Richtige ist.',
+    a: 'Ja. Wir wählen Modelle und Tools nach Anwendungsfall, Datenschutz, Kosten und Integrationsaufwand statt nach einem festen Hersteller-Stack.',
   },
   {
     q: 'Wie schnell sehen wir Ergebnisse?',
-    a: 'Erste Ergebnisse — ein laufender Chatbot, ein automatisiertes Screening — sind typischerweise in zwei bis vier Wochen sichtbar.',
+    a: 'Ein klar abgegrenzter Prototyp kann sehr schnell entstehen. Für produktive Integrationen hängt die Dauer von Daten, Schnittstellen, Sicherheitsanforderungen und gewünschtem Umfang ab.',
   },
 ];
 
 export const HomeFAQ: React.FC = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="py-16u px-6 md:px-8">
-      <div className="max-w-[700px] mx-auto">
-        <h2 className="font-editorial text-2xl md:text-3xl text-ink mb-12u">
-          Häufige Fragen
-        </h2>
+    <section className="py-24 md:py-32 bg-[#F3EFEA] border-y border-ink/10">
+      <div className="max-w-[900px] mx-auto px-6">
+        <header className="text-center mb-12 md:mb-14">
+          <p className="text-xs uppercase tracking-[0.14em] font-semibold text-light mb-3">FAQ</p>
+          <h2 className="font-editorial text-[clamp(2.35rem,5vw,3.5rem)] leading-[1.05] tracking-[-0.025em] text-ink font-normal">
+            Häufige Fragen
+          </h2>
+        </header>
 
-        <div className="space-y-0">
-          {faqItems.map((item, i) => (
-            <div key={i} className="border-t border-faint/50">
-              <button
-                onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full flex items-start justify-between py-5 text-left cursor-pointer group"
-              >
-                <span className="text-sm font-body text-ink pr-8 leading-relaxed">
-                  {item.q}
-                </span>
-                <span
-                  className={`text-muted text-lg font-body flex-shrink-0 transition-transform duration-300 ${
-                    openIndex === i ? 'rotate-45' : ''
-                  }`}
+        <div className="brand-card bg-surface overflow-hidden divide-y divide-ink/10">
+          {faqItems.map((item, i) => {
+            const open = openIndex === i;
+            return (
+              <div key={item.q}>
+                <button
+                  onClick={() => setOpenIndex(open ? null : i)}
+                  className="w-full flex items-center justify-between gap-6 p-5 md:px-7 md:py-6 text-left group"
+                  aria-expanded={open}
                 >
-                  +
-                </span>
-              </button>
-
-              <div
-                className={`overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                  openIndex === i
-                    ? 'max-h-40 opacity-100 pb-5'
-                    : 'max-h-0 opacity-0'
-                }`}
-              >
-                <p className="text-sm text-muted font-body leading-relaxed pr-12">
-                  {item.a}
-                </p>
+                  <span className="font-editorial text-lg md:text-xl text-ink leading-snug">{item.q}</span>
+                  <span className={`w-9 h-9 rounded-full border border-ink/15 flex items-center justify-center shrink-0 transition-transform duration-300 ${open ? 'rotate-45 bg-accent/25' : 'bg-base'}`}>
+                    <span className="material-symbols-outlined text-[20px]">add</span>
+                  </span>
+                </button>
+                <div className={`grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(.16,1,.3,1)] ${open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
+                  <div className="overflow-hidden">
+                    <p className="px-5 md:px-7 pb-6 text-sm md:text-[0.95rem] text-muted leading-relaxed max-w-3xl">{item.a}</p>
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
-          <div className="border-t border-faint/50" />
+            );
+          })}
         </div>
       </div>
     </section>
