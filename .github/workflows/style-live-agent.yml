@@ -1,0 +1,59 @@
+name: Style Live Agent
+
+on:
+  push:
+    branches: [finish-marvin-design]
+    paths: ['.github/workflows/style-live-agent.yml']
+
+permissions:
+  contents: write
+
+jobs:
+  style:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: finish-marvin-design
+      - name: Apply Marvin presentation layer
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('components/LiveAgentDemo.tsx')
+          text = p.read_text()
+          replacements = {
+            'pt-28 pb-12 px-6 md:px-8': 'pt-36 pb-12 px-6 md:px-8',
+            'max-w-[1000px] mx-auto px-4 sm:px-6 md:px-8': 'max-w-[900px] mx-auto px-4 sm:px-6 md:px-8 text-center',
+            'inline-block text-xs font-bold uppercase tracking-[0.25em] text-accent border border-accent/30 bg-accent/5 px-3 py-1 mb-6': 'inline-block rounded-full text-xs font-bold uppercase tracking-[0.14em] text-ink border border-accent/45 bg-accent/15 px-4 py-1.5 mb-6',
+            'border-2 border-dashed p-10 text-center cursor-pointer transition-colors mb-8': 'brand-card border-2 border-dashed bg-surface p-10 text-center cursor-pointer transition-all mb-8 rounded-[26px]',
+            'border border-faint/30 p-5 text-left hover:border-accent/50 hover:bg-accent/[0.02] transition-all cursor-pointer group': 'brand-card bg-surface p-5 text-left hover:border-accent/50 transition-all cursor-pointer group rounded-[22px]',
+            'border border-faint/30 bg-ink/[0.02] p-8': 'brand-card bg-surface p-8 rounded-[24px]',
+            'border border-red-300 bg-red-50 p-6': 'rounded-[22px] border border-red-900/15 bg-red-50 p-6',
+            'border border-faint/30 p-6 mb-6': 'brand-card bg-surface p-6 mb-6 rounded-[24px]',
+            'mb-6 p-5 border-l-2 border-accent bg-accent/[0.03]': 'brand-card mb-6 p-5 bg-accent/10 border-accent/35 rounded-[22px]',
+            'border border-faint/30 divide-y divide-faint/20': 'brand-card bg-surface divide-y divide-ink/10 overflow-hidden rounded-[22px]',
+            'border border-faint/30 p-4 flex gap-3': 'brand-card bg-surface p-4 flex gap-3 rounded-[20px]',
+            'border p-3 flex items-start gap-2': 'border rounded-2xl p-3 flex items-start gap-2',
+            'inline-flex items-center gap-2 px-6 py-3 bg-ink text-base text-sm font-bold hover:bg-ink/80 transition-colors': 'brand-pill inline-flex items-center gap-2 px-6 py-3 bg-ink text-white text-sm font-bold hover:bg-[#33312E] transition-colors',
+            'PDF, PNG oder JPG hochladen (max 4 MB)': 'PDF, PNG oder JPG hochladen (max. 6 MB)',
+            'schlaegt': 'schlägt',
+            'naechste': 'nächste',
+            'Naechste': 'Nächste',
+            'fuer unser Unternehmen': 'für unser Unternehmen',
+            'fuer': 'für',
+            'pruefen': 'prüfen',
+            'Schluesselfelder': 'Schlüsselfelder',
+            'Keine Anmeldung, keine Daten gespeichert.': 'Keine Anmeldung. Keine dauerhafte Speicherung durch diese Demo-Oberfläche.',
+          }
+          for old, new in replacements.items():
+            text = text.replace(old, new)
+          p.write_text(text)
+          PY
+      - name: Commit
+        run: |
+          git rm .github/workflows/style-live-agent.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add components/LiveAgentDemo.tsx
+          git commit -m "style: finish document agent in Marvin design"
+          git push origin HEAD:finish-marvin-design
