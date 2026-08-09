@@ -1,13 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-
-// Color tokens — Hex is single-source-of-truth for now.
-// OKLch values show the designer's perceptual intent:
-// hue + chroma + lightness, independent of display profile.
-// Inspired by Perplexity DESIGN.md color documentation.
-//
-// To switch to terracotta accent (per Design Manifest alt), change every
-// `accent` class to `accent-alt` in components. The token stays available
-// for selective use (e.g. one specific Insights CTA).
 export default {
   content: [
     './index.html',
@@ -19,23 +10,39 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Per Design Manifest
-        base:         '#F0EDE3',
-        surface:      '#E5E2D7',
-        ink:          '#1C1917',
-        muted:        '#6B6861',
-        faint:        '#B8B2A7',
-        // Current brand accent
-        accent:       '#1B4D3E',
-        'accent-mid':  '#2D7A5E',
-        'accent-hover':'#163C30',
-        // Alternative accent per Design Manifest option (Anwaltskanzlei alt)
-        'accent-alt':  '#B44D2D',
-        'accent-alt-hover': '#9A3F23',
+        // Ainzigartig visual canon — ported from marvin-brt/Ainzigartig_clean
+        base: '#FAF8F5',
+        surface: '#FFFFFF',
+        'surface-soft': '#F3EFEA',
+        ink: '#1A1918',
+        muted: '#52504C',
+        faint: '#7A7873',
+        accent: '#ECA867',
+        'accent-mid': '#E3944C',
+        'accent-hover': '#D9823A',
+        'border-light': '#DDD8D1',
+
+        // Compatibility aliases for older functional pages.
+        // Keeping the class names avoids touching business logic while
+        // making the whole app render in the current Ainzigartig identity.
+        'background-dark': '#FAF8F5',
+        'surface-dark': '#FFFFFF',
+        'terminal-bg': '#FFFFFF',
+        'terminal-border': '#DDD8D1',
+        'text-primary': '#1A1918',
+        'text-secondary': '#52504C',
+        'neon-cyan': '#ECA867',
+        'neon-pink': '#ECA867',
+        'neon-yellow': '#B77A36',
+        primary: '#1A1918',
+        'primary-hover': '#33312E',
       },
       fontFamily: {
-        editorial: ['"Fraunces"', 'Georgia', 'serif'],
-        body:      ['"IBM Plex Sans"', 'system-ui', 'sans-serif'],
+        editorial: ['"Newsreader"', 'Georgia', 'serif'],
+        display: ['"Newsreader"', 'Georgia', 'serif'],
+        body: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+        sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+        mono: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
       },
       spacing: {
         unit: '8px',
@@ -48,16 +55,25 @@ export default {
         '16u': '128px',
       },
       borderRadius: {
-        DEFAULT: '2px',
+        DEFAULT: '16px',
+        sm: '8px',
+        md: '16px',
+        lg: '24px',
+        pill: '9999px',
+      },
+      boxShadow: {
+        soft: '0 4px 12px rgba(26, 25, 24, 0.04)',
+        card: '0 12px 32px rgba(26, 25, 24, 0.08)',
+        lift: '0 20px 48px rgba(26, 25, 24, 0.12)',
       },
       keyframes: {
         reveal: {
-          '0%': { opacity: '0', transform: 'translateY(12px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
+          '0%': { opacity: '0', transform: 'translateY(20px) scale(.99)' },
+          '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
         },
-        'underline-in': {
-          '0%': { backgroundSize: '0% 1px' },
-          '100%': { backgroundSize: '100% 1px' },
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
         },
         blink: {
           '0%, 100%': { opacity: '1' },
@@ -65,8 +81,8 @@ export default {
         },
       },
       animation: {
-        reveal: 'reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards',
-        'underline-in': 'underline-in 0.4s cubic-bezier(0.33, 1, 0.68, 1) forwards',
+        reveal: 'reveal .8s cubic-bezier(.16,1,.3,1) forwards',
+        marquee: 'marquee 34s linear infinite',
         blink: 'blink 1s step-end infinite',
       },
     },
