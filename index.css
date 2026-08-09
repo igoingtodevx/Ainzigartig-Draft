@@ -48,33 +48,22 @@ body::after {
   opacity: .42;
 }
 
-h1, h2, h3, h4 {
-  text-wrap: balance;
-}
-
-p {
-  text-wrap: pretty;
-}
+h1, h2, h3, h4 { text-wrap: balance; }
+p { text-wrap: pretty; }
 
 ::selection {
   background: var(--accent);
   color: var(--ink);
 }
 
-button, a, input, textarea, select {
-  -webkit-tap-highlight-color: transparent;
-}
-
-button, a[href] {
-  cursor: pointer;
-}
+button, a, input, textarea, select { -webkit-tap-highlight-color: transparent; }
+button, a[href] { cursor: pointer; }
 
 *:focus-visible {
   outline: 2px solid var(--accent-hover);
   outline-offset: 3px;
 }
 
-/* Reusable brand primitives used by new + existing pages. */
 .brand-pill {
   display: inline-flex;
   align-items: center;
@@ -132,16 +121,13 @@ button, a[href] {
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
-.issue-num,
-.stat-value,
-.tabular {
+.issue-num, .stat-value, .tabular {
   font-variant-numeric: tabular-nums;
   font-feature-settings: 'tnum' 1, 'ss01' 1;
 }
 
-/* Compatibility cleanup for legacy functional pages. Their JSX can keep its
-   old class names while the visual result is now Ainzigartig instead of neon. */
-.text-white { color: var(--ink) !important; }
+/* Narrow compatibility aliases only. Never override semantic utilities such
+   as text-white globally: new dark Marvin surfaces depend on those utilities. */
 .text-gray-300, .text-gray-400 { color: var(--muted) !important; }
 .text-gray-500, .text-gray-600 { color: var(--light) !important; }
 .border-gray-700, .border-gray-800 { border-color: var(--border) !important; }
