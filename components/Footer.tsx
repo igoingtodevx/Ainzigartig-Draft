@@ -1,25 +1,54 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export const Footer: React.FC = () => {
-  return (
-    <footer className="border-t border-faint/40 py-8 px-6 md:px-8">
-      <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <span className="text-xs text-faint font-body">
-          © 2026 Ainzigartig
-        </span>
-        <div className="flex gap-6 text-xs text-muted font-body">
-          <Link to="/" className="hover:text-ink transition-colors duration-200">
-            Startseite
+const EyeMark: React.FC = () => (
+  <svg width="24" height="16" viewBox="0 0 24 16" fill="none" aria-hidden="true">
+    <ellipse cx="12" cy="8" rx="11" ry="7" stroke="currentColor" strokeWidth="1.8" fill="#ECA867" />
+    <circle cx="12" cy="8" r="3.5" fill="#1A1918" />
+    <circle cx="10.5" cy="6.5" r="1" fill="#FFFFFF" />
+  </svg>
+);
+
+export const Footer: React.FC = () => (
+  <footer className="bg-ink text-white pt-14 pb-8 px-6">
+    <div className="max-w-[1140px] mx-auto">
+      <div className="grid md:grid-cols-[1.15fr_.85fr] gap-10 pb-12 border-b border-white/15">
+        <div>
+          <Link to="/" className="inline-flex items-center gap-2.5 text-white">
+            <EyeMark />
+            <span className="font-editorial text-2xl font-semibold tracking-[-0.02em]">Ainzigartig</span>
           </Link>
-          <Link to="/impressum" className="hover:text-ink transition-colors duration-200">
-            Impressum
-          </Link>
-          <Link to="/datenschutz" className="hover:text-ink transition-colors duration-200">
-            Datenschutz
-          </Link>
+          <p className="text-sm text-white/60 leading-relaxed mt-4 max-w-md">
+            KI-Beratung, Automatisierung und individuelle KI-Lösungen für kleine und mittelständische Unternehmen.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 gap-8 text-sm">
+          <div>
+            <p className="text-white/40 text-xs uppercase tracking-[0.12em] font-semibold mb-3">Entdecken</p>
+            <div className="flex flex-col gap-2.5">
+              <Link to="/ki-analyse" className="text-white/70 hover:text-white transition-colors">KI-Check</Link>
+              <Link to="/live-demo" className="text-white/70 hover:text-white transition-colors">Live Demo</Link>
+              <Link to="/projekte" className="text-white/70 hover:text-white transition-colors">Projekte</Link>
+              <Link to="/insights" className="text-white/70 hover:text-white transition-colors">Insights</Link>
+            </div>
+          </div>
+          <div>
+            <p className="text-white/40 text-xs uppercase tracking-[0.12em] font-semibold mb-3">Unternehmen</p>
+            <div className="flex flex-col gap-2.5">
+              <Link to="/preise" className="text-white/70 hover:text-white transition-colors">Preise</Link>
+              <Link to="/#kontakt" className="text-white/70 hover:text-white transition-colors">Kontakt</Link>
+              <Link to="/impressum" className="text-white/70 hover:text-white transition-colors">Impressum</Link>
+              <Link to="/datenschutz" className="text-white/70 hover:text-white transition-colors">Datenschutz</Link>
+            </div>
+          </div>
         </div>
       </div>
-    </footer>
-  );
-};
+
+      <div className="pt-6 flex flex-col sm:flex-row justify-between gap-3 text-xs text-white/40">
+        <span>© 2026 Ainzigartig</span>
+        <span>KI, die im Alltag funktioniert.</span>
+      </div>
+    </div>
+  </footer>
+);
