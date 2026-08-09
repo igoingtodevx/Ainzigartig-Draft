@@ -1,181 +1,143 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 interface ServiceItem {
   title: string;
-  metric: string;
+  eyebrow: string;
   description: string;
-  href: string;
+  to: string;
+  icon: string;
 }
 
 const services: ServiceItem[] = [
   {
-    title: 'KI-Website-Analyse',
-    metric: 'Kostenlos · 60 Sekunden',
-    description:
-      'Geben Sie Ihre URL ein — KI analysiert Ihre Website und zeigt konkrete Einsparpotenziale. Sofort, ohne Anmeldung.',
-    href: '#/ki-analyse',
+    title: 'KI im Kundenservice',
+    eyebrow: 'Assistenten',
+    description: 'Chatbots und Wissensassistenten, die auf Ihrem Unternehmenswissen arbeiten und Kunden wie Teams zuverlässig unterstützen.',
+    to: '/ki-kundenservice',
+    icon: 'forum',
   },
   {
-    title: 'KI-Schnellstart',
-    metric: '5 Tage',
-    description:
-      'Ihr erster KI-Assistent in 5 Tagen. Fester Preis, klarer Scope, kein Risiko. Perfekt als Einstieg.',
-    href: '#/ki-schnellstart',
+    title: 'KI-Website-Analyse',
+    eyebrow: '60 Sekunden',
+    description: 'Ihre URL wird analysiert und in konkrete KI-Potenziale, Aufwand, Wirkung und nächste Schritte übersetzt.',
+    to: '/ki-analyse',
+    icon: 'travel_explore',
+  },
+  {
+    title: 'Dokument-Agent',
+    eyebrow: 'Live Demo',
+    description: 'PDFs, Bilder und Texte werden strukturiert verstanden, zusammengefasst und in konkrete Aktionen oder Risiken übersetzt.',
+    to: '/live-demo',
+    icon: 'document_scanner',
   },
   {
     title: 'KI-Reifegrad-Check',
-    metric: '6 Fragen · 60 Sekunden',
-    description:
-      'Kostenloser Check: Wie reif ist Ihr Unternehmen für KI? Am Ende gibt es eine klare Empfehlung.',
-    href: '#/ki-audit',
+    eyebrow: '6 Fragen',
+    description: 'Ein schneller Reality-Check, wie gut Ihr Unternehmen auf konkrete KI-Projekte vorbereitet ist und wo der beste Einstieg liegt.',
+    to: '/ki-audit',
+    icon: 'checklist',
   },
   {
-    title: 'KI-Beratung für KMU',
-    metric: 'Maßgeschneidert',
-    description:
-      'Wir stehen als Experten an Ihrer Seite und identifizieren Anwendungsfälle, die sich im Alltag bezahlt machen — praxisnah, DSGVO-konform, ohne Buzzwords.',
-    href: '#/ki-beratung',
+    title: 'KI-Schnellstart',
+    eyebrow: '5 Tage',
+    description: 'Ein klar gescoptes Einstiegsprojekt für Unternehmen, die nicht monatelang über KI sprechen, sondern etwas Nutzbares testen wollen.',
+    to: '/ki-schnellstart',
+    icon: 'bolt',
   },
   {
-    title: 'KI im Kundenservice',
-    metric: '80 % weniger Tickets',
-    description:
-      'Chatbots, die Ihr Unternehmen kennen. Trainiert auf Ihre Daten, nicht auf generisches Wissen. Ihr Team kümmert sich um die Fälle, die wirklich Aufmerksamkeit brauchen.',
-    href: '#/ki-kundenservice',
-  },
-  {
-    title: 'KI-Telefonassistent',
-    metric: '24/7 erreichbar',
-    description:
-      'Nimmt Anrufe entgegen, beantwortet Standardfragen, leitet weiter wenn nötig. Kein Warteschleifenmusik-Erlebnis mehr für Ihre Kunden.',
-    href: '#',
+    title: 'KI-Beratung',
+    eyebrow: 'Maßgeschneidert',
+    description: 'Use-Case-Identifikation, Priorisierung, Toolauswahl und Umsetzungsplanung mit Fokus auf Wirtschaftlichkeit und Alltagstauglichkeit.',
+    to: '/ki-beratung',
+    icon: 'strategy',
   },
   {
     title: 'KI im Recruiting',
-    metric: '60 % schneller besetzen',
-    description:
-      'Automatisches CV-Screening und Matching — auf Basis Ihrer Kriterien, nicht auf Basis von Keywords. Die Entscheidung bleibt bei Ihnen.',
-    href: '#/ki-recruiting',
-  },
-  {
-    title: 'KI-Lead-Generierung',
-    metric: '500+ Leads am Tag',
-    description:
-      'Automatische Identifikation von Zielunternehmen mit personalisierter Erstansprache. Ihr Vertrieb spricht nur noch mit Interessenten.',
-    href: '#',
-  },
-  {
-    title: 'KI im Vertrieb',
-    metric: '40 % mehr qualifizierte Leads',
-    description:
-      'Lead-Qualifizierung, Priorisierung und automatisierte Follow-ups — damit kein Kontakt mehr durch das Raster fällt.',
-    href: '#',
-  },
-  {
-    title: 'KI im Backoffice',
-    metric: '70 % Zeitersparnis',
-    description:
-      'E-Mails, Dokumente, Rechnungen — automatisch verarbeitet und zugeordnet. Ihr Team arbeitet an Ergebnissen statt an Verwaltung.',
-    href: '#',
+    eyebrow: 'Workflow',
+    description: 'Unterstützung bei Screening, Matching und wiederkehrenden Recruiting-Aufgaben — nachvollziehbar und mit Entscheidung beim Menschen.',
+    to: '/ki-recruiting',
+    icon: 'group_search',
   },
   {
     title: 'Analytics Dashboard',
-    metric: 'Echtzeit',
-    description:
-      'Alle relevanten KPIs an einem Ort. Mit KI-Analysen, die nicht nur zeigen was passiert, sondern warum.',
-    href: '#/analytics-dashboard',
+    eyebrow: 'Echtzeit',
+    description: 'KPIs an einem Ort, ergänzt um KI-gestützte Einordnung und verständliche Hinweise auf Auffälligkeiten und Entwicklungen.',
+    to: '/analytics-dashboard',
+    icon: 'monitoring',
   },
   {
     title: 'ROI-Rechner',
-    metric: '60 Sekunden',
-    description:
-      'Wie viel Geld und Zeit spart KI in Ihrer Branche konkret? Branchen-spezifische Schätzung mit nachvollziehbarer Methodik. Keine Eingabe verlässt den Browser.',
-    href: '#/roi-rechner',
-  },
-  {
-    title: 'Alle Preise ansehen',
-    metric: 'Transparent',
-    description:
-      'Alle Services mit Preisen, Paketen und was jeweils enthalten ist. Kein Versteck.',
-    href: '#/preise',
+    eyebrow: 'Kalkulation',
+    description: 'Eine nachvollziehbare erste Schätzung, wo Automatisierung und KI in Ihrer Branche Zeit und Kosten reduzieren können.',
+    to: '/roi-rechner',
+    icon: 'calculate',
   },
 ];
 
-const ServiceRow: React.FC<{
-  item: ServiceItem;
-  index: number;
-  isOpen: boolean;
-  onToggle: () => void;
-}> = ({ item, index, isOpen, onToggle }) => {
-  const num = String(index + 1).padStart(2, '0');
+const additional = ['Telefonassistenten', 'Lead-Generierung', 'Vertriebsautomatisierung', 'Backoffice-Automation'];
 
-  return (
-    <div className="border-t border-faint/50 group">
-      <button
-        onClick={onToggle}
-        className="w-full flex items-baseline justify-between py-5 px-0 text-left cursor-pointer"
-      >
-        <div className="flex items-baseline gap-4 md:gap-6">
-          <span
-            className="text-xs text-faint font-body tabular-nums transition-transform duration-300 group-hover:-translate-x-1"
+export const Services: React.FC = () => (
+  <section id="services" className="py-24 md:py-32 bg-base scroll-mt-24">
+    <div className="max-w-[1140px] mx-auto px-6">
+      <header className="max-w-3xl mx-auto text-center mb-14 md:mb-16">
+        <p className="text-xs uppercase tracking-[0.14em] font-semibold text-light mb-3">Was wir bauen</p>
+        <h2 className="font-editorial text-[clamp(2.4rem,5vw,3.6rem)] leading-[1.05] tracking-[-0.025em] text-ink font-normal">
+          Use Cases, die im Alltag funktionieren
+        </h2>
+        <p className="text-base md:text-lg text-muted mt-4 leading-relaxed">
+          Nicht „KI um der KI willen“, sondern konkrete Lösungen für wiederkehrende Arbeit, Kundenkontakt, Wissen und Entscheidungen.
+        </p>
+      </header>
+
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {services.map((service) => (
+          <Link
+            key={service.title}
+            to={service.to}
+            className="brand-card group min-h-[285px] p-6 md:p-7 flex flex-col bg-surface"
           >
-            {num}
-          </span>
-          <span className="text-base md:text-lg text-ink font-editorial leading-snug">
-            {item.title}
-          </span>
-        </div>
-        <span className="text-xs text-muted font-body tracking-wide hidden sm:block">
-          {item.metric}
-        </span>
-      </button>
+            <div className="flex items-start justify-between gap-4 mb-10">
+              <span className="w-11 h-11 rounded-full bg-accent/20 border border-accent/45 flex items-center justify-center text-ink">
+                <span className="material-symbols-outlined text-[22px]" aria-hidden="true">{service.icon}</span>
+              </span>
+              <span className="text-[0.68rem] uppercase tracking-[0.12em] font-semibold text-light border border-ink/10 rounded-full px-3 py-1">
+                {service.eyebrow}
+              </span>
+            </div>
 
-      <div
-        className={`overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-          isOpen ? 'max-h-48 opacity-100 pb-6' : 'max-h-0 opacity-0'
-        }`}
-      >
-        <div className="pl-8 md:pl-14 pr-4 md:pr-32">
-          <p className="text-sm text-muted font-body leading-relaxed max-w-xl">
-            {item.description}
-          </p>
-          {item.href !== '#' && (
-            <a
-              href={item.href}
-              className="inline-block mt-3 text-xs text-accent font-body underline decoration-1 underline-offset-4 hover:decoration-2 transition-all duration-200"
-            >
-              Details lesen
-            </a>
-          )}
+            <div className="mt-auto">
+              <h3 className="font-editorial text-[1.65rem] leading-tight text-ink mb-3">{service.title}</h3>
+              <p className="text-sm leading-relaxed text-muted">{service.description}</p>
+              <div className="mt-5 flex items-center gap-2 text-sm font-semibold text-ink">
+                Mehr erfahren
+                <span className="material-symbols-outlined text-[18px] transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true">arrow_forward</span>
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
+
+      <div className="mt-10 md:mt-12 border-t border-ink/10 pt-8 flex flex-col md:flex-row md:items-center justify-between gap-5">
+        <div>
+          <p className="font-editorial text-xl text-ink">Weitere typische Automatisierungsfelder</p>
+          <p className="text-sm text-muted mt-1">Wir sind nicht auf diese Beispiele beschränkt.</p>
         </div>
+        <div className="flex flex-wrap gap-2">
+          {additional.map((item) => (
+            <span key={item} className="rounded-full border border-ink/15 bg-surface/70 px-3.5 py-2 text-xs font-medium text-muted">
+              {item}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-8 text-center">
+        <Link to="/preise" className="inline-flex items-center gap-2 text-sm font-semibold text-ink hover:text-accent-hover transition-colors">
+          Leistungen & Preise ansehen
+          <span className="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_forward</span>
+        </Link>
       </div>
     </div>
-  );
-};
-
-export const Services: React.FC = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-  return (
-    <section id="services" className="py-16u px-6 md:px-8">
-      <div className="max-w-[1200px] mx-auto">
-        <h2 className="font-editorial text-2xl md:text-3xl text-ink mb-12u">
-          Was wir tun
-        </h2>
-
-        <div>
-          {services.map((item, i) => (
-            <ServiceRow
-              key={item.title}
-              item={item}
-              index={i}
-              isOpen={openIndex === i}
-              onToggle={() => setOpenIndex(openIndex === i ? null : i)}
-            />
-          ))}
-          <div className="border-t border-faint/50" />
-        </div>
-      </div>
-    </section>
-  );
-};
+  </section>
+);
