@@ -34,14 +34,14 @@ body {
   position: relative;
 }
 
-/* Marvin's paper/grain surface, now global across every React route. */
+/* Marvin's paper/grain surface, bundled by Vite with the rest of the brand media. */
 body::after {
   content: '';
   position: fixed;
   inset: 0;
   width: 100vw;
   height: 100vh;
-  background-image: url('/Assets/grain.png');
+  background-image: url('./Assets/grain.png');
   background-repeat: repeat;
   pointer-events: none;
   z-index: 9999;
