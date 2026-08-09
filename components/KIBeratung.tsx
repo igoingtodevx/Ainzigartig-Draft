@@ -11,7 +11,7 @@ const SectionLabel: React.FC<{ children: React.ReactNode }> = ({ children }) => 
 );
 
 const SectionHeadline: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <h2 className="text-2xl md:text-4xl font-bold text-white font-editorial leading-tight mb-4">
+  <h2 className="text-2xl md:text-4xl font-bold text-ink font-editorial leading-tight mb-4">
     <span className="text-accent-hover mr-2">&gt;</span>
     {children}
   </h2>
@@ -28,14 +28,14 @@ const LeadText: React.FC<{ children: React.ReactNode }> = ({ children }) => (
 const Hero: React.FC = () => (
   <section className="relative pt-32 pb-20 px-4 text-center overflow-hidden">
     {/* decorative grid dots */}
-    <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#6B46C1_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
+    <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#ECA867_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
 
     <div className="relative z-10 max-w-4xl mx-auto">
       <span className="inline-block text-xs font-bold uppercase tracking-[0.25em] text-accent-hover border border-accent/30 bg-accent/10 px-3 py-1 mb-8 font-body">
         KI-Beratung für den Mittelstand
       </span>
 
-      <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-white font-editorial leading-[1.1] mb-6">
+      <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-ink font-editorial leading-[1.1] mb-6">
         KI ist kein Hype –<br />
         <span className="text-accent-hover ">für Ihr Unternehmen auch nicht.</span>
       </h1>
@@ -55,7 +55,7 @@ const Hero: React.FC = () => (
         </Link>
         <a
           href="#problem"
-          className="px-8 py-3 text-sm font-bold border-2 border-accent/40 text-accent-hover hover:border-neon-cyan hover:bg-accent/10 transition-all duration-200 flex items-center gap-2"
+          className="px-8 py-3 text-sm font-bold border-2 border-accent/40 text-accent-hover hover:border-accent-hover hover:bg-accent/10 transition-all duration-200 flex items-center gap-2"
         >
           <span className="material-symbols-outlined text-sm">arrow_downward</span>
           Wie das konkret aussieht
@@ -66,7 +66,7 @@ const Hero: React.FC = () => (
       <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-xs md:text-sm text-muted font-body">
         {[
           'Kein Sales-Pitch – echtes Gespräch',
-          'DSGVO-konform von Anfang an',
+          'Datenschutz von Anfang an mitgedacht',
           'Herstellerunabhängig',
           '30 Min. kostenlos',
         ].map((item) => (
@@ -114,7 +114,7 @@ const painCards = [
 const painBorder: Record<string, string> = {
   cyan: 'border-accent/25 hover:border-accent/50',
   pink: 'border-accent/25 hover:border-accent/50',
-  yellow: 'border-accent/25 hover:border-neon-yellow/60',
+  yellow: 'border-accent/25 hover:border-accent-hover/60',
 };
 
 const Problem: React.FC = () => (
@@ -136,7 +136,7 @@ const Problem: React.FC = () => (
             className={`border bg-base/80 backdrop-blur-sm p-6 transition-all duration-300 hover:-translate-y-1 ${painBorder[c.color]}`}
           >
             <span className="text-3xl mb-3 block">{c.emoji}</span>
-            <h3 className="text-lg font-bold text-white font-editorial mb-2">{c.title}</h3>
+            <h3 className="text-lg font-bold text-ink font-editorial mb-2">{c.title}</h3>
             <p className="text-muted text-sm leading-relaxed font-body">{c.text}</p>
           </div>
         ))}
@@ -164,8 +164,8 @@ const leistungen = [
     icon: 'category',
   },
   {
-    title: 'DSGVO-Check',
-    text: 'Jeder Use Case wird auf datenschutzrechtliche Compliance geprüft. Sie wissen genau, was erlaubt ist – und was nicht.',
+    title: 'Datenschutz- & Datenfluss-Check',
+    text: 'Wir machen Datenflüsse, Modellanbieter und Auftragsverarbeitung transparent und berücksichtigen Ihre Datenschutzanforderungen bereits beim Lösungsdesign.',
     icon: 'verified_user',
   },
   {
@@ -192,7 +192,7 @@ const Angebot: React.FC = () => (
       {/* Package box */}
       <div className="mt-14 border border-accent/25 bg-surface/60 backdrop-blur-sm text-left">
         <div className="border-b border-neon-cyan/10 px-6 py-4">
-          <h3 className="text-lg font-bold text-white font-editorial">
+          <h3 className="text-lg font-bold text-ink font-editorial">
             <span className="text-accent-hover mr-2">#</span>Was im Beratungspaket steckt
           </h3>
           <p className="text-light text-xs font-body mt-1">Kein One-Size-fits-all. Wir passen die Tiefe an Ihren Bedarf an.</p>
@@ -204,7 +204,7 @@ const Angebot: React.FC = () => (
               <div className="flex items-start gap-3">
                 <span className="material-symbols-outlined text-accent-hover text-2xl mt-0.5">{l.icon}</span>
                 <div>
-                  <h4 className="text-sm font-bold text-white font-editorial mb-1 flex items-center gap-2">
+                  <h4 className="text-sm font-bold text-ink font-editorial mb-1 flex items-center gap-2">
                     <span className="text-accent-hover">✓</span> {l.title}
                   </h4>
                   <p className="text-muted text-sm leading-relaxed font-body">{l.text}</p>
@@ -220,10 +220,10 @@ const Angebot: React.FC = () => (
         <span className="text-4xl">🛡️</span>
         <div>
           <h4 className="text-sm font-bold text-[#B77A36] font-editorial mb-2 uppercase tracking-wider">
-            DSGVO-Konformität ist bei uns keine Fußnote.
+            Datenschutz ist bei uns keine Fußnote.
           </h4>
           <p className="text-muted text-sm leading-relaxed font-body">
-            Viele Unternehmen nutzen KI-Tools, ohne sich über die Datenverarbeitung Gedanken zu machen. Wir stellen sicher, dass Ihre KI-Strategie rechtssicher ist – mit Serverstandorten in der EU, klaren Verträgen und praxistauglichen Datenschutzlösungen.
+            Wir betrachten Datenflüsse, Modellanbieter, Hosting, Verträge und Zugriffsrechte gemeinsam mit dem technischen Setup. So ist früh klar, welche Anforderungen vor einem produktiven Einsatz geklärt werden müssen.
           </p>
         </div>
       </div>
@@ -267,16 +267,16 @@ const Prozess: React.FC = () => (
 
       <div className="mt-14 space-y-0 text-left relative">
         {/* vertical line */}
-        <div className="absolute left-[23px] md:left-[27px] top-4 bottom-4 w-px bg-gradient-to-b from-neon-cyan via-neon-pink to-neon-yellow opacity-30 hidden sm:block" />
+        <div className="absolute left-[23px] md:left-[27px] top-4 bottom-4 w-px bg-gradient-to-b from-accent via-accent-mid to-[#B77A36] opacity-30 hidden sm:block" />
 
         {steps.map((s, i) => (
           <div key={s.num} className="relative flex gap-5 sm:gap-6 py-6 group">
             {/* step indicator */}
-            <div className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 border border-accent/30 bg-surface flex items-center justify-center text-accent-hover font-bold font-editorial text-lg relative z-10 group-hover:border-neon-cyan group-hover:shadow-[0_0_12px_rgba(0,255,255,0.25)] transition-all duration-300">
+            <div className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 border border-accent/30 bg-surface flex items-center justify-center text-accent-hover font-bold font-editorial text-lg relative z-10 group-hover:border-accent-hover group-hover:shadow-soft transition-all duration-300">
               {s.num}
             </div>
             <div className="pt-1">
-              <h3 className="text-base md:text-lg font-bold text-white font-editorial mb-2">
+              <h3 className="text-base md:text-lg font-bold text-ink font-editorial mb-2">
                 Schritt {s.num.replace(/^0/, '')} – {s.title}
               </h3>
               <p className="text-muted text-sm leading-relaxed font-body">{s.text}</p>
@@ -307,7 +307,7 @@ const useCases = [
     icon: 'support_agent',
     title: 'Eingehende Anfragen automatisch vorqualifizieren',
     text: 'E-Mails und Kontaktformulare werden automatisch kategorisiert, priorisiert und mit Antwortvorschlägen versehen – Ihr Team antwortet schneller, mit weniger Aufwand.',
-    result: 'Bis zu 60% weniger Bearbeitungszeit',
+    result: 'Weniger manuelle Triage und Wiederholungsarbeit',
     color: 'cyan' as const,
   },
   {
@@ -315,7 +315,7 @@ const useCases = [
     icon: 'edit_note',
     title: 'Konsistente Inhalte in Ihrer Markenstimme',
     text: 'Social Media Posts, Newsletter, Produktbeschreibungen – KI generiert Entwürfe auf Basis Ihrer Tonalität. Ihr Team verfeinert, statt bei Null anzufangen.',
-    result: '3–5x schnellere Contentproduktion',
+    result: 'Schneller von der Idee zum bearbeitbaren Entwurf',
     color: 'pink' as const,
   },
   {
@@ -353,9 +353,9 @@ const useCases = [
 ];
 
 const ucBorder: Record<string, string> = {
-  cyan: 'border-accent/25 hover:border-accent/50 hover:shadow-[0_0_15px_rgba(0,255,255,0.15)]',
-  pink: 'border-accent/25 hover:border-accent/50 hover:shadow-[0_0_15px_rgba(255,0,255,0.15)]',
-  yellow: 'border-accent/25 hover:border-neon-yellow/60 hover:shadow-[0_0_15px_rgba(255,255,0,0.15)]',
+  cyan: 'border-accent/25 hover:border-accent/50 hover:shadow-soft',
+  pink: 'border-accent/25 hover:border-accent/50 hover:shadow-soft',
+  yellow: 'border-accent/25 hover:border-accent-hover/60 hover:shadow-soft',
 };
 
 const ucCategory: Record<string, string> = {
@@ -391,7 +391,7 @@ const UseCases: React.FC = () => (
                 {uc.category}
               </span>
             </div>
-            <h3 className="text-base font-bold text-white font-editorial mb-2">{uc.title}</h3>
+            <h3 className="text-base font-bold text-ink font-editorial mb-2">{uc.title}</h3>
             <p className="text-muted text-sm leading-relaxed font-body mb-4 flex-1">{uc.text}</p>
             <div className="flex items-center gap-1.5 text-accent-hover text-xs font-bold font-body mt-auto">
               <span className="material-symbols-outlined text-sm">arrow_forward</span>
@@ -413,7 +413,7 @@ const FinalCTA: React.FC = () => (
       <span className="absolute top-3 left-3 text-accent-hover/30 text-2xl font-body select-none" aria-hidden="true">[</span>
       <span className="absolute bottom-3 right-3 text-accent-hover/30 text-2xl font-body select-none" aria-hidden="true">]</span>
 
-      <h2 className="text-2xl md:text-3xl font-bold text-white font-editorial mb-4">
+      <h2 className="text-2xl md:text-3xl font-bold text-ink font-editorial mb-4">
         Bereit, KI in Ihrem Unternehmen<br className="hidden sm:block" />
         <span className="text-accent-hover ">konkret einzusetzen?</span>
       </h2>
@@ -442,11 +442,11 @@ const FinalCTA: React.FC = () => (
 
 export const KIBeratung: React.FC = () => {
   return (
-    <div className="min-h-screen bg-base text-white font-body relative">
+    <div className="min-h-screen bg-base text-ink font-body relative">
       <RouteMeta title="KI-Beratung | Ainzigartig" description="Strategische KI-Beratung für Ihr Unternehmen." />
       {/* Background effects – matching main page */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#6B46C1_1px,transparent_1px)] [background-size:16px_16px]" />
+        <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#ECA867_1px,transparent_1px)] [background-size:16px_16px]" />
         <div className="absolute top-1/4 left-1/4 text-[#B77A36] font-bold text-xl animate-float opacity-40">sys</div>
         <div className="absolute top-1/3 right-1/3 text-accent-hover font-bold text-2xl animate-float opacity-30 [animation-delay:1s]">[]</div>
         <div className="absolute bottom-1/4 left-1/3 text-accent-hover font-bold text-xl animate-float opacity-40 [animation-delay:2s]">&gt;</div>

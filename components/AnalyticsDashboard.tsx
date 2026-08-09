@@ -11,7 +11,7 @@ const SectionLabel: React.FC<{ children: React.ReactNode }> = ({ children }) => 
 );
 
 const SectionHeadline: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <h2 className="text-2xl md:text-4xl font-bold text-white font-editorial leading-tight mb-4">
+  <h2 className="text-2xl md:text-4xl font-bold text-ink font-editorial leading-tight mb-4">
     <span className="text-accent-hover mr-2">&gt;</span>
     {children}
   </h2>
@@ -31,14 +31,14 @@ const Separator: React.FC<{ color?: string }> = ({ color = 'neon-cyan' }) => (
 
 const Hero: React.FC = () => (
   <section className="relative pt-32 pb-20 px-4 text-center overflow-hidden">
-    <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#6B46C1_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
+    <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#ECA867_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
 
     <div className="relative z-10 max-w-4xl mx-auto">
       <span className="inline-block text-xs font-bold uppercase tracking-[0.25em] text-accent-hover border border-accent/30 bg-accent/10 px-3 py-1 mb-8 font-body">
         KI-gestützte Analytics
       </span>
 
-      <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-white font-editorial leading-[1.1] mb-6">
+      <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-ink font-editorial leading-[1.1] mb-6">
         Sie haben genug Daten.<br />
         <span className="text-accent-hover ">Was fehlt, sind die richtigen Antworten.</span>
       </h1>
@@ -58,7 +58,7 @@ const Hero: React.FC = () => (
         </Link>
         <a
           href="#problem"
-          className="px-8 py-3 text-sm font-bold border-2 border-accent/40 text-accent-hover hover:border-neon-pink hover:bg-accent/10 transition-all duration-200 flex items-center gap-2"
+          className="px-8 py-3 text-sm font-bold border-2 border-accent/40 text-accent-hover hover:border-accent-hover hover:bg-accent/10 transition-all duration-200 flex items-center gap-2"
         >
           <span className="material-symbols-outlined text-sm">arrow_downward</span>
           Was das Dashboard konkret leistet
@@ -138,7 +138,7 @@ const painCards = [
 const painBorder: Record<string, string> = {
   cyan: 'border-accent/25 hover:border-accent/50',
   pink: 'border-accent/25 hover:border-accent/50',
-  yellow: 'border-accent/25 hover:border-neon-yellow/60',
+  yellow: 'border-accent/25 hover:border-accent-hover/60',
 };
 
 const Problem: React.FC = () => (
@@ -160,7 +160,7 @@ const Problem: React.FC = () => (
             className={`border bg-base/80 backdrop-blur-sm p-6 transition-all duration-300 hover:-translate-y-1 ${painBorder[c.color]}`}
           >
             <span className="text-3xl mb-3 block">{c.emoji}</span>
-            <h3 className="text-lg font-bold text-white font-editorial mb-2">{c.title}</h3>
+            <h3 className="text-lg font-bold text-ink font-editorial mb-2">{c.title}</h3>
             <p className="text-muted text-sm leading-relaxed font-body">{c.text}</p>
           </div>
         ))}
@@ -227,7 +227,7 @@ const Loesung: React.FC = () => (
               <div className="flex items-start gap-3">
                 <span className="material-symbols-outlined text-accent-hover text-2xl mt-0.5 flex-shrink-0">{l.icon}</span>
                 <div>
-                  <h4 className="text-sm font-bold text-white font-editorial mb-1 flex items-center gap-2">
+                  <h4 className="text-sm font-bold text-ink font-editorial mb-1 flex items-center gap-2">
                     <span className="text-accent-hover">✓</span> {l.title}
                   </h4>
                   <p className="text-muted text-sm leading-relaxed font-body">{l.text}</p>
@@ -296,11 +296,11 @@ const Prozess: React.FC = () => (
 
         {steps.map((s) => (
           <div key={s.num} className="relative flex gap-5 sm:gap-6 py-6 group">
-            <div className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 border border-accent/30 bg-surface flex items-center justify-center text-accent-hover font-bold font-editorial text-lg relative z-10 group-hover:border-neon-pink group-hover:shadow-[0_0_12px_rgba(255,0,255,0.25)] transition-all duration-300">
+            <div className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 border border-accent/30 bg-surface flex items-center justify-center text-accent-hover font-bold font-editorial text-lg relative z-10 group-hover:border-accent-hover group-hover:shadow-[0_0_12px_rgba(255,0,255,0.25)] transition-all duration-300">
               {s.num}
             </div>
             <div className="pt-1">
-              <h3 className="text-base md:text-lg font-bold text-white font-editorial mb-2">
+              <h3 className="text-base md:text-lg font-bold text-ink font-editorial mb-2">
                 Schritt {s.num.replace(/^0/, '')} – {s.title}
               </h3>
               <p className="text-muted text-sm leading-relaxed font-body">{s.text}</p>
@@ -358,9 +358,9 @@ const useCases = [
 ];
 
 const ucBorder: Record<string, string> = {
-  cyan: 'border-accent/25 hover:border-accent/50 hover:shadow-[0_0_15px_rgba(0,255,255,0.15)]',
-  pink: 'border-accent/25 hover:border-accent/50 hover:shadow-[0_0_15px_rgba(255,0,255,0.15)]',
-  yellow: 'border-accent/25 hover:border-neon-yellow/60 hover:shadow-[0_0_15px_rgba(255,255,0,0.15)]',
+  cyan: 'border-accent/25 hover:border-accent/50 hover:shadow-soft',
+  pink: 'border-accent/25 hover:border-accent/50 hover:shadow-soft',
+  yellow: 'border-accent/25 hover:border-accent-hover/60 hover:shadow-soft',
 };
 const ucCategory: Record<string, string> = {
   cyan: 'text-accent-hover border-accent/30 bg-accent/15',
@@ -394,7 +394,7 @@ const UseCases: React.FC = () => (
                 {uc.category}
               </span>
             </div>
-            <h3 className="text-base font-bold text-white font-editorial mb-2">{uc.title}</h3>
+            <h3 className="text-base font-bold text-ink font-editorial mb-2">{uc.title}</h3>
             <p className="text-muted text-sm leading-relaxed font-body mb-4 flex-1">{uc.text}</p>
             <div className={`flex items-center gap-1.5 text-xs font-bold font-body mt-auto ${ucIcon[uc.color]}`}>
               <span className="material-symbols-outlined text-sm">arrow_forward</span>
@@ -440,7 +440,7 @@ const Zielgruppe: React.FC = () => (
 
       {/* Not for */}
       <div className="mt-14 max-w-2xl mx-auto text-left">
-        <h3 className="text-lg font-bold text-white font-editorial mb-6 text-center">
+        <h3 className="text-lg font-bold text-ink font-editorial mb-6 text-center">
           <span className="text-accent-hover mr-2">#</span>Und für wen es (noch) nicht passt.
         </h3>
         <div className="space-y-4">
@@ -545,7 +545,7 @@ const FAQItem: React.FC<{ item: typeof faqItems[0]; isOpen: boolean; onToggle: (
       onClick={onToggle}
       className="w-full flex items-center justify-between p-5 text-left hover:bg-white/[0.02] transition-colors"
     >
-      <span className="text-sm font-bold text-white font-editorial pr-4">{item.q}</span>
+      <span className="text-sm font-bold text-ink font-editorial pr-4">{item.q}</span>
       <span className={`material-symbols-outlined text-accent-hover flex-shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-45' : ''}`}>
         add
       </span>
@@ -592,7 +592,7 @@ const FinalCTA: React.FC = () => (
 
       <SectionLabel>Jetzt starten</SectionLabel>
 
-      <h2 className="text-2xl md:text-3xl font-bold text-white font-editorial mb-4 mt-2">
+      <h2 className="text-2xl md:text-3xl font-bold text-ink font-editorial mb-4 mt-2">
         Sehen Sie live, wie Ihre Daten<br className="hidden sm:block" />
         <span className="text-accent-hover ">aussehen könnten.</span>
       </h2>
@@ -619,11 +619,11 @@ const FinalCTA: React.FC = () => (
 
 export const AnalyticsDashboard: React.FC = () => {
   return (
-    <div className="min-h-screen bg-base text-white font-body relative">
+    <div className="min-h-screen bg-base text-ink font-body relative">
       <RouteMeta title="Analytics Dashboard | Ainzigartig" description="Datenbasierte Entscheidungen mit KI-gestützten Dashboards." />
       {/* Background effects */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#6B46C1_1px,transparent_1px)] [background-size:16px_16px]" />
+        <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#ECA867_1px,transparent_1px)] [background-size:16px_16px]" />
         <div className="absolute top-1/4 left-1/4 text-[#B77A36] font-bold text-xl animate-float opacity-40">sys</div>
         <div className="absolute top-1/3 right-1/3 text-accent-hover font-bold text-2xl animate-float opacity-30 [animation-delay:1s]">[]</div>
         <div className="absolute bottom-1/4 left-1/3 text-accent-hover font-bold text-xl animate-float opacity-40 [animation-delay:2s]">&gt;</div>
