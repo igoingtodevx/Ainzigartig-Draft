@@ -47,7 +47,7 @@ async function pdfToImages(file: File, maxPages: number): Promise<{ base64: stri
   return results;
 }
 
-const mailto = 'mailto:info@ainzigartig.de?subject=Live%20Agent%20Demo%20%E2%80%94%20fuer%20unser%20Unternehmen';
+const mailto = 'mailto:info@ainzigartig.de?subject=Live%20Agent%20Demo%20%E2%80%94%20für%20unser%20Unternehmen';
 
 interface KeyField {
   [key: string]: string;
@@ -88,7 +88,7 @@ Ainzigartig Demo GmbH
 Beispielweg 7, 50667 Koeln
 
 Pos. | Beschreibung                              | Menge | Einzelpreis | Gesamt
-1    | Toner fuer HP LaserJet Pro M404           |   2   |    89,00 EUR |  178,00 EUR
+1    | Toner für HP LaserJet Pro M404           |   2   |    89,00 EUR |  178,00 EUR
 2    | Wartung Drucker Quartal Q2/2025           |   1   |   450,00 EUR |  450,00 EUR
 3    | Premium-Papier A4 80g (5x 500 Blatt)      |   5   |     6,50 EUR |   32,50 EUR
 
@@ -111,7 +111,7 @@ Betreff: Anfrage Bueromoebel — 12 Arbeitsplaetze
 Sehr geehrte Damen und Herren,
 
 wir sind eine Digitalagentur mit 18 Mitarbeitenden und planen den Umzug in
-neue Raeumlichkeiten zum 01.08.2025. Dafuer benoetigen wir 12 komplette
+neue Raeumlichkeiten zum 01.08.2025. Dafür benoetigen wir 12 komplette
 Arbeitsplaetze (Hoehenverstellbare Tische, ergonomische Stuehle, Sideboards).
 
 Koennten Sie uns ein Angebot zukommen lassen? Ideal waere:
@@ -137,7 +137,7 @@ Hauptstrasse 88, 70173 Stuttgart
 
 Sehr geehrter Herr Becker,
 
-vielen Dank fuer Ihre Anfrage. Wir bieten Ihnen folgende Leistungen an:
+vielen Dank für Ihre Anfrage. Wir bieten Ihnen folgende Leistungen an:
 
 Position 1: Dachstuhl Erweiterungsbau, 240 qm
    Material: BSH Fichte, Festigkeitsklasse C24
@@ -164,7 +164,7 @@ Werner Holzbau GmbH
 Peter Werner, Geschaeftsfuehrer`;
 
 const SAMPLES: { id: string; label: string; icon: string; text: string }[] = [
-  { id: 'invoice', label: 'Rechnung pruefen', icon: 'receipt_long', text: SAMPLE_INVOICE },
+  { id: 'invoice', label: 'Rechnung prüfen', icon: 'receipt_long', text: SAMPLE_INVOICE },
   { id: 'email', label: 'E-Mail triagieren', icon: 'mail', text: SAMPLE_EMAIL },
   { id: 'offer', label: 'Angebot analysieren', icon: 'request_quote', text: SAMPLE_OFFER },
 ];
@@ -172,8 +172,8 @@ const SAMPLES: { id: string; label: string; icon: string; text: string }[] = [
 const THINKING_STEPS = [
   { label: 'Dokument eingelesen', icon: 'description' },
   { label: 'Typ erkannt', icon: 'category' },
-  { label: 'Schluesselfelder extrahiert', icon: 'data_object' },
-  { label: 'Naechste Schritte geplant', icon: 'task_alt' },
+  { label: 'Schlüsselfelder extrahiert', icon: 'data_object' },
+  { label: 'Nächste Schritte geplant', icon: 'task_alt' },
   { label: 'Risiken markiert', icon: 'shield' },
 ];
 
@@ -323,9 +323,9 @@ export const LiveAgentDemo: React.FC = () => {
     <div className="min-h-screen bg-base text-ink font-body">
       <RouteMeta title="Live Demo | Ainzigartig" description="Testen Sie unseren KI-Dokumentenagenten live." />
       {/* Hero */}
-      <section className="pt-28 pb-12 px-6 md:px-8">
-        <div className="max-w-[1000px] mx-auto px-4 sm:px-6 md:px-8">
-          <span className="inline-block text-xs font-bold uppercase tracking-[0.25em] text-accent border border-accent/30 bg-accent/5 px-3 py-1 mb-6">
+      <section className="pt-36 pb-12 px-6 md:px-8">
+        <div className="max-w-[900px] mx-auto px-4 sm:px-6 md:px-8 text-center">
+          <span className="inline-block rounded-full text-xs font-bold uppercase tracking-[0.14em] text-ink border border-accent/45 bg-accent/15 px-4 py-1.5 mb-6">
             Live Agent Demo
           </span>
           <h1 className="font-editorial text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05] text-ink mb-6 break-words">
@@ -333,8 +333,8 @@ export const LiveAgentDemo: React.FC = () => {
             <span className="text-accent">Dokument-Agent arbeiten.</span>
           </h1>
           <p className="text-muted text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-            Rechnung, E-Mail, Angebot oder Vertrag — der Agent liest, strukturiert und schlaegt
-            naechste Schritte vor. Sie sehen den Prozess live. Keine Anmeldung, keine Daten gespeichert.
+            Rechnung, E-Mail, Angebot oder Vertrag — der Agent liest, strukturiert und schlägt
+            nächste Schritte vor. Sie sehen den Prozess live. Keine Anmeldung. Keine dauerhafte Speicherung durch diese Demo-Oberfläche.
           </p>
         </div>
       </section>
@@ -349,12 +349,12 @@ export const LiveAgentDemo: React.FC = () => {
               onDragLeave={() => setDragOver(false)}
               onDrop={handleDrop}
               onClick={() => fileInputRef.current?.click()}
-              className={`border-2 border-dashed p-10 text-center cursor-pointer transition-colors mb-8 ${
+              className={`brand-card border-2 border-dashed bg-surface p-10 text-center cursor-pointer transition-all mb-8 rounded-[26px] ${
                 dragOver ? 'border-accent bg-accent/5' : 'border-faint/30 hover:border-faint/60'
               }`}
             >
               <span className="material-symbols-outlined text-4xl text-muted mb-3 block">upload_file</span>
-              <p className="text-sm text-ink mb-1">PDF, PNG oder JPG hochladen (max 4 MB)</p>
+              <p className="text-sm text-ink mb-1">PDF, PNG oder JPG hochladen (max. 6 MB)</p>
               <p className="text-xs text-faint">Rechnung, E-Mail-Screenshot, Angebot, Vertrag — was Sie gerade haben</p>
               <input
                 ref={fileInputRef}
@@ -374,7 +374,7 @@ export const LiveAgentDemo: React.FC = () => {
                 <button
                   key={sample.id}
                   onClick={() => runSample(sample.text)}
-                  className="border border-faint/30 p-5 text-left hover:border-accent/50 hover:bg-accent/[0.02] transition-all cursor-pointer group"
+                  className="brand-card bg-surface p-5 text-left hover:border-accent/50 transition-all cursor-pointer group rounded-[22px]"
                 >
                   <span className="material-symbols-outlined text-2xl text-accent mb-2 block">{sample.icon}</span>
                   <p className="text-sm text-ink font-medium mb-1">{sample.label}</p>
@@ -390,7 +390,7 @@ export const LiveAgentDemo: React.FC = () => {
       {analyzing && (
         <section className="px-6 md:px-8 pb-16">
           <div className="max-w-[700px] mx-auto">
-            <div className="border border-faint/30 bg-ink/[0.02] p-8">
+            <div className="brand-card bg-surface p-8 rounded-[24px]">
               <div className="flex items-center gap-3 mb-6">
                 <span className="material-symbols-outlined text-accent animate-spin">progress_activity</span>
                 <p className="text-sm text-ink font-medium">Agent arbeitet...</p>
@@ -426,7 +426,7 @@ export const LiveAgentDemo: React.FC = () => {
       {error && (
         <section className="px-6 md:px-8 pb-12">
           <div className="max-w-[700px] mx-auto">
-            <div className="border border-red-300 bg-red-50 p-6">
+            <div className="rounded-[22px] border border-red-900/15 bg-red-50 p-6">
               <p className="text-sm text-red-700 mb-3">{error}</p>
               <button
                 onClick={handleReset}
@@ -444,7 +444,7 @@ export const LiveAgentDemo: React.FC = () => {
         <section className="px-6 md:px-8 pb-20">
           <div className="max-w-[900px] mx-auto">
             {/* Header */}
-            <div className="border border-faint/30 p-6 mb-6">
+            <div className="brand-card bg-surface p-6 mb-6 rounded-[24px]">
               <div className="flex items-start justify-between gap-4 flex-wrap">
                 <div className="flex items-center gap-3">
                   <span className="material-symbols-outlined text-accent text-3xl">
@@ -469,7 +469,7 @@ export const LiveAgentDemo: React.FC = () => {
 
             {/* Summary */}
             {result.summary && (
-              <div className="mb-6 p-5 border-l-2 border-accent bg-accent/[0.03]">
+              <div className="brand-card mb-6 p-5 bg-accent/10 border-accent/35 rounded-[22px]">
                 <p className="text-xs text-faint uppercase tracking-[0.2em] mb-2">Zusammenfassung</p>
                 <p className="text-sm text-ink leading-relaxed">{result.summary}</p>
               </div>
@@ -479,7 +479,7 @@ export const LiveAgentDemo: React.FC = () => {
             {Object.keys(result.key_fields || {}).length > 0 && (
               <div className="mb-6">
                 <p className="text-xs text-faint uppercase tracking-[0.2em] mb-3">Extrahierte Felder</p>
-                <div className="border border-faint/30 divide-y divide-faint/20">
+                <div className="brand-card bg-surface divide-y divide-ink/10 overflow-hidden rounded-[22px]">
                   {Object.entries(result.key_fields).map(([k, v]) => (
                     <div key={k} className="grid grid-cols-2 px-4 py-2.5">
                       <span className="text-xs text-muted">{k}</span>
@@ -493,10 +493,10 @@ export const LiveAgentDemo: React.FC = () => {
             {/* Suggested actions */}
             {result.suggested_actions && result.suggested_actions.length > 0 && (
               <div className="mb-6">
-                <p className="text-xs text-faint uppercase tracking-[0.2em] mb-3">Naechste Schritte</p>
+                <p className="text-xs text-faint uppercase tracking-[0.2em] mb-3">Nächste Schritte</p>
                 <div className="space-y-3">
                   {result.suggested_actions.map((a, i) => (
-                    <div key={i} className="border border-faint/30 p-4 flex gap-3">
+                    <div key={i} className="brand-card bg-surface p-4 flex gap-3 rounded-[20px]">
                       <span className="material-symbols-outlined text-accent text-xl shrink-0">arrow_forward</span>
                       <div className="flex-1">
                         <div className="flex items-start justify-between gap-3 mb-1">
@@ -519,7 +519,7 @@ export const LiveAgentDemo: React.FC = () => {
                 <p className="text-xs text-faint uppercase tracking-[0.2em] mb-3">Hinweise</p>
                 <div className="space-y-2">
                   {result.risk_flags.map((r, i) => (
-                    <div key={i} className={`border p-3 flex items-start gap-2 ${getRiskColor(r.level)}`}>
+                    <div key={i} className={`border rounded-2xl p-3 flex items-start gap-2 ${getRiskColor(r.level)}`}>
                       <span className="material-symbols-outlined text-base mt-0.5 shrink-0">{getRiskIcon(r.level)}</span>
                       <p className="text-xs leading-relaxed">{r.message}</p>
                     </div>
@@ -547,9 +547,9 @@ export const LiveAgentDemo: React.FC = () => {
               </button>
               <Link
                 to="/#kontakt"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-ink text-base text-sm font-bold hover:bg-ink/80 transition-colors"
+                className="brand-pill inline-flex items-center gap-2 px-6 py-3 bg-ink text-white text-sm font-bold hover:bg-[#33312E] transition-colors"
               >
-                So etwas fuer unser Unternehmen?
+                So etwas für unser Unternehmen?
                 <span className="material-symbols-outlined text-sm">arrow_forward</span>
               </Link>
             </div>
