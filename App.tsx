@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { Analytics } from '@vercel/analytics/react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
+import { LogoSlider } from './components/LogoSlider';
+import { HomeProcess } from './components/HomeProcess';
 import { Services } from './components/Services';
 import { CaseStudies } from './components/CaseStudies';
 import { TeamSection } from './components/TeamSection';
@@ -33,9 +35,11 @@ const HomePage: React.FC = () => (
   <main>
     <RouteMeta
       title="Ainzigartig – KI-Beratung für den Mittelstand"
-      description="Wir helfen Mittelstandsunternehmen, KI gewinnbringend einzusetzen."
+      description="Ainzigartig hilft KMUs dabei, generative KI gewinnbringend und praxistauglich einzusetzen."
     />
     <Hero />
+    <LogoSlider />
+    <HomeProcess />
     <Services />
     <CaseStudies />
     <TeamSection />
@@ -61,9 +65,7 @@ function ScrollToHash() {
         el.scrollIntoView({ behavior: 'smooth', block: 'start' });
         return;
       }
-      if (attempt < 10) {
-        setTimeout(() => tryScroll(attempt + 1), 50);
-      }
+      if (attempt < 10) setTimeout(() => tryScroll(attempt + 1), 50);
     };
     tryScroll(0);
     return () => {
@@ -73,14 +75,13 @@ function ScrollToHash() {
   return null;
 }
 
-const App: React.FC = () => {
-  return (
-    <BrowserRouter>
-      <ScrollToHash />
-      <div className="min-h-screen bg-base text-ink font-body antialiased overflow-x-hidden selection:bg-accent selection:text-base">
-        <Navbar />
-        <ErrorBoundary>
-          <Routes>
+const App: React.FC = () => (
+  <BrowserRouter>
+    <ScrollToHash />
+    <div className="min-h-screen bg-base text-ink font-body antialiased overflow-x-hidden selection:bg-accent selection:text-ink">
+      <Navbar />
+      <ErrorBoundary>
+        <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/impressum" element={<Impressum />} />
           <Route path="/datenschutz" element={<Datenschutz />} />
@@ -98,13 +99,12 @@ const App: React.FC = () => {
           <Route path="/insights" element={<Insights />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-        </ErrorBoundary>
-        <Footer />
-        <ChatBot />
-        <Analytics />
-      </div>
-    </BrowserRouter>
-  );
-};
+      </ErrorBoundary>
+      <Footer />
+      <ChatBot />
+      <Analytics />
+    </div>
+  </BrowserRouter>
+);
 
 export default App;
