@@ -4,20 +4,20 @@ import { RouteMeta } from './RouteMeta';
 
 export const Datenschutz: React.FC = () => {
   return (
-    <div className="min-h-screen bg-background-dark text-white font-mono pt-28 pb-20 px-4">
+    <div className="min-h-screen bg-base text-white font-body pt-28 pb-20 px-4">
       <RouteMeta title="Datenschutz | Ainzigartig" description="Unsere Datenschutzerklärung." />
       <div className="max-w-3xl mx-auto">
-        <Link to="/" className="text-neon-cyan text-sm hover:underline mb-8 inline-flex items-center gap-1">
+        <Link to="/" className="text-accent-hover text-sm hover:underline mb-8 inline-flex items-center gap-1">
           <span className="material-symbols-outlined text-sm">arrow_back</span>
           Zurück zur Startseite
         </Link>
 
-        <h1 className="text-3xl font-bold text-white font-display mb-8 mt-4">
-          <span className="text-neon-cyan mr-2">&gt;</span>
+        <h1 className="text-3xl font-bold text-white font-editorial mb-8 mt-4">
+          <span className="text-accent-hover mr-2">&gt;</span>
           Datenschutzerklärung
         </h1>
 
-        <div className="space-y-6 text-gray-300 text-sm leading-relaxed border border-gray-800 bg-[#150a26]/40 p-8 rounded-lg">
+        <div className="space-y-6 text-muted text-sm leading-relaxed border border-ink/10 bg-[#150a26]/40 p-8 rounded-lg">
           <div>
             <h2 className="text-lg font-bold text-white mb-2">1. Datenschutz auf einen Blick</h2>
             <h3 className="text-md font-bold text-gray-200 mb-1 mt-3">Allgemeine Hinweise</h3>
@@ -63,11 +63,11 @@ export const Datenschutz: React.FC = () => {
               Diese Website wird bei Vercel Inc. gehostet (San Francisco, USA). Vercel verarbeitet
               Server-Log-Dateien zur Bereitstellung der Website. Details zum Umgang mit Ihren
               Daten finden Sie in der Datenschutzerklärung von Vercel:
-              <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-neon-cyan hover:underline ml-1">
+              <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-accent-hover hover:underline ml-1">
                 https://vercel.com/legal/privacy-policy
               </a>
             </p>
-            <p className="mt-2 text-xs text-gray-500 italic">
+            <p className="mt-2 text-xs text-light italic">
               Hinweis: Die Server-Anfragen werden über Vercels globales CDN verarbeitet. Einzelne
               Anfragen können über Knotenpunkte in der EU geroutet werden.
             </p>
@@ -83,7 +83,7 @@ export const Datenschutz: React.FC = () => {
             </p>
             <p className="mt-2">
               Weitere Informationen finden Sie in der Datenschutzerklärung von Google:
-              <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-neon-cyan hover:underline ml-1">
+              <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-accent-hover hover:underline ml-1">
                 https://policies.google.com/privacy
               </a>
             </p>
@@ -119,8 +119,8 @@ export const Datenschutz: React.FC = () => {
             </p>
           </div>
 
-          <div className="border-t border-gray-700 pt-4 mt-8">
-            <p className="text-gray-500 text-xs">
+          <div className="border-t border-ink/10 pt-4 mt-8">
+            <p className="text-light text-xs">
               Stand: Februar 2026<br />
               Datenschutzerklärung wird laufend aktualisiert. Fragen: info@ainzigartig.de
             </p>

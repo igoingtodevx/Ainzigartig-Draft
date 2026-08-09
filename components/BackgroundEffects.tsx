@@ -6,12 +6,12 @@ export const BackgroundEffects: React.FC = () => {
       <div className="absolute inset-0 opacity-10 dark:opacity-5 bg-[radial-gradient(#6B46C1_1px,transparent_1px)] [background-size:16px_16px]"></div>
       
       {/* Floating Elements */}
-      <div className="absolute top-1/4 left-1/4 text-neon-yellow font-bold text-xl animate-float opacity-60">sys</div>
-      <div className="absolute top-1/3 right-1/3 text-neon-pink font-bold text-2xl animate-float opacity-40 [animation-delay:1s]">[]</div>
-      <div className="absolute bottom-1/4 left-1/3 text-neon-cyan font-bold text-xl animate-float opacity-50 [animation-delay:2s]">&gt;</div>
-      <div className="absolute top-20 right-20 text-neon-yellow font-bold text-lg animate-float opacity-70 [animation-delay:3s]">#</div>
-      <div className="absolute bottom-40 right-10 text-neon-pink font-bold text-xl animate-float opacity-40 [animation-delay:4s]">{'}'}</div>
-      <div className="absolute top-1/2 left-10 text-neon-cyan font-bold text-lg animate-float opacity-60 [animation-delay:1.5s]">0x</div>
+      <div className="absolute top-1/4 left-1/4 text-[#B77A36] font-bold text-xl animate-float opacity-60">sys</div>
+      <div className="absolute top-1/3 right-1/3 text-accent-hover font-bold text-2xl animate-float opacity-40 [animation-delay:1s]">[]</div>
+      <div className="absolute bottom-1/4 left-1/3 text-accent-hover font-bold text-xl animate-float opacity-50 [animation-delay:2s]">&gt;</div>
+      <div className="absolute top-20 right-20 text-[#B77A36] font-bold text-lg animate-float opacity-70 [animation-delay:3s]">#</div>
+      <div className="absolute bottom-40 right-10 text-accent-hover font-bold text-xl animate-float opacity-40 [animation-delay:4s]">{'}'}</div>
+      <div className="absolute top-1/2 left-10 text-accent-hover font-bold text-lg animate-float opacity-60 [animation-delay:1.5s]">0x</div>
 
       {/* Gradient Scanline Overlay */}
       <div 

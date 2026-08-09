@@ -5,20 +5,20 @@ import { RouteMeta } from './RouteMeta';
 /* ───────────── small reusable bits ───────────── */
 
 const SectionLabel: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <span className="inline-block text-xs font-bold uppercase tracking-[0.25em] text-neon-pink border border-neon-pink/30 bg-neon-pink/5 px-3 py-1 mb-4 font-mono">
+  <span className="inline-block text-xs font-bold uppercase tracking-[0.25em] text-accent-hover border border-accent/30 bg-accent/10 px-3 py-1 mb-4 font-body">
     {children}
   </span>
 );
 
 const SectionHeadline: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <h2 className="text-2xl md:text-4xl font-bold text-white font-display leading-tight mb-4">
-    <span className="text-neon-cyan mr-2">&gt;</span>
+  <h2 className="text-2xl md:text-4xl font-bold text-white font-editorial leading-tight mb-4">
+    <span className="text-accent-hover mr-2">&gt;</span>
     {children}
   </h2>
 );
 
 const LeadText: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <p className="text-gray-400 text-base md:text-lg leading-relaxed max-w-3xl mx-auto font-mono">
+  <p className="text-muted text-base md:text-lg leading-relaxed max-w-3xl mx-auto font-body">
     {children}
   </p>
 );
@@ -34,16 +34,16 @@ const Hero: React.FC = () => (
     <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#6B46C1_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
 
     <div className="relative z-10 max-w-4xl mx-auto">
-      <span className="inline-block text-xs font-bold uppercase tracking-[0.25em] text-neon-pink border border-neon-pink/30 bg-neon-pink/5 px-3 py-1 mb-8 font-mono">
+      <span className="inline-block text-xs font-bold uppercase tracking-[0.25em] text-accent-hover border border-accent/30 bg-accent/10 px-3 py-1 mb-8 font-body">
         KI-gestützte Analytics
       </span>
 
-      <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-white font-display leading-[1.1] mb-6">
+      <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-white font-editorial leading-[1.1] mb-6">
         Sie haben genug Daten.<br />
-        <span className="text-neon-pink text-glow-pink">Was fehlt, sind die richtigen Antworten.</span>
+        <span className="text-accent-hover ">Was fehlt, sind die richtigen Antworten.</span>
       </h1>
 
-      <p className="text-gray-400 text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-mono mb-10">
+      <p className="text-muted text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-body mb-10">
         Unser Analytics Dashboard bündelt Ihre Vertriebs- und Recruiting-Daten in einem zentralen Echtzeit-Überblick – mit KI-gestützten Analysen, die Ihnen sagen, was hinter den Zahlen steckt. Keine Tabellen mehr. Keine Kaffeesatzleserei. Nur klare Entscheidungsgrundlagen.
       </p>
 
@@ -58,7 +58,7 @@ const Hero: React.FC = () => (
         </Link>
         <a
           href="#problem"
-          className="px-8 py-3 text-sm font-bold border-2 border-neon-pink/40 text-neon-pink hover:border-neon-pink hover:bg-neon-pink/5 transition-all duration-200 flex items-center gap-2"
+          className="px-8 py-3 text-sm font-bold border-2 border-accent/40 text-accent-hover hover:border-neon-pink hover:bg-accent/10 transition-all duration-200 flex items-center gap-2"
         >
           <span className="material-symbols-outlined text-sm">arrow_downward</span>
           Was das Dashboard konkret leistet
@@ -66,7 +66,7 @@ const Hero: React.FC = () => (
       </div>
 
       {/* Trust bar */}
-      <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-xs md:text-sm text-gray-400 font-mono">
+      <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-xs md:text-sm text-muted font-body">
         {[
           'Echtzeit-Daten aus allen relevanten Quellen',
           'Keine Data-Science-Kenntnisse nötig',
@@ -74,32 +74,32 @@ const Hero: React.FC = () => (
           'Live in 1–2 Wochen',
         ].map((item) => (
           <span key={item} className="flex items-center gap-1.5">
-            <span className="text-neon-pink">✓</span> {item}
+            <span className="text-accent-hover">✓</span> {item}
           </span>
         ))}
       </div>
     </div>
 
-    <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background-dark to-transparent pointer-events-none" />
+    <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-base to-transparent pointer-events-none" />
   </section>
 );
 
 /* ───────────── STAT BAR ───────────── */
 
 const stats = [
-  { value: 'Echtzeit', label: 'statt wöchentliche Excel-Reports', color: 'text-neon-pink' },
-  { value: '1 Ort', label: 'für alle Vertriebs- und Recruiting-KPIs', color: 'text-neon-cyan' },
-  { value: '3x', label: 'schnellere Entscheidungsfindung im Management', color: 'text-neon-yellow' },
-  { value: 'Ø 6 Std.', label: 'pro Woche gespart durch automatisiertes Reporting', color: 'text-neon-pink' },
+  { value: 'Echtzeit', label: 'statt wöchentliche Excel-Reports', color: 'text-accent-hover' },
+  { value: '1 Ort', label: 'für alle Vertriebs- und Recruiting-KPIs', color: 'text-accent-hover' },
+  { value: '3x', label: 'schnellere Entscheidungsfindung im Management', color: 'text-[#B77A36]' },
+  { value: 'Ø 6 Std.', label: 'pro Woche gespart durch automatisiertes Reporting', color: 'text-accent-hover' },
 ];
 
 const StatBar: React.FC = () => (
   <section className="py-12 px-4">
     <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
       {stats.map((s) => (
-        <div key={s.label} className="text-center border border-gray-800 bg-terminal-bg/40 backdrop-blur-sm p-5">
-          <div className={`text-3xl md:text-4xl font-bold font-display mb-1 ${s.color}`}>{s.value}</div>
-          <p className="text-gray-500 text-xs font-mono leading-snug">{s.label}</p>
+        <div key={s.label} className="text-center border border-ink/10 bg-surface/40 backdrop-blur-sm p-5">
+          <div className={`text-3xl md:text-4xl font-bold font-editorial mb-1 ${s.color}`}>{s.value}</div>
+          <p className="text-light text-xs font-body leading-snug">{s.label}</p>
         </div>
       ))}
     </div>
@@ -136,9 +136,9 @@ const painCards = [
 ];
 
 const painBorder: Record<string, string> = {
-  cyan: 'border-neon-cyan/20 hover:border-neon-cyan/60',
-  pink: 'border-neon-pink/20 hover:border-neon-pink/60',
-  yellow: 'border-neon-yellow/20 hover:border-neon-yellow/60',
+  cyan: 'border-accent/25 hover:border-accent/50',
+  pink: 'border-accent/25 hover:border-accent/50',
+  yellow: 'border-accent/25 hover:border-neon-yellow/60',
 };
 
 const Problem: React.FC = () => (
@@ -157,11 +157,11 @@ const Problem: React.FC = () => (
         {painCards.map((c) => (
           <div
             key={c.title}
-            className={`border bg-background-dark/80 backdrop-blur-sm p-6 transition-all duration-300 hover:-translate-y-1 ${painBorder[c.color]}`}
+            className={`border bg-base/80 backdrop-blur-sm p-6 transition-all duration-300 hover:-translate-y-1 ${painBorder[c.color]}`}
           >
             <span className="text-3xl mb-3 block">{c.emoji}</span>
-            <h3 className="text-lg font-bold text-white font-display mb-2">{c.title}</h3>
-            <p className="text-gray-400 text-sm leading-relaxed font-mono">{c.text}</p>
+            <h3 className="text-lg font-bold text-white font-editorial mb-2">{c.title}</h3>
+            <p className="text-muted text-sm leading-relaxed font-body">{c.text}</p>
           </div>
         ))}
       </div>
@@ -217,20 +217,20 @@ const Loesung: React.FC = () => (
       </LeadText>
 
       {/* Leistungen grid */}
-      <div className="mt-14 border border-neon-pink/20 bg-terminal-bg/60 backdrop-blur-sm text-left">
+      <div className="mt-14 border border-accent/25 bg-surface/60 backdrop-blur-sm text-left">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
           {leistungen.map((l, i) => (
             <div
               key={l.title}
-              className={`p-6 ${i % 2 === 0 ? 'md:border-r border-gray-800' : ''} ${i >= 2 ? 'border-t border-gray-800' : ''}`}
+              className={`p-6 ${i % 2 === 0 ? 'md:border-r border-ink/10' : ''} ${i >= 2 ? 'border-t border-ink/10' : ''}`}
             >
               <div className="flex items-start gap-3">
-                <span className="material-symbols-outlined text-neon-pink text-2xl mt-0.5 flex-shrink-0">{l.icon}</span>
+                <span className="material-symbols-outlined text-accent-hover text-2xl mt-0.5 flex-shrink-0">{l.icon}</span>
                 <div>
-                  <h4 className="text-sm font-bold text-white font-display mb-1 flex items-center gap-2">
-                    <span className="text-neon-pink">✓</span> {l.title}
+                  <h4 className="text-sm font-bold text-white font-editorial mb-1 flex items-center gap-2">
+                    <span className="text-accent-hover">✓</span> {l.title}
                   </h4>
-                  <p className="text-gray-400 text-sm leading-relaxed font-mono">{l.text}</p>
+                  <p className="text-muted text-sm leading-relaxed font-body">{l.text}</p>
                 </div>
               </div>
             </div>
@@ -239,13 +239,13 @@ const Loesung: React.FC = () => (
       </div>
 
       {/* DSGVO strip */}
-      <div className="mt-8 border border-neon-yellow/20 bg-neon-yellow/5 p-6 text-left flex flex-col md:flex-row items-start gap-4">
+      <div className="mt-8 border border-accent/25 bg-accent/10 p-6 text-left flex flex-col md:flex-row items-start gap-4">
         <span className="text-4xl">🛡️</span>
         <div>
-          <h4 className="text-sm font-bold text-neon-yellow font-display mb-2 uppercase tracking-wider">
+          <h4 className="text-sm font-bold text-[#B77A36] font-editorial mb-2 uppercase tracking-wider">
             Ihre Unternehmensdaten gehören zu den sensibelsten, die es gibt.
           </h4>
-          <p className="text-gray-400 text-sm leading-relaxed font-mono">
+          <p className="text-muted text-sm leading-relaxed font-body">
             Umsatzzahlen, Personaldaten, Bewerberdaten – alles verarbeiten wir ausschließlich auf EU-Servern, ohne Datenweitergabe an Dritte. Zugriffskontrollen, Rollenkonzepte und Audit-Logs sind standardmäßig enthalten. DSGVO-Konformität ist kein Add-on, sondern Grundvoraussetzung.
           </p>
         </div>
@@ -296,14 +296,14 @@ const Prozess: React.FC = () => (
 
         {steps.map((s) => (
           <div key={s.num} className="relative flex gap-5 sm:gap-6 py-6 group">
-            <div className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 border border-neon-pink/30 bg-terminal-bg flex items-center justify-center text-neon-pink font-bold font-display text-lg relative z-10 group-hover:border-neon-pink group-hover:shadow-[0_0_12px_rgba(255,0,255,0.25)] transition-all duration-300">
+            <div className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 border border-accent/30 bg-surface flex items-center justify-center text-accent-hover font-bold font-editorial text-lg relative z-10 group-hover:border-neon-pink group-hover:shadow-[0_0_12px_rgba(255,0,255,0.25)] transition-all duration-300">
               {s.num}
             </div>
             <div className="pt-1">
-              <h3 className="text-base md:text-lg font-bold text-white font-display mb-2">
+              <h3 className="text-base md:text-lg font-bold text-white font-editorial mb-2">
                 Schritt {s.num.replace(/^0/, '')} – {s.title}
               </h3>
-              <p className="text-gray-400 text-sm leading-relaxed font-mono">{s.text}</p>
+              <p className="text-muted text-sm leading-relaxed font-body">{s.text}</p>
             </div>
           </div>
         ))}
@@ -358,19 +358,19 @@ const useCases = [
 ];
 
 const ucBorder: Record<string, string> = {
-  cyan: 'border-neon-cyan/20 hover:border-neon-cyan/60 hover:shadow-[0_0_15px_rgba(0,255,255,0.15)]',
-  pink: 'border-neon-pink/20 hover:border-neon-pink/60 hover:shadow-[0_0_15px_rgba(255,0,255,0.15)]',
-  yellow: 'border-neon-yellow/20 hover:border-neon-yellow/60 hover:shadow-[0_0_15px_rgba(255,255,0,0.15)]',
+  cyan: 'border-accent/25 hover:border-accent/50 hover:shadow-[0_0_15px_rgba(0,255,255,0.15)]',
+  pink: 'border-accent/25 hover:border-accent/50 hover:shadow-[0_0_15px_rgba(255,0,255,0.15)]',
+  yellow: 'border-accent/25 hover:border-neon-yellow/60 hover:shadow-[0_0_15px_rgba(255,255,0,0.15)]',
 };
 const ucCategory: Record<string, string> = {
-  cyan: 'text-neon-cyan border-neon-cyan/30 bg-neon-cyan/10',
-  pink: 'text-neon-pink border-neon-pink/30 bg-neon-pink/10',
-  yellow: 'text-neon-yellow border-neon-yellow/30 bg-neon-yellow/10',
+  cyan: 'text-accent-hover border-accent/30 bg-accent/15',
+  pink: 'text-accent-hover border-accent/30 bg-accent/15',
+  yellow: 'text-[#B77A36] border-accent/30 bg-accent/15',
 };
 const ucIcon: Record<string, string> = {
-  cyan: 'text-neon-cyan',
-  pink: 'text-neon-pink',
-  yellow: 'text-neon-yellow',
+  cyan: 'text-accent-hover',
+  pink: 'text-accent-hover',
+  yellow: 'text-[#B77A36]',
 };
 
 const UseCases: React.FC = () => (
@@ -386,17 +386,17 @@ const UseCases: React.FC = () => (
         {useCases.map((uc) => (
           <div
             key={uc.title}
-            className={`border bg-background-dark/80 backdrop-blur-sm p-6 transition-all duration-300 hover:-translate-y-1 flex flex-col ${ucBorder[uc.color]}`}
+            className={`border bg-base/80 backdrop-blur-sm p-6 transition-all duration-300 hover:-translate-y-1 flex flex-col ${ucBorder[uc.color]}`}
           >
             <div className="flex items-center gap-3 mb-4">
               <span className={`material-symbols-outlined text-3xl ${ucIcon[uc.color]}`}>{uc.icon}</span>
-              <span className={`text-[10px] font-bold uppercase tracking-wider py-0.5 px-2 border rounded font-mono ${ucCategory[uc.color]}`}>
+              <span className={`text-[10px] font-bold uppercase tracking-wider py-0.5 px-2 border rounded font-body ${ucCategory[uc.color]}`}>
                 {uc.category}
               </span>
             </div>
-            <h3 className="text-base font-bold text-white font-display mb-2">{uc.title}</h3>
-            <p className="text-gray-400 text-sm leading-relaxed font-mono mb-4 flex-1">{uc.text}</p>
-            <div className={`flex items-center gap-1.5 text-xs font-bold font-mono mt-auto ${ucIcon[uc.color]}`}>
+            <h3 className="text-base font-bold text-white font-editorial mb-2">{uc.title}</h3>
+            <p className="text-muted text-sm leading-relaxed font-body mb-4 flex-1">{uc.text}</p>
+            <div className={`flex items-center gap-1.5 text-xs font-bold font-body mt-auto ${ucIcon[uc.color]}`}>
               <span className="material-symbols-outlined text-sm">arrow_forward</span>
               {uc.result}
             </div>
@@ -431,23 +431,23 @@ const Zielgruppe: React.FC = () => (
 
       <div className="mt-10 space-y-4 text-left max-w-2xl mx-auto">
         {targetAudience.map((a) => (
-          <div key={a.text} className="flex items-start gap-3 border border-neon-pink/10 bg-terminal-bg/40 p-4 hover:border-neon-pink/30 transition-colors">
+          <div key={a.text} className="flex items-start gap-3 border border-neon-pink/10 bg-surface/40 p-4 hover:border-accent/30 transition-colors">
             <span className="text-2xl flex-shrink-0">{a.emoji}</span>
-            <p className="text-gray-300 text-sm font-mono leading-relaxed">{a.text}</p>
+            <p className="text-muted text-sm font-body leading-relaxed">{a.text}</p>
           </div>
         ))}
       </div>
 
       {/* Not for */}
       <div className="mt-14 max-w-2xl mx-auto text-left">
-        <h3 className="text-lg font-bold text-white font-display mb-6 text-center">
-          <span className="text-neon-pink mr-2">#</span>Und für wen es (noch) nicht passt.
+        <h3 className="text-lg font-bold text-white font-editorial mb-6 text-center">
+          <span className="text-accent-hover mr-2">#</span>Und für wen es (noch) nicht passt.
         </h3>
         <div className="space-y-4">
           {notFor.map((item) => (
-            <div key={item} className="flex items-start gap-3 border border-gray-800 bg-background-dark/60 p-4">
-              <span className="text-neon-pink font-bold text-lg flex-shrink-0 mt-[-2px]">✕</span>
-              <p className="text-gray-500 text-sm font-mono leading-relaxed">{item}</p>
+            <div key={item} className="flex items-start gap-3 border border-ink/10 bg-base/60 p-4">
+              <span className="text-accent-hover font-bold text-lg flex-shrink-0 mt-[-2px]">✕</span>
+              <p className="text-light text-sm font-body leading-relaxed">{item}</p>
             </div>
           ))}
         </div>
@@ -474,17 +474,17 @@ const Vergleich: React.FC = () => (
       <SectionHeadline>Was sich konkret verändert.</SectionHeadline>
 
       <div className="mt-12 overflow-x-auto">
-        <table className="w-full text-left text-sm font-mono border-collapse">
+        <table className="w-full text-left text-sm font-body border-collapse">
           <thead>
-            <tr className="border-b border-gray-700">
-              <th className="py-3 px-4 text-gray-500 font-normal text-xs uppercase tracking-wider w-1/4"></th>
-              <th className="py-3 px-4 text-neon-pink font-bold text-xs uppercase tracking-wider w-[37.5%]">
+            <tr className="border-b border-ink/10">
+              <th className="py-3 px-4 text-light font-normal text-xs uppercase tracking-wider w-1/4"></th>
+              <th className="py-3 px-4 text-accent-hover font-bold text-xs uppercase tracking-wider w-[37.5%]">
                 <span className="flex items-center gap-1.5">
                   <span className="material-symbols-outlined text-sm">close</span>
                   Ohne Dashboard
                 </span>
               </th>
-              <th className="py-3 px-4 text-neon-cyan font-bold text-xs uppercase tracking-wider w-[37.5%]">
+              <th className="py-3 px-4 text-accent-hover font-bold text-xs uppercase tracking-wider w-[37.5%]">
                 <span className="flex items-center gap-1.5">
                   <span className="material-symbols-outlined text-sm">check</span>
                   Mit Dashboard
@@ -496,11 +496,11 @@ const Vergleich: React.FC = () => (
             {comparisonRows.map((row, i) => (
               <tr
                 key={row.label}
-                className={`border-b border-gray-800 ${i % 2 === 0 ? 'bg-terminal-bg/20' : ''}`}
+                className={`border-b border-ink/10 ${i % 2 === 0 ? 'bg-surface/20' : ''}`}
               >
-                <td className="py-3 px-4 text-gray-400 font-bold text-xs uppercase tracking-wider">{row.label}</td>
-                <td className="py-3 px-4 text-gray-500">{row.before}</td>
-                <td className="py-3 px-4 text-neon-cyan">{row.after}</td>
+                <td className="py-3 px-4 text-muted font-bold text-xs uppercase tracking-wider">{row.label}</td>
+                <td className="py-3 px-4 text-light">{row.before}</td>
+                <td className="py-3 px-4 text-accent-hover">{row.after}</td>
               </tr>
             ))}
           </tbody>
@@ -540,19 +540,19 @@ const faqItems = [
 ];
 
 const FAQItem: React.FC<{ item: typeof faqItems[0]; isOpen: boolean; onToggle: () => void }> = ({ item, isOpen, onToggle }) => (
-  <div className="border border-gray-800 bg-terminal-bg/30">
+  <div className="border border-ink/10 bg-surface/30">
     <button
       onClick={onToggle}
       className="w-full flex items-center justify-between p-5 text-left hover:bg-white/[0.02] transition-colors"
     >
-      <span className="text-sm font-bold text-white font-display pr-4">{item.q}</span>
-      <span className={`material-symbols-outlined text-neon-pink flex-shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-45' : ''}`}>
+      <span className="text-sm font-bold text-white font-editorial pr-4">{item.q}</span>
+      <span className={`material-symbols-outlined text-accent-hover flex-shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-45' : ''}`}>
         add
       </span>
     </button>
     {isOpen && (
       <div className="px-5 pb-5 -mt-1">
-        <p className="text-gray-400 text-sm leading-relaxed font-mono">{item.a}</p>
+        <p className="text-muted text-sm leading-relaxed font-body">{item.a}</p>
       </div>
     )}
   </div>
@@ -586,17 +586,17 @@ const FAQ: React.FC = () => {
 
 const FinalCTA: React.FC = () => (
   <section className="py-24 px-4">
-    <div className="max-w-3xl mx-auto text-center border border-neon-pink/20 bg-terminal-bg/60 backdrop-blur-sm p-10 md:p-16 relative overflow-hidden">
-      <span className="absolute top-3 left-3 text-neon-pink/30 text-2xl font-mono select-none" aria-hidden="true">[</span>
-      <span className="absolute bottom-3 right-3 text-neon-pink/30 text-2xl font-mono select-none" aria-hidden="true">]</span>
+    <div className="max-w-3xl mx-auto text-center border border-accent/25 bg-surface/60 backdrop-blur-sm p-10 md:p-16 relative overflow-hidden">
+      <span className="absolute top-3 left-3 text-accent-hover/30 text-2xl font-body select-none" aria-hidden="true">[</span>
+      <span className="absolute bottom-3 right-3 text-accent-hover/30 text-2xl font-body select-none" aria-hidden="true">]</span>
 
       <SectionLabel>Jetzt starten</SectionLabel>
 
-      <h2 className="text-2xl md:text-3xl font-bold text-white font-display mb-4 mt-2">
+      <h2 className="text-2xl md:text-3xl font-bold text-white font-editorial mb-4 mt-2">
         Sehen Sie live, wie Ihre Daten<br className="hidden sm:block" />
-        <span className="text-neon-pink text-glow-pink">aussehen könnten.</span>
+        <span className="text-accent-hover ">aussehen könnten.</span>
       </h2>
-      <p className="text-gray-400 font-mono text-sm md:text-base mb-8 max-w-xl mx-auto">
+      <p className="text-muted font-body text-sm md:text-base mb-8 max-w-xl mx-auto">
         In einer kostenlosen Demo bauen wir einen exemplarischen Blick auf Ihre Datensituation – mit echten Beispielen aus Ihrer Branche. Sie sehen konkret, welche Fragen das Dashboard beantwortet und welche Daten dafür nötig wären.
       </p>
 
@@ -608,7 +608,7 @@ const FinalCTA: React.FC = () => (
         <span className="material-symbols-outlined text-sm">arrow_forward</span>
       </Link>
 
-      <p className="mt-6 text-xs text-gray-600 font-mono">
+      <p className="mt-6 text-xs text-light font-body">
         Keine Verpflichtung. Keine Folge-E-Mail-Flut. Einfach zeigen, was möglich ist.
       </p>
     </div>
@@ -619,19 +619,19 @@ const FinalCTA: React.FC = () => (
 
 export const AnalyticsDashboard: React.FC = () => {
   return (
-    <div className="min-h-screen bg-background-dark text-white font-mono relative">
+    <div className="min-h-screen bg-base text-white font-body relative">
       <RouteMeta title="Analytics Dashboard | Ainzigartig" description="Datenbasierte Entscheidungen mit KI-gestützten Dashboards." />
       {/* Background effects */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#6B46C1_1px,transparent_1px)] [background-size:16px_16px]" />
-        <div className="absolute top-1/4 left-1/4 text-neon-yellow font-bold text-xl animate-float opacity-40">sys</div>
-        <div className="absolute top-1/3 right-1/3 text-neon-pink font-bold text-2xl animate-float opacity-30 [animation-delay:1s]">[]</div>
-        <div className="absolute bottom-1/4 left-1/3 text-neon-cyan font-bold text-xl animate-float opacity-40 [animation-delay:2s]">&gt;</div>
+        <div className="absolute top-1/4 left-1/4 text-[#B77A36] font-bold text-xl animate-float opacity-40">sys</div>
+        <div className="absolute top-1/3 right-1/3 text-accent-hover font-bold text-2xl animate-float opacity-30 [animation-delay:1s]">[]</div>
+        <div className="absolute bottom-1/4 left-1/3 text-accent-hover font-bold text-xl animate-float opacity-40 [animation-delay:2s]">&gt;</div>
       </div>
 
       {/* Back link */}
       <div className="fixed top-24 left-4 sm:left-8 z-40">
-        <Link to="/" className="text-neon-cyan text-sm hover:underline inline-flex items-center gap-1 font-mono bg-background-dark/80 backdrop-blur-sm px-3 py-1.5 border border-neon-cyan/20 hover:border-neon-cyan/50 transition-colors">
+        <Link to="/" className="text-accent-hover text-sm hover:underline inline-flex items-center gap-1 font-body bg-base/80 backdrop-blur-sm px-3 py-1.5 border border-accent/25 hover:border-accent/45 transition-colors">
           <span className="material-symbols-outlined text-sm">arrow_back</span>
           Zurück
         </Link>

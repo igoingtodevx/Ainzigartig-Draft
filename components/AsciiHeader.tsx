@@ -146,15 +146,15 @@ export const AsciiHeader: React.FC = () => {
 
   return (
     <div className="mb-20 md:mb-28 select-none relative group cursor-default">
-      <pre className="font-mono text-[3px] sm:text-[5px] md:text-[7px] lg:text-[9px] xl:text-[10px] leading-[1.15] text-gray-600 whitespace-pre overflow-hidden inline-block text-left">
+      <pre className="font-body text-[3px] sm:text-[5px] md:text-[7px] lg:text-[9px] xl:text-[10px] leading-[1.15] text-light whitespace-pre overflow-hidden inline-block text-left">
         {renderAscii()}
       </pre>
 
-      <h1 className="mt-8 md:mt-16 text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white uppercase font-display px-4 leading-tight">
+      <h1 className="mt-8 md:mt-16 text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white uppercase font-editorial px-4 leading-tight">
         Bereit für eine Zukunft<br />
-        <span className="text-neon-cyan text-glow-cyan">mit generativer KI?</span>
+        <span className="text-accent-hover ">mit generativer KI?</span>
       </h1>
-      <p className="mt-6 text-base md:text-lg text-gray-400 max-w-6xl mx-auto px-4">
+      <p className="mt-6 text-base md:text-lg text-muted max-w-6xl mx-auto px-4">
         Ainzigartig hilft kleinen und mittelständischen Unternehmen dabei, künstliche Intelligenz sinnvoll einzusetzen – mit konkreten Anwendungsfällen, die wirklich funktionieren, und einer Beratung, die auf Augenhöhe stattfindet.
       </p>
 
@@ -162,14 +162,14 @@ export const AsciiHeader: React.FC = () => {
       <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 px-4">
         <a
           href="/#kontakt"
-          className="inline-flex items-center gap-2 px-8 py-3 text-sm font-bold uppercase tracking-wider bg-primary text-white border-2 border-primary hover:bg-primary-hover shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-200 font-mono"
+          className="inline-flex items-center gap-2 px-8 py-3 text-sm font-bold uppercase tracking-wider bg-primary text-white border-2 border-primary hover:bg-primary-hover shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-200 font-body"
         >
           Kostenloses Erstgespräch buchen
           <span className="material-symbols-outlined text-base">calendar_month</span>
         </a>
         <a
           href="/live-demo"
-          className="inline-flex items-center gap-2 px-8 py-3 text-sm font-bold uppercase tracking-wider text-neon-cyan border-2 border-neon-cyan/40 hover:border-neon-cyan hover:bg-neon-cyan/5 transition-all duration-200 font-mono"
+          className="inline-flex items-center gap-2 px-8 py-3 text-sm font-bold uppercase tracking-wider text-accent-hover border-2 border-accent/40 hover:border-neon-cyan hover:bg-accent/10 transition-all duration-200 font-body"
         >
           Demo ansehen
         </a>
@@ -182,8 +182,8 @@ export const AsciiHeader: React.FC = () => {
           'Made in Germany',
           'Technische Expertise',
         ].map((badge) => (
-          <span key={badge} className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-400 font-mono">
-            <span className="material-symbols-outlined text-neon-cyan text-base">check_circle</span>
+          <span key={badge} className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-muted font-body">
+            <span className="material-symbols-outlined text-accent-hover text-base">check_circle</span>
             {badge}
           </span>
         ))}
