@@ -1,80 +1,67 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-interface CaseStudy {
-  title: string;
-  description: string;
-  status: string;
-  context: string;
-  result?: string;
-}
-
-const studies: CaseStudy[] = [
+const work = [
   {
-    title: 'KI-Chatbot auf der Website',
-    description:
-      'Der KI-Chatbot ist die Weiterentwicklung der FAQ-Seite und skaliert individuelle Beratung, ohne dass dafür Kundenberater eingestellt werden müssen. Die KI versteht Fragen semantisch und beantwortet sie auf Basis von explizitem Unternehmenswissen.',
-    status: 'Live',
-    context: 'Kundenservice',
-    result: 'Ticketvolumen um 80 % reduziert',
+    label: 'Live Tool',
+    title: 'KI-Website-Analyse',
+    description: 'Eine echte Website wird ausgelesen, technisch eingeordnet und in konkrete KI-Potenziale mit Wirkung, Aufwand und nächsten Schritten übersetzt.',
+    to: '/ki-analyse',
+    meta: 'Analyse · Scraping · LLM',
   },
   {
-    title: 'HubSpot CRM Flows',
-    description:
-      'Implementierung von HubSpot zur automatisierten Lead-Segmentierung. Workflows, bei denen sich Kunden über einen Funnel für ein Webinar anmelden und automatisch die richtigen Daten und E-Mails erhalten — ohne manuellen Eingriff.',
-    status: 'Optimiert',
-    context: 'Vertrieb & Marketing',
+    label: 'Live Demo',
+    title: 'Dokument-Agent',
+    description: 'PDFs, Scans und Texte werden multimodal verarbeitet und in Zusammenfassung, Risiken und konkrete Aktionen strukturiert.',
+    to: '/live-demo',
+    meta: 'PDF · Vision · Automation',
+  },
+  {
+    label: 'Engineering',
+    title: 'Ainzigartig Werkstatt',
+    description: 'Ausgewählte Projekte und technische Experimente, mit denen wir neue Agenten-, RAG- und Automatisierungsansätze praktisch testen.',
+    to: '/projekte',
+    meta: 'Agents · RAG · Workflows',
   },
 ];
 
-export const CaseStudies: React.FC = () => {
-  return (
-    <section className="py-16u px-6 md:px-8">
-      <div className="max-w-[1200px] mx-auto">
-        <h2 className="font-editorial text-2xl md:text-3xl text-ink mb-12u">
-          Referenzen
-        </h2>
+export const CaseStudies: React.FC = () => (
+  <section className="py-24 md:py-32 bg-[#F3EFEA] border-y border-ink/10">
+    <div className="max-w-[1140px] mx-auto px-6">
+      <div className="grid lg:grid-cols-[.72fr_1.28fr] gap-10 lg:gap-16 items-start">
+        <div className="lg:sticky lg:top-28">
+          <p className="text-xs uppercase tracking-[0.14em] font-semibold text-light mb-3">Aus der Werkstatt</p>
+          <h2 className="font-editorial text-[clamp(2.3rem,4vw,3.35rem)] leading-[1.05] tracking-[-0.025em] text-ink font-normal">
+            Lieber zeigen als behaupten.
+          </h2>
+          <p className="text-base text-muted leading-relaxed mt-4 max-w-md">
+            Ein Teil unserer Arbeit lässt sich direkt ausprobieren. So sehen Sie, wie wir KI-Systeme denken und bauen — bevor wir über ein Projekt sprechen.
+          </p>
+        </div>
 
-        <div className="space-y-12u">
-          {studies.map((study) => (
-            <div
-              key={study.title}
-              className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-12 border-t border-faint/50 pt-8"
-            >
-              <div className="md:col-span-7">
-                <h3 className="font-editorial text-xl text-ink mb-3">
-                  {study.title}
-                </h3>
-                <p className="text-sm text-muted font-body leading-relaxed">
-                  {study.description}
-                </p>
-              </div>
-
-              <div className="md:col-span-5 space-y-4">
-                <div>
-                  <p className="text-[10px] text-faint font-body uppercase tracking-[0.2em] mb-0.5">
-                    Status
-                  </p>
-                  <p className="text-sm text-ink font-body">{study.status}</p>
+        <div className="space-y-4">
+          {work.map((item, index) => (
+            <Link key={item.title} to={item.to} className="brand-card group bg-surface p-6 md:p-8 grid sm:grid-cols-[auto_1fr_auto] gap-5 items-start">
+              <span className="font-editorial text-4xl text-accent-mid leading-none tabular">0{index + 1}</span>
+              <div>
+                <div className="flex flex-wrap gap-2 items-center mb-2">
+                  <span className="text-[0.68rem] uppercase tracking-[0.12em] font-semibold text-light">{item.label}</span>
+                  <span className="w-1 h-1 rounded-full bg-accent" aria-hidden="true" />
+                  <span className="text-[0.72rem] text-light">{item.meta}</span>
                 </div>
-                <div>
-                  <p className="text-[10px] text-faint font-body uppercase tracking-[0.2em] mb-0.5">
-                    Kontext
-                  </p>
-                  <p className="text-sm text-ink font-body">{study.context}</p>
-                </div>
-                {study.result && (
-                  <div>
-                    <p className="text-[10px] text-faint font-body uppercase tracking-[0.2em] mb-0.5">
-                      Ergebnis
-                    </p>
-                    <p className="text-sm text-accent font-body">{study.result}</p>
-                  </div>
-                )}
+                <h3 className="font-editorial text-2xl text-ink leading-tight">{item.title}</h3>
+                <p className="text-sm text-muted leading-relaxed mt-2 max-w-xl">{item.description}</p>
               </div>
-            </div>
+              <span className="material-symbols-outlined text-ink/50 group-hover:text-ink group-hover:translate-x-1 transition-all duration-300" aria-hidden="true">arrow_forward</span>
+            </Link>
           ))}
+
+          <Link to="/insights" className="inline-flex items-center gap-2 mt-3 text-sm font-semibold text-ink hover:text-accent-hover transition-colors">
+            Aktuelle KI-Insights ansehen
+            <span className="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_forward</span>
+          </Link>
         </div>
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);
