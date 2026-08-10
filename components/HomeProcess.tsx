@@ -34,7 +34,7 @@ export const HomeProcess: React.FC = () => {
     const root = sectionRef.current;
     if (!root) return;
 
-    const items = Array.from(root.querySelectorAll<HTMLElement>('[data-process-reveal]'));
+    const items = Array.from(root.querySelectorAll('[data-process-reveal]')) as HTMLElement[];
     if (!('IntersectionObserver' in window)) {
       items.forEach((item) => item.classList.add('is-visible'));
       return;
