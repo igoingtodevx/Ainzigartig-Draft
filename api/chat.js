@@ -1,5 +1,6 @@
 // Vercel Serverless Function: AINZIGARTIG Chat Assistant "Edi"
-// Single-backend: OpenAI gpt-4o-mini. No Gemini / NVIDIA / OpenRouter.
+// Uses direct OpenAI when OPENAI_API_KEY is configured and falls back to
+// Vercel AI Gateway with deployment OIDC in previews/production.
 
 import { readFileSync, existsSync } from 'fs';
 import { resolve, dirname } from 'path';
@@ -15,16 +16,38 @@ const COOLDOWN_MS = 5000;
 
 const rateLimitMap = new Map();
 
+function getLLMConfig() {
+  const openaiKey = process.env.OPENAI_API_KEY || '';
+  if (openaiKey) {
+    return {
+      token: openaiKey,
+      endpoint: 'https://api.openai.com/v1/chat/completions',
+      model: 'gpt-4o-mini',
+      backend: 'openai-direct',
+    };
+  }
+
+  const gatewayToken = process.env.AI_GATEWAY_API_KEY || process.env.VERCEL_OIDC_TOKEN || '';
+  if (gatewayToken) {
+    return {
+      token: gatewayToken,
+      endpoint: 'https://ai-gateway.vercel.sh/v1/chat/completions',
+      model: 'openai/gpt-4o-mini',
+      backend: process.env.AI_GATEWAY_API_KEY ? 'vercel-ai-gateway-key' : 'vercel-ai-gateway-oidc',
+    };
+  }
+
+  return null;
+}
+
 function loadCompanyContext() {
   try {
     const contextPath = resolve(
       dirname(fileURLToPath(import.meta.url)),
       'company-context.md'
     );
-    if (existsSync(contextPath)) {
-      return readFileSync(contextPath, 'utf-8');
-    }
-  } catch (e) {
+    if (existsSync(contextPath)) return readFileSync(contextPath, 'utf-8');
+  } catch (_) {
     // fall through to inline default
   }
   return 'AINZIGARTIG ist eine KI-Beratung für den deutschen Mittelstand.';
@@ -86,11 +109,7 @@ function checkRateLimit(ip) {
 
   if (now - record.lastRequest < COOLDOWN_MS) {
     const waitSeconds = Math.ceil((COOLDOWN_MS - (now - record.lastRequest)) / 1000);
-    return {
-      allowed: false,
-      retryAfterSeconds: waitSeconds,
-      message: `Kurze Pause — bitte ${waitSeconds} Sekunden warten.`,
-    };
+    return { allowed: false, message: `Kurze Pause — bitte ${waitSeconds} Sekunden warten.` };
   }
 
   if (now - record.firstRequest > RATE_LIMIT_WINDOW_MS) {
@@ -112,15 +131,10 @@ function checkRateLimit(ip) {
 }
 
 function validateInput(message) {
-  if (!message || typeof message !== 'string') {
-    return { valid: false, error: 'Nachricht darf nicht leer sein.' };
-  }
+  if (!message || typeof message !== 'string') return { valid: false, error: 'Nachricht darf nicht leer sein.' };
   const trimmed = message.trim();
-  if (trimmed.length === 0) {
-    return { valid: false, error: 'Nachricht darf nicht leer sein.' };
-  }
-  // Short greetings ("Hallo", "Hi", "Moin", "Servus") bypass the word minimum
-  // so Edi can answer warmly instead of the user getting a validator error.
+  if (trimmed.length === 0) return { valid: false, error: 'Nachricht darf nicht leer sein.' };
+
   const isGreeting = /^(hallo|hi|moin|morgen|tag|abend|nacht|servus|grüß[ei]?\s*dich|gruess[ei]?\s*dich|hey|yo|na\s+du)\.?$/i.test(trimmed);
   const wordCount = trimmed.split(/\s+/).length;
 
@@ -128,42 +142,27 @@ function validateInput(message) {
     return { valid: false, error: 'Bitte stelle eine vollständige Frage (mind. 2 Wörter).' };
   }
   if (wordCount > MAX_INPUT_WORDS) {
-    return {
-      valid: false,
-      error: `Frage zu lang. Maximal ${MAX_INPUT_WORDS} Wörter erlaubt (aktuell: ${wordCount}).`,
-    };
+    return { valid: false, error: `Frage zu lang. Maximal ${MAX_INPUT_WORDS} Wörter erlaubt (aktuell: ${wordCount}).` };
   }
+
   const suspicious = /<script|javascript:|on\w+\s*=|SELECT\s+.*FROM|DROP\s+TABLE|INSERT\s+INTO/i;
-  if (suspicious.test(trimmed)) {
-    return { valid: false, error: 'Ungültige Eingabe erkannt.' };
-  }
+  if (suspicious.test(trimmed)) return { valid: false, error: 'Ungültige Eingabe erkannt.' };
   return { valid: true };
 }
 
-const CORS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'Content-Type',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Content-Type': 'application/json',
-};
-
 export default async function handler(req, res) {
   if (req.method === 'OPTIONS') {
-    return res.status(204).setHeader('Access-Control-Allow-Origin', '*').setHeader('Access-Control-Allow-Headers', 'Content-Type').setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS').end();
+    return res.status(204)
+      .setHeader('Access-Control-Allow-Origin', '*')
+      .setHeader('Access-Control-Allow-Headers', 'Content-Type')
+      .setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
+      .end();
   }
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  if (process.env.CHAT_ENABLED === 'false') return res.status(503).json({ error: 'Chat ist derzeit deaktiviert.' });
 
-  if (process.env.CHAT_ENABLED === 'false') {
-    return res.status(503).json({ error: 'Chat ist derzeit deaktiviert.' });
-  }
-
-  const ip = getClientIP(req);
-  const rate = checkRateLimit(ip);
-  if (!rate.allowed) {
-    return res.status(429).json({ error: rate.message });
-  }
+  const rate = checkRateLimit(getClientIP(req));
+  if (!rate.allowed) return res.status(429).json({ error: rate.message });
 
   let body;
   try {
@@ -173,17 +172,15 @@ export default async function handler(req, res) {
   }
 
   const validation = validateInput(body.message);
-  if (!validation.valid) {
-    return res.status(400).json({ error: validation.error });
-  }
+  if (!validation.valid) return res.status(400).json({ error: validation.error });
 
-  const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey) {
-    return res.status(500).json({ error: 'Server-Konfigurationsfehler.' });
+  const llm = getLLMConfig();
+  if (!llm) {
+    console.error('No LLM credentials available: OPENAI_API_KEY, AI_GATEWAY_API_KEY and VERCEL_OIDC_TOKEN are all missing.');
+    return res.status(503).json({ error: 'KI-Service ist in dieser Umgebung noch nicht aktiviert.' });
   }
 
   const history = (body.history || []).slice(-MAX_CONTEXT_MESSAGES);
-
   const messages = [
     { role: 'system', content: SYSTEM_PROMPT },
     ...history.map((msg) => ({
@@ -197,15 +194,15 @@ export default async function handler(req, res) {
     const ctrl = new AbortController();
     const to = setTimeout(() => ctrl.abort(), 12000);
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    const response = await fetch(llm.endpoint, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${apiKey}`,
+        Authorization: `Bearer ${llm.token}`,
         'Content-Type': 'application/json',
       },
       signal: ctrl.signal,
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: llm.model,
         messages,
         max_tokens: MAX_OUTPUT_TOKENS,
         temperature: 0.85,
@@ -217,7 +214,7 @@ export default async function handler(req, res) {
 
     if (!response.ok) {
       const errText = await response.text().catch(() => '');
-      console.error('OpenAI API', response.status, errText.slice(0, 200));
+      console.error('LLM API', llm.backend, response.status, errText.slice(0, 300));
       return res.status(502).json({ error: 'KI-Service vorübergehend nicht verfügbar.' });
     }
 
@@ -225,16 +222,13 @@ export default async function handler(req, res) {
     const choice = data?.choices?.[0];
     const finishReason = choice?.finish_reason;
 
-    if (finishReason === 'content_filter' || finishReason === 'length' && !choice?.message?.content) {
+    if (finishReason === 'content_filter' || (finishReason === 'length' && !choice?.message?.content)) {
       return res.status(200).json({
         response: 'Da kann ich gerade nichts Sinnvolles zu sagen — frag mich was anderes, oder schreib uns über das Kontaktformular.',
       });
     }
 
-    const text =
-      choice?.message?.content?.trim() ||
-      'Hmm, da ist mir gerade die Antwort verloren gegangen. Magst du das nochmal versuchen?';
-
+    const text = choice?.message?.content?.trim() || 'Hmm, da ist mir gerade die Antwort verloren gegangen. Magst du das nochmal versuchen?';
     return res.status(200).json({ response: text });
   } catch (e) {
     const isAbort = e?.name === 'AbortError';
