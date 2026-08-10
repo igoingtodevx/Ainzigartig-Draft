@@ -17,11 +17,11 @@ const work = [
     meta: 'PDF · Vision · Automation',
   },
   {
-    label: 'Engineering',
-    title: 'Ainzigartig Werkstatt',
-    description: 'Ausgewählte Projekte und technische Experimente, mit denen wir neue Agenten-, RAG- und Automatisierungsansätze praktisch testen.',
-    to: '/projekte',
-    meta: 'Agents · RAG · Workflows',
+    label: 'Interaktiver Check',
+    title: 'KI-Reifegrad',
+    description: 'Sechs Fragen ordnen ein, wie gut Prozesse, Daten und Organisation bereits für sinnvolle KI-Anwendungen vorbereitet sind.',
+    to: '/ki-audit',
+    meta: 'Assessment · Priorisierung · Einstieg',
   },
 ];
 
@@ -30,7 +30,7 @@ export const CaseStudies: React.FC = () => (
     <div className="max-w-[1140px] mx-auto px-6">
       <div className="grid lg:grid-cols-[.72fr_1.28fr] gap-10 lg:gap-16 items-start">
         <div className="lg:sticky lg:top-28">
-          <p className="text-xs uppercase tracking-[0.14em] font-semibold text-light mb-3">Aus der Werkstatt</p>
+          <p className="text-xs uppercase tracking-[0.14em] font-semibold text-light mb-3">Ausprobieren</p>
           <h2 className="font-editorial text-[clamp(2.3rem,4vw,3.35rem)] leading-[1.05] tracking-[-0.025em] text-ink font-normal">
             Lieber zeigen als behaupten.
           </h2>
