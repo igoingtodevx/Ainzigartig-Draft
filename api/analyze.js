@@ -1,11 +1,32 @@
 // Vercel Serverless Function (Node.js): Website KI-Analyse
-// Calls VPS scraper → sends content to OpenAI gpt-4o-mini → returns structured analysis
-// Migrated from Python to Node.js to match the rest of the API surface and
-// avoid the Vercel Python runtime's historical instability. Frontend contract
-// is unchanged.
+// Scrapes the target website and analyzes it with OpenAI directly or, on
+// Vercel previews/production, through AI Gateway using deployment OIDC.
 
 const SCRAPER_URL = process.env.SCRAPER_URL || 'http://138.68.96.190:8501';
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY || '';
+
+function getLLMConfig() {
+  const openaiKey = process.env.OPENAI_API_KEY || '';
+  if (openaiKey) {
+    return {
+      token: openaiKey,
+      endpoint: 'https://api.openai.com/v1/chat/completions',
+      model: 'gpt-4o-mini',
+      backend: 'openai-direct',
+    };
+  }
+
+  const gatewayToken = process.env.AI_GATEWAY_API_KEY || process.env.VERCEL_OIDC_TOKEN || '';
+  if (gatewayToken) {
+    return {
+      token: gatewayToken,
+      endpoint: 'https://ai-gateway.vercel.sh/v1/chat/completions',
+      model: 'openai/gpt-4o-mini',
+      backend: process.env.AI_GATEWAY_API_KEY ? 'vercel-ai-gateway-key' : 'vercel-ai-gateway-oidc',
+    };
+  }
+
+  return null;
+}
 
 const ANALYSIS_PROMPT = `Du bist ein KI-Berater für den deutschen Mittelstand. Analysiere die folgende Website und erstelle eine strukturierte KI-Potenzial-Analyse.
 
@@ -38,11 +59,9 @@ Antworte NUR mit validem JSON in diesem Format:
       "estimated_savings": "<z.B. '10h/Woche' oder '30% weniger Tickets'>"
     }}
   ],
-  "missing_basics": [
-    "<Was fehlt auf der Seite (z.B. Impressum, Datenschutz, Preise)>"
-  ],
-  "recommendation": "<Konkrete Empfehlung: Was sollte als Erstes umgesetzt werden?>",
-  "tool_suggestion": "<Welches KI-Tool passt am besten: Chatbot, Automatisierung, etc.>"
+  "missing_basics": ["<Was auf der Seite fehlt>"],
+  "recommendation": "<Konkrete Empfehlung>",
+  "tool_suggestion": "<Passender KI-Ansatz>"
 }}
 
 Wichtig: Sei konkret und praktisch. Keine Buzzwords. Bezogen auf die ECHTE Website.`;
@@ -54,13 +73,16 @@ function sendJson(res, status, data) {
 }
 
 async function readJsonBody(req) {
+  if (req.body && typeof req.body === 'object') return req.body;
+  if (typeof req.body === 'string') return JSON.parse(req.body || '{}');
+
   return new Promise((resolve, reject) => {
     let body = '';
     req.on('data', (chunk) => { body += chunk; });
     req.on('end', () => {
       if (!body) return resolve({});
       try { resolve(JSON.parse(body)); }
-      catch (e) { reject(new Error('Ungültiges JSON')); }
+      catch (_) { reject(new Error('Ungültiges JSON')); }
     });
     req.on('error', reject);
   });
@@ -74,32 +96,29 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
-  if (req.method === 'GET' && (req.url === '/health' || req.url === '/api/analyze/health')) {
+  if (req.method === 'GET') {
+    const llm = getLLMConfig();
     return sendJson(res, 200, {
       status: 'ok',
       service: 'analyze',
-      backend: 'openai-only',
-      has_openai: !!OPENAI_API_KEY,
+      backend: llm?.backend || 'not-configured',
+      has_llm: !!llm,
+      has_scraper: !!SCRAPER_URL,
     });
   }
 
-  if (req.method !== 'POST') {
-    return sendJson(res, 405, { error: 'Method not allowed' });
-  }
+  if (req.method !== 'POST') return sendJson(res, 405, { error: 'Method not allowed' });
 
   let body;
   try {
     body = await readJsonBody(req);
-  } catch (e) {
+  } catch (_) {
     return sendJson(res, 400, { error: 'Ungültiges Request-Format.' });
   }
 
   const url = (body.url || '').toString().trim();
-  if (!url) {
-    return sendJson(res, 400, { error: 'URL required' });
-  }
+  if (!url) return sendJson(res, 400, { error: 'URL required' });
 
-  // Step 1: Scrape website via VPS scraper
   let scrapeResp;
   try {
     scrapeResp = await fetch(`${SCRAPER_URL}/scrape`, {
@@ -120,13 +139,11 @@ export default async function handler(req, res) {
     try {
       const j = await scrapeResp.json();
       errorDetail = j.detail || errorDetail;
-    } catch (_) { /* ignore */ }
+    } catch (_) {}
     return sendJson(res, 502, { error: `Scraping failed: ${errorDetail}` });
   }
 
   const scrapeData = await scrapeResp.json();
-
-  // Step 2: Build prompt
   const prompt = ANALYSIS_PROMPT
     .replace('{markdown}', String(scrapeData.markdown || '').slice(0, 15000))
     .replace('{url}', url)
@@ -138,21 +155,19 @@ export default async function handler(req, res) {
     .replace('{has_privacy}', scrapeData.has_privacy_policy ? 'Ja' : 'Nein')
     .replace('{word_count}', String(scrapeData.word_count || 0));
 
-  // Step 3: Call OpenAI
-  if (!OPENAI_API_KEY) {
-    return sendJson(res, 500, { error: 'Server-Konfigurationsfehler.' });
-  }
+  const llm = getLLMConfig();
+  if (!llm) return sendJson(res, 503, { error: 'KI-Service ist in dieser Umgebung noch nicht aktiviert.' });
 
   let llmResp;
   try {
-    llmResp = await fetch('https://api.openai.com/v1/chat/completions', {
+    llmResp = await fetch(llm.endpoint, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${OPENAI_API_KEY}`,
+        Authorization: `Bearer ${llm.token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: llm.model,
         messages: [{ role: 'user', content: prompt }],
         temperature: 0.3,
         max_tokens: 2000,
@@ -162,25 +177,23 @@ export default async function handler(req, res) {
     });
   } catch (e) {
     const isTimeout = e?.name === 'TimeoutError' || /timeout/i.test(String(e));
-    console.error('OpenAI analyze timeout/network:', e);
+    console.error('Analyze LLM timeout/network:', llm.backend, e);
     return sendJson(res, isTimeout ? 504 : 502, { error: 'LLM analysis failed' });
   }
 
   if (!llmResp.ok) {
     const err = await llmResp.text().catch(() => '');
-    console.error(`OpenAI analyze error: ${llmResp.status} ${err.slice(0, 200)}`);
+    console.error('Analyze LLM error:', llm.backend, llmResp.status, err.slice(0, 300));
     return sendJson(res, 502, { error: 'LLM analysis failed' });
   }
 
   const llmJson = await llmResp.json();
   const llmResponse = llmJson?.choices?.[0]?.message?.content || '';
 
-  // Step 4: Parse JSON — response_format=json_object guarantees validity,
-  // but keep a defensive fallback for malformed edge cases.
   let analysis;
   try {
     analysis = JSON.parse(llmResponse);
-  } catch (e) {
+  } catch (_) {
     let s = llmResponse;
     if (s.includes('```json')) s = s.split('```json', 2)[1].split('```', 1)[0];
     else if (s.includes('```')) s = s.split('```', 2)[1].split('```', 1)[0];
