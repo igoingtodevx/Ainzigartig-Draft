@@ -6,7 +6,6 @@ const NAV_ITEMS = [
   { label: 'KI-Check', to: '/ki-analyse' },
   { label: 'ROI-Rechner', to: '/roi-rechner' },
   { label: 'Live Demo', to: '/live-demo' },
-  { label: 'Projekte', to: '/projekte' },
   { label: 'Insights', to: '/insights' },
 ];
 
