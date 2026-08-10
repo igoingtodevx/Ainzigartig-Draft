@@ -1,413 +1,339 @@
 import React, { useEffect, useState } from 'react';
 import { RouteMeta } from './RouteMeta';
 
-/* ───────────────────────────────────────────────────────────────────────────
-   Insights — Watcher-Light-Embed auf ainzigartig.
-   Zeigt den aktuellen Industry-Watcher-Brief als Appetithappen: Headline,
-   3 Trends, 2 Opportunities. Link führt zur polierten Sub-Site.
-
-   Daten kommen von /api/insights (Vercel Function → proxy auf
-   ai-industry-watcher.vercel.app, 1h Cache, Stale-Fallback 1d).
-
-   Visuelle Sprache:
-   - Ainzigartig-Look: Fraunces (editorial), IBM Plex Sans (body),
-     Cream-Background, Akzent-Grün (#1B4D3E)
-   - Monochrome Signal-Hierarchie ●/◐/○ (konsistent mit Sub-Site Phase A)
-   - Keine Emoji, kein JP
-   ─────────────────────────────────────────────────────────────────────────── */
-
-interface Trend {
+type Trend = {
   title: string;
-  signal: string;     // "hoch" | "mittel" | "niedrig"
-  what: string;
-}
+  signal?: string;
+  what?: string;
+  why?: string;
+};
 
-interface Opportunity {
+type Opportunity = {
   title: string;
-  what: string;
-  price: string;
-  how: string;
-}
+  what?: string;
+  who?: string;
+  price?: string;
+  how?: string;
+  time_to_market?: string;
+};
 
-interface Brief {
+type Article = {
+  title: string;
+  url?: string;
+  source?: string;
+  date?: string;
+  why?: string;
+};
+
+type Brief = {
   headline: string;
-  subheadline: string;
-  executive_summary: string;
-  trends: Trend[];
-  opportunities: Opportunity[];
-}
+  subheadline?: string;
+  executive_summary?: string;
+  trends?: Trend[];
+  opportunities?: Opportunity[];
+  top_articles?: Article[];
+  action_items?: string[];
+};
 
-interface InsightsPayload {
-  generated_at: string;
-  vertical: string;
-  model: string;
-  issue_url: string;
+type InsightsPayload = {
+  generated_at?: string;
+  vertical?: string;
+  model?: string;
+  issue_url?: string;
   issue: Brief;
-}
-
-const SIGNAL_CLASS: Record<string, string> = {
-  hoch: 'bg-ink text-base',
-  mittel: 'border border-ink/40 text-ink/70',
-  niedrig: 'border border-faint text-muted',
 };
 
-const SIGNAL_DOT: Record<string, string> = {
-  hoch: '●',
-  mittel: '◐',
-  niedrig: '○',
-};
+const WATCHER_URL = 'https://ai-industry-watcher.vercel.app';
 
-function timeAgo(iso: string): string {
-  if (!iso) return '';
-  const ms = Date.now() - new Date(iso).getTime();
-  const days = Math.floor(ms / (1000 * 60 * 60 * 24));
-  if (days < 1) return 'heute';
-  if (days === 1) return 'gestern';
-  if (days < 7) return `vor ${days} Tagen`;
-  const weeks = Math.floor(days / 7);
-  if (weeks === 1) return 'vor 1 Woche';
-  if (weeks < 8) return `vor ${weeks} Wochen`;
-  const months = Math.floor(days / 30);
-  return `vor ${months} ${months === 1 ? 'Monat' : 'Monaten'}`;
+function formatDate(iso?: string) {
+  if (!iso) return 'Aktuelle Ausgabe';
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return 'Aktuelle Ausgabe';
+  return new Intl.DateTimeFormat('de-DE', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+  }).format(date);
 }
 
-function issueWeek(iso: string): string {
-  if (!iso) return '?';
-  const d = new Date(iso);
-  const target = new Date(d.valueOf());
-  const dayNr = (d.getDay() + 6) % 7;
-  target.setDate(target.getDate() - dayNr + 3);
-  const firstThursday = new Date(target.getFullYear(), 0, 4);
-  const week = 1 + Math.round(
-    ((target.valueOf() - firstThursday.valueOf()) / 86400000 - 3 + ((firstThursday.getDay() + 6) % 7)) / 7
-  );
-  return `${d.getFullYear()}-W${String(week).padStart(2, '0')}`;
+function signalLabel(signal?: string) {
+  const value = (signal || 'mittel').toLowerCase();
+  if (value === 'hoch') return 'Hohes Signal';
+  if (value === 'niedrig') return 'Frühes Signal';
+  return 'Mittleres Signal';
 }
 
 export const Insights: React.FC = () => {
   const [data, setData] = useState<InsightsPayload | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
+
     fetch('/api/insights')
-      .then((r) => r.json())
+      .then(async (response) => {
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        return response.json();
+      })
       .then((payload) => {
         if (cancelled) return;
-        if (payload.error) {
-          setError(payload.error);
-        } else {
-          setData(payload);
+        if (!payload || payload.error || !payload.issue) {
+          setFailed(true);
+          return;
         }
+        setData(payload);
       })
-      .catch((e) => {
-        if (cancelled) return;
-        setError(`Verbindung fehlgeschlagen: ${String(e).slice(0, 120)}`);
+      .catch(() => {
+        if (!cancelled) setFailed(true);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
       });
-    return () => { cancelled = true; };
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
+  const brief = data?.issue;
+  const trends = brief?.trends || [];
+  const opportunities = brief?.opportunities || [];
+  const articles = brief?.top_articles || [];
+  const actionItems = brief?.action_items || [];
+
   return (
-    <section className="py-16u md:py-24 px-6 md:px-8">
+    <main className="min-h-screen bg-base text-ink font-body pt-32 pb-24">
       <RouteMeta
         title="Insights | Ainzigartig"
-        description="Wöchentliche KI-Branchen-Analyse: Trends, Opportunities und Action Items für den deutschen Mittelstand."
+        description="Das aktuelle KI-Briefing aus unserem Industry Watcher."
       />
-      <div className="max-w-[1200px] mx-auto">
-        <div className="max-w-2xl mb-12u md:mb-16u">
-          <p className="text-xs font-body uppercase tracking-[0.18em] text-muted mb-4u">
-            Intelligence Briefing
-          </p>
-          <h1 className="font-editorial text-3xl md:text-5xl text-ink leading-[1.1] mb-4u">
-            Was diese Woche in der KI-Branche zählt.
-          </h1>
-          <p className="text-base text-muted font-body leading-relaxed">
-            Jede Woche kuratieren wir 9 Quellen (Heise, Golem, The Decoder,
-            t3n, The Verge u.a.) per LLM zu einem knappen Briefing. Hier ist
-            die Kurzfassung — die volle Analyse mit Preisen, Quellen und
-            Action Items liegt auf der{' '}
-            <a
-              href="https://ai-industry-watcher.vercel.app"
-              target="_blank"
-              rel="noreferrer"
-              className="text-accent underline decoration-1 underline-offset-4 hover:decoration-2 transition-all"
-            >
-              Watcher-Sub-Site
-            </a>
-            .
-          </p>
-        </div>
 
-        {error && (
-          <div className="border border-faint bg-surface p-6u rounded">
-            <p className="text-sm text-muted font-body">
-              Insights konnten nicht geladen werden: {error}
-            </p>
-            <p className="text-xs text-muted font-body mt-2u">
-              Schau direkt auf{' '}
-              <a
-                href="https://ai-industry-watcher.vercel.app"
-                target="_blank"
-                rel="noreferrer"
-                className="text-accent underline decoration-1 underline-offset-4"
-              >
-                ai-industry-watcher.vercel.app
-              </a>
-              .
-            </p>
-          </div>
-        )}
-
-        {!data && !error && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4u">
-            {[0, 1, 2, 3, 4].map((i) => (
-              <div
-                key={i}
-                className="border border-faint/50 bg-surface/30 p-6u rounded h-[180px] animate-pulse"
-              />
-            ))}
-          </div>
-        )}
-
-        {data && (
-          <>
-            {/* Headline-Block — die "Was zählt"-Story */}
-            <div className="border-t-2 border-ink pt-6u pb-12u mb-12u">
-              <div className="flex flex-wrap items-baseline gap-x-4u gap-y-2u mb-6u">
-                <span className="text-[10px] font-body uppercase tracking-[0.18em] text-ink tabular">
-                  № {issueWeek(data.generated_at)}
-                </span>
-                <span className="text-[10px] font-body uppercase tracking-[0.18em] text-muted">
-                  {data.vertical || '—'}
-                </span>
-                <span className="text-[10px] font-body uppercase tracking-[0.18em] text-muted tabular">
-                  {timeAgo(data.generated_at)}
-                </span>
-              </div>
-              <h2 className="font-editorial text-2xl md:text-4xl text-ink leading-[1.15] mb-4u">
-                {data.issue.headline}
-              </h2>
-              {data.issue.subheadline && (
-                <p className="text-base md:text-lg text-muted font-body leading-relaxed max-w-3xl">
-                  {data.issue.subheadline}
+      <section className="px-6">
+        <div className="max-w-[1140px] mx-auto">
+          <header className="border-b border-ink/15 pb-14 md:pb-20">
+            <div className="grid lg:grid-cols-[.72fr_1.28fr] gap-10 lg:gap-20 items-end">
+              <div>
+                <p className="text-xs uppercase tracking-[0.18em] font-semibold text-light mb-5">
+                  Intelligence Briefing
                 </p>
-              )}
-            </div>
-
-            {/* Trends — 3-spaltig (wraps for 7-9 trends) */}
-            <div className="mb-12u">
-              <div className="flex items-baseline gap-3 mb-6u">
-                <span className="text-[10px] font-body uppercase tracking-[0.18em] text-ink">01</span>
-                <h3 className="font-editorial text-xl md:text-2xl text-ink">
-                  Trends
-                </h3>
-                <span className="text-[10px] font-body uppercase tracking-[0.18em] text-muted ml-auto">
-                  {data.issue.trends.length} Trends · signalgewichtet
-                </span>
+                <p className="font-editorial text-[clamp(3.2rem,7vw,6.7rem)] leading-[.9] tracking-[-.045em] text-accent-mid">
+                  AI
+                </p>
+                <p className="font-editorial text-[clamp(2.2rem,4.8vw,4.5rem)] leading-[.95] tracking-[-.035em] mt-1">
+                  Industry Watcher
+                </p>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4u">
-                {data.issue.trends.map((t, i) => {
-                  const sig = (t.signal || '').toLowerCase();
-                  const cls = SIGNAL_CLASS[sig] || SIGNAL_CLASS.mittel;
-                  const dot = SIGNAL_DOT[sig] || SIGNAL_DOT.mittel;
-                  return (
-                    <article
-                      key={i}
-                      className="border border-faint/60 hover:border-accent/60 bg-transparent p-5u rounded transition-colors duration-300 flex flex-col"
-                    >
-                      <div className="flex items-start justify-between gap-3 mb-3u">
-                        <span className="text-[10px] font-body uppercase tracking-[0.18em] text-muted tabular">
-                          Trend {String(i + 1).padStart(2, '0')}
-                        </span>
-                        <span
-                          className={`text-[10px] font-body uppercase tracking-[0.12em] px-2 py-1 rounded-sm ${cls}`}
-                          title={`Signal: ${t.signal}`}
-                        >
-                          {dot} {sig || 'mittel'}
-                        </span>
-                      </div>
-                      <h4 className="font-editorial text-lg text-ink leading-[1.25] mb-3u flex-grow">
-                        {t.title}
-                      </h4>
-                      <p className="text-sm text-muted font-body leading-relaxed mb-3u">
-                        {t.what}
-                      </p>
-                      {t.why && (
-                        <p className="text-xs text-ink/70 font-body leading-relaxed border-t border-faint/40 pt-3u">
-                          <strong className="text-ink">Mittelstand:</strong> {t.why}
-                        </p>
-                      )}
-                    </article>
-                  );
-                })}
+
+              <div className="max-w-2xl lg:pb-2">
+                <p className="text-base md:text-lg text-muted leading-relaxed mb-6">
+                  Unser Watcher scannt und kuratiert laufend relevante KI- und Digitalisierungssignale für den deutschen Mittelstand. Hier zeigen wir die aktuelle Ausgabe in einer kompakten, lesbaren Form.
+                </p>
+                <a
+                  href={WATCHER_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-ink border-b border-ink pb-1 hover:text-accent-hover hover:border-accent-hover transition-colors"
+                >
+                  Vollständigen Watcher öffnen <span aria-hidden="true">↗</span>
+                </a>
               </div>
             </div>
+          </header>
 
-            {/* Opportunities — 2-spaltig (wraps for 6-8 opps) */}
-            <div className="mb-12u">
-              <div className="flex items-baseline gap-3 mb-6u">
-                <span className="text-[10px] font-body uppercase tracking-[0.18em] text-ink">02</span>
-                <h3 className="font-editorial text-xl md:text-2xl text-ink">
-                  Opportunities
-                </h3>
-                <span className="text-[10px] font-body uppercase tracking-[0.18em] text-muted ml-auto">
-                  {data.issue.opportunities.length} Marktbedarfe · Preisindikation
-                </span>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4u">
-                {data.issue.opportunities.map((o, i) => {
-                  const sig = (o.how || '').toLowerCase();
-                  const cls = SIGNAL_CLASS[sig] || SIGNAL_CLASS.mittel;
-                  const dot = SIGNAL_DOT[sig] || SIGNAL_DOT.mittel;
-                  return (
-                    <article
-                      key={i}
-                      className="border-l-2 border-accent bg-surface/40 p-5u pl-6u"
-                    >
-                      <h4 className="font-editorial text-lg text-ink leading-[1.25] mb-3u">
-                        {o.title}
-                      </h4>
-                      <p className="text-sm text-muted font-body leading-relaxed mb-3u">
-                        {o.what}
-                      </p>
-                      {o.who && (
-                        <p className="text-xs text-muted font-body leading-relaxed mb-3u">
-                          <strong className="text-ink">Zielgruppe:</strong> {o.who}
-                        </p>
-                      )}
-                      <div className="flex flex-wrap gap-x-4u gap-y-2u pt-3u border-t border-faint/40">
-                        <div className="flex-1 min-w-[120px]">
-                          <span className="text-[10px] font-body uppercase tracking-[0.12em] text-muted block">
-                            Preis
-                          </span>
-                          <span className="text-sm text-ink font-body font-medium">
-                            {o.price || '—'}
-                          </span>
-                        </div>
-                        <div>
-                          <span className="text-[10px] font-body uppercase tracking-[0.12em] text-muted block">
-                            Time-to-Market
-                          </span>
-                          <span className="text-sm text-ink font-body font-medium">
-                            {o.time_to_market || 'Wochen'}
-                          </span>
-                        </div>
-                        <div>
-                          <span className="text-[10px] font-body uppercase tracking-[0.12em] text-muted block">
-                            Umsetzbarkeit
-                          </span>
-                          <span
-                            className={`text-[10px] font-body uppercase tracking-[0.12em] px-2 py-1 rounded-sm ${cls}`}
-                          >
-                            {dot} {o.how || 'mittel'}
-                          </span>
-                        </div>
-                      </div>
-                    </article>
-                  );
-                })}
+          {loading && (
+            <div className="py-20 border-b border-ink/15">
+              <p className="text-xs uppercase tracking-[0.16em] text-light mb-6">Ausgabe wird geladen</p>
+              <div className="space-y-4 max-w-4xl">
+                <div className="h-12 bg-ink/5 rounded-full animate-pulse" />
+                <div className="h-12 w-4/5 bg-ink/5 rounded-full animate-pulse" />
+                <div className="h-5 w-2/3 bg-ink/5 rounded-full animate-pulse mt-8" />
               </div>
             </div>
+          )}
 
-            {/* Top Articles — numbered list */}
-            {data.issue.top_articles && data.issue.top_articles.length > 0 && (
-              <div className="mb-12u">
-                <div className="flex items-baseline gap-3 mb-6u">
-                  <span className="text-[10px] font-body uppercase tracking-[0.18em] text-ink">03</span>
-                  <h3 className="font-editorial text-xl md:text-2xl text-ink">
-                    Quellen & Artikel
-                  </h3>
-                  <span className="text-[10px] font-body uppercase tracking-[0.18em] text-muted ml-auto">
-                    Top {data.issue.top_articles.length} der Woche
-                  </span>
-                </div>
-                <div className="border-t border-ink">
-                  {data.issue.top_articles.map((a, i) => (
-                    <article
-                      key={i}
-                      className="border-b border-faint/30 py-5u grid grid-cols-[40px_1fr] gap-4u hover:bg-surface/30 transition-colors duration-200"
-                    >
-                      <span className="text-[10px] font-body uppercase tracking-[0.18em] text-muted tabular pt-1">
-                        {String(i + 1).padStart(2, '0')}
-                      </span>
+          {failed && !loading && (
+            <div className="py-16 md:py-20 border-b border-ink/15 grid md:grid-cols-[.7fr_1.3fr] gap-8 md:gap-16">
+              <span className="font-editorial text-6xl text-accent-mid">01</span>
+              <div className="max-w-2xl">
+                <h1 className="font-editorial text-3xl md:text-4xl leading-tight mb-4">Der Brief ist gerade nicht eingebettet.</h1>
+                <p className="text-base text-muted leading-relaxed mb-6">
+                  Die Watcher-Seite selbst bleibt erreichbar. Statt einer technischen Fehlermeldung verlinken wir direkt auf die aktuelle Ausgabe.
+                </p>
+                <a href={WATCHER_URL} target="_blank" rel="noreferrer" className="brand-pill bg-ink text-white text-sm">
+                  Aktuelle Ausgabe öffnen ↗
+                </a>
+              </div>
+            </div>
+          )}
+
+          {brief && !loading && (
+            <>
+              <section className="py-16 md:py-24 border-b border-ink/15">
+                <div className="grid lg:grid-cols-[.72fr_1.28fr] gap-10 lg:gap-20">
+                  <aside className="space-y-7">
+                    <div>
+                      <p className="text-[.68rem] uppercase tracking-[0.16em] font-semibold text-light mb-1">Ausgabe</p>
+                      <p className="text-sm text-ink">{formatDate(data?.generated_at)}</p>
+                    </div>
+                    {data?.vertical && (
                       <div>
-                        <h4 className="font-editorial text-base text-ink leading-[1.3] mb-2u">
-                          <a
-                            href={a.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="hover:text-accent transition-colors duration-200"
-                          >
-                            {a.title}
-                          </a>
-                        </h4>
-                        <div className="text-[10px] font-body uppercase tracking-[0.12em] text-muted mb-2u">
-                          {a.source} {a.date && `· ${a.date}`}
-                        </div>
-                        {a.why && (
-                          <p className="text-sm text-muted font-body leading-relaxed">
-                            {a.why}
-                          </p>
-                        )}
+                        <p className="text-[.68rem] uppercase tracking-[0.16em] font-semibold text-light mb-1">Fokus</p>
+                        <p className="text-sm text-ink max-w-xs">{data.vertical}</p>
                       </div>
-                    </article>
-                  ))}
-                </div>
-              </div>
-            )}
+                    )}
+                    <div>
+                      <p className="text-[.68rem] uppercase tracking-[0.16em] font-semibold text-light mb-1">Umfang</p>
+                      <p className="text-sm text-ink">{trends.length} Trends · {opportunities.length} Opportunities</p>
+                    </div>
+                  </aside>
 
-            {/* Action Items */}
-            {data.issue.action_items && data.issue.action_items.length > 0 && (
-              <div className="mb-12u">
-                <div className="flex items-baseline gap-3 mb-6u">
-                  <span className="text-[10px] font-body uppercase tracking-[0.18em] text-ink">04</span>
-                  <h3 className="font-editorial text-xl md:text-2xl text-ink">
-                    Diese Woche tun
-                  </h3>
-                  <span className="text-[10px] font-body uppercase tracking-[0.18em] text-muted ml-auto">
-                    {data.issue.action_items.length} konkrete Schritte
-                  </span>
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.16em] font-semibold text-accent-hover mb-5">Was jetzt zählt</p>
+                    <h1 className="font-editorial text-[clamp(2.5rem,5vw,4.7rem)] leading-[1.02] tracking-[-.03em] mb-7">
+                      {brief.headline}
+                    </h1>
+                    {brief.subheadline && (
+                      <p className="font-editorial text-xl md:text-2xl leading-relaxed text-muted max-w-3xl mb-7">
+                        {brief.subheadline}
+                      </p>
+                    )}
+                    {brief.executive_summary && (
+                      <p className="text-base md:text-lg text-muted leading-[1.8] max-w-3xl">
+                        {brief.executive_summary}
+                      </p>
+                    )}
+                  </div>
                 </div>
-                <ol className="border-t-2 border-ink">
-                  {data.issue.action_items.map((a, i) => (
-                    <li
-                      key={i}
-                      className="border-b border-faint/30 py-4u pl-12u relative font-editorial text-base text-ink leading-[1.5]"
-                    >
-                      <span className="absolute left-0 top-4u font-mono text-[10px] text-muted tabular">
-                        {String(i + 1).padStart(2, '0')}
-                      </span>
-                      {a}
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            )}
+              </section>
 
-            {/* CTA zur Sub-Site */}
-            <div className="border-t border-faint/40 pt-8u mt-12u flex flex-wrap items-center gap-x-8u gap-y-4u">
-              <a
-                href={data.issue_url}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 text-base text-accent font-body group"
-              >
-                <span className="underline decoration-1 underline-offset-4 group-hover:decoration-2 transition-all duration-200">
-                  Vollständigen Brief lesen
-                </span>
-                <span className="transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true">
-                  →
-                </span>
-              </a>
-              <span className="text-sm text-muted font-body">
-                mit {data.issue.opportunities.length + 2} weiteren Opportunities, allen Quellen und Action Items.
-              </span>
-            </div>
-          </>
-        )}
-      </div>
-    </section>
+              {trends.length > 0 && (
+                <section className="py-16 md:py-24 border-b border-ink/15">
+                  <div className="flex items-end justify-between gap-6 mb-10 md:mb-14">
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.16em] font-semibold text-light mb-2">01 · Signals</p>
+                      <h2 className="font-editorial text-4xl md:text-5xl">Trends</h2>
+                    </div>
+                    <span className="hidden sm:block text-xs uppercase tracking-[0.14em] text-light">{trends.length} Beobachtungen</span>
+                  </div>
+
+                  <div className="border-t border-ink/30">
+                    {trends.map((trend, index) => (
+                      <article
+                        key={`${trend.title}-${index}`}
+                        className="grid md:grid-cols-[90px_1fr_180px] gap-4 md:gap-8 py-8 md:py-10 border-b border-ink/12 items-start group"
+                      >
+                        <span className="font-editorial text-3xl text-accent-mid leading-none">
+                          {String(index + 1).padStart(2, '0')}
+                        </span>
+                        <div className="max-w-3xl">
+                          <h3 className="font-editorial text-2xl md:text-[2rem] leading-tight mb-4 group-hover:text-accent-hover transition-colors">
+                            {trend.title}
+                          </h3>
+                          {trend.what && <p className="text-sm md:text-base text-muted leading-relaxed">{trend.what}</p>}
+                          {trend.why && (
+                            <p className="text-sm text-ink/75 leading-relaxed mt-4 pt-4 border-t border-ink/10">
+                              <strong className="font-semibold text-ink">Für den Mittelstand:</strong> {trend.why}
+                            </p>
+                          )}
+                        </div>
+                        <div className="md:text-right">
+                          <span className="inline-flex rounded-full border border-ink/20 px-3 py-1.5 text-[.68rem] uppercase tracking-[0.12em] font-semibold">
+                            {signalLabel(trend.signal)}
+                          </span>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {opportunities.length > 0 && (
+                <section className="py-16 md:py-24 border-b border-ink/15">
+                  <div className="rounded-[32px] bg-accent px-6 py-10 md:p-14 lg:p-16 overflow-hidden relative">
+                    <div className="absolute right-[-70px] top-[-90px] w-72 h-72 rounded-full border border-ink/15" aria-hidden="true" />
+                    <div className="relative z-10 grid lg:grid-cols-[.72fr_1.28fr] gap-10 lg:gap-16">
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.16em] font-semibold text-ink/60 mb-3">02 · Opportunities</p>
+                        <h2 className="font-editorial text-4xl md:text-5xl leading-[1.02]">Wo daraus Geschäft entsteht.</h2>
+                      </div>
+
+                      <div className="divide-y divide-ink/20 border-y border-ink/20">
+                        {opportunities.map((opportunity, index) => (
+                          <article key={`${opportunity.title}-${index}`} className="py-7 md:py-8">
+                            <div className="flex items-start gap-5 md:gap-7">
+                              <span className="font-editorial text-2xl text-ink/55 min-w-8">{String(index + 1).padStart(2, '0')}</span>
+                              <div className="flex-1">
+                                <h3 className="font-editorial text-2xl leading-tight mb-3">{opportunity.title}</h3>
+                                {opportunity.what && <p className="text-sm text-ink/70 leading-relaxed">{opportunity.what}</p>}
+                                <div className="flex flex-wrap gap-x-6 gap-y-2 mt-5 text-[.72rem] uppercase tracking-[0.08em] font-semibold text-ink/70">
+                                  {opportunity.who && <span>{opportunity.who}</span>}
+                                  {opportunity.price && <span>{opportunity.price}</span>}
+                                  {opportunity.time_to_market && <span>{opportunity.time_to_market}</span>}
+                                </div>
+                              </div>
+                            </div>
+                          </article>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              )}
+
+              {articles.length > 0 && (
+                <section className="py-16 md:py-24 border-b border-ink/15">
+                  <div className="grid lg:grid-cols-[.72fr_1.28fr] gap-10 lg:gap-20">
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.16em] font-semibold text-light mb-3">03 · Quellen</p>
+                      <h2 className="font-editorial text-4xl md:text-5xl">Weiterlesen</h2>
+                    </div>
+                    <div className="border-t border-ink/30">
+                      {articles.slice(0, 8).map((article, index) => (
+                        <article key={`${article.title}-${index}`} className="grid grid-cols-[42px_1fr] gap-4 py-5 border-b border-ink/12">
+                          <span className="text-xs text-light pt-1">{String(index + 1).padStart(2, '0')}</span>
+                          <div>
+                            {article.url ? (
+                              <a href={article.url} target="_blank" rel="noreferrer" className="font-editorial text-xl md:text-2xl leading-tight hover:text-accent-hover transition-colors">
+                                {article.title} ↗
+                              </a>
+                            ) : (
+                              <h3 className="font-editorial text-xl md:text-2xl leading-tight">{article.title}</h3>
+                            )}
+                            <p className="text-xs uppercase tracking-[0.1em] text-light mt-2">
+                              {[article.source, article.date].filter(Boolean).join(' · ')}
+                            </p>
+                            {article.why && <p className="text-sm text-muted leading-relaxed mt-3 max-w-2xl">{article.why}</p>}
+                          </div>
+                        </article>
+                      ))}
+                    </div>
+                  </div>
+                </section>
+              )}
+
+              {actionItems.length > 0 && (
+                <section className="py-16 md:py-24">
+                  <div className="bg-ink text-white rounded-[32px] px-6 py-10 md:p-14 lg:p-16 grid lg:grid-cols-[.72fr_1.28fr] gap-10 lg:gap-16">
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.16em] font-semibold text-white/45 mb-3">04 · Action Items</p>
+                      <h2 className="font-editorial text-4xl md:text-5xl text-white">Was daraus folgt.</h2>
+                    </div>
+                    <div className="divide-y divide-white/15 border-y border-white/15">
+                      {actionItems.map((item, index) => (
+                        <div key={`${item}-${index}`} className="grid grid-cols-[42px_1fr] gap-4 py-6">
+                          <span className="font-editorial text-2xl text-accent">{String(index + 1).padStart(2, '0')}</span>
+                          <p className="text-sm md:text-base text-white/75 leading-relaxed">{item}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </section>
+              )}
+            </>
+          )}
+        </div>
+      </section>
+    </main>
   );
 };
-
-export default Insights;
