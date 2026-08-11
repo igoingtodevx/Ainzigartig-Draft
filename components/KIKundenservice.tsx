@@ -45,7 +45,7 @@ const Hero: React.FC = () => (
       </h1>
 
       <p className="text-gray-400 text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-mono mb-10">
-        Ein KI-Chatbot, der Ihre Wissensbasis kennt, beantwortet bis zu 80% der eingehenden Anfragen automatisch – rund um die Uhr, auf dem Niveau Ihrer besten Mitarbeiter. Ihr Team kümmert sich um die Fälle, bei denen es wirklich gebraucht wird.
+        Ein Wissensassistent kann wiederkehrende Fragen auf Basis freigegebener Inhalte beantworten und bei Unsicherheit an Ihr Team übergeben. Umfang und Automatisierungsgrad hängen von Ihrer Wissensbasis und den tatsächlichen Anfragen ab.
       </p>
 
       {/* CTAs */}
@@ -69,9 +69,8 @@ const Hero: React.FC = () => (
       {/* Trust bar */}
       <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-xs md:text-sm text-gray-400 font-mono">
         {[
-          'Trainiert auf Ihren Daten – nicht auf generischem Wissen',
-          'DSGVO-konform & Daten bleiben bei Ihnen',
-          'Live in 2–4 Wochen',
+          'Datenschutz und Datenflüsse gemeinsam klären',
+          'Aufbau passend zum Umfang',
           'Kein Entwickler-Team nötig',
         ].map((item) => (
           <span key={item} className="flex items-center gap-1.5">
@@ -88,10 +87,10 @@ const Hero: React.FC = () => (
 /* ───────────── STAT BAR ───────────── */
 
 const stats = [
-  { value: '80%', label: 'der Anfragen automatisch beantwortet', color: 'text-neon-cyan' },
-  { value: '24/7', label: 'Erreichbarkeit ohne Mehrkosten', color: 'text-neon-pink' },
-  { value: '< 3 Sek.', label: 'durchschnittliche Antwortzeit', color: 'text-neon-yellow' },
-  { value: '2–4 Wo.', label: 'bis zur Livestellung', color: 'text-neon-cyan' },
+  { value: 'Quellen', label: 'Antworten aus freigegebenem Wissen', color: 'text-neon-cyan' },
+  { value: 'Übergabe', label: 'unklare Fälle bleiben beim Team', color: 'text-neon-pink' },
+  { value: 'Rollen', label: 'Zugriff passend zum Einsatzbereich', color: 'text-neon-yellow' },
+  { value: 'Messbar', label: 'Qualität vor Ausbau prüfen', color: 'text-neon-cyan' },
 ];
 
 const StatBar: React.FC = () => (
@@ -130,8 +129,8 @@ const painCards = [
   },
   {
     emoji: '😰',
-    title: 'Qualität schwankt je nach Mitarbeiter und Tag',
-    text: 'Ob eine Antwort gut oder schlecht ist, hängt davon ab, wer gerade Dienst hat. Ein KI-System antwortet immer auf demselben Niveau.',
+    title: 'Qualität muss überprüfbar bleiben',
+    text: 'Antworten sollten auf freigegebenem Wissen, klaren Regeln und einer Übergabe an Menschen beruhen. Ohne Pflege und Prüfung wird auch ein Assistent unzuverlässig.',
     color: 'cyan' as const,
   },
 ];
@@ -189,8 +188,8 @@ const leistungen = [
     icon: 'devices',
   },
   {
-    title: 'Vollständig DSGVO-konform',
-    text: 'Ihre Daten verlassen nicht die EU. Kein Training auf öffentlichen Modellen mit Ihren Kundeninformationen. Wir richten das so ein, dass Ihr Datenschutzbeauftragter ruhig schlafen kann.',
+    title: 'Datenschutz und Datenflüsse',
+    text: 'Datenflüsse, Anbieter und Verträge werden gemeinsam geprüft. Zugriffskontrollen und klare Übergaben gehören in die Konzeption – nicht als nachträgliche Fußnote.',
     icon: 'verified_user',
   },
   {
@@ -241,10 +240,10 @@ const Loesung: React.FC = () => (
         <span className="text-4xl">🛡️</span>
         <div>
           <h4 className="text-sm font-bold text-neon-yellow font-display mb-2 uppercase tracking-wider">
-            Ihre Kundendaten gehören Ihnen – und bleiben bei Ihnen.
+            Kundendaten verdienen klare Grenzen.
           </h4>
           <p className="text-gray-400 text-sm leading-relaxed font-mono">
-            Wir arbeiten ausschließlich mit EU-Serverstandorten und setzen keine US-amerikanischen Dienste ein, die Daten außerhalb der EU verarbeiten. Jede Implementierung wird auf DSGVO-Konformität geprüft – dokumentiert und übergeben.
+            Datenflüsse, Anbieter und Verträge werden gemeinsam geprüft. Zugriffskontrollen und klare Übergaben gehören in die Konzeption – nicht als nachträgliche Fußnote.
           </p>
         </div>
       </div>
@@ -282,8 +281,8 @@ const Prozess: React.FC = () => (
     <div className="max-w-4xl mx-auto text-center">
       <SectionLabel>Wie es läuft</SectionLabel>
       <SectionHeadline>
-        In vier Wochen live –<br className="hidden sm:block" />
-        ohne IT-Projekt.
+        Vom ersten Datencheck zum passenden nächsten Schritt.<br className="hidden sm:block" />
+        Ohne unnötiges IT-Projekt.
       </SectionHeadline>
       <LeadText>
         Sie brauchen kein eigenes Entwicklerteam und keine aufwendige Infrastruktur. Wir bringen alles mit und übergeben ein fertiges, laufendes System.
@@ -318,15 +317,15 @@ const useCases = [
     category: 'Bestellungen & Lieferung',
     icon: 'local_shipping',
     title: 'Lieferstatus abfragen, Retouren einleiten, Lieferadressen ändern',
-    text: 'Direkte Anbindung an Ihr Shopsystem möglich – der Bot antwortet mit echten Echtzeit-Daten, nicht mit Textbausteinen.',
-    result: 'Häufigste Anfragekategorie im E-Commerce & Handel',
+    text: 'Eine Anbindung an Ihr Shopsystem kann geprüft werden – konkrete Datenflüsse, Berechtigungen und Grenzen werden im Projekt festgelegt.',
+    result: 'Typischer Anwendungsfall im E-Commerce',
     color: 'cyan' as const,
   },
   {
     category: 'Produkt- & Servicefragen',
     icon: 'inventory_2',
     title: 'Technische Spezifikationen, Kompatibilität, Anwendungsfragen',
-    text: 'Der Bot kennt Ihren Produktkatalog besser als jeder neue Mitarbeiter – und vergisst nichts.',
+    text: 'Mit einer gepflegten Wissensbasis lassen sich technische Spezifikationen, Kompatibilität und Produktfragen strukturiert beantworten.',
     result: 'Besonders wertvoll bei erklärungsbedürftigen Produkten',
     color: 'pink' as const,
   },
@@ -334,16 +333,16 @@ const useCases = [
     category: 'Vertragliches & Konditionen',
     icon: 'gavel',
     title: 'Preise, Laufzeiten, Kündigungsfristen, Zahlungsmodalitäten',
-    text: 'Standardisierte, rechtlich abgestimmte Antworten – kein Mitarbeiter der „es falsch erklärt".',
-    result: 'Reduziert auch Rückfragen und Beschwerden',
+    text: 'Antworten können auf freigegebenen und abgestimmten Inhalten basieren – eine fachliche und rechtliche Prüfung bleibt erforderlich.',
+    result: 'Rückfragen besser strukturieren',
     color: 'yellow' as const,
   },
   {
     category: 'Onboarding neuer Kunden',
     icon: 'person_add',
     title: 'Erstkonfiguration, Zugänge, erste Schritte',
-    text: 'Neue Kunden kommen schneller zum Erfolg, ohne Ihr Team zu belasten.',
-    result: 'Höhere Aktivierungsrate, weniger Abbrüche',
+    text: 'Klare Anleitungen können neue Kunden durch die ersten Schritte führen, ohne Ihr Team bei jeder Frage einzubinden.',
+    result: 'Erste Schritte nachvollziehbar machen',
     color: 'cyan' as const,
   },
   {
@@ -376,9 +375,9 @@ const UseCases: React.FC = () => (
   <section className="py-20 px-4">
     <div className="max-w-6xl mx-auto text-center">
       <SectionLabel>Typische Anwendungsfälle</SectionLabel>
-      <SectionHeadline>Was Ihr Chatbot vom ersten Tag an übernimmt.</SectionHeadline>
+      <SectionHeadline>Was ein Assistent in Ihrem Prozess unterstützen kann.</SectionHeadline>
       <LeadText>
-        Das sind die Anfragen, die Ihr Team täglich von der eigentlichen Arbeit abhalten – und die ein trainierter Assistent sofort und zuverlässig beantwortet.
+        Das sind typische Fragen, bei denen ein Assistent unterstützen kann – abhängig von Ihrer Wissensbasis, den angebundenen Systemen und klaren Übergaben an Ihr Team.
       </LeadText>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-14 text-left">
@@ -418,7 +417,7 @@ const targetAudience = [
 
 const notFor = [
   'Unternehmen mit unter 5 Support-Anfragen täglich – der Aufwand wäre größer als der Nutzen, das sagen wir Ihnen lieber direkt.',
-  'Wer einen „fertigen Bot von der Stange" sucht, der morgen läuft – gute Qualität braucht 2–4 Wochen Aufbau.',
+  'Wer einen „fertigen Bot von der Stange" sucht, der morgen läuft – gute Qualität braucht einen abgestimmten Aufbau.',
   'Unternehmen, die keine Wissensbasis haben und auch nicht bereit sind, eine aufzubauen – ohne strukturiertes Wissen kann kein Assistent gut antworten.',
 ];
 
@@ -458,12 +457,12 @@ const Zielgruppe: React.FC = () => (
 /* ───────────── VERGLEICH ───────────── */
 
 const comparisonRows = [
-  { label: 'Erreichbarkeit', before: 'Mo–Fr, 9–17 Uhr', after: '24/7, 365 Tage' },
-  { label: 'Antwortzeit', before: 'Minuten bis Stunden', after: 'Unter 3 Sekunden' },
-  { label: 'Routineanfragen', before: 'Manuell bearbeitet', after: 'Automatisch gelöst' },
-  { label: 'Teamauslastung', before: 'Gebunden durch Routinefälle', after: 'Frei für komplexe Fälle' },
-  { label: 'Skalierung', before: 'Mehr Anfragen = mehr Personal', after: 'Mehr Anfragen = gleiche Kosten' },
-  { label: 'Qualitätskonsistenz', before: 'Schwankt je nach Tag & Person', after: 'Gleichbleibend hoch' },
+  { label: 'Erreichbarkeit', before: 'Mo–Fr, 9–17 Uhr', after: 'Längere Erreichbarkeit möglich' },
+  { label: 'Antwortzeit', before: 'Minuten bis Stunden', after: 'Innerhalb definierter Abläufe' },
+  { label: 'Routineanfragen', before: 'Manuell bearbeitet', after: 'Unterstützt durch Regeln & Wissen' },
+  { label: 'Teamauslastung', before: 'Gebunden durch Routinefälle', after: 'Mehr Raum für komplexe Fälle' },
+  { label: 'Skalierung', before: 'Mehr Anfragen = mehr Personal', after: 'Abhängig von Prozess & Systemgrenzen' },
+  { label: 'Qualitätskonsistenz', before: 'Schwankt je nach Tag & Person', after: 'Prüfbar durch Vorgaben & Monitoring' },
 ];
 
 const Vergleich: React.FC = () => (
@@ -518,7 +517,7 @@ const faqItems = [
   },
   {
     q: 'Wo werden meine Daten verarbeitet?',
-    a: 'Ausschließlich auf EU-Servern. Wir nutzen keine Dienste, die Daten in die USA oder in Drittländer übertragen. Das gesamte Setup ist DSGVO-konform dokumentiert.',
+    a: 'Das hängt von den gewählten Anbietern, Datenflüssen und Vertragsbedingungen ab. Wir prüfen gemeinsam, wo Daten verarbeitet werden und welche Datenschutzanforderungen für Ihren Einsatz gelten.',
   },
   {
     q: 'Muss ich meine bestehende Software ersetzen?',
@@ -530,7 +529,7 @@ const faqItems = [
   },
   {
     q: 'Wie schnell sehen wir erste Ergebnisse?',
-    a: 'Bereits in der Testphase – also vor dem offiziellen Go-live – sehen Sie anhand echter Beispielanfragen, wie der Assistent antwortet. Nach dem Launch sind Kennzahlen wie Lösungsrate und Ticketreduktion ab Tag 1 messbar.',
+    a: 'Bereits in der Testphase sehen Sie anhand echter Beispielanfragen, wie der Assistent antwortet. Welche Kennzahlen sinnvoll sind, legen wir passend zu Ihrem Prozess und Ihren Daten fest.',
   },
   {
     q: 'Was kostet das?',

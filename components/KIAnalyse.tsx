@@ -56,7 +56,20 @@ export const KIAnalyse: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   const handleAnalyze = async () => {
-    if (!url.trim()) return;
+    const rawUrl = url.trim();
+    if (!rawUrl) {
+      setError('Bitte geben Sie eine Website-Adresse ein.');
+      return;
+    }
+    let normalizedUrl: string;
+    try {
+      const parsed = new URL(/^https?:\/\//i.test(rawUrl) ? rawUrl : `https://${rawUrl}`);
+      if (!['http:', 'https:'].includes(parsed.protocol) || !parsed.hostname.includes('.')) throw new Error();
+      normalizedUrl = parsed.toString();
+    } catch {
+      setError('Bitte geben Sie eine gültige Website-Adresse ein, z. B. beispiel.de.');
+      return;
+    }
 
     setLoading(true);
     setError(null);
@@ -66,10 +79,9 @@ export const KIAnalyse: React.FC = () => {
       const response = await fetch('/api/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: url.trim() }),
+        body: JSON.stringify({ url: normalizedUrl }),
       });
-
-      const data = await response.json();
+      const data = await response.json().catch(() => ({}));
 
       if (!response.ok) {
         setError(data.error || 'Analyse fehlgeschlagen');
@@ -108,6 +120,9 @@ export const KIAnalyse: React.FC = () => {
           <div className="max-w-xl mx-auto">
             <div className="flex gap-3">
               <input
+                id="website-url"
+                aria-label="Website-Adresse"
+                aria-describedby="website-url-hint"
                 type="url"
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
@@ -130,8 +145,8 @@ export const KIAnalyse: React.FC = () => {
                 )}
               </button>
             </div>
-            <p className="text-xs text-faint mt-3">
-              Keine Daten gespeichert. Ergebnis nur im Browser.
+            <p id="website-url-hint" className="text-xs text-faint mt-3">
+              Die URL wird zur Analyse an unseren Dienst übertragen. Es ist keine Anmeldung nötig.
             </p>
           </div>
 
@@ -158,7 +173,7 @@ export const KIAnalyse: React.FC = () => {
       {error && (
         <section className="px-6 md:px-8 pb-12">
           <div className="max-w-[800px] mx-auto">
-            <div className="border border-red-300 bg-red-50 p-6 text-center">
+            <div className="border border-red-300 bg-red-50 p-6 text-center" role="alert">
               <p className="text-sm text-red-700">{error}</p>
               <button
                 onClick={() => setError(null)}

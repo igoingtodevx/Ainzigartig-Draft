@@ -14,7 +14,7 @@ export const TeamSection: React.FC = () => {
   const [showPhoto, setShowPhoto] = React.useState(false);
 
   return (
-    <section className="py-16u px-6 md:px-8">
+    <section className="py-8u md:py-16u px-6 md:px-8">
       <div className="max-w-[1200px] mx-auto">
         <div className="max-w-2xl">
           <div className="space-y-1 mb-10">

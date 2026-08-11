@@ -106,7 +106,7 @@ function getLevel(score: number): { label: string; color: string; recommendation
   return {
     label: 'KI-Reif',
     color: 'text-green-500',
-    recommendation: 'Sie sind besser aufgestellt als 80% der KMUs. Jetzt geht es um Optimierung und Skalierung. Sprechen wir über die nächsten Schritte.',
+    recommendation: 'Ihre Antworten sprechen für gute Voraussetzungen. Als Nächstes sollten Datenzugang, Verantwortlichkeiten und ein klar abgegrenzter Anwendungsfall geprüft werden.',
   };
 }
 
@@ -150,7 +150,7 @@ export const KIAudit: React.FC = () => {
             <p className={`font-editorial text-5xl md:text-7xl mb-2 ${level.color}`}>{score}</p>
             <p className="font-editorial text-2xl text-ink mb-2">{level.label}</p>
             <p className="text-faint text-xs uppercase tracking-[0.2em] mb-10">
-              KI-Reifegrad-Score · {questions.length} Fragen
+              Regelbasierte Orientierung · {questions.length} Fragen · kein Benchmark
             </p>
 
             <div className="border border-faint/30 bg-ink/[0.03] p-8 text-left mb-10">
@@ -210,7 +210,7 @@ export const KIAudit: React.FC = () => {
               Wie reif ist Ihr Unternehmen für KI?
             </h1>
             <p className="text-muted text-sm max-w-lg mx-auto">
-              6 Fragen. 60 Sekunden. Am Ende wissen Sie: Was ist machbar, was ist priorität, und was kostet es.
+              6 Fragen. Etwa 60 Sekunden. Das Ergebnis ist eine regelbasierte Orientierung – keine unabhängige Prüfung und keine Kostenzusage.
             </p>
           </div>
 
@@ -220,7 +220,7 @@ export const KIAudit: React.FC = () => {
               <span className="text-xs text-faint tabular-nums">Frage {currentQ + 1} von {questions.length}</span>
               <span className="text-xs text-faint tabular-nums">{Math.round(progress)}%</span>
             </div>
-            <div className="h-1 bg-faint/10 w-full">
+            <div className="h-1 bg-faint/10 w-full" role="progressbar" aria-label="Fortschritt" aria-valuemin={1} aria-valuemax={questions.length} aria-valuenow={currentQ + 1}>
               <div
                 className="h-full bg-accent transition-all duration-500 ease-out"
                 style={{ width: `${progress}%` }}

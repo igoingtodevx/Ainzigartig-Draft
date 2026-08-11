@@ -62,7 +62,7 @@ export const InsightsTeaser: React.FC = () => {
   const dot = SIGNAL_DOT[sig] || '◐';
 
   return (
-    <section className="py-12u md:py-16u px-6 md:px-8 bg-surface/40 border-y border-faint/40">
+    <section className="py-8u md:py-16u px-6 md:px-8 bg-surface/40 border-y border-faint/40">
       <div className="max-w-[1200px] mx-auto">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6u">
           <div className="flex-1 min-w-0">

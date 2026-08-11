@@ -66,7 +66,7 @@ const Hero: React.FC = () => (
       <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-xs md:text-sm text-gray-400 font-mono">
         {[
           'Kein Sales-Pitch – echtes Gespräch',
-          'DSGVO-konform von Anfang an',
+          'Datenschutz von Anfang an mitdenken',
           'Herstellerunabhängig',
           '30 Min. kostenlos',
         ].map((item) => (
@@ -164,8 +164,8 @@ const leistungen = [
     icon: 'category',
   },
   {
-    title: 'DSGVO-Check',
-    text: 'Jeder Use Case wird auf datenschutzrechtliche Compliance geprüft. Sie wissen genau, was erlaubt ist – und was nicht.',
+    title: 'Datenschutz-Check',
+    text: 'Datenflüsse, Anbieter und Anforderungen werden gemeinsam geprüft. Offene Punkte bleiben transparent dokumentiert.',
     icon: 'verified_user',
   },
   {
@@ -223,7 +223,7 @@ const Angebot: React.FC = () => (
             DSGVO-Konformität ist bei uns keine Fußnote.
           </h4>
           <p className="text-gray-400 text-sm leading-relaxed font-mono">
-            Viele Unternehmen nutzen KI-Tools, ohne sich über die Datenverarbeitung Gedanken zu machen. Wir stellen sicher, dass Ihre KI-Strategie rechtssicher ist – mit Serverstandorten in der EU, klaren Verträgen und praxistauglichen Datenschutzlösungen.
+            Viele Unternehmen nutzen KI-Tools, ohne sich über die Datenverarbeitung Gedanken zu machen. Wir prüfen Datenflüsse, Anbieter und Verträge gemeinsam mit Ihnen und halten offene Punkte transparent fest.
           </p>
         </div>
       </div>
@@ -307,7 +307,7 @@ const useCases = [
     icon: 'support_agent',
     title: 'Eingehende Anfragen automatisch vorqualifizieren',
     text: 'E-Mails und Kontaktformulare werden automatisch kategorisiert, priorisiert und mit Antwortvorschlägen versehen – Ihr Team antwortet schneller, mit weniger Aufwand.',
-    result: 'Bis zu 60% weniger Bearbeitungszeit',
+    result: 'Weniger Bearbeitungszeit',
     color: 'cyan' as const,
   },
   {
@@ -315,7 +315,7 @@ const useCases = [
     icon: 'edit_note',
     title: 'Konsistente Inhalte in Ihrer Markenstimme',
     text: 'Social Media Posts, Newsletter, Produktbeschreibungen – KI generiert Entwürfe auf Basis Ihrer Tonalität. Ihr Team verfeinert, statt bei Null anzufangen.',
-    result: '3–5x schnellere Contentproduktion',
+    result: 'Schnellere Contentproduktion',
     color: 'pink' as const,
   },
   {
@@ -330,16 +330,16 @@ const useCases = [
     category: 'Interne Prozesse',
     icon: 'menu_book',
     title: 'Wissen im Unternehmen nutzbar machen',
-    text: 'Handbücher, FAQs, Verträge – ein interner KI-Assistent beantwortet Mitarbeiterfragen sofort und korrekt, ohne dass jemand suchen muss.',
-    result: 'Onboarding & Support deutlich entlastet',
+    text: 'Handbücher, FAQs, Verträge – ein interner KI-Assistent kann Mitarbeiterfragen auf freigegebenem Wissen strukturieren und an Menschen übergeben.',
+    result: 'Onboarding & Support strukturieren',
     color: 'cyan' as const,
   },
   {
     category: 'Buchhaltung & Verwaltung',
     icon: 'receipt_long',
     title: 'Dokumente automatisch verarbeiten',
-    text: 'Eingangsrechnungen, Lieferscheine, Formulare – KI extrahiert relevante Daten und überträgt sie in Ihre Systeme. Fehlerquote sinkt, Aufwand auch.',
-    result: 'Stunden pro Woche eingespart',
+    text: 'Eingangsrechnungen, Lieferscheine, Formulare – KI kann relevante Daten vorerfassen. Prüfung und Freigabe bleiben Teil des Prozesses.',
+    result: 'Weniger manuelle Vorarbeit möglich',
     color: 'pink' as const,
   },
   {
@@ -347,7 +347,7 @@ const useCases = [
     icon: 'monitoring',
     title: 'Daten verstehen ohne Data Scientist',
     text: 'Umsatzdaten, Kundenfeedback, Website-Auswertungen – KI hilft Ihnen, relevante Muster zu erkennen und bessere Entscheidungen zu treffen.',
-    result: 'Klarere Entscheidungsgrundlagen',
+    result: 'Entscheidungsgrundlagen werden klarer',
     color: 'yellow' as const,
   },
 ];
@@ -376,7 +376,7 @@ const UseCases: React.FC = () => (
       <SectionLabel>Beispiele aus der Praxis</SectionLabel>
       <SectionHeadline>Was KI für KMU konkret leisten kann.</SectionHeadline>
       <LeadText>
-        Das sind reale Anwendungsfälle – keine Zukunftsmusik, keine Millionen-Budgets nötig.
+        Typische Anwendungsfälle – keine Versprechen über ein bestimmtes Ergebnis.
       </LeadText>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-14 text-left">
@@ -431,7 +431,7 @@ const FinalCTA: React.FC = () => (
 
       <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mt-8 text-xs text-gray-500 font-mono">
         <span>✓ Kein Sales-Pitch</span>
-        <span>✓ DSGVO-konform</span>
+        <span>✓ Datenschutz gemeinsam prüfen</span>
         <span>✓ Herstellerunabhängig</span>
       </div>
     </div>

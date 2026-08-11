@@ -3,11 +3,7 @@ import { Link } from 'react-router-dom';
 
 const NAV_ITEMS = [
   { label: 'Leistungen', to: '/#services', isHash: true },
-  { label: 'KI-Check', to: '/ki-analyse' },
-  { label: 'Preise', to: '/preise' },
-  { label: 'ROI-Rechner', to: '/roi-rechner' },
-  { label: 'Live Demo', to: '/live-demo' },
-  { label: 'Projekte', to: '/projekte' },
+  { label: 'Demos & Systeme', to: '/#beispiele', isHash: true },
   { label: 'Insights', to: '/insights' },
   { label: 'Gespräch vereinbaren', to: '/#kontakt', isHash: true },
 ];
@@ -24,6 +20,7 @@ export const Navbar: React.FC = () => {
 
   return (
     <nav
+      aria-label="Hauptnavigation"
       className={`fixed top-0 w-full z-50 transition-none ${
         scrolled ? 'border-b border-faint/40 bg-base' : 'border-b border-transparent bg-base'
       }`}
@@ -43,7 +40,7 @@ export const Navbar: React.FC = () => {
                 key={item.to}
                 to={item.to}
                 className={
-                  item.label === 'Live Demo' || item.label === 'Gespräch vereinbaren'
+                  item.label === 'Gespräch vereinbaren'
                     ? 'text-sm text-ink font-body underline decoration-accent decoration-1 underline-offset-4 hover:decoration-2 transition-all duration-200'
                     : 'text-sm text-muted hover:text-ink transition-colors duration-200 font-body'
                 }
@@ -60,6 +57,7 @@ export const Navbar: React.FC = () => {
               onClick={() => setMenuOpen((o) => !o)}
               aria-label={menuOpen ? 'Menü schließen' : 'Menü öffnen'}
               aria-expanded={menuOpen}
+              aria-controls="mobile-navigation"
               className="w-9 h-9 flex items-center justify-center text-ink hover:text-accent transition-colors"
             >
               <span className="material-symbols-outlined text-2xl">
@@ -71,7 +69,7 @@ export const Navbar: React.FC = () => {
 
         {/* Mobile menu drawer */}
         {menuOpen && (
-          <div className="md:hidden border-t border-faint/40 pb-4 pt-2">
+          <div id="mobile-navigation" className="md:hidden border-t border-faint/40 pb-4 pt-2">
             <ul className="flex flex-col gap-1">
               {NAV_ITEMS.map((item) => (
                 <li key={item.to}>

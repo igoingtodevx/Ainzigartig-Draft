@@ -19,7 +19,7 @@ const faqItems = [
   },
   {
     q: 'Wie schnell sehen wir Ergebnisse?',
-    a: 'Erste Ergebnisse — ein laufender Chatbot, ein automatisiertes Screening — sind typischerweise in zwei bis vier Wochen sichtbar.',
+    a: 'Das hängt vom Anwendungsfall, der Datenlage und der Integrationstiefe ab. Im Erstgespräch klären wir, welcher nächste Schritt sinnvoll ist, bevor Sie sich entscheiden.',
   },
 ];
 
@@ -27,7 +27,7 @@ export const HomeFAQ: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section className="py-16u px-6 md:px-8">
+    <section className="py-8u md:py-16u px-6 md:px-8">
       <div className="max-w-[700px] mx-auto">
         <h2 className="font-editorial text-2xl md:text-3xl text-ink mb-12u">
           Häufige Fragen

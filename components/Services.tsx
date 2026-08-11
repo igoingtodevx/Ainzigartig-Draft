@@ -1,180 +1,69 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-interface ServiceItem {
-  title: string;
-  metric: string;
-  description: string;
-  href: string;
-}
-
-const services: ServiceItem[] = [
+const services = [
   {
-    title: 'KI-Website-Analyse',
-    metric: 'Kostenlos · 60 Sekunden',
-    description:
-      'Geben Sie Ihre URL ein — KI analysiert Ihre Website und zeigt konkrete Einsparpotenziale. Sofort, ohne Anmeldung.',
-    href: '#/ki-analyse',
+    title: 'Automatisierung & Integrationen',
+    lead: 'Wiederkehrende Arbeit verschwindet aus dem Tagesgeschäft.',
+    description: 'Wir verbinden bestehende Systeme und automatisieren klare Abläufe – etwa Dokumentenverarbeitung, Übergaben, Benachrichtigungen und Datensynchronisation. Ihr Team behält die Kontrolle; Sonderfälle bleiben sichtbar.',
+    examples: 'Typisch: E-Mail- und Dokumentenprozesse, CRM-Workflows, Systemübergaben',
   },
   {
-    title: 'KI-Schnellstart',
-    metric: '5 Tage',
-    description:
-      'Ihr erster KI-Assistent in 5 Tagen. Fester Preis, klarer Scope, kein Risiko. Perfekt als Einstieg.',
-    href: '#/ki-schnellstart',
+    title: 'Dashboards & interne Business-Tools',
+    lead: 'Die richtigen Informationen und Werkzeuge an einem Ort.',
+    description: 'Wir bauen schlanke Anwendungen für Abläufe, die in Tabellen, Postfächern oder Insellösungen feststecken. Datenquellen, Rollen und Freigaben werden passend zu Ihrem Betrieb abgebildet.',
+    examples: 'Typisch: operative Dashboards, Kundenportale, interne Fachanwendungen',
   },
   {
-    title: 'KI-Reifegrad-Check',
-    metric: '6 Fragen · 60 Sekunden',
-    description:
-      'Kostenloser Check: Wie reif ist Ihr Unternehmen für KI? Am Ende gibt es eine klare Empfehlung.',
-    href: '#/ki-audit',
+    title: 'KI-Assistenten & Wissenssysteme',
+    lead: 'Unternehmenswissen wird auffindbar und im Alltag nutzbar.',
+    description: 'Assistenten beantworten Fragen auf Basis freigegebener Dokumente und zeigen ihre Quellen. Wir definieren gemeinsam, was das System wissen darf, wann es unsicher ist und wann ein Mensch übernimmt.',
+    examples: 'Typisch: Dokument-Assistenten, interne Wissenssuche, Service-Unterstützung',
   },
   {
-    title: 'KI-Beratung für KMU',
-    metric: 'Maßgeschneidert',
-    description:
-      'Wir stehen als Experten an Ihrer Seite und identifizieren Anwendungsfälle, die sich im Alltag bezahlt machen — praxisnah, DSGVO-konform, ohne Buzzwords.',
-    href: '#/ki-beratung',
-  },
-  {
-    title: 'KI im Kundenservice',
-    metric: '80 % weniger Tickets',
-    description:
-      'Chatbots, die Ihr Unternehmen kennen. Trainiert auf Ihre Daten, nicht auf generisches Wissen. Ihr Team kümmert sich um die Fälle, die wirklich Aufmerksamkeit brauchen.',
-    href: '#/ki-kundenservice',
-  },
-  {
-    title: 'KI-Telefonassistent',
-    metric: '24/7 erreichbar',
-    description:
-      'Nimmt Anrufe entgegen, beantwortet Standardfragen, leitet weiter wenn nötig. Kein Warteschleifenmusik-Erlebnis mehr für Ihre Kunden.',
-    href: '#',
-  },
-  {
-    title: 'KI im Recruiting',
-    metric: '60 % schneller besetzen',
-    description:
-      'Automatisches CV-Screening und Matching — auf Basis Ihrer Kriterien, nicht auf Basis von Keywords. Die Entscheidung bleibt bei Ihnen.',
-    href: '#/ki-recruiting',
-  },
-  {
-    title: 'KI-Lead-Generierung',
-    metric: '500+ Leads am Tag',
-    description:
-      'Automatische Identifikation von Zielunternehmen mit personalisierter Erstansprache. Ihr Vertrieb spricht nur noch mit Interessenten.',
-    href: '#',
-  },
-  {
-    title: 'KI im Vertrieb',
-    metric: '40 % mehr qualifizierte Leads',
-    description:
-      'Lead-Qualifizierung, Priorisierung und automatisierte Follow-ups — damit kein Kontakt mehr durch das Raster fällt.',
-    href: '#',
-  },
-  {
-    title: 'KI im Backoffice',
-    metric: '70 % Zeitersparnis',
-    description:
-      'E-Mails, Dokumente, Rechnungen — automatisch verarbeitet und zugeordnet. Ihr Team arbeitet an Ergebnissen statt an Verwaltung.',
-    href: '#',
-  },
-  {
-    title: 'Analytics Dashboard',
-    metric: 'Echtzeit',
-    description:
-      'Alle relevanten KPIs an einem Ort. Mit KI-Analysen, die nicht nur zeigen was passiert, sondern warum.',
-    href: '#/analytics-dashboard',
-  },
-  {
-    title: 'ROI-Rechner',
-    metric: '60 Sekunden',
-    description:
-      'Wie viel Geld und Zeit spart KI in Ihrer Branche konkret? Branchen-spezifische Schätzung mit nachvollziehbarer Methodik. Keine Eingabe verlässt den Browser.',
-    href: '#/roi-rechner',
-  },
-  {
-    title: 'Alle Preise ansehen',
-    metric: 'Transparent',
-    description:
-      'Alle Services mit Preisen, Paketen und was jeweils enthalten ist. Kein Versteck.',
-    href: '#/preise',
+    title: 'Individuelle KI- & Softwarelösungen',
+    lead: 'Wenn Standardsoftware den entscheidenden Prozess nicht abbildet.',
+    description: 'Wir übersetzen einen konkreten Engpass in eine belastbare Lösung – vom ersten Prototyp bis zur integrierten Anwendung. Erst klären wir Nutzen, Daten und Grenzen; dann wird gebaut.',
+    examples: 'Typisch: branchenspezifische Anwendungen, Analyse-Tools, neue digitale Angebote',
   },
 ];
 
-const ServiceRow: React.FC<{
-  item: ServiceItem;
-  index: number;
-  isOpen: boolean;
-  onToggle: () => void;
-}> = ({ item, index, isOpen, onToggle }) => {
-  const num = String(index + 1).padStart(2, '0');
-
-  return (
-    <div className="border-t border-faint/50 group">
-      <button
-        onClick={onToggle}
-        className="w-full flex items-baseline justify-between py-5 px-0 text-left cursor-pointer"
-      >
-        <div className="flex items-baseline gap-4 md:gap-6">
-          <span
-            className="text-xs text-faint font-body tabular-nums transition-transform duration-300 group-hover:-translate-x-1"
-          >
-            {num}
-          </span>
-          <span className="text-base md:text-lg text-ink font-editorial leading-snug">
-            {item.title}
-          </span>
-        </div>
-        <span className="text-xs text-muted font-body tracking-wide hidden sm:block">
-          {item.metric}
-        </span>
-      </button>
-
-      <div
-        className={`overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-          isOpen ? 'max-h-48 opacity-100 pb-6' : 'max-h-0 opacity-0'
-        }`}
-      >
-        <div className="pl-8 md:pl-14 pr-4 md:pr-32">
-          <p className="text-sm text-muted font-body leading-relaxed max-w-xl">
-            {item.description}
-          </p>
-          {item.href !== '#' && (
-            <a
-              href={item.href}
-              className="inline-block mt-3 text-xs text-accent font-body underline decoration-1 underline-offset-4 hover:decoration-2 transition-all duration-200"
-            >
-              Details lesen
-            </a>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
-
 export const Services: React.FC = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="services" className="py-16u px-6 md:px-8">
+    <section id="services" className="scroll-mt-20 py-8u md:py-16u px-6 md:px-8" aria-labelledby="services-title">
       <div className="max-w-[1200px] mx-auto">
-        <h2 className="font-editorial text-2xl md:text-3xl text-ink mb-12u">
-          Was wir tun
-        </h2>
-
-        <div>
-          {services.map((item, i) => (
-            <ServiceRow
-              key={item.title}
-              item={item}
-              index={i}
-              isOpen={openIndex === i}
-              onToggle={() => setOpenIndex(openIndex === i ? null : i)}
-            />
-          ))}
-          <div className="border-t border-faint/50" />
+        <div className="grid gap-6 md:grid-cols-12 md:gap-12 mb-12u">
+          <h2 id="services-title" className="font-editorial text-2xl md:text-3xl text-ink md:col-span-5">Vier Wege zu weniger Reibung</h2>
+          <p className="text-sm text-muted leading-relaxed md:col-span-6 md:col-start-7">
+            Keine KI um der KI willen. Wir beginnen bei einem konkreten Engpass, prüfen Daten und Systeme und bauen nur, was im Arbeitsalltag einen nachvollziehbaren Nutzen hat.
+          </p>
         </div>
+
+        <div className="border-b border-faint/50">
+          {services.map((item, index) => {
+            const open = openIndex === index;
+            const panelId = `service-panel-${index}`;
+            return (
+              <article key={item.title} className="border-t border-faint/50">
+                <button type="button" onClick={() => setOpenIndex(open ? null : index)} aria-expanded={open} aria-controls={panelId} className="group w-full py-5 md:py-6 flex items-start gap-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-base">
+                  <span className="text-xs text-faint tabular-nums mt-1">{String(index + 1).padStart(2, '0')}</span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block font-editorial text-lg md:text-xl text-ink">{item.title}</span>
+                    <span className="block text-xs md:text-sm text-muted mt-1 leading-relaxed">{item.lead}</span>
+                  </span>
+                  <span aria-hidden="true" className="text-accent text-xl leading-none mt-1">{open ? '−' : '+'}</span>
+                </button>
+                <div id={panelId} hidden={!open} className="pb-7 pl-8 md:pl-10 pr-2 md:pr-24">
+                  <p className="text-sm text-muted leading-relaxed max-w-2xl">{item.description}</p>
+                  <p className="text-xs text-faint mt-3 max-w-2xl">{item.examples}</p>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+        <Link to="/#kontakt" className="inline-flex mt-8 text-sm text-accent underline underline-offset-4 hover:decoration-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">Engpass im Erstgespräch einordnen →</Link>
       </div>
     </section>
   );

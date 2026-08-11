@@ -70,8 +70,8 @@ const Hero: React.FC = () => (
         {[
           'Echtzeit-Daten aus allen relevanten Quellen',
           'Keine Data-Science-Kenntnisse nötig',
-          'DSGVO-konform & EU-Serverstandorte',
-          'Live in 1–2 Wochen',
+          'Datenflüsse & Zugriffe gemeinsam prüfen',
+          'Umfang passend zum Bedarf',
         ].map((item) => (
           <span key={item} className="flex items-center gap-1.5">
             <span className="text-neon-pink">✓</span> {item}
@@ -87,10 +87,10 @@ const Hero: React.FC = () => (
 /* ───────────── STAT BAR ───────────── */
 
 const stats = [
-  { value: 'Echtzeit', label: 'statt wöchentliche Excel-Reports', color: 'text-neon-pink' },
-  { value: '1 Ort', label: 'für alle Vertriebs- und Recruiting-KPIs', color: 'text-neon-cyan' },
-  { value: '3x', label: 'schnellere Entscheidungsfindung im Management', color: 'text-neon-yellow' },
-  { value: 'Ø 6 Std.', label: 'pro Woche gespart durch automatisiertes Reporting', color: 'text-neon-pink' },
+  { value: 'Aktuell', label: 'im Takt der angebundenen Datenquelle', color: 'text-neon-pink' },
+  { value: '1 Ort', label: 'für vereinbarte operative Kennzahlen', color: 'text-neon-cyan' },
+  { value: 'Rollen', label: 'Ansichten passend zur Verantwortung', color: 'text-neon-yellow' },
+  { value: 'Alerts', label: 'für definierte Abweichungen', color: 'text-neon-pink' },
 ];
 
 const StatBar: React.FC = () => (
@@ -246,7 +246,7 @@ const Loesung: React.FC = () => (
             Ihre Unternehmensdaten gehören zu den sensibelsten, die es gibt.
           </h4>
           <p className="text-gray-400 text-sm leading-relaxed font-mono">
-            Umsatzzahlen, Personaldaten, Bewerberdaten – alles verarbeiten wir ausschließlich auf EU-Servern, ohne Datenweitergabe an Dritte. Zugriffskontrollen, Rollenkonzepte und Audit-Logs sind standardmäßig enthalten. DSGVO-Konformität ist kein Add-on, sondern Grundvoraussetzung.
+            Umsatzzahlen, Personaldaten, Bewerberdaten – Datenflüsse, Zugriffskontrollen und Rollenkonzepte werden passend zu Ihrem Einsatz definiert. Datenschutzanforderungen und offene Punkte bleiben dokumentiert.
           </p>
         </div>
       </div>
@@ -284,8 +284,8 @@ const Prozess: React.FC = () => (
     <div className="max-w-4xl mx-auto text-center">
       <SectionLabel>Wie es läuft</SectionLabel>
       <SectionHeadline>
-        In zwei Wochen von Datenchaos<br className="hidden sm:block" />
-        zu klaren Entscheidungsgrundlagen.
+        In Datenchaos starten.<br className="hidden sm:block" />
+        Zu klaren Entscheidungsgrundlagen.
       </SectionHeadline>
       <LeadText>
         Kein monatelanges BI-Projekt. Wir haben klare Prozesse für den Aufbau – und bringen Erfahrung aus vergleichbaren Implementierungen mit.
@@ -464,7 +464,7 @@ const comparisonRows = [
   { label: 'Reaktionszeit', before: 'Wochen nach dem Problem', after: 'Sofort per Alert' },
   { label: 'Entscheidungsgrundlage', before: 'Bauchgefühl & Excel', after: 'KI-gestützte Analyse' },
   { label: 'Managementblick', before: 'Vergangenheit', after: 'Gegenwart & Trends' },
-  { label: 'Reportingaufwand', before: 'Ø 6 Std./Woche', after: 'Unter 30 Minuten' },
+  { label: 'Reportingaufwand', before: 'Wiederkehrend manuell', after: 'Je nach Datenquelle automatisierbar' },
 ];
 
 const Vergleich: React.FC = () => (

@@ -164,7 +164,7 @@ Werner Holzbau GmbH
 Peter Werner, Geschaeftsfuehrer`;
 
 const SAMPLES: { id: string; label: string; icon: string; text: string }[] = [
-  { id: 'invoice', label: 'Rechnung pruefen', icon: 'receipt_long', text: SAMPLE_INVOICE },
+  { id: 'invoice', label: 'Rechnung prüfen', icon: 'receipt_long', text: SAMPLE_INVOICE },
   { id: 'email', label: 'E-Mail triagieren', icon: 'mail', text: SAMPLE_EMAIL },
   { id: 'offer', label: 'Angebot analysieren', icon: 'request_quote', text: SAMPLE_OFFER },
 ];
@@ -224,6 +224,7 @@ export const LiveAgentDemo: React.FC = () => {
       const data = await resp.json();
       if (!resp.ok) {
         setError(data.error || 'Analyse fehlgeschlagen.');
+        setAnalyzing(false);
         return;
       }
       // Let the final thinking step complete
@@ -233,6 +234,7 @@ export const LiveAgentDemo: React.FC = () => {
       }, 200);
     } catch (e) {
       setError('Verbindung fehlgeschlagen. Bitte versuchen Sie es erneut.');
+      setAnalyzing(false);
     } finally {
       clearInterval(stepInterval);
     }
@@ -329,12 +331,12 @@ export const LiveAgentDemo: React.FC = () => {
             Live Agent Demo
           </span>
           <h1 className="font-editorial text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05] text-ink mb-6 break-words">
-            Schauen Sie unseren<br />
-            <span className="text-accent">Dokument-Agent arbeiten.</span>
+            Sehen Sie unserem<br />
+            <span className="text-accent">Dokument-Agenten bei der Arbeit zu.</span>
           </h1>
           <p className="text-muted text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-            Rechnung, E-Mail, Angebot oder Vertrag — der Agent liest, strukturiert und schlaegt
-            naechste Schritte vor. Sie sehen den Prozess live. Keine Anmeldung, keine Daten gespeichert.
+            Rechnung, E-Mail, Angebot oder Vertrag — der Agent liest, strukturiert und schlägt
+            nächste Schritte vor. Die Ausgabe ist eine KI-generierte Demo und muss fachlich geprüft werden. Keine Anmeldung erforderlich.
           </p>
         </div>
       </section>
@@ -354,10 +356,11 @@ export const LiveAgentDemo: React.FC = () => {
               }`}
             >
               <span className="material-symbols-outlined text-4xl text-muted mb-3 block">upload_file</span>
-              <p className="text-sm text-ink mb-1">PDF, PNG oder JPG hochladen (max 4 MB)</p>
+              <p className="text-sm text-ink mb-1">PDF, PNG oder JPG hochladen (max. 6 MB)</p>
               <p className="text-xs text-faint">Rechnung, E-Mail-Screenshot, Angebot, Vertrag — was Sie gerade haben</p>
               <input
                 ref={fileInputRef}
+                aria-label="Dokument für die Demo auswählen"
                 type="file"
                 accept="application/pdf,image/png,image/jpeg,image/webp"
                 className="hidden"
@@ -388,7 +391,7 @@ export const LiveAgentDemo: React.FC = () => {
 
       {/* Thinking State */}
       {analyzing && (
-        <section className="px-6 md:px-8 pb-16">
+        <section className="px-6 md:px-8 pb-16" aria-live="polite" aria-busy="true">
           <div className="max-w-[700px] mx-auto">
             <div className="border border-faint/30 bg-ink/[0.02] p-8">
               <div className="flex items-center gap-3 mb-6">
@@ -426,7 +429,7 @@ export const LiveAgentDemo: React.FC = () => {
       {error && (
         <section className="px-6 md:px-8 pb-12">
           <div className="max-w-[700px] mx-auto">
-            <div className="border border-red-300 bg-red-50 p-6">
+            <div className="border border-red-300 bg-red-50 p-6" role="alert">
               <p className="text-sm text-red-700 mb-3">{error}</p>
               <button
                 onClick={handleReset}

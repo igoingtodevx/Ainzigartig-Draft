@@ -9,6 +9,9 @@ interface ErrorBoundaryState {
 }
 
 export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  // React is intentionally consumed as a JavaScript dependency in this project,
+  // so the class base does not contribute typed `props` to TypeScript here.
+  declare readonly props: ErrorBoundaryProps;
   state: ErrorBoundaryState = { hasError: false };
 
   static getDerivedStateFromError(): ErrorBoundaryState {

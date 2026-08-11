@@ -19,12 +19,11 @@ const INITIAL: ContactFormState = {
 };
 
 const SERVICE_OPTIONS = [
-  'KI-Beratung',
-  'KI-Kundenservice',
-  'KI-Recruiting',
-  'Analytics',
-  'KI-Audit',
-  'KI-Schnellstart',
+  'Automatisierung & Integrationen',
+  'Dashboards & interne Business-Tools',
+  'KI-Assistenten & Wissenssysteme',
+  'Individuelle KI- & Softwarelösungen',
+  'Noch unklar / gemeinsam einordnen',
   'Sonstiges',
 ];
 
@@ -76,12 +75,12 @@ export const ContactForm: React.FC = () => {
 
   if (state === 'success') {
     return (
-      <div className="mt-10 border border-accent/30 bg-accent/[0.04] p-8 text-center max-w-xl">
+      <div className="mt-10 border border-accent/30 bg-accent/[0.04] p-8 text-center max-w-xl" role="status" aria-live="polite">
         <span className="material-symbols-outlined text-accent text-4xl mb-3 block">check_circle</span>
         <p className="font-editorial text-xl text-ink mb-2">Vielen Dank.</p>
         <p className="text-sm text-muted leading-relaxed">
-          Wir haben Ihre Anfrage erhalten und melden uns innerhalb von 24 Stunden
-          mit einer ehrlichen Einschätzung — keine Folgetermine, kein Pitch.
+          Wir haben Ihre Anfrage erhalten und melden uns persönlich
+          mit einer ehrlichen Einschätzung – kein automatischer Vertriebsprozess.
         </p>
       </div>
     );
@@ -90,7 +89,7 @@ export const ContactForm: React.FC = () => {
   const submitting = state === 'submitting';
 
   return (
-    <form onSubmit={handleSubmit} className="mt-10 max-w-xl space-y-6" noValidate>
+    <form onSubmit={handleSubmit} className="mt-10 max-w-xl space-y-6" noValidate aria-busy={submitting}>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
           <label htmlFor="cf-name" className="block text-xs text-muted font-body uppercase tracking-[0.15em] mb-2">
@@ -200,7 +199,7 @@ export const ContactForm: React.FC = () => {
           )}
         </button>
         <p className="text-xs text-faint font-body">
-          Antwort innerhalb von 24 Stunden. Keine Folgetermine, kein Pitch.
+          Wir melden uns persönlich. Kein automatischer Vertriebsprozess.
         </p>
       </div>
     </form>

@@ -65,7 +65,7 @@ const pricing: PricingItem[] = [
       'Custom Chatbot / Voice Agent',
       'Trainiert auf Ihr Wissen',
       'Website, WhatsApp, E-Mail',
-      'DSGVO-konform',
+      'Datenschutz und Löschkonzept gemeinsam prüfen',
       'Monatliche Optimierung',
     ],
     tier: 'Kern',
@@ -101,7 +101,7 @@ const pricing: PricingItem[] = [
     name: 'KI-Compliance-Paket',
     price: 'Auf Anfrage',
     period: '',
-    description: 'DSGVO-konforme KI-Einführung. Keine Abmahnung, kein Risiko.',
+    description: 'Begleitung bei der datenschutzsensiblen KI-Einführung. Offene Punkte bleiben sichtbar.',
     features: [
       'AVV & Datenschutz-Dokumentation',
       'AI-Tool-Vetting',
