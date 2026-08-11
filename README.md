@@ -1,185 +1,68 @@
 # Ainzigartig
 
-**KI-Beratung für den deutschen Mittelstand.** Konkret, schnell, ohne Pilotprojekte die im Nichts enden.
+Ainzigartig is a React/Vite website for an AI consultancy serving small and medium-sized businesses. The repository contains the public marketing site plus Vercel serverless functions for an AI chat assistant, website analysis, document analysis, project data, industry insights, and a contact form.
 
-Live: [ainzigartig.vercel.app](https://ainzigartig.vercel.app)
+## Public deployment
 
----
+The following URL was checked anonymously during this audit and returned HTTP 200:
 
-## Was das hier ist
+- <https://ainzigartig.vercel.app/>
 
-Eine Marketing-Website mit drei integrierten KI-Demos:
+This is the only deployment URL documented here. API features may still be unavailable when their server-side environment variables are not configured.
 
-1. **Edi** — der KI-Chat-Assistent (rechts unten auf jeder Seite). Beantwortet Fragen zu Ainzigartig, mit Charakter statt Buzzword-Sprech.
-2. **KI-Website-Analyse** (`/ki-analyse`) — gibt eine URL ein, kriegt einen KI-Reifegrad-Score plus konkrete Optimierungsvorschläge.
-3. **Live-Dokumenten-Agent** (`/live-demo`) — lädt eine Rechnung/E-Mail/Angebot hoch, der Agent extrahiert Felder, schlägt nächste Schritte vor, markiert Risiken.
+## Evidence-backed stack
 
-Backend: Vercel Serverless Functions. Eine AI-Abhängigkeit (OpenAI). Eine E-Mail-Abhängigkeit (Resend).
+- React 19, TypeScript, React Router 6
+- Vite 6, Tailwind CSS 3, PostCSS
+- Vercel deployment configuration for a Vite SPA and serverless functions
+- `pdfjs-dist` for client-side PDF page rendering in the document demo
+- Vercel Analytics
+- Server-side integrations use the OpenAI Chat Completions API directly or the Vercel AI Gateway, depending on configured credentials
 
----
+## Implemented scope
 
-## Stack
+- Multi-route marketing site, including `/ki-beratung`, `/ki-kundenservice`, `/ki-recruiting`, `/analytics-dashboard`, `/roi-rechner`, `/ki-schnellstart`, `/ki-audit`, `/preise`, `/ki-analyse`, `/live-demo`, `/projekte`, `/insights`, `/impressum`, and `/datenschutz`.
+- `/api/chat`: the “Edi” assistant, with input validation, a six-message history window, cooldown/hourly in-memory rate limiting, and an OpenAI/Vercel AI Gateway provider path.
+- `/api/analyze`: accepts a website URL, calls the configured scraper, and asks the configured LLM for structured analysis.
+- `/api/live-agent-demo`: analyzes sample text or up to five client-rendered document images and returns structured JSON.
+- `/api/contact`: validates a contact request and sends it through Resend.
+- `/api/projects` and `/api/insights`: server-side data endpoints used by the project and industry-insights sections.
 
-| Layer | Tech |
-|---|---|
-| Frontend | React 19, TypeScript, Vite 6, Tailwind 3, React Router 6 |
-| Hosting | Vercel (static + functions) |
-| AI | OpenAI `gpt-4o-mini` (chat, vision, structured JSON) |
-| Email | Resend (contact form → inbox) |
-| Analytics | Vercel Analytics |
-| Scraper | Standalone FastAPI auf VPS (nur für `/ki-analyse` benötigt) |
+## Status
 
----
+The frontend and serverless handlers are implemented and deployed as a public demo. This repository is not a self-contained AI backend: the AI, scraper, email, GitHub, and remote-insights integrations depend on deployment configuration and external services.
 
-## Entwicklung lokal
+## Local setup
 
 ```bash
 npm install
-npm run dev
+npm run dev       # Vite development server on port 3000
+npm run build
+npm run preview
 ```
 
-Die Seite läuft auf `http://localhost:3000`. Für die KI-Endpunkte brauchst du entweder echte API-Keys oder du akzeptierst 500er auf `/api/chat` und `/api/analyze`.
+For a production-like local API environment, use a Vercel-compatible local runtime. Plain `vite` serves the frontend but does not provide the `api/*.js` functions by itself.
 
-### Build
+## Server-side environment
 
-```bash
-npm run build      # Produktion in dist/
-npm run preview    # dist/ lokal serven
-```
+Set these in the deployment environment, never in client-exposed `VITE_` variables:
 
----
+| Variable | Used for |
+| --- | --- |
+| `OPENAI_API_KEY` | Direct OpenAI calls for chat, analysis, and document analysis |
+| `AI_GATEWAY_API_KEY` or the platform-provided `VERCEL_OIDC_TOKEN` | Vercel AI Gateway fallback |
+| `RESEND_API_KEY` and `CONTACT_EMAIL` | Contact form delivery; set `CONTACT_EMAIL` explicitly |
+| `SCRAPER_URL` | Scraper service used by `/api/analyze` |
+| `GITHUB_TOKEN` | Optional authenticated GitHub metadata for `/api/projects` |
+| `CHAT_ENABLED=false` | Optional kill switch for `/api/chat` |
 
-## Environment variables (Vercel)
+The Vite config still reads `GEMINI_API_KEY` for a legacy build-time mapping, but the current server handlers documented above use OpenAI-compatible endpoints. Do not treat the Gemini variable as an active provider without checking the implementation.
 
-Drei Variablen, in den Vercel-Projekt-Einstellungen unter **Settings → Environment Variables** setzen. Production + Preview + Development gleich.
+## Limitations
 
-| Var | Required | Wo es verwendet wird | Was passiert ohne |
-|---|---|---|---|
-| `OPENAI_API_KEY` | ✅ | `api/chat.js`, `api/analyze.js`, `api/live-agent-demo.js` | Alle 3 Endpunkte → 500/502 |
-| `RESEND_API_KEY` | ✅ | `api/contact.js` | Contact-Form → 500 |
-| `CONTACT_EMAIL` | optional | `api/contact.js` — Empfänger der Form-Submissions. Default: `florian.schupp@student.uni-siegen.de` | Default greift |
-| `GITHUB_TOKEN` | optional | `api/projects.js` — GitHub-PAT für 5000/h Rate-Limit statt 60/h. **Aktuell gesetzt** auf Vercel. | Funktioniert ohne, aber 60/h statt 5000/h |
-| `CHAT_ENABLED` | optional | `api/chat.js` — setze auf `"false"` um den Chat zu killen | Chat läuft normal |
-| `SCRAPER_URL` | optional | `api/analyze.js` — wo der VPS-Scraper läuft. Default: `http://138.68.96.190:8501` | Default greift |
-
-**Nicht mehr nötig (entfernt):** `GEMINI_API_KEY`, `NVIDIA_API_KEY`, `OPENROUTER_API_KEY`.
-
----
-
-## Architektur
-
-### Routen (React Router v6)
-
-```
-/                          →  Startseite
-/ki-beratung               →  Landing: Strategische KI-Beratung
-/ki-kundenservice          →  Landing: KI-Chatbots für Support
-/ki-recruiting             →  Landing: CV-Screening & Matching
-/analytics-dashboard       →  Landing: Echtzeit-Analytics
-/roi-rechner               →  ROI-Rechner (client-side, kein Backend)
-/ki-schnellstart           →  Landing: 5-Tage-Setup
-/ki-audit                  →  Interaktiver Reifegrad-Check (6 Fragen)
-/preise                    →  Pricing-Übersicht
-/ki-analyse                →  URL → KI-Analyse (POST /api/analyse)
-/live-demo                 →  PDF/Image → Document-Agent (POST /api/live-agent-demo)
-/projekte                  →  Eigene GitHub-Projekte (GET /api/projects)
-/impressum                 →  Legal
-/datenschutz               →  Legal
-*                          →  404
-```
-
-### API-Endpunkte
-
-| Endpoint | Method | Provider | Was es tut |
-|---|---|---|---|
-| `/api/chat` | POST | OpenAI `gpt-4o-mini` | Chat-Assistent "Edi" |
-| `/api/analyze` | POST | OpenAI `gpt-4o-mini` + VPS Scraper | Website KI-Analyse |
-| `/api/live-agent-demo` | POST | OpenAI `gpt-4o-mini` (text + vision) | Dokument-Analyse |
-| `/api/projects` | GET | GitHub REST | Kuratierte Repo-Liste |
-| `/api/contact` | POST | Resend | Kontaktformular → E-Mail |
-| `/api/chat/health` | GET | – | Health check |
-| `/api/live-agent-demo/health` | GET | – | Health check |
-| `/api/projects/health` | GET | – | Health check |
-
-Alle AI-Endpoints verwenden dasselbe `OPENAI_API_KEY` und denselben Provider — keine Multi-Provider-Komplexität.
-
-### Edi — der Chat-Assistent
-
-Persönlichkeit lebt im `SYSTEM_PROMPT` in `api/chat.js`. Persona-Details editieren ist ein One-File-Change, kein Frontend-Rebuild nötig. Wissensbasis liegt in `api/company-context.md` — das ist die einzige Quelle der Wahrheit, was Edi weiß. Updates dort sind sofort nach Redeploy live.
-
-Edi nutzt `gpt-4o-mini` mit `temperature: 0.85`, `presence_penalty: 0.3` für abwechslungsreiche Antworten. Kein `response_format: json_object` (Edi redet frei, nicht strukturiert).
-
-### Rate limiting
-
-Im-memory, per IP. Heuristik: max 1 Request / 5s, max 30 Requests / Stunde. Cold-start-reset: nach einem Vercel-Function-Restart ist der Counter weg — das ist OK für die erwartete Last.
-
-### Live-Dokumenten-Agent
-
-PDFs werden client-seitig via `pdfjs-dist` zu Bildern gerendert (max. 5 Seiten), dann als Base64-Data-URLs an die `/api/live-agent-demo` geschickt. Der OpenAI-Aufruf nutzt `gpt-4o-mini` mit `response_format: { type: "json_object" }` für garantiert parsebares JSON. Die App hat drei Beispiel-Dokumente (Rechnung, E-Mail, Angebot) für Demo-Zwecke — siehe `SAMPLE_INVOICE`, `SAMPLE_EMAIL`, `SAMPLE_OFFER` in `components/LiveAgentDemo.tsx`.
-
----
-
-## Vercel Setup
-
-Das Projekt erwartet eine `vercel.json` mit:
-
-- `framework: "vite"` (statisches Frontend in `dist/`)
-- `functions` für `api/*.js` (Node.js Runtime)
-- `rewrites` für SPA-Routing (siehe `vercel.json`)
-
-Custom Domain: `ainzigartig.de`. DNS ist nicht Teil dieses Repos.
-
----
-
-## Repo-Struktur
-
-```
-.
-├── api/                       Vercel Serverless Functions
-│   ├── chat.js                Chat-Assistent "Edi"
-│   ├── analyze.js              Website KI-Analyse (mit VPS-Scraper)
-│   ├── live-agent-demo.js     Dokument-Analyse (Text + Vision)
-│   ├── projects.js            GitHub-Projekte
-│   ├── contact.js             Kontaktformular → E-Mail
-│   └── company-context.md     Edi-Wissensbasis
-│
-├── components/                React-Komponenten (eine pro Route + Globals)
-│   ├── ChatBot.tsx            Floating Chat
-│   ├── ContactForm.tsx        Form (im /#kontakt Anker)
-│   ├── ErrorBoundary.tsx      Render-Crash-Fallback
-│   ├── NotFound.tsx           404-Seite
-│   ├── RouteMeta.tsx          Per-Route <title> + <meta> + OG
-│   └── ...                    26 Komponenten total
-│
-├── scraper/                   Standalone VPS-Service (eigenes Deploy)
-│   └── service.py             FastAPI Scraper
-│
-├── public/                    Statische Assets (robots.txt, sitemap.xml)
-├── App.tsx                    React Router + Layout
-├── index.html                 HTML-Shell (Default-Meta + OG-Fallback)
-├── vercel.json                Vercel-Konfiguration
-└── package.json               npm-Dependencies
-```
-
----
-
-## Lokale Entwicklung ohne AI-Keys
-
-Setze in `vercel.json` die Funktionen auf Stub-Mode oder kommentiere die AI-Calls temporär aus. Für Frontend-Entwicklung reicht es, `/api/chat`, `/api/analyze`, `/api/live-agent-demo` als "kann grade nicht" zu akzeptieren — der Rest der Seite funktioniert ohne Backend.
-
----
-
-## Deploy
-
-Push auf `main` → Vercel auto-deployt. Preview-URLs gibt's für jeden Branch.
-
-```bash
-git push origin main                 # → production deploy
-git push origin feature/foo          # → preview deploy
-```
-
----
-
-## Lizenz
-
-Privat. © Ainzigartig.
+- AI endpoints return an unavailable/not-configured response without valid provider credentials.
+- Website analysis additionally depends on a reachable scraper service; the repository does not include that service.
+- Contact delivery depends on a valid Resend configuration and an explicitly set recipient.
+- Rate limiting is process-local and is not a shared production quota.
+- The document demo renders PDF pages in the browser and sends images to the configured provider; it is not a durable document-processing pipeline.
+- Remote project and insights data can fail independently of the frontend.
