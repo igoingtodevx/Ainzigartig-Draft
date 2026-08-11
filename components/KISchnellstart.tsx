@@ -18,14 +18,14 @@ const includes = [
 
 export const KISchnellstart: React.FC = () => (
   <div className="min-h-screen bg-base text-ink font-body">
-    <RouteMeta title="KI-Schnellstart | Ainzigartig" description="In 5 Tagen zum ersten klar abgegrenzten KI-Assistenten." />
+    <RouteMeta title="KI-Schnellstart | Ainzigartig" description="Ein klar abgegrenzter KI-Assistent — mit Zielrahmen, wenn Scope und Datenlage passen." />
 
     <section className="pt-36 pb-20 px-6">
       <div className="max-w-[920px] mx-auto text-center">
         <p className="text-xs uppercase tracking-[0.14em] font-semibold text-light mb-3">KI-Schnellstart</p>
         <h1 className="font-editorial text-[clamp(2.8rem,6vw,4.8rem)] leading-[1.02] tracking-[-0.035em] font-normal">
           Ein erster KI-Assistent.<br />
-          <span className="hand-underline font-body font-extrabold">5 Tage Zielrahmen.</span>
+          <span className="hand-underline font-body font-extrabold">Klarer Zielrahmen.</span>
         </h1>
         <p className="text-base md:text-lg text-muted max-w-2xl mx-auto leading-relaxed mt-7">
           Kein monatelanges Vorprojekt. Wir wählen einen kleinen, sinnvollen Scope und bauen etwas, das Sie mit echten Fällen ausprobieren können.

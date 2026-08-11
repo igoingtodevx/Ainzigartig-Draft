@@ -1,201 +1,38 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { RouteMeta } from './RouteMeta';
 
-interface Opportunity {
-  title: string;
-  description: string;
-  impact: string;
-  effort: string;
-  estimated_savings: string;
-}
+type Level = 'Hoch' | 'Mittel' | 'Niedrig';
+interface Result { url:string; analyzed_at:string; scrape:{title:string;technologies:string[];word_count:number;response_time_ms:number}; analysis:{score:number;score_label:string;summary:string;observations:{label:string;finding:string;confidence:string}[];opportunities:{title:string;description:string;evidence:string;impact:Level;effort:Level;first_step:string}[];missing_basics:string[];recommendation:string;limitations:string[]} }
 
-interface AnalysisResult {
-  url: string;
-  scrape: {
-    title: string;
-    technologies: string[];
-    word_count: number;
-    response_time_ms: number;
-  };
-  analysis: {
-    score: number;
-    score_label: string;
-    summary: string;
-    opportunities: Opportunity[];
-    missing_basics: string[];
-    recommendation: string;
-    tool_suggestion: string;
-  };
+function normalizeUrl(value: string) {
+  let candidate = value.trim();
+  if (!candidate) throw new Error('Bitte geben Sie eine Website-Adresse ein.');
+  if (!/^https?:\/\//i.test(candidate)) candidate = `https://${candidate}`;
+  const parsed = new URL(candidate);
+  if (!['http:', 'https:'].includes(parsed.protocol) || !parsed.hostname.includes('.')) throw new Error();
+  return parsed.toString();
 }
-
-function scoreTone(score: number): string {
-  if (score <= 30) return 'text-[#B77A36]';
-  if (score <= 60) return 'text-accent-hover';
-  return 'text-ink';
-}
-
-const badge = 'rounded-full border px-2.5 py-1 text-[0.68rem] font-semibold';
+async function responseJson(response: Response) { try { return await response.json(); } catch { return {}; } }
+const badge = 'rounded-full border px-2.5 py-1 text-[0.68rem] font-semibold whitespace-nowrap';
 
 export const KIAnalyse: React.FC = () => {
-  const [url, setUrl] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<AnalysisResult | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  const handleAnalyze = async () => {
-    if (!url.trim()) return;
-    setLoading(true);
-    setError(null);
-    setResult(null);
-
-    try {
-      const response = await fetch('/api/analyze', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: url.trim() }),
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        setError(data.error || 'Analyse fehlgeschlagen');
-        return;
-      }
-      setResult(data);
-    } catch {
-      setError('Verbindung fehlgeschlagen. Bitte versuchen Sie es erneut.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <main className="min-h-screen bg-base text-ink font-body pt-36 pb-24 px-6">
-      <RouteMeta title="KI-Website-Analyse | Ainzigartig" description="Kostenlose KI-Analyse Ihrer Unternehmenswebseite." />
-      <div className="max-w-[1000px] mx-auto">
-        <header className="text-center max-w-[820px] mx-auto mb-12">
-          <p className="text-xs uppercase tracking-[0.14em] font-semibold text-light mb-3">Kostenlose KI-Analyse</p>
-          <h1 className="font-editorial text-[clamp(2.8rem,6vw,4.8rem)] leading-[1.02] tracking-[-0.035em] font-normal">
-            Was kann KI für<br /><span className="hand-underline font-body font-extrabold">Ihre Website</span> tun?
-          </h1>
-          <p className="text-base md:text-lg text-muted max-w-2xl mx-auto leading-relaxed mt-7">
-            Geben Sie Ihre URL ein. Wir lesen die Website aus und übersetzen den aktuellen Stand in konkrete KI-Potenziale, Aufwand und nächste Schritte.
-          </p>
-        </header>
-
-        <div className="brand-card bg-surface p-4 md:p-5 max-w-[760px] mx-auto">
-          <div className="flex flex-col sm:flex-row gap-3">
-            <input
-              type="url"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              placeholder="https://ihre-website.de"
-              onKeyDown={(e) => e.key === 'Enter' && handleAnalyze()}
-              className="flex-1 rounded-2xl border border-ink/15 bg-base/60 px-4 py-3.5 text-sm text-ink placeholder:text-light focus:outline-none focus:border-accent-hover transition-colors"
-            />
-            <button
-              onClick={handleAnalyze}
-              disabled={loading || !url.trim()}
-              className="brand-pill bg-ink text-white hover:bg-[#33312E] px-6 py-3.5 text-sm disabled:opacity-40 disabled:cursor-not-allowed"
-            >
-              {loading ? (
-                <><span className="animate-spin material-symbols-outlined text-[17px]">refresh</span> Analysiere…</>
-              ) : (
-                <>Analysieren <span className="material-symbols-outlined text-[17px]">arrow_forward</span></>
-              )}
-            </button>
-          </div>
-          <p className="text-[0.7rem] text-light text-center mt-3">Keine dauerhafte Speicherung der eingegebenen URL durch diese Oberfläche.</p>
-        </div>
-
-        {loading && (
-          <div className="max-w-[760px] mx-auto mt-6 brand-card bg-surface p-6 space-y-4" aria-busy="true">
-            <div className="h-4 w-1/2 rounded-full bg-ink/8 animate-pulse" />
-            <div className="h-3 w-full rounded-full bg-ink/6 animate-pulse" />
-            <div className="h-3 w-4/5 rounded-full bg-ink/6 animate-pulse" />
-            <p className="text-xs text-light pt-2">Website wird ausgelesen und eingeordnet.</p>
-          </div>
-        )}
-
-        {error && (
-          <div className="max-w-[760px] mx-auto mt-6 rounded-[22px] border border-red-900/15 bg-red-50 p-5 text-center">
-            <p className="text-sm text-red-800">{error}</p>
-            <button onClick={() => setError(null)} className="mt-2 text-xs text-red-700 underline underline-offset-4">Erneut versuchen</button>
-          </div>
-        )}
-
-        {result && (
-          <section className="mt-14 space-y-6">
-            <div className="brand-card bg-surface p-6 md:p-8">
-              <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-                <div className="min-w-0">
-                  <p className="text-[0.68rem] uppercase tracking-[0.12em] font-semibold text-light mb-2">Analysiert</p>
-                  <p className="font-editorial text-xl md:text-2xl text-ink break-all">{result.url}</p>
-                  {result.scrape.title && <p className="text-xs text-muted mt-2">{result.scrape.title}</p>}
-                </div>
-                <div className="md:text-right shrink-0">
-                  <p className={`font-editorial text-6xl leading-none ${scoreTone(result.analysis.score)}`}>{result.analysis.score}</p>
-                  <p className="text-xs text-light mt-1">{result.analysis.score_label} · Orientierungs-Score</p>
-                </div>
-              </div>
-              <div className="mt-6 pt-5 border-t border-ink/10 flex flex-wrap gap-x-5 gap-y-2 text-[0.72rem] text-light">
-                {result.scrape.technologies.length > 0 && <span>{result.scrape.technologies.join(' · ')}</span>}
-                <span>{result.scrape.word_count.toLocaleString('de-DE')} Wörter</span>
-                <span>{result.scrape.response_time_ms} ms Abrufzeit</span>
-              </div>
-            </div>
-
-            <div className="grid lg:grid-cols-[.72fr_1.28fr] gap-6">
-              <div className="brand-card bg-[#F3EFEA] p-6 md:p-7 h-fit">
-                <p className="text-[0.68rem] uppercase tracking-[0.12em] font-semibold text-light mb-3">Kurzfazit</p>
-                <p className="text-sm md:text-base text-muted leading-relaxed">{result.analysis.summary}</p>
-              </div>
-
-              <div className="space-y-4">
-                {result.analysis.opportunities.length > 0 && (
-                  <div>
-                    <h2 className="font-editorial text-2xl md:text-3xl mb-4">KI-Chancen</h2>
-                    <div className="space-y-3">
-                      {result.analysis.opportunities.map((opportunity, index) => (
-                        <article key={index} className="brand-card bg-surface p-5 md:p-6">
-                          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-3">
-                            <h3 className="font-editorial text-xl text-ink">{opportunity.title}</h3>
-                            <div className="flex gap-2 shrink-0">
-                              <span className={`${badge} border-accent/40 bg-accent/15 text-ink`}>Wirkung: {opportunity.impact}</span>
-                              <span className={`${badge} border-ink/12 bg-base text-muted`}>Aufwand: {opportunity.effort}</span>
-                            </div>
-                          </div>
-                          <p className="text-sm text-muted leading-relaxed">{opportunity.description}</p>
-                          {opportunity.estimated_savings && <p className="text-xs font-semibold text-accent-hover mt-3">{opportunity.estimated_savings}</p>}
-                        </article>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {result.analysis.missing_basics.length > 0 && (
-              <div className="brand-card bg-surface p-6 md:p-7">
-                <h2 className="font-editorial text-2xl mb-4">Grundlagen, die vorher geklärt werden sollten</h2>
-                <ul className="grid md:grid-cols-2 gap-3">
-                  {result.analysis.missing_basics.map((item, index) => (
-                    <li key={index} className="rounded-2xl bg-base border border-ink/10 px-4 py-3 text-sm text-muted flex items-start gap-2.5">
-                      <span className="material-symbols-outlined text-[17px] text-accent-hover mt-px">priority_high</span>{item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            <div className="rounded-[28px] bg-accent p-6 md:p-9 shadow-card">
-              <p className="text-[0.68rem] uppercase tracking-[0.12em] font-bold text-ink/60 mb-3">Empfehlung</p>
-              <p className="font-editorial text-2xl md:text-3xl leading-tight text-ink">{result.analysis.recommendation}</p>
-              {result.analysis.tool_suggestion && <p className="text-sm text-ink/70 mt-4">Möglicher Ansatz: {result.analysis.tool_suggestion}</p>}
-              <Link to="/#kontakt" className="brand-pill mt-7 bg-ink text-white hover:bg-[#33312E]">Ergebnis besprechen</Link>
-            </div>
-          </section>
-        )}
-      </div>
-    </main>
-  );
+  const [url,setUrl]=useState(''); const [loading,setLoading]=useState(false); const [result,setResult]=useState<Result|null>(null); const [error,setError]=useState('');
+  const resultRef=useRef<HTMLElement>(null);
+  const submit=async(e?:FormEvent)=>{e?.preventDefault(); let normalized=''; try{normalized=normalizeUrl(url);setUrl(normalized);}catch{setError('Bitte geben Sie eine gültige öffentliche Website-Adresse ein, z. B. beispiel.de.');return}
+    setLoading(true);setError('');setResult(null);
+    try{const response=await fetch('/api/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:normalized})});const data=await responseJson(response);if(!response.ok)throw new Error(data.error||'Die Analyse konnte nicht abgeschlossen werden.');setResult(data as Result);requestAnimationFrame(()=>resultRef.current?.focus());}
+    catch(err){setError(err instanceof Error?err.message:'Verbindung fehlgeschlagen. Bitte versuchen Sie es erneut.');}finally{setLoading(false)} };
+  return <main className="min-h-screen bg-base text-ink pt-32 md:pt-36 pb-24 px-4 sm:px-6">
+    <RouteMeta title="KI-Website-Analyse | Ainzigartig" description="Konkrete, priorisierte Potenziale auf Basis öffentlich lesbarer Website-Inhalte." />
+    <div className="max-w-[1000px] mx-auto">
+      <header className="text-center max-w-[800px] mx-auto mb-10"><p className="text-xs uppercase tracking-[.14em] font-semibold text-light mb-3">Website-Potenzialanalyse</p><h1 className="font-editorial text-[clamp(2.5rem,7vw,4.8rem)] leading-[1.02] tracking-[-.035em]">Öffentliche Signale.<br/><span className="hand-underline font-body font-extrabold">Konkrete nächste Schritte.</span></h1><p className="text-base md:text-lg text-muted max-w-2xl mx-auto leading-relaxed mt-7">Wir lesen öffentlich erreichbare Inhalte Ihrer Website und leiten daraus priorisierte digitale und KI-Ansatzpunkte ab — mit Belegen und sichtbaren Grenzen.</p></header>
+      <form onSubmit={submit} noValidate className="brand-card bg-surface p-4 md:p-5 max-w-[760px] mx-auto" aria-describedby="analysis-note"><label htmlFor="website-url" className="sr-only">Website-Adresse</label><div className="flex flex-col sm:flex-row gap-3"><input id="website-url" type="text" inputMode="url" autoCapitalize="none" autoCorrect="off" value={url} onChange={e=>{setUrl(e.target.value);if(error)setError('')}} placeholder="beispiel.de" aria-invalid={!!error} className="min-w-0 flex-1 rounded-2xl border border-ink/15 bg-base/60 px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent"/><button disabled={loading||!url.trim()} className="brand-pill justify-center bg-ink text-white px-6 py-3.5 disabled:opacity-40">{loading?'Website wird geprüft…':'Analyse starten'}<span className={`material-symbols-outlined text-[17px] ${loading?'animate-spin':''}`} aria-hidden="true">{loading?'progress_activity':'arrow_forward'}</span></button></div><p id="analysis-note" className="text-[.72rem] text-light mt-3 leading-relaxed">Analysiert werden öffentlich abrufbare Seiteninhalte. Interne Prozesse, Trackingdaten und technische Systeme hinter der Website bleiben unbekannt. Die URL wird an unseren Analyse-Dienst übermittelt.</p></form>
+      <div aria-live="polite" aria-atomic="true">{loading&&<div className="max-w-[760px] mx-auto mt-6 brand-card bg-surface p-6" role="status"><div className="flex gap-3 items-center"><span className="h-3 w-3 rounded-full bg-accent animate-pulse"/><p className="text-sm font-semibold">Abruf, Evidenzprüfung und Priorisierung laufen.</p></div><p className="text-xs text-light mt-2 ml-6">Das kann bei langsamen Websites einige Sekunden dauern.</p></div>}{error&&<div className="max-w-[760px] mx-auto mt-6 rounded-[22px] border border-red-900/15 bg-red-50 p-5" role="alert"><p className="text-sm font-semibold text-red-900">Analyse nicht möglich</p><p className="text-sm text-red-800 mt-1">{error}</p><button onClick={()=>submit()} className="mt-3 text-xs text-red-800 underline underline-offset-4">Erneut versuchen</button></div>}</div>
+      {result&&<section ref={resultRef} tabIndex={-1} className="mt-12 space-y-6 outline-none" aria-labelledby="result-title"><div className="brand-card bg-surface p-6 md:p-8"><div className="flex flex-col md:flex-row md:items-end justify-between gap-6"><div className="min-w-0"><p className="text-[.68rem] uppercase tracking-[.12em] font-semibold text-light mb-2">Öffentlich analysiert</p><h2 id="result-title" className="font-editorial text-xl md:text-2xl break-words">{result.scrape.title||new URL(result.url).hostname}</h2><p className="text-xs text-muted mt-2 break-all">{result.url}</p></div><div className="shrink-0"><p className="font-editorial text-6xl leading-none">{result.analysis.score}</p><p className="text-xs text-light mt-1">{result.analysis.score_label} · Orientierungswert</p></div></div><div className="mt-6 pt-5 border-t border-ink/10 flex flex-wrap gap-x-5 gap-y-2 text-[.72rem] text-light"><span>{result.scrape.word_count.toLocaleString('de-DE')} ausgelesene Wörter</span>{result.scrape.technologies.length>0&&<span>{result.scrape.technologies.join(' · ')}</span>}</div></div>
+        <div className="grid lg:grid-cols-[.8fr_1.2fr] gap-6"><div className="space-y-6"><article className="brand-card bg-[#F3EFEA] p-6 md:p-7"><p className="text-[.68rem] uppercase tracking-[.12em] font-semibold text-light mb-3">Einordnung</p><p className="text-sm md:text-base text-muted leading-relaxed">{result.analysis.summary}</p></article>{result.analysis.observations.length>0&&<article className="brand-card bg-surface p-6"><h3 className="font-editorial text-2xl mb-4">Was sichtbar war</h3><ul className="space-y-4">{result.analysis.observations.map((o,i)=><li key={i}><div className="flex justify-between gap-3"><strong className="text-sm">{o.label}</strong><span className="text-[.68rem] text-light">{o.confidence}</span></div><p className="text-sm text-muted mt-1">{o.finding}</p></li>)}</ul></article>}</div><div><h3 className="font-editorial text-2xl md:text-3xl mb-4">Priorisierte Ansatzpunkte</h3><div className="space-y-3">{result.analysis.opportunities.map((o,i)=><article key={i} className="brand-card bg-surface p-5 md:p-6"><div className="flex flex-col sm:flex-row justify-between gap-3"><h4 className="font-editorial text-xl">{i+1}. {o.title}</h4><div className="flex gap-2"><span className={`${badge} border-accent/40 bg-accent/15`}>Wirkung {o.impact}</span><span className={`${badge} border-ink/12`}>Aufwand {o.effort}</span></div></div><p className="text-sm text-muted leading-relaxed mt-3">{o.description}</p>{o.evidence&&<p className="text-xs text-light mt-3"><strong className="text-muted">Grundlage:</strong> {o.evidence}</p>}{o.first_step&&<p className="text-sm mt-4 p-3 rounded-xl bg-base"><strong>Erster Test:</strong> {o.first_step}</p>}</article>)}</div></div></div>
+        {(result.analysis.missing_basics.length>0||result.analysis.limitations.length>0)&&<div className="grid md:grid-cols-2 gap-6"><article className="brand-card bg-surface p-6"><h3 className="font-editorial text-xl mb-3">Zuerst klären</h3><ul className="space-y-2 text-sm text-muted">{result.analysis.missing_basics.map((x,i)=><li key={i}>— {x}</li>)}</ul></article><article className="brand-card bg-surface p-6"><h3 className="font-editorial text-xl mb-3">Grenzen dieser Analyse</h3><ul className="space-y-2 text-sm text-muted">{result.analysis.limitations.map((x,i)=><li key={i}>— {x}</li>)}</ul></article></div>}
+        <div className="rounded-[28px] bg-accent p-6 md:p-9"><p className="text-[.68rem] uppercase tracking-[.12em] font-bold text-ink/60 mb-3">Empfohlener nächster Schritt</p><p className="font-editorial text-2xl md:text-3xl leading-tight">{result.analysis.recommendation}</p><div className="flex flex-col sm:flex-row gap-3 mt-7"><Link to="/#kontakt" className="brand-pill justify-center bg-ink text-white">Analyse einordnen lassen</Link><button onClick={()=>{setResult(null);setUrl('');window.scrollTo({top:0,behavior:'smooth'})}} className="brand-pill justify-center bg-base/60">Andere Website prüfen</button></div></div>
+      </section>}
+    </div></main>;
 };

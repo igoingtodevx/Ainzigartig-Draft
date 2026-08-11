@@ -19,7 +19,7 @@ const services: ServiceItem[] = [
   },
   {
     title: 'KI-Website-Analyse',
-    eyebrow: '60 Sekunden',
+    eyebrow: 'Live Tool',
     description: 'Ihre URL wird analysiert und in konkrete KI-Potenziale, Aufwand, Wirkung und nächste Schritte übersetzt.',
     to: '/ki-analyse',
     icon: 'travel_explore',
@@ -40,7 +40,7 @@ const services: ServiceItem[] = [
   },
   {
     title: 'KI-Schnellstart',
-    eyebrow: '5 Tage',
+    eyebrow: 'Klarer Scope',
     description: 'Ein klar gescoptes Einstiegsprojekt für Unternehmen, die nicht monatelang über KI sprechen, sondern etwas Nutzbares testen wollen.',
     to: '/ki-schnellstart',
     icon: 'bolt',
@@ -61,7 +61,7 @@ const services: ServiceItem[] = [
   },
   {
     title: 'Analytics Dashboard',
-    eyebrow: 'Echtzeit',
+    eyebrow: 'Business-Tool',
     description: 'KPIs an einem Ort, ergänzt um KI-gestützte Einordnung und verständliche Hinweise auf Auffälligkeiten und Entwicklungen.',
     to: '/analytics-dashboard',
     icon: 'monitoring',
@@ -69,7 +69,7 @@ const services: ServiceItem[] = [
   {
     title: 'ROI-Rechner',
     eyebrow: 'Kalkulation',
-    description: 'Eine nachvollziehbare erste Schätzung, wo Automatisierung und KI in Ihrer Branche Zeit und Kosten reduzieren können.',
+    description: 'Ein transparenter Business Case mit frei editierbaren Annahmen, Kosten und Sensitivität — ohne versteckte Branchenbenchmarks.',
     to: '/roi-rechner',
     icon: 'calculate',
   },

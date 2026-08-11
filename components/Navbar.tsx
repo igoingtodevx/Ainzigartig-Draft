@@ -71,7 +71,7 @@ export const Navbar: React.FC = () => {
         <div className="flex items-center gap-3">
           <Link
             to="/#kontakt"
-            className="hidden sm:inline-flex brand-pill bg-ink text-white hover:bg-[#33312E] text-sm py-2.5 px-5"
+            className="!hidden sm:!inline-flex brand-pill bg-ink text-white hover:bg-[#33312E] text-sm py-2.5 px-5"
           >
             Erstgespräch buchen
           </Link>

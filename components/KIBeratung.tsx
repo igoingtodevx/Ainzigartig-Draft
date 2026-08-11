@@ -431,7 +431,7 @@ const FinalCTA: React.FC = () => (
 
       <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mt-8 text-xs text-light font-body">
         <span>✓ Kein Sales-Pitch</span>
-        <span>✓ DSGVO-konform</span>
+        <span>✓ Datenschutz im Setup berücksichtigt</span>
         <span>✓ Herstellerunabhängig</span>
       </div>
     </div>

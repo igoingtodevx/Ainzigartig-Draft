@@ -19,7 +19,7 @@ const work = [
   {
     label: 'Interaktiver Check',
     title: 'KI-Reifegrad',
-    description: 'Sechs Fragen ordnen ein, wie gut Prozesse, Daten und Organisation bereits für sinnvolle KI-Anwendungen vorbereitet sind.',
+    description: 'Sechs Dimensionen zeigen, welche Voraussetzungen für einen begrenzten KI-Pilot stehen und was zuerst geklärt werden sollte.',
     to: '/ki-audit',
     meta: 'Assessment · Priorisierung · Einstieg',
   },
@@ -57,7 +57,7 @@ export const CaseStudies: React.FC = () => (
           ))}
 
           <Link to="/insights" className="inline-flex items-center gap-2 mt-3 text-sm font-semibold text-ink hover:text-accent-hover transition-colors">
-            Aktuelle KI-Insights ansehen
+            Kuratierte KI-Insights ansehen
             <span className="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_forward</span>
           </Link>
         </div>

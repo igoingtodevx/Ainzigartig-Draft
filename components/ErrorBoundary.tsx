@@ -9,6 +9,13 @@ interface ErrorBoundaryState {
 }
 
 export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  private readonly content: React.ReactNode;
+
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.content = props.children;
+  }
+
   state: ErrorBoundaryState = { hasError: false };
 
   static getDerivedStateFromError(): ErrorBoundaryState {
@@ -47,6 +54,6 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
         </div>
       );
     }
-    return this.props.children;
+    return this.content;
   }
 }
