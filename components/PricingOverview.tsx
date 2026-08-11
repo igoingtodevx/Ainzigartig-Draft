@@ -214,7 +214,7 @@ export const PricingOverview: React.FC = () => {
           <p className="text-xs text-faint leading-relaxed">
             Alle Preise zzgl. MwSt. · Unverbindliche Preisauskunft · Individuelle Angebote nach Bedarf.
             <br />
-            DSGVO-Konformität ist in allen Paketen enthalten.
+            Datenschutzanforderungen werden je nach Einsatz gemeinsam geprüft und dokumentiert.
           </p>
         </div>
       </section>
