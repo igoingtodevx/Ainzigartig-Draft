@@ -5,7 +5,7 @@ import heroPoster from '../Assets/Gemini_Generated_Image_anzdlsanzdlsanzd.png';
 
 export const Hero: React.FC = () => {
   return (
-    <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-24 pb-14">
+    <section className="relative min-h-[82svh] md:min-h-[100svh] flex items-center justify-center overflow-hidden pt-20 md:pt-24 pb-10 md:pb-14">
       <video
         className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none"
         autoPlay
@@ -23,7 +23,7 @@ export const Hero: React.FC = () => {
 
       <div className="relative z-10 max-w-[1140px] mx-auto px-6 w-full text-center">
         <div className="max-w-[920px] mx-auto">
-          <p className="inline-flex items-center gap-2 rounded-full border border-accent/60 bg-base/65 backdrop-blur-sm px-4 py-1.5 text-xs font-semibold tracking-[0.08em] uppercase text-ink mb-7">
+          <p className="inline-flex items-center gap-2 rounded-full border border-accent/60 bg-base/65 backdrop-blur-sm px-3.5 md:px-4 py-1.5 text-[0.66rem] md:text-xs font-semibold tracking-[0.08em] uppercase text-ink mb-5 md:mb-7">
             <span className="w-2 h-2 rounded-full bg-accent" />
             KI-Beratung & Implementierung für KMU
           </p>
@@ -36,11 +36,11 @@ export const Hero: React.FC = () => {
             ?
           </h1>
 
-          <p className="mt-8 text-[clamp(1rem,2vw,1.28rem)] leading-relaxed text-muted font-body max-w-[680px] mx-auto">
-            Ainzigartig hilft kleinen und mittelständischen Unternehmen, KI gewinnbringend einzusetzen — von der ersten Idee bis zur produktiven Lösung.
+          <p className="mt-6 md:mt-8 text-[clamp(0.96rem,2vw,1.28rem)] leading-relaxed text-muted font-body max-w-[680px] mx-auto">
+            Wir automatisieren Abläufe und bauen KI- und Softwarelösungen, die zu Ihren Prozessen passen.
           </p>
 
-          <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+          <div className="mt-7 md:mt-9 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
             <Link
               to="/#kontakt"
               className="brand-pill bg-ink text-white hover:bg-[#33312E] px-7 py-3.5 text-[0.98rem] w-full sm:w-auto"

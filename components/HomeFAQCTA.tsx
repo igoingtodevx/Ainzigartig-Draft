@@ -27,9 +27,9 @@ export const HomeFAQ: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="py-24 md:py-32 bg-[#F3EFEA] border-y border-ink/10">
+    <section id="faq" className="py-14 md:py-32 bg-[#F3EFEA] border-y border-ink/10 scroll-mt-24">
       <div className="max-w-[900px] mx-auto px-6">
-        <header className="text-center mb-12 md:mb-14">
+        <header className="text-center mb-8 md:mb-14">
           <p className="text-xs uppercase tracking-[0.14em] font-semibold text-light mb-3">FAQ</p>
           <h2 className="font-editorial text-[clamp(2.35rem,5vw,3.5rem)] leading-[1.05] tracking-[-0.025em] text-ink font-normal">
             Häufige Fragen
@@ -43,17 +43,17 @@ export const HomeFAQ: React.FC = () => {
               <div key={item.q}>
                 <button
                   onClick={() => setOpenIndex(open ? null : i)}
-                  className="w-full flex items-center justify-between gap-6 p-5 md:px-7 md:py-6 text-left group"
+                  className="w-full flex items-center justify-between gap-4 px-4 py-3.5 md:px-7 md:py-6 text-left group"
                   aria-expanded={open}
                 >
-                  <span className="font-editorial text-lg md:text-xl text-ink leading-snug">{item.q}</span>
-                  <span className={`w-9 h-9 rounded-full border border-ink/15 flex items-center justify-center shrink-0 transition-transform duration-300 ${open ? 'rotate-45 bg-accent/25' : 'bg-base'}`}>
+                  <span className="font-editorial text-[1.05rem] md:text-xl text-ink leading-snug">{item.q}</span>
+                  <span className={`w-8 h-8 md:w-9 md:h-9 rounded-full border border-ink/15 flex items-center justify-center shrink-0 transition-transform duration-300 ${open ? 'rotate-45 bg-accent/25' : 'bg-base'}`}>
                     <span className="material-symbols-outlined text-[20px]">add</span>
                   </span>
                 </button>
                 <div className={`grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(.16,1,.3,1)] ${open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
                   <div className="overflow-hidden">
-                    <p className="px-5 md:px-7 pb-6 text-sm md:text-[0.95rem] text-muted leading-relaxed max-w-3xl">{item.a}</p>
+                    <p className="px-4 md:px-7 pb-4 md:pb-6 text-sm md:text-[0.95rem] text-muted leading-relaxed max-w-3xl">{item.a}</p>
                   </div>
                 </div>
               </div>

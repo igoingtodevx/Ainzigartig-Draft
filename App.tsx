@@ -38,7 +38,7 @@ const HomePage: React.FC = () => (
       description="Ainzigartig hilft KMUs dabei, generative KI gewinnbringend und praxistauglich einzusetzen."
     />
     <Hero />
-    <LogoSlider />
+    <div className="hidden md:block"><LogoSlider /></div>
     <HomeProcess />
     <Services />
     <CaseStudies />

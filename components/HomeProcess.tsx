@@ -61,14 +61,14 @@ export const HomeProcess: React.FC = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} id="prozess" className="py-24 md:py-32 bg-base border-y border-ink/10 scroll-mt-24">
+    <section ref={sectionRef} id="prozess" className="py-16 md:py-32 bg-base border-y border-ink/10 scroll-mt-24">
       <div className="max-w-[1140px] mx-auto px-6">
-        <header data-process-reveal className="process-reveal text-center max-w-3xl mx-auto mb-20 md:mb-24">
+        <header data-process-reveal className="process-reveal text-center max-w-3xl mx-auto mb-10 md:mb-24">
           <p className="text-xs uppercase tracking-[0.14em] font-semibold text-light mb-3">Unsere Methode</p>
           <h2 className="font-editorial text-[clamp(2.5rem,5vw,3.65rem)] leading-[1.05] tracking-[-0.025em] text-ink font-normal">
             Vom Problem zur Lösung.
           </h2>
-          <p className="text-base md:text-lg text-muted leading-relaxed mt-5 max-w-2xl mx-auto">
+          <p className="text-sm md:text-lg text-muted leading-relaxed mt-4 md:mt-5 max-w-2xl mx-auto">
             Kein sechsmonatiges Transformationsprogramm. Erst verstehen wir den relevanten Prozess, dann priorisieren wir nach Nutzen — und erst danach bauen wir.
           </p>
         </header>
@@ -76,28 +76,28 @@ export const HomeProcess: React.FC = () => {
         <div className="relative max-w-[980px] mx-auto">
           <div className="hidden md:block absolute left-[30px] top-7 bottom-24 w-px bg-ink/70" aria-hidden="true" />
 
-          <div className="space-y-24 md:space-y-32">
+          <div className="space-y-9 md:space-y-32">
             {steps.map((step) => (
               <article
                 key={step.number}
                 data-process-reveal
-                className="process-reveal grid md:grid-cols-[1.02fr_.98fr] gap-10 md:gap-16 items-center relative"
+                className="process-reveal grid md:grid-cols-[1.02fr_.98fr] gap-8 md:gap-16 items-center relative"
               >
                 <div className="flex gap-6 md:gap-8 items-start relative z-10">
                   <span className="font-editorial text-[4rem] md:text-[4.4rem] leading-[.82] text-ink bg-base min-w-[62px] pt-1">
                     {step.number}
                   </span>
                   <div className="pt-1">
-                    <h3 className="font-editorial text-[2rem] md:text-[2.55rem] leading-[1.05] text-ink mb-6">
+                    <h3 className="font-editorial text-[1.75rem] md:text-[2.55rem] leading-[1.05] text-ink mb-3 md:mb-6">
                       {step.title}
                     </h3>
-                    <p className="font-editorial text-[1.25rem] md:text-[1.45rem] leading-[1.55] text-muted max-w-[560px]">
+                    <p className="text-sm md:font-editorial md:text-[1.45rem] leading-relaxed md:leading-[1.55] text-muted max-w-[560px]">
                       {step.text}
                     </p>
                   </div>
                 </div>
 
-                <div className="relative min-h-[250px] md:min-h-[300px] flex items-center justify-center px-3 pb-5">
+                <div className="hidden md:flex relative min-h-[300px] items-center justify-center px-3 pb-5">
                   <img
                     src={step.image}
                     alt={step.alt}

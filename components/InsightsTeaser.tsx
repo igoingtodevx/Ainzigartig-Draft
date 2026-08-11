@@ -16,6 +16,27 @@ interface Payload {
   issue: Brief;
 }
 
+function isPayload(value: unknown): value is Payload {
+  if (!value || typeof value !== 'object') return false;
+
+  const payload = value as Partial<Payload>;
+  return (
+    typeof payload.generated_at === 'string'
+    && !Number.isNaN(Date.parse(payload.generated_at))
+    && typeof payload.vertical === 'string'
+    && !!payload.issue
+    && typeof payload.issue.headline === 'string'
+    && payload.issue.headline.trim().length > 0
+    && Array.isArray(payload.issue.trends)
+    && payload.issue.trends.every((trend) => (
+      !!trend
+      && typeof trend.title === 'string'
+      && typeof trend.signal === 'string'
+      && typeof trend.what === 'string'
+    ))
+  );
+}
+
 function issueWeek(iso: string): string {
   if (!iso) return '?';
   const d = new Date(iso);
@@ -44,27 +65,67 @@ const SIGNAL_DOT: Record<string, string> = {
 };
 
 export const InsightsTeaser: React.FC = () => {
-  const [data, setData] = useState<Payload | null>(null);
+  const [data, setData] = useState<Payload | null>();
 
   useEffect(() => {
     let cancelled = false;
     fetch('/api/insights')
-      .then((r) => r.json())
-      .then((p) => { if (!cancelled && !p.error) setData(p); })
-      .catch(() => { /* silent — teaser is non-essential */ });
+      .then((response) => {
+        if (!response.ok) throw new Error('Insights request failed');
+        return response.json() as Promise<unknown>;
+      })
+      .then((payload) => {
+        if (!cancelled) setData(isPayload(payload) ? payload : null);
+      })
+      .catch(() => {
+        if (!cancelled) setData(null);
+      });
     return () => { cancelled = true; };
   }, []);
 
-  if (!data) return null; // no flicker, just nothing
+  if (data === undefined) return null; // avoid flicker while the request is pending
+
+  if (data === null) {
+    return (
+      <section className="py-8 md:py-16u px-6 md:px-8 bg-surface/40 border-y border-faint/40">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 md:gap-6u">
+            <div className="flex-1 min-w-0">
+              <span className="block text-[10px] font-body uppercase tracking-[0.18em] text-muted mb-3u">
+                Insights
+              </span>
+              <h2 className="font-editorial text-xl md:text-3xl text-ink leading-[1.15] mb-2 md:mb-3u max-w-3xl">
+                KI-Insights für Entscheider:innen
+              </h2>
+              <p className="text-sm text-muted font-body leading-relaxed max-w-2xl">
+                Entdecken Sie unsere Einordnungen und Perspektiven rund um künstliche Intelligenz.
+              </p>
+            </div>
+            <a
+              href="/insights"
+              className="text-sm text-accent font-body group inline-flex items-center gap-2 self-start md:self-end shrink-0"
+            >
+              <span className="underline decoration-1 underline-offset-4 group-hover:decoration-2 transition-all duration-200">
+                Zu den KI-Insights
+              </span>
+              <span className="transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true">
+                →
+              </span>
+            </a>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   const topTrend = data.issue.trends?.[0];
   const sig = (topTrend?.signal || '').toLowerCase();
   const dot = SIGNAL_DOT[sig] || '◐';
 
   return (
-    <section className="py-12u md:py-16u px-6 md:px-8 bg-surface/40 border-y border-faint/40">
+    <section className="py-8 md:py-16u px-6 md:px-8 bg-surface/40 border-y border-faint/40">
       <div className="max-w-[1200px] mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6u">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 md:gap-6u">
           <div className="flex-1 min-w-0">
             <div className="flex flex-wrap items-baseline gap-x-3u gap-y-1u mb-3u">
               <span className="text-[10px] font-body uppercase tracking-[0.18em] text-ink tabular">
@@ -74,7 +135,7 @@ export const InsightsTeaser: React.FC = () => {
                 {timeAgo(data.generated_at)}
               </span>
             </div>
-            <h2 className="font-editorial text-2xl md:text-3xl text-ink leading-[1.15] mb-3u max-w-3xl">
+            <h2 className="font-editorial text-xl md:text-3xl text-ink leading-[1.15] mb-2 md:mb-3u max-w-3xl">
               {data.issue.headline}
             </h2>
             {topTrend && (
