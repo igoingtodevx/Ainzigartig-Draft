@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { Analytics } from '@vercel/analytics/react';
 import { Navbar } from './components/Navbar';
@@ -11,25 +11,26 @@ import { TeamSection } from './components/TeamSection';
 import { HomeFAQ } from './components/HomeFAQCTA';
 import { ClosingCTA } from './components/ClosingCTA';
 import { Footer } from './components/Footer';
-import { Impressum } from './components/Impressum';
-import { Datenschutz } from './components/Datenschutz';
-import { KIBeratung } from './components/KIBeratung';
-import { KIKundenservice } from './components/KIKundenservice';
-import { KIRecruiting } from './components/KIRecruiting';
-import { AnalyticsDashboard } from './components/AnalyticsDashboard';
-import { ROICalculator } from './components/ROICalculator';
-import { KISchnellstart } from './components/KISchnellstart';
-import { KIAudit } from './components/KIAudit';
-import { PricingOverview } from './components/PricingOverview';
-import { KIAnalyse } from './components/KIAnalyse';
-import { LiveAgentDemo } from './components/LiveAgentDemo';
-import { Projects } from './components/Projects';
-import { Insights } from './components/Insights';
 import { InsightsTeaser } from './components/InsightsTeaser';
 import { ChatBot } from './components/ChatBot';
 import { RouteMeta } from './components/RouteMeta';
 import { ErrorBoundary } from './components/ErrorBoundary';
-import { NotFound } from './components/NotFound';
+
+const Impressum=lazy(()=>import('./components/Impressum').then(m=>({default:m.Impressum})));
+const Datenschutz=lazy(()=>import('./components/Datenschutz').then(m=>({default:m.Datenschutz})));
+const KIBeratung=lazy(()=>import('./components/KIBeratung').then(m=>({default:m.KIBeratung})));
+const KIKundenservice=lazy(()=>import('./components/KIKundenservice').then(m=>({default:m.KIKundenservice})));
+const KIRecruiting=lazy(()=>import('./components/KIRecruiting').then(m=>({default:m.KIRecruiting})));
+const AnalyticsDashboard=lazy(()=>import('./components/AnalyticsDashboard').then(m=>({default:m.AnalyticsDashboard})));
+const ROICalculator=lazy(()=>import('./components/ROICalculator').then(m=>({default:m.ROICalculator})));
+const KISchnellstart=lazy(()=>import('./components/KISchnellstart').then(m=>({default:m.KISchnellstart})));
+const KIAudit=lazy(()=>import('./components/KIAudit').then(m=>({default:m.KIAudit})));
+const PricingOverview=lazy(()=>import('./components/PricingOverview').then(m=>({default:m.PricingOverview})));
+const KIAnalyse=lazy(()=>import('./components/KIAnalyse').then(m=>({default:m.KIAnalyse})));
+const LiveAgentDemo=lazy(()=>import('./components/LiveAgentDemo').then(m=>({default:m.LiveAgentDemo})));
+const Projects=lazy(()=>import('./components/Projects').then(m=>({default:m.Projects})));
+const Insights=lazy(()=>import('./components/Insights').then(m=>({default:m.Insights})));
+const NotFound=lazy(()=>import('./components/NotFound').then(m=>({default:m.NotFound})));
 
 const HomePage: React.FC = () => (
   <main>
@@ -81,7 +82,7 @@ const App: React.FC = () => (
     <div className="min-h-screen bg-base text-ink font-body antialiased overflow-x-hidden selection:bg-accent selection:text-ink">
       <Navbar />
       <ErrorBoundary>
-        <Routes>
+        <Suspense fallback={<main className="min-h-[70vh] pt-36 px-6" role="status"><p className="max-w-[1140px] mx-auto text-sm text-muted">Seite wird geladen…</p></main>}><Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/impressum" element={<Impressum />} />
           <Route path="/datenschutz" element={<Datenschutz />} />
@@ -98,7 +99,7 @@ const App: React.FC = () => (
           <Route path="/projekte" element={<Projects />} />
           <Route path="/insights" element={<Insights />} />
           <Route path="*" element={<NotFound />} />
-        </Routes>
+        </Routes></Suspense>
       </ErrorBoundary>
       <Footer />
       <ChatBot />

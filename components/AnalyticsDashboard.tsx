@@ -44,7 +44,7 @@ const Hero: React.FC = () => (
       </h1>
 
       <p className="text-muted text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-body mb-10">
-        Unser Analytics Dashboard bündelt Ihre Vertriebs- und Recruiting-Daten in einem zentralen Echtzeit-Überblick – mit KI-gestützten Analysen, die Ihnen sagen, was hinter den Zahlen steckt. Keine Tabellen mehr. Keine Kaffeesatzleserei. Nur klare Entscheidungsgrundlagen.
+        Unser Analytics Dashboard bündelt Ihre Vertriebs- und Recruiting-Daten in einem zentralen Überblick – mit KI-gestützten Analysen, die Kontext zu den Zahlen liefern. Welche Quellen angebunden werden und wie aktuell die Daten sind, hängt von Ihrem Setup ab.
       </p>
 
       {/* CTAs */}
@@ -68,10 +68,10 @@ const Hero: React.FC = () => (
       {/* Trust bar */}
       <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-xs md:text-sm text-muted font-body">
         {[
-          'Echtzeit-Daten aus allen relevanten Quellen',
+          'Daten aus den relevanten Quellen',
           'Keine Data-Science-Kenntnisse nötig',
-          'DSGVO-konform & EU-Serverstandorte',
-          'Live in 1–2 Wochen',
+          'Datenschutz im Setup mitgedacht',
+          'Zeitrahmen nach Scope',
         ].map((item) => (
           <span key={item} className="flex items-center gap-1.5">
             <span className="text-accent-hover">✓</span> {item}
@@ -87,10 +87,10 @@ const Hero: React.FC = () => (
 /* ───────────── STAT BAR ───────────── */
 
 const stats = [
-  { value: 'Echtzeit', label: 'statt wöchentliche Excel-Reports', color: 'text-accent-hover' },
-  { value: '1 Ort', label: 'für alle Vertriebs- und Recruiting-KPIs', color: 'text-accent-hover' },
-  { value: '3x', label: 'schnellere Entscheidungsfindung im Management', color: 'text-[#B77A36]' },
-  { value: 'Ø 6 Std.', label: 'pro Woche gespart durch automatisiertes Reporting', color: 'text-accent-hover' },
+  { value: '1 Ort', label: 'für Ihre angebundenen Kennzahlen', color: 'text-accent-hover' },
+  { value: 'Kontext', label: 'statt isolierter Kennzahlen', color: 'text-accent-hover' },
+  { value: 'Weniger', label: 'manuelle Schritte im Reporting', color: 'text-[#B77A36]' },
+  { value: 'Klarer', label: 'durch definierte Fragen und Ansichten', color: 'text-accent-hover' },
 ];
 
 const StatBar: React.FC = () => (
@@ -173,7 +173,7 @@ const Problem: React.FC = () => (
 
 const leistungen = [
   {
-    title: 'Echtzeit-Datenaggregation',
+    title: 'Datenaggregation nach Bedarf',
     text: 'Alle relevanten Datenquellen – CRM, ATS, ERP, Marketing-Tools, Excel-Importe – werden automatisch zusammengeführt. Kein manuelles Zusammenklicken, keine veralteten Reports.',
     icon: 'sync',
   },
@@ -193,7 +193,7 @@ const leistungen = [
     icon: 'summarize',
   },
   {
-    title: 'Echtzeit-Alerts',
+    title: 'Hinweise und Alerts nach Setup',
     text: 'Definieren Sie Schwellwerte – und das System informiert Sie sofort, wenn etwas aus dem Rahmen fällt. Bevor es zum Problem wird.',
     icon: 'notifications_active',
   },
@@ -213,7 +213,7 @@ const Loesung: React.FC = () => (
         Und eine KI, die Ihnen erklärt, was sie bedeuten.
       </SectionHeadline>
       <LeadText>
-        Wir verbinden Ihre bestehenden Systeme, bauen ein zentrales Dashboard auf das Ihre wichtigsten KPIs in Echtzeit abbildet – und ergänzen es um KI-gestützte Analysen, die nicht nur zeigen was passiert, sondern auch warum.
+        Wir verbinden Ihre bestehenden Systeme, bauen ein zentrales Dashboard für die vereinbarten KPIs und ergänzen es um KI-gestützte Analysen, die nicht nur zeigen, was passiert, sondern auch Kontext liefern.
       </LeadText>
 
       {/* Leistungen grid */}
@@ -246,7 +246,7 @@ const Loesung: React.FC = () => (
             Ihre Unternehmensdaten gehören zu den sensibelsten, die es gibt.
           </h4>
           <p className="text-muted text-sm leading-relaxed font-body">
-            Umsatzzahlen, Personaldaten, Bewerberdaten – alles verarbeiten wir ausschließlich auf EU-Servern, ohne Datenweitergabe an Dritte. Zugriffskontrollen, Rollenkonzepte und Audit-Logs sind standardmäßig enthalten. DSGVO-Konformität ist kein Add-on, sondern Grundvoraussetzung.
+            Umsatzzahlen, Personaldaten und Bewerberdaten verlangen ein geprüftes Daten- und Zugriffsmodell. Speicherort, Anbieter, Rollen, Audit-Logs und mögliche Datenweitergaben werden vor einer produktiven Anbindung gemeinsam geklärt; eine pauschale Konformitätszusage ersetzt das nicht.
           </p>
         </div>
       </div>
@@ -284,7 +284,7 @@ const Prozess: React.FC = () => (
     <div className="max-w-4xl mx-auto text-center">
       <SectionLabel>Wie es läuft</SectionLabel>
       <SectionHeadline>
-        In zwei Wochen von Datenchaos<br className="hidden sm:block" />
+        Von Datenchaos<br className="hidden sm:block" />
         zu klaren Entscheidungsgrundlagen.
       </SectionHeadline>
       <LeadText>
@@ -319,7 +319,7 @@ const useCases = [
     category: 'Vertrieb & Pipeline',
     icon: 'trending_up',
     title: 'Wo hakt es im Verkaufsprozess wirklich?',
-    text: 'Pipeline-Entwicklung, Conversion je Stufe, Forecasts, Performance je Mitarbeiter und Region – in Echtzeit, nicht erst im Monatsmeeting.',
+    text: 'Pipeline-Entwicklung, Conversion je Stufe, Forecasts, Performance je Mitarbeiter und Region – in der Aktualisierung, die Ihre Anbindungen ermöglichen.',
     result: 'Früher eingreifen, bevor Deals verloren gehen',
     color: 'pink' as const,
   },
@@ -459,12 +459,12 @@ const Zielgruppe: React.FC = () => (
 /* ───────────── VERGLEICH ───────────── */
 
 const comparisonRows = [
-  { label: 'Reporting', before: 'Manuell, wöchentlich', after: 'Automatisch, in Echtzeit' },
+  { label: 'Reporting', before: 'Manuell zusammengeführt', after: 'Strukturiert im Dashboard' },
   { label: 'Datenbasis', before: 'Mehrere Systeme, inkonsistent', after: 'Eine Quelle, immer aktuell' },
   { label: 'Reaktionszeit', before: 'Wochen nach dem Problem', after: 'Sofort per Alert' },
   { label: 'Entscheidungsgrundlage', before: 'Bauchgefühl & Excel', after: 'KI-gestützte Analyse' },
   { label: 'Managementblick', before: 'Vergangenheit', after: 'Gegenwart & Trends' },
-  { label: 'Reportingaufwand', before: 'Ø 6 Std./Woche', after: 'Unter 30 Minuten' },
+  { label: 'Reportingaufwand', before: 'Viele manuelle Schritte', after: 'Wiederholbare Abläufe' },
 ];
 
 const Vergleich: React.FC = () => (

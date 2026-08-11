@@ -18,7 +18,7 @@ function uint8ToBase64(bytes: Uint8Array): string {
 }
 
 // Render the first N pages of a PDF to PNG dataURLs, return base64 arrays.
-// Renders at 2x scale for sharp OCR.
+// Moderate resolution keeps multi-page requests within the API body limit.
 async function pdfToImages(file: File, maxPages: number): Promise<{ base64: string; mime_type: string }[]> {
   const bytes = new Uint8Array(await file.arrayBuffer());
   const loadingTask = pdfjsLib.getDocument({ data: bytes });
@@ -27,16 +27,16 @@ async function pdfToImages(file: File, maxPages: number): Promise<{ base64: stri
   const results: { base64: string; mime_type: string }[] = [];
   for (let i = 1; i <= pageCount; i++) {
     const page = await pdf.getPage(i);
-    const viewport = page.getViewport({ scale: 2.0 });
+    const viewport = page.getViewport({ scale: 1.45 });
     const canvas = document.createElement('canvas');
     canvas.width = Math.ceil(viewport.width);
     canvas.height = Math.ceil(viewport.height);
     const ctx = canvas.getContext('2d');
     if (!ctx) continue;
     await page.render({ canvasContext: ctx, viewport, canvas }).promise;
-    const dataUrl = canvas.toDataURL('image/png');
+    const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
     const b64 = dataUrl.split(',', 2)[1] || '';
-    if (b64) results.push({ base64: b64, mime_type: 'image/png' });
+    if (b64) results.push({ base64: b64, mime_type: 'image/jpeg' });
   }
   // pdfjs-dist@6 removed the legacy destroy() in favor of cleanup() on PDFDocumentProxy
   if (typeof (pdf as any).destroy === 'function') {
@@ -47,7 +47,8 @@ async function pdfToImages(file: File, maxPages: number): Promise<{ base64: stri
   return results;
 }
 
-const mailto = 'mailto:info@ainzigartig.de?subject=Live%20Agent%20Demo%20%E2%80%94%20für%20unser%20Unternehmen';
+const MAX_FILE_BYTES = 4 * 1024 * 1024;
+const ACCEPTED_TYPES = ['application/pdf', 'image/png', 'image/jpeg', 'image/webp'];
 
 interface KeyField {
   [key: string]: string;
@@ -203,8 +204,12 @@ export const LiveAgentDemo: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [dragOver, setDragOver] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const requestRef = useRef<AbortController | null>(null);
 
   const runSample = useCallback(async (sampleText: string) => {
+    requestRef.current?.abort();
+    const controller = new AbortController();
+    requestRef.current = controller;
     setAnalyzing(true);
     setError(null);
     setResult(null);
@@ -219,30 +224,36 @@ export const LiveAgentDemo: React.FC = () => {
       const resp = await fetch('/api/live-agent-demo', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ mode: 'sample', text: sampleText }),
+        body: JSON.stringify({ mode: 'sample', text: sampleText }), signal: controller.signal,
       });
-      const data = await resp.json();
+      const data = await resp.json().catch(() => ({}));
       if (!resp.ok) {
         setError(data.error || 'Analyse fehlgeschlagen.');
         return;
       }
-      // Let the final thinking step complete
-      setTimeout(() => {
-        setResult(data);
-        setAnalyzing(false);
-      }, 200);
+      setResult(data);
     } catch (e) {
-      setError('Verbindung fehlgeschlagen. Bitte versuchen Sie es erneut.');
+      if ((e as Error).name !== 'AbortError') setError('Verbindung fehlgeschlagen. Bitte versuchen Sie es erneut.');
     } finally {
       clearInterval(stepInterval);
+      if (requestRef.current === controller) { requestRef.current = null; setAnalyzing(false); }
     }
   }, []);
 
   const runUpload = useCallback(async (uploadedFile: File) => {
-    if (uploadedFile.size > 6 * 1024 * 1024) {
-      setError('Datei zu gross (max 6 MB).');
+    if (!ACCEPTED_TYPES.includes(uploadedFile.type)) {
+      setError('Bitte verwenden Sie PDF, PNG, JPG oder WebP.');
+      setFile(null);
       return;
     }
+    if (uploadedFile.size > MAX_FILE_BYTES) {
+      setError('Die Datei ist größer als 4 MB. Bitte verkleinern oder teilen Sie das Dokument.');
+      setFile(null);
+      return;
+    }
+    requestRef.current?.abort();
+    const controller = new AbortController();
+    requestRef.current = controller;
     setAnalyzing(true);
     setError(null);
     setResult(null);
@@ -260,8 +271,6 @@ export const LiveAgentDemo: React.FC = () => {
         images = await pdfToImages(uploadedFile, 5);
         if (images.length === 0) {
           setError('PDF enthaelt keine lesbaren Seiten.');
-          setAnalyzing(false);
-          clearInterval(stepInterval);
           return;
         }
       } else {
@@ -277,25 +286,19 @@ export const LiveAgentDemo: React.FC = () => {
           mode: 'upload',
           images,
           filename: uploadedFile.name,
-        }),
+        }), signal: controller.signal,
       });
-      const data = await resp.json();
+      const data = await resp.json().catch(() => ({}));
       if (!resp.ok) {
         setError(data.error || 'Analyse fehlgeschlagen.');
-        setAnalyzing(false);
-        clearInterval(stepInterval);
         return;
       }
-      setTimeout(() => {
-        setResult(data);
-        setAnalyzing(false);
-      }, 200);
-    } catch (e: any) {
-      console.error('Live agent runUpload error:', e);
-      setError('Verbindung fehlgeschlagen. Bitte versuchen Sie es erneut.' + (e?.message ? ` (${e.message})` : ''));
-      setAnalyzing(false);
+      setResult(data);
+    } catch (e) {
+      if ((e as Error).name !== 'AbortError') setError((e as Error).message || 'Das Dokument konnte nicht verarbeitet werden.');
     } finally {
       clearInterval(stepInterval);
+      if (requestRef.current === controller) { requestRef.current = null; setAnalyzing(false); }
     }
   }, []);
 
@@ -312,11 +315,14 @@ export const LiveAgentDemo: React.FC = () => {
   };
 
   const handleReset = () => {
+    requestRef.current?.abort();
+    requestRef.current = null;
     setFile(null);
     setResult(null);
     setError(null);
     setAnalyzing(false);
     setThinkingStep(0);
+    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
   return (
@@ -334,7 +340,7 @@ export const LiveAgentDemo: React.FC = () => {
           </h1>
           <p className="text-muted text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
             Rechnung, E-Mail, Angebot oder Vertrag — der Agent liest, strukturiert und schlägt
-            nächste Schritte vor. Sie sehen den Prozess live. Keine Anmeldung. Keine dauerhafte Speicherung durch diese Demo-Oberfläche.
+            nächste Schritte vor. Die Ergebnisse sind KI-generierte Prüfvorschläge und sollten vor geschäftlichen Entscheidungen kontrolliert werden.
           </p>
         </div>
       </section>
@@ -349,13 +355,17 @@ export const LiveAgentDemo: React.FC = () => {
               onDragLeave={() => setDragOver(false)}
               onDrop={handleDrop}
               onClick={() => fileInputRef.current?.click()}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInputRef.current?.click(); } }}
+              role="button"
+              tabIndex={0}
+              aria-label="Dokument auswählen: PDF, PNG, JPG oder WebP bis 4 MB"
               className={`brand-card border-2 border-dashed bg-surface p-10 text-center cursor-pointer transition-all mb-8 rounded-[26px] ${
                 dragOver ? 'border-accent bg-accent/5' : 'border-faint/30 hover:border-faint/60'
               }`}
             >
               <span className="material-symbols-outlined text-4xl text-muted mb-3 block">upload_file</span>
-              <p className="text-sm text-ink mb-1">PDF, PNG oder JPG hochladen (max. 6 MB)</p>
-              <p className="text-xs text-faint">Rechnung, E-Mail-Screenshot, Angebot, Vertrag — was Sie gerade haben</p>
+              <p className="text-sm text-ink mb-1">PDF, PNG, JPG oder WebP hochladen (max. 4 MB)</p>
+              <p className="text-xs text-faint">Bei PDFs verarbeitet die Demo höchstens die ersten fünf Seiten.</p>
               <input
                 ref={fileInputRef}
                 type="file"
@@ -390,7 +400,7 @@ export const LiveAgentDemo: React.FC = () => {
       {analyzing && (
         <section className="px-6 md:px-8 pb-16">
           <div className="max-w-[700px] mx-auto">
-            <div className="brand-card bg-surface p-8 rounded-[24px]">
+            <div className="brand-card bg-surface p-8 rounded-[24px]" role="status" aria-live="polite" aria-busy="true">
               <div className="flex items-center gap-3 mb-6">
                 <span className="material-symbols-outlined text-accent animate-spin">progress_activity</span>
                 <p className="text-sm text-ink font-medium">Agent arbeitet...</p>
@@ -426,7 +436,7 @@ export const LiveAgentDemo: React.FC = () => {
       {error && (
         <section className="px-6 md:px-8 pb-12">
           <div className="max-w-[700px] mx-auto">
-            <div className="rounded-[22px] border border-red-900/15 bg-red-50 p-6">
+            <div className="rounded-[22px] border border-red-900/15 bg-red-50 p-6" role="alert">
               <p className="text-sm text-red-700 mb-3">{error}</p>
               <button
                 onClick={handleReset}
@@ -536,6 +546,8 @@ export const LiveAgentDemo: React.FC = () => {
                 </p>
               </div>
             )}
+
+            <p className="text-xs text-faint leading-relaxed mb-8 p-4 rounded-2xl bg-surface border border-ink/10">Demo-Hinweis: Der Agent extrahiert und priorisiert, führt aber keine vorgeschlagene Aktion automatisch aus. Bitte laden Sie hier keine vertraulichen oder besonders sensiblen Dokumente hoch.</p>
 
             {/* CTAs */}
             <div className="border-t border-faint/30 pt-8 flex flex-col sm:flex-row gap-4 items-center justify-between">

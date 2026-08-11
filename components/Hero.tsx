@@ -29,15 +29,14 @@ export const Hero: React.FC = () => {
           </p>
 
           <h1 className="font-editorial text-[clamp(2.7rem,7vw,5.2rem)] font-normal leading-[0.98] tracking-[-0.035em] text-ink drop-shadow-[0_2px_14px_rgba(250,248,245,0.95)]">
-            Bereit für eine Zukunft<br className="hidden sm:block" /> mit{' '}
+            Wir bauen die Software,<br className="hidden sm:block" /> die{' '}
             <span className="hand-underline font-body font-extrabold tracking-[-0.045em]">
-              Generativer KI
+              Arbeit abnimmt.
             </span>
-            ?
           </h1>
 
           <p className="mt-8 text-[clamp(1rem,2vw,1.28rem)] leading-relaxed text-muted font-body max-w-[680px] mx-auto">
-            Ainzigartig hilft kleinen und mittelständischen Unternehmen, KI gewinnbringend einzusetzen — von der ersten Idee bis zur produktiven Lösung.
+            Automatisierungen, interne Tools, Dashboards und KI-Assistenten für KMU — vom abgegrenzten Prozess bis zur integrierten, überprüfbaren Lösung.
           </p>
 
           <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
@@ -45,19 +44,19 @@ export const Hero: React.FC = () => {
               to="/#kontakt"
               className="brand-pill bg-ink text-white hover:bg-[#33312E] px-7 py-3.5 text-[0.98rem] w-full sm:w-auto"
             >
-              Erstgespräch vereinbaren
+              Prozess besprechen
               <span className="material-symbols-outlined text-[19px]" aria-hidden="true">arrow_forward</span>
             </Link>
             <Link
               to="/#services"
               className="brand-pill bg-base/55 backdrop-blur-sm text-ink hover:bg-base/80 px-7 py-3.5 text-[0.98rem] w-full sm:w-auto"
             >
-              Lösungen ansehen
+              Live-Demos testen
             </Link>
           </div>
 
           <p className="mt-4 text-xs text-light font-body">
-            30 Minuten · kostenlos · kein Verkaufsdruck
+            Kostenloses Erstgespräch · konkrete Einordnung statt Standard-Pitch
           </p>
         </div>
       </div>

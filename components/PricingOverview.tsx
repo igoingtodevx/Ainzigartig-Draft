@@ -13,7 +13,7 @@ const pricing: PricingItem[] = [
   {
     name: 'KI-Schnellstart',
     description: 'Ein klar abgegrenzter erster KI-Assistent als pragmatischer Einstieg.',
-    features: ['1 klarer Use Case', 'Arbeit mit Ihren Daten', 'Integration in vorhandene Abläufe', '5 Tage Zielrahmen', 'Nachbesserung inklusive'],
+    features: ['1 klarer Use Case', 'Arbeit mit Ihren Daten', 'Integration in vorhandene Abläufe', 'Zielrahmen nach Scope', 'Feinschliff & Übergabe'],
     tier: 'Einstieg',
   },
   {

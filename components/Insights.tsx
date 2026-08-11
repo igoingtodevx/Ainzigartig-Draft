@@ -127,7 +127,7 @@ export const Insights: React.FC = () => {
 
               <div className="max-w-2xl lg:pb-2">
                 <p className="text-base md:text-lg text-muted leading-relaxed mb-6">
-                  Unser Watcher scannt und kuratiert laufend relevante KI- und Digitalisierungssignale für den deutschen Mittelstand. Hier zeigen wir die aktuelle Ausgabe in einer kompakten, lesbaren Form.
+                  Hier zeigen wir eine automatisch erzeugte oder hinterlegte Ausgabe unseres Industry Watchers. Inhalte sind eine redaktionell noch zu prüfende Orientierung; Datum und Quellenlinks bestimmen, wie aktuell und belastbar ein Signal ist.
                 </p>
                 <a
                   href={WATCHER_URL}

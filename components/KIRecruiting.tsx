@@ -69,7 +69,7 @@ const Hero: React.FC = () => (
       {/* Trust bar */}
       <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-xs md:text-sm text-muted font-body">
         {[
-          'Screening in Minuten statt Tagen',
+          'Vorstrukturierte Sichtung nach Kriterien',
           'Nachvollziehbare Kriterien statt Bauchgefühl',
           'Datenschutz für Bewerberdaten mitgedacht',
           'Integrierbar in bestehende HR-Systeme',
@@ -113,7 +113,7 @@ const painCards = [
   {
     emoji: '📬',
     title: 'Bewerbungsflut ohne System',
-    text: 'Eine Stellenanzeige, 150 Bewerbungen. Davon sind vielleicht 20 wirklich relevant. Aber welche? Das herauszufinden kostet Stunden – pro Stelle, pro Runde.',
+    text: 'Eine Stellenanzeige, viele Bewerbungen. Welche Profile passen wirklich? Das herauszufinden kostet Zeit – pro Stelle, pro Runde.',
     color: 'yellow' as const,
   },
   {
@@ -199,8 +199,8 @@ const leistungen = [
     icon: 'hub',
   },
   {
-    title: 'Vollständig DSGVO-konform',
-    text: 'Bewerberdaten sind besonders schützenswert. Wir verarbeiten ausschließlich auf EU-Servern, mit klaren Löschroutinen und dokumentierter Rechtsgrundlage – revision- und auditsicher.',
+    title: 'Datenschutz im Recruiting-Setup',
+    text: 'Bewerberdaten sind besonders schützenswert. Datenflüsse, Speicherorte, Löschroutinen und Zugriffsrechte werden vor der produktiven Nutzung geprüft und dokumentiert; die konkrete rechtliche Bewertung bleibt anwendungsabhängig.',
     icon: 'verified_user',
   },
 ];
@@ -460,12 +460,12 @@ const Zielgruppe: React.FC = () => (
 /* ───────────── VERGLEICH ───────────── */
 
 const comparisonRows = [
-  { label: 'CV-Sichtung', before: '2–5 Tage manuell', after: 'Minuten, automatisch' },
+  { label: 'CV-Sichtung', before: 'Manueller Aufwand', after: 'Vorstrukturierte Vorschläge' },
   { label: 'Kandidatenvergleich', before: 'Subjektiv, inkonsistent', after: 'Strukturiert, nachvollziehbar' },
-  { label: 'Erste Rückmeldung', before: 'Oft nach Tagen', after: 'Automatisch innerhalb von Stunden' },
-  { label: 'Parallele Stellen', before: 'Kaum skalierbar', after: 'Beliebig skalierbar' },
-  { label: 'Bewerberdaten', before: 'Verteilt in E-Mail-Postfächern', after: 'Zentral, strukturiert, DSGVO-konform' },
-  { label: 'Besetzungsdauer', before: 'Ø 6–10 Wochen', after: 'Ø 3–5 Wochen' },
+  { label: 'Erste Rückmeldung', before: 'Oft verzögert', after: 'Definierbarer Workflow' },
+  { label: 'Parallele Stellen', before: 'Manuell schwer vergleichbar', after: 'Mehr Fälle mit gleichem Ablauf' },
+  { label: 'Bewerberdaten', before: 'Verteilt in E-Mail-Postfächern', after: 'Zentral und mit definierten Zugriffen' },
+  { label: 'Besetzungsdauer', before: 'Abhängig von Prozess und Volumen', after: 'Abhängig von Prozess, Daten und Team' },
 ];
 
 const Vergleich: React.FC = () => (
