@@ -44,7 +44,7 @@ const Hero: React.FC = () => (
       </h1>
 
       <p className="text-muted text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-body mb-10">
-        Unser Analytics Dashboard bündelt Ihre Vertriebs- und Recruiting-Daten in einem zentralen Echtzeit-Überblick – mit KI-gestützten Analysen, die Ihnen sagen, was hinter den Zahlen steckt. Keine Tabellen mehr. Keine Kaffeesatzleserei. Nur klare Entscheidungsgrundlagen.
+        Unser Analytics Dashboard bündelt Ihre Vertriebs- und Recruiting-Daten in einem zentralen Überblick – je nach Anbindung in Echtzeit oder definierten Intervallen. KI-gestützte Analysen helfen dabei, Muster und Abweichungen einzuordnen.
       </p>
 
       {/* CTAs */}
@@ -68,10 +68,10 @@ const Hero: React.FC = () => (
       {/* Trust bar */}
       <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-xs md:text-sm text-muted font-body">
         {[
-          'Echtzeit-Daten aus allen relevanten Quellen',
+          'Aktuelle Daten aus angebundenen Quellen',
           'Keine Data-Science-Kenntnisse nötig',
-          'DSGVO-konform & EU-Serverstandorte',
-          'Live in 1–2 Wochen',
+          'Datenflüsse & Zugriffe gemeinsam prüfen',
+          'Umfang passend zum Bedarf',
         ].map((item) => (
           <span key={item} className="flex items-center gap-1.5">
             <span className="text-accent-hover">✓</span> {item}
@@ -87,10 +87,10 @@ const Hero: React.FC = () => (
 /* ───────────── STAT BAR ───────────── */
 
 const stats = [
-  { value: 'Echtzeit', label: 'statt wöchentliche Excel-Reports', color: 'text-accent-hover' },
-  { value: '1 Ort', label: 'für alle Vertriebs- und Recruiting-KPIs', color: 'text-accent-hover' },
-  { value: '3x', label: 'schnellere Entscheidungsfindung im Management', color: 'text-[#B77A36]' },
-  { value: 'Ø 6 Std.', label: 'pro Woche gespart durch automatisiertes Reporting', color: 'text-accent-hover' },
+  { value: 'Aktuell', label: 'im Takt der angebundenen Datenquelle', color: 'text-accent-hover' },
+  { value: '1 Ort', label: 'für vereinbarte operative Kennzahlen', color: 'text-accent-hover' },
+  { value: 'Rollen', label: 'Ansichten passend zur Verantwortung', color: 'text-[#B77A36]' },
+  { value: 'Alerts', label: 'für definierte Abweichungen', color: 'text-accent-hover' },
 ];
 
 const StatBar: React.FC = () => (
@@ -173,8 +173,8 @@ const Problem: React.FC = () => (
 
 const leistungen = [
   {
-    title: 'Echtzeit-Datenaggregation',
-    text: 'Alle relevanten Datenquellen – CRM, ATS, ERP, Marketing-Tools, Excel-Importe – werden automatisch zusammengeführt. Kein manuelles Zusammenklicken, keine veralteten Reports.',
+    title: 'Datenaggregation aus angebundenen Quellen',
+    text: 'Alle vereinbarten Datenquellen – CRM, ATS, ERP, Marketing-Tools oder Excel-Importe – können verbunden und in einem nachvollziehbaren Überblick zusammengeführt werden. Umfang und Aktualisierung hängen vom Setup ab.',
     icon: 'sync',
   },
   {
@@ -213,7 +213,7 @@ const Loesung: React.FC = () => (
         Und eine KI, die Ihnen erklärt, was sie bedeuten.
       </SectionHeadline>
       <LeadText>
-        Wir verbinden Ihre bestehenden Systeme, bauen ein zentrales Dashboard auf das Ihre wichtigsten KPIs in Echtzeit abbildet – und ergänzen es um KI-gestützte Analysen, die nicht nur zeigen was passiert, sondern auch warum.
+        Wir verbinden Ihre bestehenden Systeme, bauen ein zentrales Dashboard auf das Ihre wichtigsten KPIs je nach Anbindung in Echtzeit oder definierten Intervallen abbildet – und ergänzen es um KI-gestützte Analysen, die bei der Einordnung von Mustern und Abweichungen helfen.
       </LeadText>
 
       {/* Leistungen grid */}
@@ -246,7 +246,7 @@ const Loesung: React.FC = () => (
             Ihre Unternehmensdaten gehören zu den sensibelsten, die es gibt.
           </h4>
           <p className="text-muted text-sm leading-relaxed font-body">
-            Umsatzzahlen, Personaldaten, Bewerberdaten – alles verarbeiten wir ausschließlich auf EU-Servern, ohne Datenweitergabe an Dritte. Zugriffskontrollen, Rollenkonzepte und Audit-Logs sind standardmäßig enthalten. DSGVO-Konformität ist kein Add-on, sondern Grundvoraussetzung.
+            Umsatzzahlen, Personaldaten, Bewerberdaten – Datenflüsse, Zugriffskontrollen und Rollenkonzepte werden passend zu Ihrem Einsatz definiert. Datenschutzanforderungen und offene Punkte bleiben dokumentiert.
           </p>
         </div>
       </div>
@@ -319,7 +319,7 @@ const useCases = [
     category: 'Vertrieb & Pipeline',
     icon: 'trending_up',
     title: 'Wo hakt es im Verkaufsprozess wirklich?',
-    text: 'Pipeline-Entwicklung, Conversion je Stufe, Forecasts, Performance je Mitarbeiter und Region – in Echtzeit, nicht erst im Monatsmeeting.',
+    text: 'Pipeline-Entwicklung, Conversion je Stufe, Forecasts, Performance je Mitarbeiter und Region – abhängig von Datenquelle und Aktualisierungsintervall.',
     result: 'Früher eingreifen, bevor Deals verloren gehen',
     color: 'pink' as const,
   },
@@ -459,12 +459,12 @@ const Zielgruppe: React.FC = () => (
 /* ───────────── VERGLEICH ───────────── */
 
 const comparisonRows = [
-  { label: 'Reporting', before: 'Manuell, wöchentlich', after: 'Automatisch, in Echtzeit' },
-  { label: 'Datenbasis', before: 'Mehrere Systeme, inkonsistent', after: 'Eine Quelle, immer aktuell' },
-  { label: 'Reaktionszeit', before: 'Wochen nach dem Problem', after: 'Sofort per Alert' },
+  { label: 'Reporting', before: 'Manuell, wöchentlich', after: 'Aktuell je nach Anbindung' },
+  { label: 'Datenbasis', before: 'Mehrere Systeme, inkonsistent', after: 'Vereinbarte Quellen, nachvollziehbar gebündelt' },
+  { label: 'Reaktionszeit', before: 'Wochen nach dem Problem', after: 'Hinweise bei definierten Abweichungen' },
   { label: 'Entscheidungsgrundlage', before: 'Bauchgefühl & Excel', after: 'KI-gestützte Analyse' },
   { label: 'Managementblick', before: 'Vergangenheit', after: 'Gegenwart & Trends' },
-  { label: 'Reportingaufwand', before: 'Ø 6 Std./Woche', after: 'Unter 30 Minuten' },
+  { label: 'Reportingaufwand', before: 'Manuell, je nach Setup', after: 'Automatisierbar, Umfang prüfen' },
 ];
 
 const Vergleich: React.FC = () => (
@@ -527,7 +527,7 @@ const faqItems = [
   },
   {
     q: 'Können verschiedene Nutzer unterschiedliche Ansichten haben?',
-    a: 'Ja. Rollenbasierte Zugriffskonzepte sind standardmäßig integriert. Der Vertriebsleiter sieht andere Metriken als die HR-Leiterin, die Geschäftsführung sieht den Gesamtüberblick. Jede Ansicht ist individuell konfigurierbar.',
+    a: 'Rollenbasierte Zugriffskonzepte können vorgesehen werden. Ansichten lassen sich je nach Verantwortung und vereinbarten Kennzahlen trennen.',
   },
   {
     q: 'Was passiert, wenn sich unsere Systeme oder Anforderungen ändern?',

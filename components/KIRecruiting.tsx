@@ -69,9 +69,9 @@ const Hero: React.FC = () => (
       {/* Trust bar */}
       <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-xs md:text-sm text-muted font-body">
         {[
-          'Screening in Minuten statt Tagen',
-          'Nachvollziehbare Kriterien statt Bauchgefühl',
-          'Datenschutz für Bewerberdaten mitgedacht',
+          'Strukturierte Kriterien statt Bauchgefühl',
+          'Menschliche Entscheidung bleibt zentral',
+          'Datenschutz und Datenflüsse gemeinsam klären',
           'Integrierbar in bestehende HR-Systeme',
         ].map((item) => (
           <span key={item} className="flex items-center gap-1.5">
@@ -88,10 +88,10 @@ const Hero: React.FC = () => (
 /* ───────────── STAT BAR ───────────── */
 
 const stats = [
-  { value: 'Schneller', label: 'relevante Profile vergleichbar machen', color: 'text-[#B77A36]' },
-  { value: 'Weniger', label: 'wiederkehrende Sichtungsarbeit', color: 'text-accent-hover' },
-  { value: 'Mehr Fokus', label: 'für Gespräche und Entscheidungen', color: 'text-accent-hover' },
-  { value: 'Strukturiert', label: 'von Eingang bis Vorauswahl', color: 'text-[#B77A36]' },
+  { value: 'Kriterien', label: 'vorab festgelegt und nachvollziehbar', color: 'text-[#B77A36]' },
+  { value: 'Struktur', label: 'Unterlagen einheitlich aufbereitet', color: 'text-accent-hover' },
+  { value: 'Mensch', label: 'entscheidet über jede Bewerbung', color: 'text-accent-hover' },
+  { value: 'Prüfung', label: 'Qualität und Fairness kontrollieren', color: 'text-[#B77A36]' },
 ];
 
 const StatBar: React.FC = () => (
@@ -199,8 +199,8 @@ const leistungen = [
     icon: 'hub',
   },
   {
-    title: 'Vollständig DSGVO-konform',
-    text: 'Bewerberdaten sind besonders schützenswert. Wir verarbeiten ausschließlich auf EU-Servern, mit klaren Löschroutinen und dokumentierter Rechtsgrundlage – revision- und auditsicher.',
+    title: 'Datenschutz und Datenflüsse',
+    text: 'Bewerberdaten sind besonders schützenswert. Datenflüsse, Anbieter, Löschroutinen und Rechtsgrundlage werden vor dem Einsatz gemeinsam geprüft und dokumentiert.',
     icon: 'verified_user',
   },
 ];
@@ -247,7 +247,7 @@ const Loesung: React.FC = () => (
             Bewerberdaten sind Personaldaten – und besonders schützenswert.
           </h4>
           <p className="text-muted text-sm leading-relaxed font-body">
-            Wir arbeiten ausschließlich mit EU-Servern, ohne Datenweitergabe an Dritte. Löschroutinen nach DSGVO-Vorgaben sind automatisch integriert. Jede Implementierung wird dokumentiert und ist auditfähig – für Ihren Datenschutzbeauftragten und Ihren Betriebsrat.
+            Datenflüsse, Anbieter, Löschroutinen und Rechtsgrundlage werden vor dem Einsatz gemeinsam geprüft und dokumentiert.
           </p>
         </div>
       </div>
@@ -285,8 +285,8 @@ const Prozess: React.FC = () => (
     <div className="max-w-4xl mx-auto text-center">
       <SectionLabel>Wie es läuft</SectionLabel>
       <SectionHeadline>
-        Aufgesetzt in zwei Wochen.<br className="hidden sm:block" />
-        Ergebnisse ab der ersten Stelle.
+        Aufgesetzt nach abgestimmtem Umfang.<br className="hidden sm:block" />
+        Ergebnisse mit der ersten Stelle prüfen.
       </SectionHeadline>
       <LeadText>
         Kein monatelanges Einführungsprojekt. Wir analysieren Ihre bestehenden Prozesse, integrieren die KI in Ihre Infrastruktur und trainieren das System auf Ihre Anforderungsprofile – schnell und ohne großen internen Aufwand.
@@ -344,7 +344,7 @@ const useCases = [
     category: 'Schnelle Besetzung',
     icon: 'bolt',
     title: 'Wenn eine Stelle gestern hätte besetzt sein sollen',
-    text: 'KI verkürzt die Vorauswahl von Wochen auf Tage. Gerade bei dringendem Bedarf entscheidet das, ob die Stelle intern oder extern besetzt werden kann.',
+    text: 'KI kann die Vorauswahl strukturieren und Kriterien sichtbar machen. Wie viel Zeit das spart, hängt von Prozess, Daten und Stellenprofilen ab.',
     result: 'Reaktionszeit als Wettbewerbsvorteil',
     color: 'yellow' as const,
   },
@@ -352,7 +352,7 @@ const useCases = [
     category: 'Interne Talentpools',
     icon: 'database',
     title: 'Kandidaten aus alten Prozessen wieder aktivieren',
-    text: 'Viele Unternehmen haben Bewerberdaten aus vergangenen Prozessen – aber kein System, um diese sinnvoll zu nutzen. KI durchsucht bestehende Pools auf neue Stellen automatisch.',
+    text: 'Viele Unternehmen haben Bewerberdaten aus vergangenen Prozessen – aber kein System, um diese sinnvoll zu nutzen. Mit passenden Regeln können bestehende Pools auf neue Stellen geprüft werden.',
     result: 'Weniger externe Ausschreibungen nötig',
     color: 'cyan' as const,
   },
@@ -460,12 +460,12 @@ const Zielgruppe: React.FC = () => (
 /* ───────────── VERGLEICH ───────────── */
 
 const comparisonRows = [
-  { label: 'CV-Sichtung', before: '2–5 Tage manuell', after: 'Minuten, automatisch' },
-  { label: 'Kandidatenvergleich', before: 'Subjektiv, inkonsistent', after: 'Strukturiert, nachvollziehbar' },
-  { label: 'Erste Rückmeldung', before: 'Oft nach Tagen', after: 'Automatisch innerhalb von Stunden' },
-  { label: 'Parallele Stellen', before: 'Kaum skalierbar', after: 'Beliebig skalierbar' },
-  { label: 'Bewerberdaten', before: 'Verteilt in E-Mail-Postfächern', after: 'Zentral, strukturiert, DSGVO-konform' },
-  { label: 'Besetzungsdauer', before: 'Ø 6–10 Wochen', after: 'Ø 3–5 Wochen' },
+  { label: 'CV-Sichtung', before: 'Manuell, je nach Volumen', after: 'Strukturiert aufbereitet' },
+  { label: 'Kandidatenvergleich', before: 'Subjektiv, inkonsistent', after: 'Kriterien nachvollziehbar' },
+  { label: 'Erste Rückmeldung', before: 'Oft nach Tagen', after: 'Abläufe können vorbereitet werden' },
+  { label: 'Parallele Stellen', before: 'Kaum skalierbar', after: 'Abhängig von Prozess & Daten' },
+  { label: 'Bewerberdaten', before: 'Verteilt in E-Mail-Postfächern', after: 'Zentral und strukturiert – Datenschutz prüfen' },
+  { label: 'Besetzungsdauer', before: 'Abhängig von Prozess und Markt', after: 'Keine pauschale Zeitangabe' },
 ];
 
 const Vergleich: React.FC = () => (
@@ -516,15 +516,15 @@ const Vergleich: React.FC = () => (
 const faqItems = [
   {
     q: 'Trifft die KI die finale Einstellungsentscheidung?',
-    a: 'Nein – und das ist Absicht. Die KI übernimmt die Vorauswahl und liefert strukturierte Entscheidungsgrundlagen. Die finale Entscheidung liegt immer beim Menschen. Das ist nicht nur ethisch richtig, sondern auch rechtlich der einzig sinnvolle Weg.',
+    a: 'Nein – und das ist Absicht. Die KI kann die Vorauswahl unterstützen und strukturierte Entscheidungsgrundlagen liefern. Die finale Entscheidung liegt beim Menschen; Kriterien, Datenflüsse und Prozesse müssen vor dem Einsatz geprüft werden.',
   },
   {
     q: 'Werden Bewerber benachteiligt, weil eine KI entscheidet?',
-    a: 'Das Gegenteil ist oft der Fall. KI-gestütztes Screening bewertet auf Basis definierter, transparenter Kriterien – ohne Tagesform, ohne unbewusste Muster, ohne Einfluss von Formulierungen oder Namen. Das macht den Prozess fairer, nicht weniger fair.',
+    a: 'Eine faire Auswahl hängt von Kriterien, Daten und Prozess ab. Wir können Kriterien transparent strukturieren; die Qualität und mögliche Verzerrungen müssen vor dem Einsatz geprüft und im Betrieb beobachtet werden.',
   },
   {
     q: 'Wie werden Bewerberdaten verarbeitet und wann gelöscht?',
-    a: 'Ausschließlich auf EU-Servern, mit automatischen Löschroutinen nach dem Ende des Bewerbungsverfahrens – entsprechend den DSGVO-Vorgaben und den Fristen, die Sie festlegen. Alles ist dokumentiert und auditfähig.',
+    a: 'Das hängt von Anbietern, Datenflüssen und Ihrer Lösch- und Aufbewahrungspolitik ab. Diese Punkte werden vor dem Einsatz gemeinsam geprüft, dokumentiert und mit den zuständigen Verantwortlichen abgestimmt.',
   },
   {
     q: 'Funktioniert das auch, wenn wir kein ATS haben?',

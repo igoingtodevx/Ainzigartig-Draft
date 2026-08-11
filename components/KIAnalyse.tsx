@@ -44,7 +44,22 @@ export const KIAnalyse: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   const handleAnalyze = async () => {
-    if (!url.trim()) return;
+    const rawUrl = url.trim();
+    if (!rawUrl) {
+      setError('Bitte geben Sie eine Website-Adresse ein.');
+      return;
+    }
+
+    let normalizedUrl: string;
+    try {
+      const parsed = new URL(/^https?:\/\//i.test(rawUrl) ? rawUrl : `https://${rawUrl}`);
+      if (!['http:', 'https:'].includes(parsed.protocol) || !parsed.hostname.includes('.')) throw new Error();
+      normalizedUrl = parsed.toString();
+    } catch {
+      setError('Bitte geben Sie eine gültige Website-Adresse ein, z. B. beispiel.de.');
+      return;
+    }
+
     setLoading(true);
     setError(null);
     setResult(null);
@@ -53,9 +68,9 @@ export const KIAnalyse: React.FC = () => {
       const response = await fetch('/api/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: url.trim() }),
+        body: JSON.stringify({ url: normalizedUrl }),
       });
-      const data = await response.json();
+      const data = await response.json().catch(() => ({}));
       if (!response.ok) {
         setError(data.error || 'Analyse fehlgeschlagen');
         return;

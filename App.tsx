@@ -34,8 +34,8 @@ import { NotFound } from './components/NotFound';
 const HomePage: React.FC = () => (
   <main>
     <RouteMeta
-      title="Ainzigartig – KI-Beratung für den Mittelstand"
-      description="Ainzigartig hilft KMUs dabei, generative KI gewinnbringend und praxistauglich einzusetzen."
+      title="Ainzigartig – KI & Software für den Mittelstand"
+      description="Automatisierungen, interne Tools, Wissenssysteme und individuelle Software für konkrete Engpässe im Mittelstand."
     />
     <Hero />
     <LogoSlider />

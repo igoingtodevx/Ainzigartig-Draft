@@ -45,7 +45,7 @@ const Hero: React.FC = () => (
       </h1>
 
       <p className="text-muted text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-body mb-10">
-        Ein KI-Chatbot, der Ihre Wissensbasis kennt, kann wiederkehrende Anfragen automatisiert beantworten – rund um die Uhr und auf Basis Ihrer freigegebenen Inhalte. Ihr Team kümmert sich um die Fälle, bei denen menschliche Aufmerksamkeit wirklich gebraucht wird.
+        Ein KI-Assistent auf Ihrer Wissensbasis kann wiederkehrende Fragen unterstützen, Inhalte auffindbar machen und bei Bedarf an Ihr Team übergeben. Welche Kanäle, Daten und Regeln sinnvoll sind, klären wir gemeinsam.
       </p>
 
       {/* CTAs */}
@@ -71,7 +71,7 @@ const Hero: React.FC = () => (
         {[
           'Trainiert auf Ihren Daten – nicht auf generischem Wissen',
           'Datenschutz & Hosting passend zum Setup',
-          'Live in 2–4 Wochen',
+          'Längere Erreichbarkeit möglich',
           'Kein Entwickler-Team nötig',
         ].map((item) => (
           <span key={item} className="flex items-center gap-1.5">
@@ -88,10 +88,10 @@ const Hero: React.FC = () => (
 /* ───────────── STAT BAR ───────────── */
 
 const stats = [
-  { value: 'Automatisch', label: 'wiederkehrende Anfragen bearbeiten', color: 'text-accent-hover' },
-  { value: '24/7', label: 'Erreichbarkeit ohne Mehrkosten', color: 'text-accent-hover' },
-  { value: '< 3 Sek.', label: 'durchschnittliche Antwortzeit', color: 'text-[#B77A36]' },
-  { value: '2–4 Wo.', label: 'bis zur Livestellung', color: 'text-accent-hover' },
+  { value: 'Fragen', label: 'auf Basis Ihrer freigegebenen Inhalte', color: 'text-accent-hover' },
+  { value: 'Kanäle', label: 'passend zu Ihrem Support-Setup', color: 'text-accent-hover' },
+  { value: 'Übergabe', label: 'wenn menschliche Klärung nötig ist', color: 'text-[#B77A36]' },
+  { value: 'Regeln', label: 'für klare Grenzen und Zuständigkeiten', color: 'text-accent-hover' },
 ];
 
 const StatBar: React.FC = () => (
@@ -189,8 +189,8 @@ const leistungen = [
     icon: 'devices',
   },
   {
-    title: 'Vollständig DSGVO-konform',
-    text: 'Ihre Daten verlassen nicht die EU. Kein Training auf öffentlichen Modellen mit Ihren Kundeninformationen. Wir richten das so ein, dass Ihr Datenschutzbeauftragter ruhig schlafen kann.',
+    title: 'Datenschutz und Datenflüsse gemeinsam prüfen',
+    text: 'Hosting, Modellanbieter, Auftragsverarbeitung und Datenflüsse werden vor der Umsetzung transparent festgelegt – passend zu Ihrem Einsatz und Ihren Datenschutzanforderungen.',
     icon: 'verified_user',
   },
   {
@@ -244,7 +244,7 @@ const Loesung: React.FC = () => (
             Ihre Kundendaten gehören Ihnen – und bleiben bei Ihnen.
           </h4>
           <p className="text-muted text-sm leading-relaxed font-body">
-            Wir arbeiten ausschließlich mit EU-Serverstandorten und setzen keine US-amerikanischen Dienste ein, die Daten außerhalb der EU verarbeiten. Jede Implementierung wird auf DSGVO-Konformität geprüft – dokumentiert und übergeben.
+            Das hängt von den gewählten Anbietern, Datenflüssen und Vertragsbedingungen ab. Wir prüfen gemeinsam, wo Daten verarbeitet werden und welche Datenschutzanforderungen für Ihren Einsatz gelten.
           </p>
         </div>
       </div>
@@ -458,12 +458,12 @@ const Zielgruppe: React.FC = () => (
 /* ───────────── VERGLEICH ───────────── */
 
 const comparisonRows = [
-  { label: 'Erreichbarkeit', before: 'Mo–Fr, 9–17 Uhr', after: '24/7, 365 Tage' },
-  { label: 'Antwortzeit', before: 'Minuten bis Stunden', after: 'Unter 3 Sekunden' },
-  { label: 'Routineanfragen', before: 'Manuell bearbeitet', after: 'Automatisch gelöst' },
-  { label: 'Teamauslastung', before: 'Gebunden durch Routinefälle', after: 'Frei für komplexe Fälle' },
-  { label: 'Skalierung', before: 'Mehr Anfragen = mehr Personal', after: 'Mehr Anfragen = gleiche Kosten' },
-  { label: 'Qualitätskonsistenz', before: 'Schwankt je nach Tag & Person', after: 'Gleichbleibend hoch' },
+  { label: 'Erreichbarkeit', before: 'Mo–Fr, 9–17 Uhr', after: 'Längere Erreichbarkeit möglich' },
+  { label: 'Antwortzeit', before: 'Minuten bis Stunden', after: 'Innerhalb definierter Abläufe' },
+  { label: 'Routineanfragen', before: 'Manuell bearbeitet', after: 'Unterstützt durch Regeln & Wissen' },
+  { label: 'Teamauslastung', before: 'Gebunden durch Routinefälle', after: 'Mehr Raum für komplexe Fälle' },
+  { label: 'Skalierung', before: 'Mehr Anfragen = mehr Personal', after: 'Abhängig von Prozess & Systemgrenzen' },
+  { label: 'Qualitätskonsistenz', before: 'Schwankt je nach Tag & Person', after: 'Prüfbar durch Vorgaben & Monitoring' },
 ];
 
 const Vergleich: React.FC = () => (

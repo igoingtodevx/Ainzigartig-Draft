@@ -221,7 +221,7 @@ export const ROICalculator: React.FC = () => {
             <p className="text-base text-muted font-body leading-relaxed max-w-2xl">
               Eine konservative Schätzung dessen, was Ihr Team zurückgewinnen kann, wenn
               repetitive Aufgaben in {industry.label} von KI übernommen werden. Beruht auf
-              Branchen-Medianwerten, nicht auf Hochrechnungen einzelner Leuchtturm-Projekte.
+              den unten offengelegten Annahmen. Das Ergebnis ist ein Rechenmodell, kein Branchenbenchmark.
             </p>
           </div>
 
@@ -398,12 +398,12 @@ export const ROICalculator: React.FC = () => {
               15 % Implementierungs- und Tool-Overhead.
             </p>
             <p>
-              <strong className="text-ink">Quellen Automatisierungsgrad:</strong> Bitkom
-              Mittelstands-Report 2024 (n = 605), McKinsey "State of AI 2024" (Mittelstands-Segment),
-              eigene Projekterfahrung aus 14 Mittelstands-Piloten 2023–2025.
+              <strong className="text-ink">Annahmen:</strong> Die Automatisierungsgrade sind bewusst breite,
+              illustrative Korridore dieses Rechners und keine gemessenen Branchenwerte. Prüfen Sie vor einer
+              Investition den konkreten Prozess, die tatsächlich frei werdende Zeit und die vollständigen Kosten.
             </p>
             <p>
-              <strong className="text-ink">Hinweis:</strong> Indicative Schätzung, keine
+              <strong className="text-ink">Hinweis:</strong> Indikative Schätzung, keine
               Garantie. Die tatsächlichen Einsparungen hängen von Tool-Auswahl, Datenqualität,
               Team-Adoption und Prozess-Reife ab. Vollständige Methodik & Studienquellen
               auf Anfrage.

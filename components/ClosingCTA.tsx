@@ -12,10 +12,10 @@ export const ClosingCTA: React.FC = () => (
           <div className="lg:pt-2">
             <p className="text-xs uppercase tracking-[0.14em] font-bold text-ink/65 mb-3">Erstgespräch</p>
             <h2 className="font-editorial text-[clamp(2.45rem,5vw,3.8rem)] leading-[1.02] tracking-[-0.03em] text-ink font-normal">
-              30 Minuten.<br />Ihre Situation.<br />Unsere Einschätzung.
+              30 Minuten.<br />Ihre Situation.<br />Unsere Einschätzung. Kein Pitch.
             </h2>
             <p className="text-sm md:text-base text-ink/70 leading-relaxed mt-5 max-w-md">
-              Erzählen Sie uns kurz, wo Arbeit hängen bleibt oder wo Sie KI sinnvoll einsetzen möchten. Wir sagen konkret, was machbar ist — und was nicht.
+              Schreiben Sie uns kurz, welcher Ablauf Zeit kostet oder wo Informationen fehlen. Sie bekommen eine ehrliche erste Einordnung, ob und wie eine Lösung sinnvoll ist.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-2">

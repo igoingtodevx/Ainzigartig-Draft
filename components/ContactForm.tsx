@@ -13,14 +13,11 @@ interface ContactFormState {
 const INITIAL: ContactFormState = { name: '', email: '', company: '', service: '', message: '' };
 
 const SERVICE_OPTIONS = [
-  'KI-Beratung',
-  'KI-Kundenservice',
-  'KI-Website-Analyse',
-  'Dokument-Agent / Automatisierung',
-  'KI-Recruiting',
-  'Analytics',
-  'KI-Audit',
-  'KI-Schnellstart',
+  'Automatisierung & Integrationen',
+  'Dashboards & interne Business-Tools',
+  'KI-Assistenten & Wissenssysteme',
+  'Individuelle KI- & Softwarelösungen',
+  'Noch unklar / gemeinsam einordnen',
   'Sonstiges',
 ];
 
@@ -77,7 +74,7 @@ export const ContactForm: React.FC = () => {
         </span>
         <p className="font-editorial text-2xl text-ink mb-2">Vielen Dank.</p>
         <p className="text-sm text-muted leading-relaxed max-w-md mx-auto">
-          Wir haben Ihre Anfrage erhalten und melden uns mit einer ersten Einschätzung zurück.
+          Wir haben Ihre Anfrage erhalten und melden uns persönlich mit einer ehrlichen Einschätzung – kein automatischer Vertriebsprozess.
         </p>
       </div>
     );
@@ -136,7 +133,7 @@ export const ContactForm: React.FC = () => {
             <>Anfrage senden <span className="material-symbols-outlined text-[18px]">arrow_forward</span></>
           )}
         </button>
-        <p className="text-xs text-light leading-relaxed">Unverbindlich. Wir sagen auch offen, wenn KI für den Fall keinen Sinn ergibt.</p>
+        <p className="text-xs text-light leading-relaxed">Wir melden uns persönlich. Kein automatischer Vertriebsprozess.</p>
       </div>
     </form>
   );
