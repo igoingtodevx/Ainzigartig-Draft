@@ -1,4 +1,6 @@
 // Vercel Serverless Function: evidence-led website analysis.
+import { isIP } from 'node:net';
+
 const SCRAPER_URL = process.env.SCRAPER_URL || 'http://138.68.96.190:8501';
 const MAX_BODY_BYTES = 8_000;
 
@@ -26,11 +28,13 @@ function normalizePublicUrl(input) {
   if (!['http:', 'https:'].includes(parsed.protocol)) throw new Error('Es sind nur HTTP- und HTTPS-Adressen erlaubt.');
   if (parsed.username || parsed.password) throw new Error('Website-Adressen mit Zugangsdaten werden nicht unterstützt.');
   parsed.hash = '';
-  const hostname = parsed.hostname.toLowerCase().replace(/\.$/, '');
-  const blocked = hostname === 'localhost' || hostname.endsWith('.local') || hostname === '0.0.0.0' || hostname === '::1' ||
-    /^(127\.|10\.|169\.254\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.)/.test(hostname);
+  const hostname = parsed.hostname.toLowerCase().replace(/^\[/, '').replace(/\]$/, '').replace(/\.$/, '');
+  const ipVersion = isIP(hostname);
+  const blocked = hostname === 'localhost' || hostname.endsWith('.local') || hostname === '0.0.0.0' ||
+    (ipVersion === 4 && /^(127\.|10\.|169\.254\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.)/.test(hostname)) ||
+    (ipVersion === 6 && (hostname === '::1' || hostname === '::' || hostname.startsWith('fc') || hostname.startsWith('fd') || hostname.startsWith('fe80:')));
   if (blocked) throw new Error('Lokale oder interne Adressen können nicht analysiert werden.');
-  if (!hostname.includes('.') && !hostname.includes(':')) throw new Error('Bitte geben Sie eine öffentlich erreichbare Domain ein.');
+  if (!hostname.includes('.') && ipVersion === 0) throw new Error('Bitte geben Sie eine öffentlich erreichbare Domain ein.');
   return parsed.toString();
 }
 

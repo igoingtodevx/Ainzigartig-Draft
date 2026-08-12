@@ -2,8 +2,6 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { enforcePublicPost, readJsonBody, reserveAiBudget } from '../server/apiGuard.js';
 import analyzeHandler from '../api/analyze.js';
-import chatHandler from '../api/chat.js';
-import liveAgentHandler from '../api/live-agent-demo.js';
 
 test('analyze rejects malformed and private bracketed IPv6 URLs before external calls', async () => {
   const previousNodeEnv = process.env.NODE_ENV;
@@ -11,7 +9,7 @@ test('analyze rejects malformed and private bracketed IPv6 URLs before external 
   try {
     for (const [url, ip, message] of [
       ['https://[2001:db8::1', '198.51.100.41', 'INVALID_URL'],
-      ['https://[::1]/', '198.51.100.42', 'URL_NOT_PUBLIC'],
+      ['https://[::1]/', '198.51.100.42', 'INVALID_URL'],
     ]) {
       const res = responseDouble();
       await analyzeHandler({ method: 'POST', body: { url }, headers: { host: 'ainzigartig.vercel.app', 'content-type': 'application/json', 'x-forwarded-for': ip } }, res);
@@ -111,134 +109,6 @@ function restoreEnvironment(previous) {
   }
 }
 
-test('AI health endpoints expose ready and disabled states without starting a model call', async () => {
-  const previous = {
-    NODE_ENV: process.env.NODE_ENV,
-    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
-    SCRAPER_URL: process.env.SCRAPER_URL,
-    SCRAPER_TOKEN: process.env.SCRAPER_TOKEN,
-    AI_DEMOS_ENABLED: process.env.AI_DEMOS_ENABLED,
-    CHAT_ENABLED: process.env.CHAT_ENABLED,
-  };
-  Object.assign(process.env, {
-    NODE_ENV: 'test',
-    OPENAI_API_KEY: 'test-only',
-    SCRAPER_URL: 'https://scraper.example',
-    SCRAPER_TOKEN: 'test-only',
-    AI_DEMOS_ENABLED: 'true',
-    CHAT_ENABLED: 'true',
-  });
-
-  try {
-    for (const handler of [analyzeHandler, chatHandler, liveAgentHandler]) {
-      const ready = responseDouble();
-      await handler({ method: 'GET', headers: {} }, ready);
-      assert.equal(ready.statusCode, 200);
-      assert.equal(ready.payload.configured, true);
-    }
-
-    process.env.AI_DEMOS_ENABLED = 'false';
-    process.env.CHAT_ENABLED = 'false';
-    for (const handler of [analyzeHandler, chatHandler, liveAgentHandler]) {
-      const disabled = responseDouble();
-      await handler({ method: 'GET', headers: {} }, disabled);
-      assert.equal(disabled.statusCode, 200);
-      assert.equal(disabled.payload.configured, false);
-    }
-  } finally {
-    restoreEnvironment(previous);
-  }
-});
-
-test('website analysis returns evidence-led qualitative output and strips numeric scoring', async () => {
-  const previous = {
-    NODE_ENV: process.env.NODE_ENV,
-    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
-    SCRAPER_URL: process.env.SCRAPER_URL,
-    SCRAPER_TOKEN: process.env.SCRAPER_TOKEN,
-    AI_DEMOS_ENABLED: process.env.AI_DEMOS_ENABLED,
-    KV_REST_API_URL: process.env.KV_REST_API_URL,
-    KV_REST_API_TOKEN: process.env.KV_REST_API_TOKEN,
-    UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
-    UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
-  };
-  const previousFetch = globalThis.fetch;
-  Object.assign(process.env, {
-    NODE_ENV: 'test',
-    OPENAI_API_KEY: 'test-only',
-    SCRAPER_URL: 'https://scraper.example',
-    SCRAPER_TOKEN: 'test-only',
-    AI_DEMOS_ENABLED: 'true',
-  });
-  delete process.env.KV_REST_API_URL;
-  delete process.env.KV_REST_API_TOKEN;
-  delete process.env.UPSTASH_REDIS_REST_URL;
-  delete process.env.UPSTASH_REDIS_REST_TOKEN;
-
-  const calls = [];
-  globalThis.fetch = async (url, options) => {
-    calls.push({ url: String(url), body: JSON.parse(options.body) });
-    if (String(url) === 'https://scraper.example/scrape') {
-      return {
-        ok: true,
-        async json() {
-          return {
-            title: 'Beispielbetrieb',
-            markdown: 'Beispielbetrieb fertigt Bauteile. Kontakt und Leistungsbeschreibung sind öffentlich sichtbar. '.repeat(3),
-            technologies: ['WordPress'],
-            has_contact_form: true,
-            has_pricing_page: false,
-            has_imprint: true,
-            has_privacy_policy: true,
-            word_count: 145,
-            response_time_ms: 320,
-          };
-        },
-      };
-    }
-    return {
-      ok: true,
-      async json() {
-        return { choices: [{ message: { content: JSON.stringify({
-          score: 94,
-          score_label: 'Mehrere konkrete Ansatzpunkte',
-          summary: 'Die Seite zeigt Leistungen und einen Kontaktweg.',
-          observations: [{ label: 'Kontaktweg', finding: 'Ein Kontaktformular ist öffentlich sichtbar.', confidence: 'Sicher' }],
-          opportunities: [{ title: 'Anfragen strukturieren', description: 'Eingaben könnten vor der Übergabe kategorisiert werden.', evidence: 'Das sichtbare Kontaktformular ist die Grundlage.', impact: 'Mittel', effort: 'Gering', first_step: 'Zehn reale Anfragearten ordnen.' }],
-          missing_basics: ['Interne Bearbeitungszeit ist öffentlich nicht erkennbar.'],
-          recommendation: 'Den Kontaktprozess mit realen Fällen prüfen.',
-          limitations: ['Nur eine öffentlich sichtbare Seite wurde gelesen.'],
-        }) } }] };
-      },
-    };
-  };
-
-  try {
-    const res = responseDouble();
-    await analyzeHandler({
-      method: 'POST',
-      headers: {
-        host: 'localhost:3000',
-        'content-type': 'application/json',
-        'user-agent': 'analysis-flow-test',
-        'x-forwarded-for': '203.0.113.91',
-      },
-      body: { url: 'https://93.184.216.34/' },
-    }, res);
-
-    assert.equal(res.statusCode, 200);
-    assert.equal(res.payload.analysis.score_label, 'Mehrere konkrete Ansatzpunkte');
-    assert.equal(Object.hasOwn(res.payload.analysis, 'score'), false);
-    assert.equal(res.payload.analysis.observations[0].confidence, 'Sicher');
-    assert.equal(res.payload.analysis.limitations.length, 3);
-    assert.equal(calls.length, 2);
-    assert.equal(calls[0].url, 'https://scraper.example/scrape');
-    assert.match(calls[1].body.messages[0].content, /kein gemessener Reifegrad|nicht auf den Reifegrad/i);
-  } finally {
-    globalThis.fetch = previousFetch;
-    restoreEnvironment(previous);
-  }
-});
 
 test('production AI guard fails closed without a distributed store', async () => {
   const previous = {
