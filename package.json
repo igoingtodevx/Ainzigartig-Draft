@@ -5,6 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tests/apiGuard.test.js && uv run --with-requirements scraper/requirements.txt python -m unittest tests/test_scraper_security.py",
+    "release:check": "node scripts/release-check.mjs",
     "build": "vite build",
     "preview": "vite preview"
   },
