@@ -1,0 +1,342 @@
+[
+  {
+    "width": 390,
+    "route": "/",
+    "status": 200,
+    "screenshot": "390-home.png",
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "page_errors": [],
+    "title": "Ainzigartig – KI- & Softwarelösungen für KMU"
+  },
+  {
+    "width": 390,
+    "route": "/impressum",
+    "status": 200,
+    "screenshot": "390-impressum.png",
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "page_errors": [],
+    "title": "Anbieterangaben | Ainzigartig"
+  },
+  {
+    "width": 390,
+    "route": "/datenschutz",
+    "status": 200,
+    "screenshot": "390-datenschutz.png",
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "page_errors": [],
+    "title": "Datenschutzstatus | Ainzigartig"
+  },
+  {
+    "width": 390,
+    "route": "/ki-beratung",
+    "status": 200,
+    "screenshot": "390-ki-beratung.png",
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "page_errors": [],
+    "title": "Automatisierung & Integrationen | Ainzigartig"
+  },
+  {
+    "width": 390,
+    "route": "/ki-kundenservice",
+    "status": 200,
+    "screenshot": "390-ki-kundenservice.png",
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "page_errors": [],
+    "title": "KI-Assistenten & Wissenssysteme | Ainzigartig"
+  },
+  {
+    "width": 390,
+    "route": "/ki-recruiting",
+    "status": 200,
+    "screenshot": "390-ki-recruiting.png",
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "page_errors": [],
+    "title": "Automatisierung & Integrationen | Ainzigartig"
+  },
+  {
+    "width": 390,
+    "route": "/analytics-dashboard",
+    "status": 200,
+    "screenshot": "390-analytics-dashboard.png",
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "page_errors": [],
+    "title": "Dashboards & interne Business-Tools | Ainzigartig"
+  },
+  {
+    "width": 390,
+    "route": "/individuelle-ki-softwareloesungen",
+    "status": 200,
+    "screenshot": "390-individuelle-ki-softwareloesungen.png",
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "page_errors": [],
+    "title": "Individuelle KI- & Softwarelösungen | Ainzigartig"
+  },
+  {
+    "width": 390,
+    "route": "/roi-rechner",
+    "status": 200,
+    "screenshot": "390-roi-rechner.png",
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "page_errors": [],
+    "title": "ROI-Szenario | Ainzigartig"
+  },
+  {
+    "width": 390,
+    "route": "/ki-schnellstart",
+    "status": 200,
+    "screenshot": "390-ki-schnellstart.png",
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "page_errors": [],
+    "title": "KI-Schnellstart | Ainzigartig"
+  },
+  {
+    "width": 390,
+    "route": "/ki-audit",
+    "status": 200,
+    "screenshot": "390-ki-audit.png",
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "page_errors": [],
+    "title": "KI-Ausgangslage | Ainzigartig"
+  },
+  {
+    "width": 390,
+    "route": "/preise",
+    "status": 200,
+    "screenshot": "390-preise.png",
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "page_errors": [],
+    "title": "Leistungen & Projektrahmen | Ainzigartig"
+  },
+  {
+    "width": 390,
+    "route": "/ki-analyse",
+    "status": 200,
+    "screenshot": "390-ki-analyse.png",
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "page_errors": [],
+    "title": "KI-Website-Analyse | Ainzigartig"
+  },
+  {
+    "width": 390,
+    "route": "/live-demo",
+    "status": 200,
+    "screenshot": "390-live-demo.png",
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "page_errors": [],
+    "title": "Live Demo | Ainzigartig"
+  },
+  {
+    "width": 390,
+    "route": "/projekte",
+    "status": 200,
+    "screenshot": "390-projekte.png",
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "page_errors": [],
+    "title": "Demos & gebaute Systeme | Ainzigartig"
+  },
+  {
+    "width": 390,
+    "route": "/insights",
+    "status": 200,
+    "screenshot": "390-insights.png",
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "page_errors": [],
+    "title": "Insights | Ainzigartig"
+  },
+  {
+    "width": 390,
+    "route": "/route-die-nicht-existiert",
+    "status": 200,
+    "screenshot": "390-not-found.png",
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "page_errors": [],
+    "title": "404 – Seite nicht gefunden | Ainzigartig"
+  },
+  {
+    "width": 1440,
+    "route": "/",
+    "status": 200,
+    "screenshot": "1440-home.png",
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "page_errors": [],
+    "title": "Ainzigartig – KI- & Softwarelösungen für KMU"
+  },
+  {
+    "width": 1440,
+    "route": "/impressum",
+    "status": 200,
+    "screenshot": "1440-impressum.png",
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "page_errors": [],
+    "title": "Anbieterangaben | Ainzigartig"
+  },
+  {
+    "width": 1440,
+    "route": "/datenschutz",
+    "status": 200,
+    "screenshot": "1440-datenschutz.png",
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "page_errors": [],
+    "title": "Datenschutzstatus | Ainzigartig"
+  },
+  {
+    "width": 1440,
+    "route": "/ki-beratung",
+    "status": 200,
+    "screenshot": "1440-ki-beratung.png",
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "page_errors": [],
+    "title": "Automatisierung & Integrationen | Ainzigartig"
+  },
+  {
+    "width": 1440,
+    "route": "/ki-kundenservice",
+    "status": 200,
+    "screenshot": "1440-ki-kundenservice.png",
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "page_errors": [],
+    "title": "KI-Assistenten & Wissenssysteme | Ainzigartig"
+  },
+  {
+    "width": 1440,
+    "route": "/ki-recruiting",
+    "status": 200,
+    "screenshot": "1440-ki-recruiting.png",
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "page_errors": [],
+    "title": "Automatisierung & Integrationen | Ainzigartig"
+  },
+  {
+    "width": 1440,
+    "route": "/analytics-dashboard",
+    "status": 200,
+    "screenshot": "1440-analytics-dashboard.png",
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "page_errors": [],
+    "title": "Dashboards & interne Business-Tools | Ainzigartig"
+  },
+  {
+    "width": 1440,
+    "route": "/individuelle-ki-softwareloesungen",
+    "status": 200,
+    "screenshot": "1440-individuelle-ki-softwareloesungen.png",
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "page_errors": [],
+    "title": "Individuelle KI- & Softwarelösungen | Ainzigartig"
+  },
+  {
+    "width": 1440,
+    "route": "/roi-rechner",
+    "status": 200,
+    "screenshot": "1440-roi-rechner.png",
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "page_errors": [],
+    "title": "ROI-Szenario | Ainzigartig"
+  },
+  {
+    "width": 1440,
+    "route": "/ki-schnellstart",
+    "status": 200,
+    "screenshot": "1440-ki-schnellstart.png",
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "page_errors": [],
+    "title": "KI-Schnellstart | Ainzigartig"
+  },
+  {
+    "width": 1440,
+    "route": "/ki-audit",
+    "status": 200,
+    "screenshot": "1440-ki-audit.png",
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "page_errors": [],
+    "title": "KI-Ausgangslage | Ainzigartig"
+  },
+  {
+    "width": 1440,
+    "route": "/preise",
+    "status": 200,
+    "screenshot": "1440-preise.png",
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "page_errors": [],
+    "title": "Leistungen & Projektrahmen | Ainzigartig"
+  },
+  {
+    "width": 1440,
+    "route": "/ki-analyse",
+    "status": 200,
+    "screenshot": "1440-ki-analyse.png",
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "page_errors": [],
+    "title": "KI-Website-Analyse | Ainzigartig"
+  },
+  {
+    "width": 1440,
+    "route": "/live-demo",
+    "status": 200,
+    "screenshot": "1440-live-demo.png",
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "page_errors": [],
+    "title": "Live Demo | Ainzigartig"
+  },
+  {
+    "width": 1440,
+    "route": "/projekte",
+    "status": 200,
+    "screenshot": "1440-projekte.png",
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "page_errors": [],
+    "title": "Demos & gebaute Systeme | Ainzigartig"
+  },
+  {
+    "width": 1440,
+    "route": "/insights",
+    "status": 200,
+    "screenshot": "1440-insights.png",
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "page_errors": [],
+    "title": "Insights | Ainzigartig"
+  },
+  {
+    "width": 1440,
+    "route": "/route-die-nicht-existiert",
+    "status": 200,
+    "screenshot": "1440-not-found.png",
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "page_errors": [],
+    "title": "404 – Seite nicht gefunden | Ainzigartig"
+  }
+]

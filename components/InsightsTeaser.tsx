@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 /* ───────────────────────────────────────────────────────────────────────────
    InsightsTeaser — Kompakter 1-Section-Appetithappen für die Home-Page.
@@ -67,11 +68,11 @@ export const InsightsTeaser: React.FC = () => {
   const dot = SIGNAL_DOT[sig] || '◐';
 
   return (
-    <section className="py-12u md:py-16u px-6 md:px-8 bg-surface/40 border-y border-faint/40">
+    <section className="border-y border-faint/40 bg-surface/40 px-6 py-12 md:px-8 md:py-16">
       <div className="max-w-[1200px] mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6u">
+        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="flex-1 min-w-0">
-            <div className="flex flex-wrap items-baseline gap-x-3u gap-y-1u mb-3u">
+            <div className="mb-3 flex flex-wrap items-baseline gap-x-3 gap-y-1">
               <span className="text-[10px] font-body uppercase tracking-[0.18em] text-ink tabular">
                 {data.freshness === 'fresh' ? 'Aktuelle externe Ausgabe' : 'Zuletzt geladene Ausgabe'} · № {issueWeek(data.generated_at)}
               </span>
@@ -79,7 +80,7 @@ export const InsightsTeaser: React.FC = () => {
                 {timeAgo(data.generated_at)}
               </span>
             </div>
-            <h2 className="font-editorial text-2xl md:text-3xl text-ink leading-[1.15] mb-3u max-w-3xl">
+            <h2 className="mb-3 max-w-3xl font-editorial text-2xl leading-[1.15] text-ink md:text-3xl">
               {data.issue.headline}
             </h2>
             {topTrend && (
@@ -90,9 +91,9 @@ export const InsightsTeaser: React.FC = () => {
             )}
             <p className="text-[10px] text-light mt-3 max-w-2xl">{data.disclosure || 'Maschinell erzeugtes Briefing; Quellen vor Verwendung prüfen.'}</p>
           </div>
-          <a
-            href="/insights"
-            className="text-sm text-accent font-body group inline-flex items-center gap-2 self-start md:self-end shrink-0"
+          <Link
+            to="/insights"
+            className="text-sm text-accent-hover font-body font-semibold group inline-flex items-center gap-2 self-start md:self-end shrink-0"
           >
             <span className="underline decoration-1 underline-offset-4 group-hover:decoration-2 transition-all duration-200">
               Briefing mit Quellen öffnen
@@ -100,7 +101,7 @@ export const InsightsTeaser: React.FC = () => {
             <span className="transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true">
               →
             </span>
-          </a>
+          </Link>
         </div>
       </div>
     </section>

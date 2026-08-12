@@ -3,10 +3,11 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { Analytics } from '@vercel/analytics/react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
-import { LogoSlider } from './components/LogoSlider';
+import { ProofLedger } from './components/ProofLedger';
 import { HomeProcess } from './components/HomeProcess';
 import { Services } from './components/Services';
 import { CaseStudies } from './components/CaseStudies';
+import { SystemProof } from './components/SystemProof';
 import { TeamSection } from './components/TeamSection';
 import { HomeFAQ } from './components/HomeFAQCTA';
 import { ClosingCTA } from './components/ClosingCTA';
@@ -40,10 +41,11 @@ const HomePage: React.FC = () => (
       description="Automatisierung, interne Business-Tools, KI-Assistenten und individuelle Softwarelösungen für kleine und mittelständische Unternehmen."
     />
     <Hero />
-    <LogoSlider />
-    <HomeProcess />
-    <Services />
+    <ProofLedger />
     <CaseStudies />
+    <SystemProof />
+    <Services />
+    <HomeProcess />
     <TeamSection />
     <InsightsTeaser />
     <HomeFAQ />
@@ -81,28 +83,31 @@ const App: React.FC = () => (
   <BrowserRouter>
     <ScrollToHash />
     <div className="min-h-screen bg-base text-ink font-body antialiased overflow-x-hidden selection:bg-accent selection:text-ink">
+      <a href="#main-content" className="skip-link">Zum Hauptinhalt</a>
       <Navbar />
-      <ErrorBoundary>
-        <Suspense fallback={<main className="min-h-[70vh] pt-36 px-6" role="status"><p className="max-w-[1140px] mx-auto text-sm text-muted">Seite wird geladen…</p></main>}><Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/impressum" element={<Impressum />} />
-          <Route path="/datenschutz" element={<Datenschutz />} />
-          <Route path="/ki-beratung" element={<KIBeratung />} />
-          <Route path="/ki-kundenservice" element={<KIKundenservice />} />
-          <Route path="/ki-recruiting" element={<KIRecruiting />} />
-          <Route path="/analytics-dashboard" element={<AnalyticsDashboard />} />
-          <Route path="/individuelle-ki-softwareloesungen" element={<IndividualSolutions />} />
-          <Route path="/roi-rechner" element={<ROICalculator />} />
-          <Route path="/ki-schnellstart" element={<KISchnellstart />} />
-          <Route path="/ki-audit" element={<KIAudit />} />
-          <Route path="/preise" element={<PricingOverview />} />
-          <Route path="/ki-analyse" element={<KIAnalyse />} />
-          <Route path="/live-demo" element={<LiveAgentDemo />} />
-          <Route path="/projekte" element={<Projects />} />
-          <Route path="/insights" element={<Insights />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes></Suspense>
-      </ErrorBoundary>
+      <div id="main-content" tabIndex={-1}>
+        <ErrorBoundary>
+          <Suspense fallback={<main className="min-h-[70vh] pt-36 px-6" role="status"><p className="max-w-[1140px] mx-auto text-sm text-muted">Seite wird geladen…</p></main>}><Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/impressum" element={<Impressum />} />
+            <Route path="/datenschutz" element={<Datenschutz />} />
+            <Route path="/ki-beratung" element={<KIBeratung />} />
+            <Route path="/ki-kundenservice" element={<KIKundenservice />} />
+            <Route path="/ki-recruiting" element={<KIRecruiting />} />
+            <Route path="/analytics-dashboard" element={<AnalyticsDashboard />} />
+            <Route path="/individuelle-ki-softwareloesungen" element={<IndividualSolutions />} />
+            <Route path="/roi-rechner" element={<ROICalculator />} />
+            <Route path="/ki-schnellstart" element={<KISchnellstart />} />
+            <Route path="/ki-audit" element={<KIAudit />} />
+            <Route path="/preise" element={<PricingOverview />} />
+            <Route path="/ki-analyse" element={<KIAnalyse />} />
+            <Route path="/live-demo" element={<LiveAgentDemo />} />
+            <Route path="/projekte" element={<Projects />} />
+            <Route path="/insights" element={<Insights />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes></Suspense>
+        </ErrorBoundary>
+      </div>
       <Footer />
       <ChatBot />
       <Analytics />

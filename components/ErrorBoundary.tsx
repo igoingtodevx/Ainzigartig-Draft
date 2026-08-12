@@ -35,7 +35,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
       return (
         <div className="min-h-[60vh] flex items-center justify-center px-6 py-24">
           <div className="max-w-md text-center">
-            <span className="material-symbols-outlined text-muted text-5xl mb-4 block">error_outline</span>
+            <span className="material-symbols-outlined text-muted text-5xl mb-4 block" aria-hidden="true">error_outline</span>
             <h1 className="font-editorial text-2xl md:text-3xl text-ink mb-3">
               Etwas ist schiefgelaufen.
             </h1>
@@ -47,7 +47,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
               onClick={this.handleReload}
               className="inline-flex items-center gap-2 px-6 py-3 bg-ink text-base text-sm font-bold hover:bg-ink/80 transition-colors"
             >
-              <span className="material-symbols-outlined text-sm">refresh</span>
+              <span className="material-symbols-outlined text-sm" aria-hidden="true">refresh</span>
               Seite neu laden
             </button>
           </div>

@@ -16,10 +16,11 @@ export default {
         'surface-soft': '#F3EFEA',
         ink: '#1A1918',
         muted: '#52504C',
-        faint: '#7A7873',
+        light: '#6D6A64',
+        faint: '#6D6A64',
         accent: '#ECA867',
-        'accent-mid': '#E3944C',
-        'accent-hover': '#D9823A',
+        'accent-mid': '#B77A36',
+        'accent-hover': '#9A5C22',
         'border-light': '#DDD8D1',
 
         // Compatibility aliases for older functional pages.

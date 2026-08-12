@@ -132,7 +132,11 @@ tailwind.config = {
 
 ---
 
-### 3.2 SERVICES — "Katalog-Liste"
+## 3.1 HISTORISCHE / VERWORFENE KPI-NOTIZEN
+
+Die folgenden numerischen Erfolgs- und Leistungsangaben stammen aus einem frühen Designentwurf. Sie sind verworfen, nicht belegt und dürfen weder als öffentliche Claims noch als Produktnachweis verwendet werden. Die aktuelle öffentliche Content-Schicht enthält diese Aussagen nicht.
+
+### 3.2 SERVICES — "Katalog-Liste" (historischer Entwurf, nicht öffentlich)
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -142,17 +146,17 @@ tailwind.config = {
 │   ─────────────────────────────────────────────────     │
 │   01  KI-Beratung für KMU                  maßgeschn.  │
 │   ─────────────────────────────────────────────────     │
-│   02  KI im Kundenservice                80% weniger    │
+│   02  KI im Kundenservice                nicht belegt    │
 │   ─────────────────────────────────────────────────     │
 │   03  KI-Telefonassistent                   24/7        │
 │   ─────────────────────────────────────────────────     │
-│   04  KI im Recruiting                  60% schneller   │
+│   04  KI im Recruiting                  nicht belegt     │
 │   ─────────────────────────────────────────────────     │
-│   05  KI-Lead-Generierung               500+ pro Tag    │
+│   05  KI-Lead-Generierung               nicht belegt     │
 │   ─────────────────────────────────────────────────     │
-│   06  KI im Vertrieb                    40% mehr        │
+│   06  KI im Vertrieb                    nicht belegt     │
 │   ─────────────────────────────────────────────────     │
-│   07  KI im Backoffice                 70% Zeitersp.    │
+│   07  KI im Backoffice                 nicht belegt     │
 │   ─────────────────────────────────────────────────     │
 │   08  Analytics Dashboard               Echtzeit        │
 │   ─────────────────────────────────────────────────     │
@@ -190,7 +194,7 @@ tailwind.config = {
 │   │  FAQ-Page und skaliert      │  │                 │ │
 │   │  individuelle Beratung      │  │  ERGEBNIS       │ │
 │   │  ohne die Investition       │  │  Ticketvolumen  │ │
-│   │  in Kundenberater.          │  │  –80%           │ │
+│   │  in Kundenberater.          │  │  nicht belegt  │ │
 │   │                             │  │                 │ │
 │   └─────────────────────────────┘  └─────────────────┘ │
 │                                                         │
@@ -376,7 +380,7 @@ const services: ServiceItem[] = [
   },
   {
     title: 'KI im Kundenservice',
-    metric: '80 % weniger Tickets',
+    metric: 'Nicht belegt',
     description:
       'Chatbots, die Ihr Unternehmen kennen. Trainiert auf Ihre Daten, nicht auf generisches Wissen. Ihr Team kümmert sich um die Fälle, die wirklich Aufmerksamkeit brauchen.',
     href: '#/ki-kundenservice',
@@ -390,28 +394,28 @@ const services: ServiceItem[] = [
   },
   {
     title: 'KI im Recruiting',
-    metric: '60 % schneller besetzen',
+    metric: 'Nicht belegt',
     description:
       'Automatisches CV-Screening und Matching — auf Basis Ihrer Kriterien, nicht auf Basis von Keywords. Die Entscheidung bleibt bei Ihnen.',
     href: '#/ki-recruiting',
   },
   {
     title: 'KI-Lead-Generierung',
-    metric: '500+ Leads am Tag',
+    metric: 'Nicht belegt',
     description:
       'Automatische Identifikation von Zielunternehmen mit personalisierter Erstansprache. Ihr Vertrieb spricht nur noch mit Interessenten.',
     href: '#',
   },
   {
     title: 'KI im Vertrieb',
-    metric: '40 % mehr qualifizierte Leads',
+    metric: 'Nicht belegt',
     description:
       'Lead-Qualifizierung, Priorisierung und automatisierte Follow-ups — damit kein Kontakt mehr durch das Raster fällt.',
     href: '#',
   },
   {
     title: 'KI im Backoffice',
-    metric: '70 % Zeitersparnis',
+    metric: 'Nicht belegt',
     description:
       'E-Mails, Dokumente, Rechnungen — automatisch verarbeitet und zugeordnet. Ihr Team arbeitet an Ergebnissen statt an Verwaltung.',
     href: '#',
@@ -925,7 +929,7 @@ const studies: CaseStudy[] = [
       'Der KI-Chatbot ist die Weiterentwicklung der FAQ-Seite und skaliert individuelle Beratung, ohne dass dafür Kundenberater eingestellt werden müssen. Die KI versteht Fragen semantisch und beantwortet sie auf Basis von explizitem Unternehmenswissen.',
     status: 'Live',
     context: 'Kundenservice',
-    result: 'Ticketvolumen um 80 % reduziert',
+    result: 'Nicht belegt',
   },
   {
     title: 'HubSpot CRM Flows',

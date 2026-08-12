@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "typecheck": "tsc --noEmit",
-    "test": "node --test && python3 -m unittest tests/test_scraper_security.py",
+    "test": "node --test && uv run --with-requirements scraper/requirements.txt python -m unittest tests/test_scraper_security.py",
     "release:check": "node scripts/release-check.mjs",
     "build": "vite build",
     "preview": "vite preview"

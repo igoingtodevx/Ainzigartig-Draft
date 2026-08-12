@@ -1,11 +1,7 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { RouteMeta } from './RouteMeta';
-import * as pdfjsLib from 'pdfjs-dist';
-import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
-
-// pdf.js worker setup — required for PDF rendering in the browser
-pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
+import documentVisual from '../Assets/run_b_asset_pack/08_document_agent_cube.png';
 
 // Convert a File to a base64 string (no data URL prefix).
 function uint8ToBase64(bytes: Uint8Array): string {
@@ -20,6 +16,11 @@ function uint8ToBase64(bytes: Uint8Array): string {
 // Render the first N pages of a PDF to PNG dataURLs, return base64 arrays.
 // Moderate resolution keeps multi-page requests within the API body limit.
 async function pdfToImages(file: File, maxPages: number): Promise<{ base64: string; mime_type: string }[]> {
+  const [pdfjsLib, workerModule] = await Promise.all([
+    import('pdfjs-dist'),
+    import('pdfjs-dist/build/pdf.worker.min.mjs?url'),
+  ]);
+  pdfjsLib.GlobalWorkerOptions.workerSrc = workerModule.default;
   const bytes = new Uint8Array(await file.arrayBuffer());
   const loadingTask = pdfjsLib.getDocument({ data: bytes });
   const pdf = await loadingTask.promise;
@@ -179,14 +180,6 @@ const SAMPLES: { id: string; label: string; icon: string; text: string }[] = [
   { id: 'offer', label: 'Angebot analysieren', icon: 'request_quote', text: SAMPLE_OFFER },
 ];
 
-const THINKING_STEPS = [
-  { label: 'Dokument eingelesen', icon: 'description' },
-  { label: 'Typ erkannt', icon: 'category' },
-  { label: 'Schlüsselfelder extrahiert', icon: 'data_object' },
-  { label: 'Nächste Schritte geplant', icon: 'task_alt' },
-  { label: 'Risiken markiert', icon: 'shield' },
-];
-
 function getPriorityColor(p: string): string {
   if (p === 'Hoch') return 'bg-red-100 text-red-700';
   if (p === 'Mittel') return 'bg-yellow-100 text-yellow-700';
@@ -208,26 +201,38 @@ function getRiskIcon(l: string): string {
 export const LiveAgentDemo: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
   const [analyzing, setAnalyzing] = useState(false);
-  const [thinkingStep, setThinkingStep] = useState(0);
+  const [phase, setPhase] = useState<'idle' | 'preparing' | 'analyzing'>('idle');
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [dragOver, setDragOver] = useState(false);
+  const [availability, setAvailability] = useState<'checking' | 'ready' | 'unavailable'>('checking');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const requestRef = useRef<AbortController | null>(null);
+  const resultRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch('/api/live-agent-demo')
+      .then(async (response) => { if (!response.ok) throw new Error(); return response.json(); })
+      .then((data) => { if (!cancelled) setAvailability(data?.configured ? 'ready' : 'unavailable'); })
+      .catch(() => { if (!cancelled) setAvailability('unavailable'); });
+    return () => { cancelled = true; requestRef.current?.abort(); };
+  }, []);
+
+  useEffect(() => {
+    if (result) requestAnimationFrame(() => resultRef.current?.focus());
+  }, [result]);
 
   const runSample = useCallback(async (sampleText: string) => {
+    if (availability !== 'ready') return;
     requestRef.current?.abort();
     const controller = new AbortController();
     requestRef.current = controller;
     setAnalyzing(true);
     setError(null);
     setResult(null);
-    setThinkingStep(0);
-
-    // Animate thinking steps during API call — slower cadence masks the ~7-9s LLM roundtrip
-    const stepInterval = setInterval(() => {
-      setThinkingStep((s) => Math.min(s + 1, THINKING_STEPS.length - 1));
-    }, 1400);
+    setPhase('analyzing');
+    setFile(null);
 
     try {
       const resp = await fetch('/api/live-agent-demo', {
@@ -244,12 +249,12 @@ export const LiveAgentDemo: React.FC = () => {
     } catch (e) {
       if ((e as Error).name !== 'AbortError') setError('Verbindung fehlgeschlagen. Bitte versuchen Sie es erneut.');
     } finally {
-      clearInterval(stepInterval);
-      if (requestRef.current === controller) { requestRef.current = null; setAnalyzing(false); }
+      if (requestRef.current === controller) { requestRef.current = null; setAnalyzing(false); setPhase('idle'); }
     }
-  }, []);
+  }, [availability]);
 
   const runUpload = useCallback(async (uploadedFile: File) => {
+    if (availability !== 'ready') return;
     if (!ACCEPTED_TYPES.includes(uploadedFile.type)) {
       setError('Bitte verwenden Sie PDF, PNG, JPG oder WebP.');
       setFile(null);
@@ -266,11 +271,7 @@ export const LiveAgentDemo: React.FC = () => {
     setAnalyzing(true);
     setError(null);
     setResult(null);
-    setThinkingStep(0);
-
-    const stepInterval = setInterval(() => {
-      setThinkingStep((s) => Math.min(s + 1, THINKING_STEPS.length - 1));
-    }, 1500);
+    setPhase('preparing');
 
     try {
       // Convert PDF to images (browser-side) so the server can send them
@@ -294,6 +295,9 @@ export const LiveAgentDemo: React.FC = () => {
         return;
       }
 
+      if (controller.signal.aborted) return;
+      setPhase('analyzing');
+
       const resp = await fetch('/api/live-agent-demo', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -312,12 +316,12 @@ export const LiveAgentDemo: React.FC = () => {
     } catch (e) {
       if ((e as Error).name !== 'AbortError') setError((e as Error).message || 'Das Dokument konnte nicht verarbeitet werden.');
     } finally {
-      clearInterval(stepInterval);
-      if (requestRef.current === controller) { requestRef.current = null; setAnalyzing(false); }
+      if (requestRef.current === controller) { requestRef.current = null; setAnalyzing(false); setPhase('idle'); }
     }
-  }, []);
+  }, [availability]);
 
   const handleFileSelect = (selectedFile: File) => {
+    if (availability !== 'ready') return;
     setFile(selectedFile);
     runUpload(selectedFile);
   };
@@ -336,27 +340,33 @@ export const LiveAgentDemo: React.FC = () => {
     setResult(null);
     setError(null);
     setAnalyzing(false);
-    setThinkingStep(0);
+    setPhase('idle');
     if (fileInputRef.current) fileInputRef.current.value = '';
+  };
+
+  const cancelAnalysis = () => {
+    requestRef.current?.abort();
+    requestRef.current = null;
+    setAnalyzing(false);
+    setPhase('idle');
+    setError('Die Analyse wurde abgebrochen. Es wurde kein Ergebnis erzeugt.');
   };
 
   return (
     <div className="min-h-screen bg-base text-ink font-body">
       <RouteMeta title="Live Demo | Ainzigartig" description="Testen Sie unseren KI-Dokumentenagenten live." />
       {/* Hero */}
-      <section className="pt-36 pb-12 px-6 md:px-8">
-        <div className="max-w-[900px] mx-auto px-4 sm:px-6 md:px-8 text-center">
-          <span className="inline-block rounded-full text-xs font-bold uppercase tracking-[0.14em] text-ink border border-accent/45 bg-accent/15 px-4 py-1.5 mb-6">
-            Live Agent Demo
-          </span>
-          <h1 className="font-editorial text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05] text-ink mb-6 break-words">
-            Schauen Sie unseren<br />
-            <span className="text-accent">Dokument-Agent arbeiten.</span>
-          </h1>
-          <p className="text-muted text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-            Rechnung, E-Mail, Angebot oder Vertrag — der Agent liest, strukturiert und schlägt
-            nächste Schritte vor. Die Ergebnisse sind KI-generierte Prüfvorschläge und sollten vor geschäftlichen Entscheidungen kontrolliert werden.
-          </p>
+      <section className="pt-32 pb-10 px-5 sm:px-6 md:pt-36 md:pb-12">
+        <div className="max-w-[1000px] mx-auto grid gap-7 md:grid-cols-[1.12fr_.88fr] md:items-center md:gap-10">
+          <div>
+            <span className="inline-block rounded-full text-[10px] font-bold uppercase tracking-[0.14em] text-ink border border-accent/45 bg-accent/15 px-4 py-1.5 mb-5">Live-Demo · Dokument-Agent</span>
+            <h1 className="font-editorial text-[clamp(2.6rem,6vw,4.8rem)] leading-[.98] tracking-[-.035em] text-ink break-words">Dokument rein.<br /><em className="text-accent-hover">Prüfbare Struktur raus.</em></h1>
+            <p className="text-muted text-base md:text-lg max-w-2xl leading-relaxed mt-5">Rechnung, E-Mail oder Angebot: Der Agent extrahiert Felder, markiert Risiken und priorisiert nächste Schritte. Er führt keine Aktion selbst aus.</p>
+            <div className="mt-5 flex flex-wrap gap-2 text-[10px] font-semibold uppercase tracking-[.1em] text-muted"><span className="rounded-full border border-ink/10 bg-surface px-3 py-1.5">Extraktion</span><span className="rounded-full border border-ink/10 bg-surface px-3 py-1.5">Risiken</span><span className="rounded-full border border-ink/10 bg-surface px-3 py-1.5">Handlungspunkte</span></div>
+          </div>
+          <div className="hidden md:block relative min-h-[300px] overflow-hidden rounded-[24px] border border-ink/10 bg-surface">
+            <img src={documentVisual} alt="Illustration eines modularen Dokument-Agenten" className="absolute inset-0 h-full w-full object-cover object-[58%_center]" />
+          </div>
         </div>
       </section>
 
@@ -364,21 +374,23 @@ export const LiveAgentDemo: React.FC = () => {
       {!result && !analyzing && (
         <section className="px-6 md:px-8 pb-16">
           <div className="max-w-[1000px] mx-auto">
+            {availability !== 'ready' && <div className={`mb-5 rounded-[20px] border p-4 ${availability === 'checking' ? 'border-ink/10 bg-surface' : 'border-amber-900/15 bg-amber-50'}`} role="status"><p className={`text-sm font-semibold ${availability === 'checking' ? 'text-ink' : 'text-amber-950'}`}>{availability === 'checking' ? 'Verfügbarkeit wird geprüft' : 'Live-Verarbeitung in dieser Umgebung nicht aktiviert'}</p><p className={`mt-1 text-xs leading-relaxed ${availability === 'checking' ? 'text-muted' : 'text-amber-900/75'}`}>{availability === 'checking' ? 'Die Demo startet erst, wenn Modelldienst und Missbrauchsschutz als konfiguriert gemeldet sind.' : 'Der Modelldienst oder sein Missbrauchsschutz ist nicht vollständig konfiguriert. Beispiele und Upload-Oberfläche bleiben als transparenter Produktstand sichtbar; es wird keine Scheinanalyse gestartet.'}</p></div>}
             {/* Drop zone */}
             <div
-              onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+              onDragOver={(e) => { e.preventDefault(); if (availability === 'ready') setDragOver(true); }}
               onDragLeave={() => setDragOver(false)}
               onDrop={handleDrop}
-              onClick={() => fileInputRef.current?.click()}
-              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInputRef.current?.click(); } }}
+              onClick={() => { if (availability === 'ready') fileInputRef.current?.click(); }}
+              onKeyDown={(e) => { if (availability === 'ready' && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); fileInputRef.current?.click(); } }}
               role="button"
-              tabIndex={0}
+              tabIndex={availability === 'ready' ? 0 : -1}
+              aria-disabled={availability !== 'ready'}
               aria-label="Dokument auswählen: PDF, PNG, JPG oder WebP bis 2,5 MB"
-              className={`brand-card border-2 border-dashed bg-surface p-10 text-center cursor-pointer transition-all mb-8 rounded-[26px] ${
+              className={`brand-card border-2 border-dashed bg-surface px-5 py-8 sm:p-10 text-center transition-all mb-5 rounded-[24px] ${availability === 'ready' ? 'cursor-pointer' : 'cursor-not-allowed opacity-55'} ${
                 dragOver ? 'border-accent bg-accent/5' : 'border-faint/30 hover:border-faint/60'
               }`}
             >
-              <span className="material-symbols-outlined text-4xl text-muted mb-3 block">upload_file</span>
+              <span className="material-symbols-outlined text-4xl text-muted mb-3 block" aria-hidden="true">upload_file</span>
               <p className="text-sm text-ink mb-1">PDF, PNG, JPG oder WebP hochladen (max. 2,5 MB)</p>
               <p className="text-xs text-faint">Bei PDFs verarbeitet die Demo höchstens die ersten drei Seiten.</p>
               <input
@@ -386,9 +398,11 @@ export const LiveAgentDemo: React.FC = () => {
                 type="file"
                 accept="application/pdf,image/png,image/jpeg,image/webp"
                 className="hidden"
+                disabled={availability !== 'ready'}
                 onChange={(e) => e.target.files?.[0] && handleFileSelect(e.target.files[0])}
               />
             </div>
+            <p className="mb-8 text-center text-[11px] leading-relaxed text-light">Bitte keine vertraulichen, personenbezogenen oder besonders sensiblen Inhalte hochladen. Für einen sicheren Projektbetrieb braucht es ein eigenes Daten- und Löschkonzept.</p>
 
             {/* Or sample */}
             <div className="text-center mb-4">
@@ -400,11 +414,12 @@ export const LiveAgentDemo: React.FC = () => {
                   type="button"
                   key={sample.id}
                   onClick={() => runSample(sample.text)}
-                  className="brand-card bg-surface p-5 text-left hover:border-accent/50 transition-all cursor-pointer group rounded-[22px]"
+                  disabled={availability !== 'ready'}
+                  className="brand-card min-h-[132px] bg-surface p-5 text-left hover:border-accent/50 transition-all cursor-pointer group rounded-[20px] disabled:cursor-not-allowed disabled:opacity-45"
                 >
-                  <span className="material-symbols-outlined text-2xl text-accent mb-2 block">{sample.icon}</span>
+                  <span className="material-symbols-outlined text-2xl text-accent mb-2 block" aria-hidden="true">{sample.icon}</span>
                   <p className="text-sm text-ink font-medium mb-1">{sample.label}</p>
-                  <p className="text-xs text-faint">Klicken zum Analysieren</p>
+                  <p className="text-xs text-faint">{availability === 'ready' ? 'Klicken zum Analysieren' : 'Derzeit nicht verfügbar'}</p>
                 </button>
               ))}
             </div>
@@ -416,33 +431,16 @@ export const LiveAgentDemo: React.FC = () => {
       {analyzing && (
         <section className="px-6 md:px-8 pb-16">
           <div className="max-w-[700px] mx-auto">
-            <div className="brand-card bg-surface p-8 rounded-[24px]" role="status" aria-live="polite" aria-busy="true">
-              <div className="flex items-center gap-3 mb-6">
-                <span className="material-symbols-outlined text-accent animate-spin">progress_activity</span>
-                <p className="text-sm text-ink font-medium">Agent arbeitet...</p>
+            <div className="brand-card bg-surface p-6 sm:p-8 rounded-[24px]" role="status" aria-live="polite" aria-busy="true">
+              <div className="flex items-center gap-3">
+                <span className="material-symbols-outlined text-accent animate-spin" aria-hidden="true">progress_activity</span>
+                <p className="text-sm text-ink font-medium">{phase === 'preparing' ? 'Dokument wird im Browser vorbereitet…' : 'KI-Auswertung läuft…'}</p>
               </div>
-              <div className="space-y-3">
-                {THINKING_STEPS.map((step, i) => (
-                  <div
-                    key={i}
-                    className={`flex items-center gap-3 transition-opacity duration-500 ${
-                      i <= thinkingStep ? 'opacity-100' : 'opacity-25'
-                    }`}
-                  >
-                    {i < thinkingStep ? (
-                      <span className="material-symbols-outlined text-accent text-base">check_circle</span>
-                    ) : i === thinkingStep ? (
-                      <span className="material-symbols-outlined text-accent text-base animate-pulse">pending</span>
-                    ) : (
-                      <span className="material-symbols-outlined text-faint text-base">radio_button_unchecked</span>
-                    )}
-                    <span className="material-symbols-outlined text-faint text-sm">{step.icon}</span>
-                    <span className={`text-sm ${i <= thinkingStep ? 'text-ink' : 'text-faint'}`}>
-                      {step.label}
-                    </span>
-                  </div>
-                ))}
+              <div className="mt-6 space-y-3 border-y border-ink/10 py-5">
+                <div className="flex items-start gap-3"><span className={`material-symbols-outlined text-base ${phase === 'analyzing' ? 'text-accent-hover' : 'animate-pulse text-accent-hover'}`} aria-hidden="true">{phase === 'analyzing' ? 'check_circle' : 'pending'}</span><div><p className="text-sm font-medium text-ink">Eingabe aufbereiten</p><p className="mt-0.5 text-xs leading-relaxed text-light">{file ? 'PDFs werden lokal auf höchstens drei Seiten gerendert; Bilder werden für die Anfrage kodiert.' : 'Das klar als fiktiv markierte Beispieldokument wird für die Anfrage vorbereitet.'}</p></div></div>
+                <div className={`flex items-start gap-3 ${phase === 'analyzing' ? 'opacity-100' : 'opacity-40'}`}><span className={`material-symbols-outlined text-base ${phase === 'analyzing' ? 'animate-pulse text-accent-hover' : 'text-light'}`} aria-hidden="true">{phase === 'analyzing' ? 'pending' : 'radio_button_unchecked'}</span><div><p className="text-sm font-medium text-ink">Struktur erzeugen</p><p className="mt-0.5 text-xs leading-relaxed text-light">Der Modelldienst extrahiert Felder und erstellt Prüfvorschläge. Einzelne Teilschritte werden nicht vorgetäuscht.</p></div></div>
               </div>
+              <button type="button" onClick={cancelAnalysis} className="mt-4 min-h-11 text-xs font-semibold text-light underline underline-offset-4 hover:text-ink">Analyse abbrechen</button>
             </div>
           </div>
         </section>
@@ -455,8 +453,9 @@ export const LiveAgentDemo: React.FC = () => {
             <div className="rounded-[22px] border border-red-900/15 bg-red-50 p-6" role="alert">
               <p className="text-sm text-red-700 mb-3">{error}</p>
               <button
+                type="button"
                 onClick={handleReset}
-                className="text-xs text-red-500 underline cursor-pointer"
+                className="min-h-11 text-xs text-red-800 underline underline-offset-4"
               >
                 Erneut versuchen
               </button>
@@ -467,18 +466,18 @@ export const LiveAgentDemo: React.FC = () => {
 
       {/* Result */}
       {result && (
-        <section className="px-6 md:px-8 pb-20">
-          <div className="max-w-[900px] mx-auto">
+        <section ref={resultRef} tabIndex={-1} className="px-5 sm:px-6 md:px-8 pb-20 outline-none" aria-labelledby="document-result-title">
+          <div className="max-w-[1000px] mx-auto">
             {/* Header */}
             <div className="brand-card bg-surface p-6 mb-6 rounded-[24px]">
               <div className="flex items-start justify-between gap-4 flex-wrap">
                 <div className="flex items-center gap-3">
-                  <span className="material-symbols-outlined text-accent text-3xl">
+                  <span className="material-symbols-outlined text-accent text-3xl" aria-hidden="true">
                     {result.document_type_icon || 'description'}
                   </span>
                   <div>
                     <p className="text-xs text-faint uppercase tracking-[0.2em]">Erkannter Typ</p>
-                    <p className="font-editorial text-2xl text-ink">{result.document_type}</p>
+                    <h2 id="document-result-title" className="font-editorial text-2xl text-ink">{result.document_type}</h2>
                   </div>
                 </div>
                 <div className="text-right">
@@ -507,9 +506,9 @@ export const LiveAgentDemo: React.FC = () => {
                 <p className="text-xs text-faint uppercase tracking-[0.2em] mb-3">Extrahierte Felder</p>
                 <div className="brand-card bg-surface divide-y divide-ink/10 overflow-hidden rounded-[22px]">
                   {Object.entries(result.key_fields).map(([k, v]) => (
-                    <div key={k} className="grid grid-cols-2 px-4 py-2.5">
+                    <div key={k} className="grid gap-1 px-4 py-3 sm:grid-cols-[.7fr_1.3fr] sm:gap-4">
                       <span className="text-xs text-muted">{k}</span>
-                      <span className="text-xs text-ink font-mono text-right break-all">{v}</span>
+                      <span className="text-xs text-ink font-medium sm:text-right break-words">{v}</span>
                     </div>
                   ))}
                 </div>
@@ -523,7 +522,7 @@ export const LiveAgentDemo: React.FC = () => {
                 <div className="space-y-3">
                   {result.suggested_actions.map((a, i) => (
                     <div key={i} className="brand-card bg-surface p-4 flex gap-3 rounded-[20px]">
-                      <span className="material-symbols-outlined text-accent text-xl shrink-0">arrow_forward</span>
+                      <span className="material-symbols-outlined text-accent text-xl shrink-0" aria-hidden="true">arrow_forward</span>
                       <div className="flex-1">
                         <div className="flex items-start justify-between gap-3 mb-1">
                           <p className="text-sm text-ink font-medium">{a.title}</p>
@@ -546,7 +545,7 @@ export const LiveAgentDemo: React.FC = () => {
                 <div className="space-y-2">
                   {result.risk_flags.map((r, i) => (
                     <div key={i} className={`border rounded-2xl p-3 flex items-start gap-2 ${getRiskColor(r.level)}`}>
-                      <span className="material-symbols-outlined text-base mt-0.5 shrink-0">{getRiskIcon(r.level)}</span>
+                      <span className="material-symbols-outlined text-base mt-0.5 shrink-0" aria-hidden="true">{getRiskIcon(r.level)}</span>
                       <p className="text-xs leading-relaxed">{r.message}</p>
                     </div>
                   ))}
@@ -558,7 +557,7 @@ export const LiveAgentDemo: React.FC = () => {
             {result.agent_reasoning && (
               <div className="mb-8 text-center">
                 <p className="text-xs text-faint italic">
-                  Agent-Logik: {result.agent_reasoning}
+                  Erkennungsgrundlage: {result.agent_reasoning}
                 </p>
               </div>
             )}
@@ -568,6 +567,7 @@ export const LiveAgentDemo: React.FC = () => {
             {/* CTAs */}
             <div className="border-t border-faint/30 pt-8 flex flex-col sm:flex-row gap-4 items-center justify-between">
               <button
+                type="button"
                 onClick={handleReset}
                 className="text-xs text-faint hover:text-ink transition-colors cursor-pointer"
               >
@@ -577,8 +577,8 @@ export const LiveAgentDemo: React.FC = () => {
                 to="/#kontakt"
                 className="brand-pill inline-flex items-center gap-2 px-6 py-3 bg-ink text-white text-sm font-bold hover:bg-[#33312E] transition-colors"
               >
-                So etwas für unser Unternehmen?
-                <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                Dokumentprozess besprechen
+                <span className="material-symbols-outlined text-sm" aria-hidden="true">arrow_forward</span>
               </Link>
             </div>
           </div>

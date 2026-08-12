@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 const NAV_ITEMS = [
   { label: 'Leistungen', to: '/#services' },
-  { label: 'Demos & Systeme', to: '/projekte' },
-  { label: 'ROI-Szenario', to: '/roi-rechner' },
-  { label: 'Insights', to: '/insights' },
+  { label: 'Live-Demos', to: '/#live-demos' },
+  { label: 'Gebaute Systeme', to: '/#systeme' },
+  { label: 'Projekte', to: '/projekte' },
 ];
 
 const EyeMark: React.FC = () => (
@@ -21,6 +21,7 @@ const EyeMark: React.FC = () => (
 export const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
   const location = useLocation();
 
   useEffect(() => {
@@ -32,11 +33,23 @@ export const Navbar: React.FC = () => {
 
   useEffect(() => setMenuOpen(false), [location.pathname, location.hash]);
 
+  useEffect(() => {
+    if (!menuOpen) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMenuOpen(false);
+        requestAnimationFrame(() => menuButtonRef.current?.focus());
+      }
+    };
+    document.addEventListener('keydown', closeOnEscape);
+    return () => document.removeEventListener('keydown', closeOnEscape);
+  }, [menuOpen]);
+
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         scrolled || menuOpen
-          ? 'py-3 bg-base/90 backdrop-blur-xl border-b border-ink/10 shadow-soft'
+          ? 'py-2.5 bg-base/[.98] border-b border-ink/10'
           : 'py-5 bg-transparent border-b border-transparent'
       }`}
     >
@@ -72,24 +85,26 @@ export const Navbar: React.FC = () => {
             to="/#kontakt"
             className="!hidden sm:!inline-flex brand-pill bg-ink text-white hover:bg-[#33312E] text-sm py-2.5 px-5"
           >
-            Anwendungsfall einordnen
+            Projektidee prüfen
           </Link>
 
           <button
+            ref={menuButtonRef}
             type="button"
             onClick={() => setMenuOpen((open) => !open)}
             aria-label={menuOpen ? 'Menü schließen' : 'Menü öffnen'}
             aria-expanded={menuOpen}
-            className="lg:hidden w-11 h-11 rounded-full border border-ink/30 flex items-center justify-center bg-base/70 text-ink transition-colors hover:bg-surface"
+            aria-controls="mobile-navigation"
+            className="lg:hidden w-11 h-11 rounded-full border border-ink/30 flex items-center justify-center bg-base/85 text-ink transition-colors hover:bg-surface"
           >
-            <span className="material-symbols-outlined text-[22px]">{menuOpen ? 'close' : 'menu'}</span>
+            <span className="material-symbols-outlined text-[22px]" aria-hidden="true">{menuOpen ? 'close' : 'menu'}</span>
           </button>
         </div>
       </div>
 
       {menuOpen && (
-        <div className="lg:hidden max-w-[1140px] mx-auto px-6 pt-4 pb-3">
-          <div className="brand-card p-3 bg-base/95">
+        <nav id="mobile-navigation" aria-label="Mobile Navigation" className="lg:hidden max-w-[1140px] mx-auto px-6 pt-4 pb-3">
+          <div className="brand-card p-3 bg-base/[.98]">
             {NAV_ITEMS.map((item) => (
               <Link
                 key={item.to}
@@ -108,10 +123,10 @@ export const Navbar: React.FC = () => {
               <span aria-hidden="true">↗</span>
             </Link>
             <Link to="/#kontakt" className="brand-pill mt-2 w-full bg-ink text-white hover:bg-[#33312E] text-sm py-3">
-              Anwendungsfall einordnen
+              Projektidee prüfen
             </Link>
           </div>
-        </div>
+        </nav>
       )}
     </header>
   );

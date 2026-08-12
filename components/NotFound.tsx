@@ -26,14 +26,14 @@ export const NotFound: React.FC = () => {
               to="/"
               className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-ink text-base text-sm font-bold hover:bg-ink/80 transition-colors"
             >
-              <span className="material-symbols-outlined text-sm">arrow_back</span>
+              <span className="material-symbols-outlined text-sm" aria-hidden="true">arrow_back</span>
               Zur Startseite
             </Link>
             <Link
               to="/ki-analyse"
               className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-faint/30 text-sm text-muted hover:border-ink/30 transition-colors"
             >
-              Kostenlose KI-Analyse starten
+              Website-Analyse öffnen
             </Link>
           </div>
         </div>

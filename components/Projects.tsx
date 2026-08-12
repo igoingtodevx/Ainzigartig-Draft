@@ -5,7 +5,7 @@ import { RouteMeta } from './RouteMeta';
 
 export const Projects: React.FC = () => (
   <main className="min-h-screen bg-base text-ink font-body pt-36 pb-24 px-6">
-    <RouteMeta title="Demos & gebaute Systeme | Ainzigartig" description="Live testbare Demos und klar abgegrenzte gebaute Systeme von Ainzigartig." />
+    <RouteMeta title="Demos & gebaute Systeme | Ainzigartig" description="Interaktive Demo-Oberflächen mit Verfügbarkeitsstatus und klar abgegrenzte gebaute Systeme von Ainzigartig." />
 
     <div className="max-w-[1140px] mx-auto">
       <header className="grid lg:grid-cols-[.8fr_1.2fr] gap-8 lg:gap-14 items-end mb-16 md:mb-20">
@@ -17,7 +17,7 @@ export const Projects: React.FC = () => (
         </div>
         <div className="max-w-xl lg:pb-2">
           <p className="text-base md:text-lg text-muted leading-relaxed">
-            Zwei Belegstufen, bewusst getrennt: Demos können Sie hier direkt testen. Gebaute Systeme dokumentieren umgesetzten Funktionsumfang — ohne daraus Kundenwirkung, Verfügbarkeit oder wirtschaftliche Ergebnisse abzuleiten.
+            Zwei Belegstufen, bewusst getrennt: Demos öffnen interaktive Produktflächen und zeigen dort ihren aktuellen Verfügbarkeitsstatus. Gebaute Systeme dokumentieren umgesetzten Funktionsumfang — ohne daraus Kundenwirkung oder wirtschaftliche Ergebnisse abzuleiten.
           </p>
         </div>
       </header>

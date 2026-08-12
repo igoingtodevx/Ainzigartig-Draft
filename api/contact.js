@@ -4,7 +4,7 @@ import { CONTACT_REASONS } from '../content/services.js';
 import { enforcePublicPost, handleOptions, readJsonBody } from '../server/apiGuard.js';
 
 const MAX_BODY_BYTES = 8_000;
-const MAX = { name: 100, email: 254, company: 140, service: 100, message: 3000 };
+const MAX = { name: 100, email: 254, company: 140, service: 100, message: 3000, nextStep: 300 };
 const cleanInline = (value, limit) => typeof value === 'string'
   ? value.trim().replace(/[\u0000-\u001F\u007F]+/g, ' ').replace(/\s+/g, ' ').slice(0, limit)
   : '';
@@ -50,6 +50,7 @@ export default async function handler(req, res) {
   const company = cleanInline(body.company, MAX.company);
   const service = cleanInline(body.service, MAX.service);
   const message = cleanMessage(body.message, MAX.message);
+  const nextStep = cleanInline(body.nextStep, MAX.nextStep);
   const website = cleanInline(body.website, 200);
   const startedAt = Number(body.startedAt);
 
@@ -77,7 +78,7 @@ export default async function handler(req, res) {
       to: process.env.CONTACT_EMAIL,
       replyTo: email,
       subject: `Website-Anfrage: ${service || 'Allgemein'}`,
-      text: `Name: ${name}\nE-Mail: ${email}\nUnternehmen: ${company || '–'}\nInteresse: ${service || '–'}\n\n${message}`,
+      text: `Name: ${name}\nE-Mail: ${email}\nUnternehmen: ${company || '–'}\nInteresse: ${service || '–'}\nGewünschter nächster Schritt: ${nextStep || '–'}\n\n${message}`,
     });
     if (error) throw new Error('provider');
     return json(res, 200, { ok: true });

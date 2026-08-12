@@ -10,14 +10,15 @@ interface ContactFormState {
   company: string;
   service: string;
   message: string;
+  nextStep: string;
   website: string;
   privacyAccepted: boolean;
 }
 
-const INITIAL: ContactFormState = { name: '', email: '', company: '', service: '', message: '', website: '', privacyAccepted: false };
+const INITIAL: ContactFormState = { name: '', email: '', company: '', service: '', message: '', nextStep: '', website: '', privacyAccepted: false };
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const fieldClass = 'w-full rounded-2xl border border-ink/15 bg-base/75 px-4 py-3.5 text-sm text-ink font-body placeholder:text-light/70 transition-colors focus:border-accent-hover focus:bg-surface focus:outline-none disabled:opacity-50';
+const fieldClass = 'w-full rounded-2xl border border-ink/15 bg-base/75 px-4 py-3.5 text-sm text-ink font-body placeholder:text-light transition-colors focus:border-accent-hover focus:bg-surface focus:outline-none disabled:opacity-50';
 
 export const ContactForm: React.FC = () => {
   const [data, setData] = useState<ContactFormState>(INITIAL);
@@ -68,7 +69,7 @@ export const ContactForm: React.FC = () => {
       const resp = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...data, startedAt }),
+        body: JSON.stringify({ ...data, message: data.message.trim(), nextStep: data.nextStep.trim(), startedAt }),
       });
       const result = await resp.json().catch(() => ({}));
       if (!resp.ok) {
@@ -87,7 +88,7 @@ export const ContactForm: React.FC = () => {
     return (
       <div className="brand-card mt-8 bg-base/80 p-7 md:p-8 text-center">
         <span className="w-12 h-12 mx-auto mb-4 rounded-full bg-accent/25 border border-accent/50 flex items-center justify-center">
-          <span className="material-symbols-outlined text-ink">check</span>
+          <span className="material-symbols-outlined text-ink" aria-hidden="true">check</span>
         </span>
         <p className="font-editorial text-2xl text-ink mb-2">Vielen Dank.</p>
         <p className="text-sm text-muted leading-relaxed max-w-md mx-auto">
@@ -110,6 +111,10 @@ export const ContactForm: React.FC = () => {
         <ul className="space-y-1.5 text-xs text-muted">
           {CONTACT_REASONS.slice(0, 4).map((reason) => <li key={reason}>— {reason}</li>)}
         </ul>
+        <div className="mt-6 flex flex-col gap-2 sm:flex-row">
+          <Link to="/#live-demos" className="brand-pill justify-center bg-ink px-5 py-3 text-xs text-white">Live-Demos ansehen</Link>
+          <Link to="/projekte" className="inline-flex min-h-11 items-center justify-center px-4 text-xs font-semibold text-ink underline decoration-accent-hover decoration-2 underline-offset-4">Projektumfänge prüfen</Link>
+        </div>
       </div>
     );
   }
@@ -163,6 +168,20 @@ export const ContactForm: React.FC = () => {
         />
       </label>
 
+      <label className="block text-xs font-semibold text-muted">
+        <span className="block mb-2 ml-1">Was wäre nach einem ersten Gespräch hilfreich?</span>
+        <input
+          id="cf-next-step"
+          type="text"
+          maxLength={300}
+          value={data.nextStep}
+          onChange={update('nextStep')}
+          disabled={submitting}
+          placeholder="z. B. Machbarkeit einordnen, Pilot abgrenzen, bestehende Idee prüfen"
+          className={fieldClass}
+        />
+      </label>
+
       <label className="flex items-start gap-3 rounded-2xl border border-ink/10 bg-base/50 p-4 text-xs text-muted leading-relaxed">
         <input
           type="checkbox"
@@ -179,12 +198,12 @@ export const ContactForm: React.FC = () => {
       <div className="pt-2 flex flex-col sm:flex-row sm:items-center gap-4">
         <button type="submit" disabled={submitting} className="brand-pill bg-ink text-white hover:bg-[#33312E] disabled:opacity-50 disabled:cursor-not-allowed px-7 py-3.5 text-sm shrink-0">
           {submitting ? (
-            <><span className="inline-block w-3.5 h-3.5 border border-white border-t-transparent rounded-full animate-spin" /> Wird gesendet…</>
+            <><span className="inline-block w-3.5 h-3.5 border border-white border-t-transparent rounded-full animate-spin" aria-hidden="true" /> Wird gesendet…</>
           ) : (
-            <>Anfrage senden <span className="material-symbols-outlined text-[18px]">arrow_forward</span></>
+            <>Anfrage senden <span className="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_forward</span></>
           )}
         </button>
-        <p className="text-xs text-light leading-relaxed">Unverbindlich. Wir sagen auch offen, wenn KI für den Fall keinen Sinn ergibt.</p>
+        <p className="text-xs text-light leading-relaxed">Unverbindlich. Kein automatisches Angebot — zuerst prüfen wir Problem, Voraussetzungen und sinnvollen nächsten Schritt.</p>
       </div>
     </form>
   );

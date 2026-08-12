@@ -108,7 +108,7 @@ export const Insights: React.FC = () => {
     <main className="min-h-screen bg-base text-ink font-body pt-32 pb-24">
       <RouteMeta
         title="Insights | Ainzigartig"
-        description="Das aktuelle KI-Briefing aus unserem Industry Watcher."
+        description="Maschinell erzeugtes KI-Briefing mit Quellenlinks und sichtbarem Aktualitätsstatus."
       />
 
       <section className="px-6">

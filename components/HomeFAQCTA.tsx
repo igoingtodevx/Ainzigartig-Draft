@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 
 const faqItems = [
   {
-    q: 'Für welche Unternehmen arbeitet ihr?',
-    a: 'Vor allem mit kleinen und mittelständischen Unternehmen im deutschsprachigen Raum. Entscheidend ist weniger die Branche als ein konkreter Prozess, ein wiederkehrendes Problem oder ein klarer KI-Anwendungsfall.',
+    q: 'Für welche Unternehmen sind eure Leistungen gedacht?',
+    a: 'Vor allem für kleine und mittelständische Unternehmen im deutschsprachigen Raum. Entscheidend ist weniger die Branche als ein konkreter Prozess, ein wiederkehrendes Problem oder ein klarer KI-Anwendungsfall.',
   },
   {
     q: 'Müssen wir technisches Vorwissen mitbringen?',
@@ -14,8 +14,8 @@ const faqItems = [
     a: 'Das hängt vom Scope ab. Nach einer ersten Einordnung erhalten Sie Annahmen zu Aufwand, sinnvoller Projektgröße und Kosten, bevor ein Auftrag entsteht.',
   },
   {
-    q: 'Arbeitet ihr herstellerunabhängig?',
-    a: 'Ja. Wir wählen Modelle und Tools nach Anwendungsfall, Datenschutz, Kosten und Integrationsaufwand statt nach einem festen Hersteller-Stack.',
+    q: 'Wie wählt ihr Modelle und Tools aus?',
+    a: 'Wir legen den Anbieter nicht pauschal vor dem Anwendungsfall fest. Auswahlkriterien sind unter anderem Qualität, Datenfluss, Kosten, Integrationsaufwand und die Anforderungen des konkreten Projekts.',
   },
   {
     q: 'Wie schnell sehen wir Ergebnisse?',
@@ -39,19 +39,24 @@ export const HomeFAQ: React.FC = () => {
         <div className="brand-card bg-surface overflow-hidden divide-y divide-ink/10">
           {faqItems.map((item, i) => {
             const open = openIndex === i;
+            const triggerId = `faq-trigger-${i}`;
+            const panelId = `faq-panel-${i}`;
             return (
               <div key={item.q}>
                 <button
+                  id={triggerId}
+                  type="button"
                   onClick={() => setOpenIndex(open ? null : i)}
                   className="w-full flex items-center justify-between gap-6 p-5 md:px-7 md:py-6 text-left group"
                   aria-expanded={open}
+                  aria-controls={panelId}
                 >
                   <span className="font-editorial text-lg md:text-xl text-ink leading-snug">{item.q}</span>
                   <span className={`w-9 h-9 rounded-full border border-ink/15 flex items-center justify-center shrink-0 transition-transform duration-300 ${open ? 'rotate-45 bg-accent/25' : 'bg-base'}`}>
-                    <span className="material-symbols-outlined text-[20px]">add</span>
+                    <span className="material-symbols-outlined text-[20px]" aria-hidden="true">add</span>
                   </span>
                 </button>
-                <div className={`grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(.16,1,.3,1)] ${open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
+                <div id={panelId} role="region" aria-labelledby={triggerId} aria-hidden={!open} className={`grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(.16,1,.3,1)] ${open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
                   <div className="overflow-hidden">
                     <p className="px-5 md:px-7 pb-6 text-sm md:text-[0.95rem] text-muted leading-relaxed max-w-3xl">{item.a}</p>
                   </div>

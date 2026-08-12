@@ -33,7 +33,7 @@ export const KISchnellstart: React.FC = () => (
         <div className="mt-9 flex justify-center">
           <Link to="/#kontakt" className="brand-pill bg-ink text-white hover:bg-[#33312E] px-7 py-3.5">
             Schnellstart besprechen
-            <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+            <span className="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_forward</span>
           </Link>
         </div>
       </div>
@@ -51,7 +51,7 @@ export const KISchnellstart: React.FC = () => (
             {includes.map((item) => (
               <li key={item} className="flex items-start gap-3 text-sm text-muted">
                 <span className="w-7 h-7 rounded-full bg-accent/20 border border-accent/40 flex items-center justify-center shrink-0">
-                  <span className="material-symbols-outlined text-[16px] text-ink">check</span>
+                  <span className="material-symbols-outlined text-[16px] text-ink" aria-hidden="true">check</span>
                 </span>
                 <span className="pt-1">{item}</span>
               </li>
