@@ -13,6 +13,8 @@ interface Brief { headline: string; trends: Trend[]; }
 interface Payload {
   generated_at: string;
   vertical: string;
+  freshness: 'fresh' | 'stale' | 'cached';
+  disclosure?: string;
   issue: Brief;
 }
 
@@ -49,8 +51,11 @@ export const InsightsTeaser: React.FC = () => {
   useEffect(() => {
     let cancelled = false;
     fetch('/api/insights')
-      .then((r) => r.json())
-      .then((p) => { if (!cancelled && !p.error) setData(p); })
+      .then(async (r) => {
+        if (!r.ok) throw new Error(String(r.status));
+        return r.json();
+      })
+      .then((p) => { if (!cancelled && !p.error && p.issue) setData(p); })
       .catch(() => { /* silent — teaser is non-essential */ });
     return () => { cancelled = true; };
   }, []);
@@ -68,7 +73,7 @@ export const InsightsTeaser: React.FC = () => {
           <div className="flex-1 min-w-0">
             <div className="flex flex-wrap items-baseline gap-x-3u gap-y-1u mb-3u">
               <span className="text-[10px] font-body uppercase tracking-[0.18em] text-ink tabular">
-                Diese Woche · № {issueWeek(data.generated_at)}
+                {data.freshness === 'fresh' ? 'Aktuelle externe Ausgabe' : 'Zuletzt geladene Ausgabe'} · № {issueWeek(data.generated_at)}
               </span>
               <span className="text-[10px] font-body uppercase tracking-[0.18em] text-muted tabular">
                 {timeAgo(data.generated_at)}
@@ -83,13 +88,14 @@ export const InsightsTeaser: React.FC = () => {
                 {topTrend.title}
               </p>
             )}
+            <p className="text-[10px] text-light mt-3 max-w-2xl">{data.disclosure || 'Maschinell erzeugtes Briefing; Quellen vor Verwendung prüfen.'}</p>
           </div>
           <a
             href="/insights"
             className="text-sm text-accent font-body group inline-flex items-center gap-2 self-start md:self-end shrink-0"
           >
             <span className="underline decoration-1 underline-offset-4 group-hover:decoration-2 transition-all duration-200">
-              Alle Trends & Opportunities
+              Briefing mit Quellen öffnen
             </span>
             <span className="transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true">
               →

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import analyzeIllustration from '../Assets/svg/Gemini_Generated_Image_tn5b60tn5b60tn5b.svg';
-import prioritizeIllustration from '../Assets/Generated image 2.png';
-import implementIllustration from '../Assets/Generated image 1.png';
+import prioritizeIllustration from '../Assets/Generated image 2.webp';
+import implementIllustration from '../Assets/Generated image 1.webp';
 
 const steps = [
   {
@@ -14,14 +14,14 @@ const steps = [
   {
     number: '2',
     title: 'Priorisieren',
-    text: 'KI muss einen klaren wirtschaftlichen Nutzen haben. Deshalb priorisieren wir die Use Cases nach Wirkung, Aufwand, Risiko und ROI und besprechen transparent, womit sich der Start wirklich lohnt.',
+    text: 'Ein Use Case sollte einen nachvollziehbaren Nutzen haben. Deshalb ordnen wir erwartete Wirkung, Aufwand, Risiko und prüfbare Annahmen ein, bevor ein Projektumfang entsteht.',
     image: prioritizeIllustration,
     alt: 'Illustration zur Priorisierung von KI-Anwendungsfällen',
   },
   {
     number: '3',
     title: 'Umsetzen',
-    text: 'Aus der priorisierten Idee wird ein funktionierender Prozess. Wir bauen nah an Ihren bestehenden Systemen, testen mit realistischen Fällen und bringen die Lösung in einen Zustand, den Ihr Team tatsächlich im Alltag einsetzen kann.',
+    text: 'Aus der priorisierten Idee entsteht ein begrenzter, testbarer Stand. Wir prüfen ihn mit realistischen Fällen und dokumentieren Umfang, offene Punkte und Voraussetzungen für eine mögliche Nutzung.',
     image: implementIllustration,
     alt: 'Illustration zur Umsetzung einer KI-Lösung',
   },
@@ -69,7 +69,7 @@ export const HomeProcess: React.FC = () => {
             Vom Problem zur Lösung.
           </h2>
           <p className="text-base md:text-lg text-muted leading-relaxed mt-5 max-w-2xl mx-auto">
-            Kein sechsmonatiges Transformationsprogramm. Erst verstehen wir den relevanten Prozess, dann priorisieren wir nach Nutzen — und erst danach bauen wir.
+            Wir starten nicht mit einem pauschalen Transformationsprogramm. Erst verstehen wir den relevanten Prozess, dann priorisieren wir nach Nutzen — und erst danach bauen wir.
           </p>
         </header>
 

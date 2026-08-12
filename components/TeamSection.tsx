@@ -1,5 +1,5 @@
 import React from 'react';
-import founderImage from '../Assets/founder_pixelart_nobg.png';
+import founderImage from '../Assets/founder_pixelart_nobg.webp';
 
 const members = [
   { name: 'Florian Schupp', role: 'AI & Engineering', linkedin: '#' },

@@ -1,68 +1,77 @@
 # Ainzigartig
 
-Ainzigartig is a React/Vite website for an AI consultancy serving small and medium-sized businesses. The repository contains the public marketing site plus Vercel serverless functions for an AI chat assistant, website analysis, document analysis, project data, industry insights, and a contact form.
+Ainzigartig is a React/Vite website for four service pillars aimed at small and medium-sized businesses:
 
-## Public deployment
+1. Automatisierung & Integrationen
+2. Dashboards & interne Business-Tools
+3. KI-Assistenten & Wissenssysteme
+4. Individuelle KI- & Softwarelösungen
 
-The following URL was checked anonymously during this audit and returned HTTP 200:
+The public reference origin is <https://ainzigartig.vercel.app/>. This repository is the source for the SPA and its Vercel serverless endpoints; external AI, scraper, mail, and insights services remain separate dependencies.
 
-- <https://ainzigartig.vercel.app/>
+## Public surface
 
-This is the only deployment URL documented here. API features may still be unavailable when their server-side environment variables are not configured.
+- Live demos: `/ki-analyse`, `/live-demo`, and `/ki-audit`
+- Built-system proof: `/projekte`, with AutoWunsch, Zeitstempel, and a generic company knowledge assistant explicitly separated from live demos
+- Scenario tool: `/roi-rechner`
+- External machine-generated briefing: `/insights`, with source freshness and unavailable states
+- Four service-aligned pages plus retained recruiting and quick-start use-case routes
+- Legal status pages: `/impressum` and `/datenschutz`
 
-## Evidence-backed stack
-
-- React 19, TypeScript, React Router 6
-- Vite 6, Tailwind CSS 3, PostCSS
-- Vercel deployment configuration for a Vite SPA and serverless functions
-- `pdfjs-dist` for client-side PDF page rendering in the document demo
-- Vercel Analytics
-- Server-side integrations use the OpenAI Chat Completions API directly or the Vercel AI Gateway, depending on configured credentials
-
-## Implemented scope
-
-- Multi-route marketing site, including `/ki-beratung`, `/ki-kundenservice`, `/ki-recruiting`, `/analytics-dashboard`, `/roi-rechner`, `/ki-schnellstart`, `/ki-audit`, `/preise`, `/ki-analyse`, `/live-demo`, `/projekte`, `/insights`, `/impressum`, and `/datenschutz`.
-- `/api/chat`: the “Edi” assistant, with input validation, a six-message history window, cooldown/hourly in-memory rate limiting, and an OpenAI/Vercel AI Gateway provider path.
-- `/api/analyze`: accepts a website URL, calls the configured scraper, and asks the configured LLM for structured analysis.
-- `/api/live-agent-demo`: analyzes sample text or up to five client-rendered document images and returns structured JSON.
-- `/api/contact`: validates a contact request and sends it through Resend.
-- `/api/projects` and `/api/insights`: server-side data endpoints used by the project and industry-insights sections.
-
-## Status
-
-The frontend and serverless handlers are implemented and deployed as a public demo. This repository is not a self-contained AI backend: the AI, scraper, email, GitHub, and remote-insights integrations depend on deployment configuration and external services.
-
-## Local setup
+## Commands
 
 ```bash
-npm install
-npm run dev       # Vite development server on port 3000
+npm ci
+npm run dev
+npm run typecheck
+npm test
 npm run build
-npm run preview
+npm run release:check
+python3 -m venv .venv
+.venv/bin/pip install -r scraper/requirements.txt
+.venv/bin/python -m unittest tests/test_scraper_security.py
 ```
 
-For a production-like local API environment, use a Vercel-compatible local runtime. Plain `vite` serves the frontend but does not provide the `api/*.js` functions by itself.
+Plain Vite serves the frontend only. Use a Vercel-compatible local runtime for `api/*.js`.
 
-## Server-side environment
+## Server environment
 
-Set these in the deployment environment, never in client-exposed `VITE_` variables:
+Copy `.env.example` to a local untracked env file and set secrets only in the server/deployment environment. Never use a `VITE_` prefix for model, mail, or service credentials.
 
-| Variable | Used for |
+| Variable | Purpose |
 | --- | --- |
-| `OPENAI_API_KEY` | Direct OpenAI calls for chat, analysis, and document analysis |
-| `AI_GATEWAY_API_KEY` or the platform-provided `VERCEL_OIDC_TOKEN` | Vercel AI Gateway fallback |
-| `RESEND_API_KEY` and `CONTACT_EMAIL` | Contact form delivery; set `CONTACT_EMAIL` explicitly |
-| `SCRAPER_URL` | Scraper service used by `/api/analyze` |
-| `GITHUB_TOKEN` | Optional authenticated GitHub metadata for `/api/projects` |
-| `CHAT_ENABLED=false` | Optional kill switch for `/api/chat` |
+| `PUBLIC_SITE_ORIGIN` / `ALLOWED_ORIGINS` | Same-origin checks for public POST endpoints |
+| `OPENAI_API_KEY` | Direct server-side OpenAI-compatible requests |
+| `AI_GATEWAY_API_KEY` or platform `VERCEL_OIDC_TOKEN` | AI Gateway fallback |
+| `OPENAI_*_MODEL` / `AI_GATEWAY_*_MODEL` | Optional route-specific model selection |
+| `KV_REST_API_URL`, `KV_REST_API_TOKEN` | Upstash Redis REST credentials for production-wide throttling (preferred Vercel names) |
+| `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` | Equivalent direct-Upstash credential names |
+| `AI_DAILY_BUDGET_UNITS` | Hard account-wide UTC-day budget for weighted public AI calls; defaults to `500` |
+| `TRUSTED_CLIENT_IP_HEADER` | Optional non-Vercel proxy header; use only when that proxy overwrites it |
+| `SCRAPER_URL`, `SCRAPER_TOKEN` | Explicit HTTPS scraper and matching server-side bearer token for `/api/analyze` and the VPS |
+| `CHAT_ENABLED=false` / `AI_DEMOS_ENABLED=false` | Cost and incident kill switches |
+| `CONTACT_FORM_ENABLED=true` | Explicit contact delivery activation |
+| `RESEND_API_KEY`, `CONTACT_EMAIL`, `CONTACT_FROM` | Required together when contact delivery is enabled |
 
-The Vite config still reads `GEMINI_API_KEY` for a legacy build-time mapping, but the current server handlers documented above use OpenAI-compatible endpoints. Do not treat the Gemini variable as an active provider without checking the implementation.
+The VPS unit reads `/etc/ainzigartig-scraper.env`; it must contain the same `SCRAPER_TOKEN` configured for the Vercel function. Keep that file outside the repository with restricted filesystem permissions. The checked-in unit expects this repository at `/home/deploy/Ainzigartig-Draft-foundation` and its virtualenv at `.venv`; install `scraper/requirements.txt` into that virtualenv before installing the unit. It runs `uvicorn` on loopback for an HTTPS reverse proxy. Then run `systemd-analyze verify scraper/ainzigartig-scraper.service` and reload systemd.
 
-## Limitations
+## Endpoint guardrails
 
-- AI endpoints return an unavailable/not-configured response without valid provider credentials.
-- Website analysis additionally depends on a reachable scraper service; the repository does not include that service.
-- Contact delivery depends on a valid Resend configuration and an explicitly set recipient.
-- Rate limiting is process-local and is not a shared production quota.
-- The document demo renders PDF pages in the browser and sends images to the configured provider; it is not a durable document-processing pipeline.
-- Remote project and insights data can fail independently of the frontend.
+The chat, website analysis, document demo, and contact endpoints reject cross-site browser requests, require JSON, enforce route-specific body and history limits, use cooldown/hourly buckets, and return `Retry-After` on throttling. In production, public AI routes fail closed unless the Redis REST store is configured. Their per-client limits are atomic across serverless instances, client keys use only platform-overwritten IP headers on Vercel, and a second distributed counter enforces a weighted account-wide UTC-day model-call budget. Chat costs 1 unit, website analysis 8, document samples 6, and document uploads 10; keep each provider/platform hard-spend alert or billing cap enabled as an independent ceiling.
+
+Local development and tests use a bounded process-local fallback when no Redis REST credentials are present. That fallback is deliberately unavailable to the public AI routes when `NODE_ENV=production`; a store outage returns `503` before a model request is made.
+
+Website analysis resolves every initial/redirect target once, rejects any non-global result, and passes the approved numeric address into a dedicated HTTP transport. TLS SNI and certificate checks still use the original hostname, while the TCP connection cannot trigger a second DNS lookup. Responses, redirects, content types, ports, and download size remain bounded.
+
+## Proof boundaries
+
+- AutoWunsch is not described as automatic marketplace matching. The documented scope is intake, checkout/order plumbing, a separate vehicle-analysis preview, and price-trend views.
+- Zeitstempel is described only as the implemented browser/PWA prototype: local-first time/site/break records, offline outbox/conflicts, optional sync, totals, and CSV/PDF export.
+- The knowledge assistant is generic and integrations-dependent. It is not attributed to an unnamed customer and is not presented as an anonymous live demo.
+- AI outputs, insight signals, ROI scenarios, compatibility, savings, availability, hosting location, deletion, auditability, and legal conformity are not guaranteed.
+
+## Release gate
+
+The current repository does not contain verified legal-provider identity, a service address, or a complete controller-specific privacy notice. The public placeholder wording was removed; the two legal pages now state the missing facts cleanly and are marked `noindex`. Contact delivery defaults to disabled and is additionally locked by `content/release.js`.
+
+`npm run release:check` intentionally fails while those real legal details are absent. Replace the legal-status pages with reviewed, factual content and configure contact delivery before treating a future build as releasable.

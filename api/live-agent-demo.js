@@ -1,6 +1,12 @@
 // Vercel Serverless Function (Node.js): Live Agent Demo
 // Uses direct OpenAI when configured and falls back to Vercel AI Gateway
 // with deployment OIDC so preview deployments remain functional.
+import { enforcePublicPost, handleOptions, isAiAbuseProtectionReady, readJsonBody, reserveAiBudget } from '../server/apiGuard.js';
+
+// Keep JSON below Vercel's 4.5 MB function request ceiling, including the
+// base64 and object overhead added by the browser.
+const MAX_BODY_BYTES = 4_000_000;
+const MAX_TOTAL_BASE64_CHARS = 3_800_000;
 
 function getLLMConfig() {
   const openaiKey = process.env.OPENAI_API_KEY || '';
@@ -8,7 +14,7 @@ function getLLMConfig() {
     return {
       token: openaiKey,
       endpoint: 'https://api.openai.com/v1/chat/completions',
-      model: 'gpt-4o-mini',
+      model: process.env.OPENAI_DOCUMENT_MODEL || 'gpt-4o-mini',
       backend: 'openai-direct',
     };
   }
@@ -18,7 +24,7 @@ function getLLMConfig() {
     return {
       token: gatewayToken,
       endpoint: 'https://ai-gateway.vercel.sh/v1/chat/completions',
-      model: 'openai/gpt-4o-mini',
+      model: process.env.AI_GATEWAY_DOCUMENT_MODEL || 'openai/gpt-4o-mini',
       backend: process.env.AI_GATEWAY_API_KEY ? 'vercel-ai-gateway-key' : 'vercel-ai-gateway-oidc',
     };
   }
@@ -185,39 +191,36 @@ function validateImage(img) {
   if (typeof img.mime_type !== 'string') return 'mime_type fehlt.';
   if (!['image/png', 'image/jpeg', 'image/webp'].includes(img.mime_type)) return `Nicht unterstuetzter Bildtyp: ${img.mime_type}`;
   const size = Math.floor(img.base64.length * 0.75);
-  if (size > 4_500_000) return 'Bild zu gross (max 4 MB pro Bild).';
+  if (size > 3_000_000) return 'Bild ist innerhalb der Anfrage zu gross.';
   return null;
 }
 
 export default async function handler(req, res) {
-  if (req.method === 'OPTIONS') {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    return res.status(200).end();
-  }
+  if (handleOptions(req, res, ['GET', 'POST'])) return;
 
   if (req.method === 'GET') {
     const llm = getLLMConfig();
     return sendJson(res, 200, {
       status: 'ok',
       service: 'live-agent-demo',
-      backend: llm?.backend || 'not-configured',
-      has_llm: !!llm,
+      configured: !!llm && process.env.AI_DEMOS_ENABLED !== 'false' && isAiAbuseProtectionReady(),
     });
   }
 
-  if (req.method !== 'POST') return sendJson(res, 405, { error: 'Method not allowed' });
+  if (!await enforcePublicPost(req, res, { namespace: 'document-agent', limit: 8, windowMs: 60 * 60 * 1000, minIntervalMs: 8_000, maxBodyBytes: MAX_BODY_BYTES, requireDistributed: true })) return;
+  if (process.env.AI_DEMOS_ENABLED === 'false') return sendJson(res, 503, { error: 'Die Dokument-Demo ist derzeit deaktiviert.' });
 
   try {
-    const body = typeof req.body === 'string' ? JSON.parse(req.body) : (req.body || {});
+    const body = await readJsonBody(req, MAX_BODY_BYTES);
     const mode = body.mode || '';
 
     if (mode === 'sample') {
       const text = typeof body.text === 'string' ? body.text.trim() : '';
       if (!text) return sendJson(res, 400, { error: 'Text fehlt.' });
+      if (text.length > 8_000) return sendJson(res, 413, { error: 'Der Beispieltext ist zu lang.' });
+      if (!await reserveAiBudget(res, 6)) return;
 
-      const userPrompt = USER_PROMPT_TEMPLATE.replace('{document_content}', text.slice(0, 12000));
+      const userPrompt = USER_PROMPT_TEMPLATE.replace('{document_content}', text);
       const result = await callLLMText(userPrompt);
       if (result.error) return sendJson(res, 502, { error: 'KI-Analyse ist gerade nicht verfügbar.' });
 
@@ -229,12 +232,15 @@ export default async function handler(req, res) {
     if (mode === 'upload') {
       const images = body.images;
       if (!Array.isArray(images) || images.length === 0) return sendJson(res, 400, { error: 'Keine Bilder erhalten.' });
-      if (images.length > 5) return sendJson(res, 400, { error: 'Maximal 5 Bilder pro Anfrage.' });
+      if (images.length > 3) return sendJson(res, 400, { error: 'Maximal 3 Bilder pro Anfrage.' });
+      const totalBase64Chars = images.reduce((sum, image) => sum + (typeof image?.base64 === 'string' ? image.base64.length : 0), 0);
+      if (totalBase64Chars > MAX_TOTAL_BASE64_CHARS) return sendJson(res, 413, { error: 'Die aufbereiteten Dokumentseiten sind insgesamt zu groß.' });
 
       for (let i = 0; i < images.length; i++) {
         const err = validateImage(images[i]);
         if (err) return sendJson(res, 400, { error: `Bild ${i + 1}: ${err}` });
       }
+      if (!await reserveAiBudget(res, 10)) return;
 
       const result = await callLLMVision(images, VISION_PROMPT);
       if (result.error) return sendJson(res, 502, { error: 'KI-Analyse ist gerade nicht verfügbar.' });
@@ -247,13 +253,13 @@ export default async function handler(req, res) {
     return sendJson(res, 400, { error: 'Unbekannter Modus.' });
   } catch (e) {
     console.error('Document agent handler error', e?.name || 'unknown');
-    return sendJson(res, 500, { error: 'Die Anfrage konnte nicht verarbeitet werden.' });
+    return sendJson(res, e?.code === 'PAYLOAD_TOO_LARGE' ? 413 : 400, { error: 'Die Anfrage konnte nicht verarbeitet werden.' });
   }
 }
 
 export const config = {
   api: {
-    bodyParser: { sizeLimit: '12mb' },
+    bodyParser: { sizeLimit: '4mb' },
   },
-  maxDuration: 10,
+  maxDuration: 15,
 };

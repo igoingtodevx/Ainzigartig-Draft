@@ -2,50 +2,51 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { RouteMeta } from './RouteMeta';
 
+const knownFlows = [
+  ['Hosting & Nutzung', 'Die statische Website und Serverfunktionen sind für Vercel konfiguriert; die Anwendung bindet Vercel Analytics ein.'],
+  ['Externe Schriften', 'Der Browser lädt die eingebundenen Schriftdateien über Google-Fonts-Endpunkte.'],
+  ['Website-Assistent', 'Edi speichert den begrenzten Verlauf im Session Storage des Browsers. Bei Nutzung sendet die Serverfunktion Frage und begrenzten Verlauf an den konfigurierten OpenAI-kompatiblen Modelldienst.'],
+  ['KI-Website-Analyse', 'Die eingegebene URL wird serverseitig an einen ausdrücklich konfigurierten Scraper und der ausgelesene Inhalt anschließend an den konfigurierten Modelldienst übertragen.'],
+  ['Dokument-Agent', 'Beispieltext oder bis zu drei im Browser gerenderte Dokumentseiten werden an den konfigurierten Modelldienst gesendet. Die Oberfläche fordert ausdrücklich dazu auf, keine vertraulichen oder besonders sensiblen Dokumente hochzuladen.'],
+  ['Kontakt', 'Das Formular ist technisch für eine Übermittlung über Resend vorbereitet und bleibt serverseitig deaktiviert, bis Kontakt- und Datenschutzangaben vollständig konfiguriert sind.'],
+  ['Insights', 'Die Insights-Seite lädt ein maschinell erzeugtes Briefing über eine serverseitige Proxy-Funktion von einer externen Watcher-Anwendung.'],
+];
+
 export const Datenschutz: React.FC = () => (
   <main className="min-h-screen bg-base text-ink font-body pt-36 pb-24 px-6">
-    <RouteMeta title="Datenschutz | Ainzigartig" description="Datenschutzinformationen zu Ainzigartig." />
-    <div className="max-w-[820px] mx-auto">
+    <RouteMeta title="Datenschutzstatus | Ainzigartig" description="Technisch belegte Datenflüsse und offener Freigabestatus von Ainzigartig." noIndex />
+    <div className="max-w-[900px] mx-auto">
       <Link to="/" className="inline-flex items-center gap-2 text-sm font-semibold text-muted hover:text-ink transition-colors mb-10">
-        <span className="material-symbols-outlined text-[18px]">arrow_back</span>
+        <span className="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_back</span>
         Startseite
       </Link>
 
-      <p className="text-xs uppercase tracking-[0.14em] font-semibold text-light mb-3">Rechtliches</p>
-      <h1 className="font-editorial text-[clamp(2.8rem,6vw,4.3rem)] leading-[1.02] tracking-[-0.03em] mb-8">Datenschutz</h1>
+      <p className="text-xs uppercase tracking-[0.14em] font-semibold text-light mb-3">Technischer Datenschutzstatus</p>
+      <h1 className="font-editorial text-[clamp(2.8rem,6vw,4.3rem)] leading-[1.02] tracking-[-0.03em] mb-5">Bekannte Datenflüsse.<br />Offene Pflichtangaben.</h1>
+      <p className="text-base text-muted leading-relaxed max-w-2xl mb-10">
+        Diese Seite dokumentiert nur, was der aktuelle Quellstand technisch belegt. Sie ist keine vollständige Datenschutzerklärung, solange verantwortliche Stelle, Kontakt und produktive Anbieter-Konfiguration fehlen.
+      </p>
 
-      <div className="rounded-[26px] border border-[#B77A36]/25 bg-accent/12 p-5 md:p-6 mb-6">
-        <p className="text-xs uppercase tracking-[0.12em] font-bold text-[#8B5A24] mb-2">Pre-Launch-Hinweis</p>
-        <p className="text-sm text-muted leading-relaxed">
-          Die technische Website steht bereits, die endgültigen Unternehmens-, Domain- und Vertragsdaten jedoch noch nicht. Deshalb ist diese Seite bewusst als Arbeitsstand gekennzeichnet und muss vor dem öffentlichen Livegang anhand des finalen Setups rechtlich geprüft und vervollständigt werden.
-        </p>
+      <div className="brand-card bg-surface p-6 md:p-8">
+        <h2 className="font-editorial text-2xl mb-6">Technisch nachvollziehbarer Stand</h2>
+        <div className="divide-y divide-ink/10 border-y border-ink/10">
+          {knownFlows.map(([title, text], index) => (
+            <section key={title} className="grid sm:grid-cols-[48px_1fr] gap-3 py-5">
+              <span className="font-editorial text-xl text-accent-hover">{String(index + 1).padStart(2, '0')}</span>
+              <div>
+                <h3 className="font-editorial text-xl">{title}</h3>
+                <p className="text-sm text-muted leading-relaxed mt-1">{text}</p>
+              </div>
+            </section>
+          ))}
+        </div>
       </div>
 
-      <div className="brand-card bg-surface p-6 md:p-8 space-y-7">
-        <section>
-          <h2 className="font-editorial text-2xl mb-2">Was technisch bereits feststeht</h2>
-          <ul className="space-y-3 text-sm text-muted leading-relaxed">
-            <li className="flex gap-3"><span className="text-accent-hover">01</span><span>Die Website wird über Vercel bereitgestellt.</span></li>
-            <li className="flex gap-3"><span className="text-accent-hover">02</span><span>Der integrierte Assistent „Edi“ nutzt aktuell serverseitig die OpenAI API.</span></li>
-            <li className="flex gap-3"><span className="text-accent-hover">03</span><span>Weitere KI-Demos können Inhalte an externe Modell-APIs übermitteln, wenn ein Besucher die jeweilige Funktion aktiv nutzt.</span></li>
-            <li className="flex gap-3"><span className="text-accent-hover">04</span><span>Das Kontaktformular übermittelt die eingegebenen Kontaktdaten an das serverseitige Kontakt-Backend.</span></li>
-          </ul>
-        </section>
-
-        <section className="pt-6 border-t border-ink/10">
-          <h2 className="font-editorial text-2xl mb-2">Was vor Livegang ergänzt werden muss</h2>
-          <p className="text-sm text-muted leading-relaxed">
-            Verantwortliche Stelle, endgültige Hosting- und Anbieterinformationen, konkrete Datenflüsse der produktiv aktivierten KI-Funktionen, Rechtsgrundlagen, Aufbewahrungsfristen, Betroffenenrechte, Kontaktadresse und gegebenenfalls weitere eingesetzte Analyse- oder Drittanbieter-Dienste.
-          </p>
-        </section>
-
-        <section className="pt-6 border-t border-ink/10">
-          <h2 className="font-editorial text-2xl mb-2">Kontakt während der Preview</h2>
-          <p className="text-sm text-muted leading-relaxed">
-            Bis eine eigene Ainzigartig-Domain samt Geschäftsadresse final eingerichtet ist, wird auf dieser Preview keine erfundene E-Mail-Adresse angegeben.
-          </p>
-          <Link to="/#kontakt" className="brand-pill mt-4 bg-ink text-white hover:bg-[#33312E] text-sm">Zum Kontaktformular</Link>
-        </section>
+      <div className="mt-6 brand-card bg-[#F3EFEA] p-6 md:p-8">
+        <h2 className="font-editorial text-2xl mb-3">Release-Gate</h2>
+        <p className="text-sm text-muted leading-relaxed">
+          Vor einer Veröffentlichung müssen mindestens die verantwortliche Stelle und Kontaktmöglichkeit, Rechtsgrundlagen, Zwecke, Empfänger und mögliche Drittlandübermittlungen, Speicherdauern, Betroffenenrechte sowie die tatsächlich aktivierten Anbieter und Verträge vollständig und anwendungsspezifisch dokumentiert und geprüft werden.
+        </p>
       </div>
     </div>
   </main>

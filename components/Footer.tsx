@@ -19,7 +19,7 @@ export const Footer: React.FC = () => (
             <span className="font-editorial text-2xl font-semibold tracking-[-0.02em]">Ainzigartig</span>
           </Link>
           <p className="text-sm text-white/60 leading-relaxed mt-4 max-w-md">
-            KI-Beratung, Automatisierung und individuelle KI-Lösungen für kleine und mittelständische Unternehmen.
+            Automatisierung, interne Business-Tools, Wissenssysteme und individuelle KI- & Softwarelösungen für kleine und mittelständische Unternehmen.
           </p>
         </div>
 
@@ -27,16 +27,16 @@ export const Footer: React.FC = () => (
           <div>
             <p className="text-white/40 text-xs uppercase tracking-[0.12em] font-semibold mb-3">Entdecken</p>
             <div className="flex flex-col gap-2.5">
-              <Link to="/ki-analyse" className="text-white/70 hover:text-white transition-colors">KI-Check</Link>
-              <Link to="/live-demo" className="text-white/70 hover:text-white transition-colors">Live Demo</Link>
-              <Link to="/projekte" className="text-white/70 hover:text-white transition-colors">Projekte</Link>
+              <Link to="/projekte" className="text-white/70 hover:text-white transition-colors">Demos & Systeme</Link>
+              <Link to="/ki-analyse" className="text-white/70 hover:text-white transition-colors">Website-Analyse</Link>
+              <Link to="/live-demo" className="text-white/70 hover:text-white transition-colors">Dokument-Agent</Link>
               <Link to="/insights" className="text-white/70 hover:text-white transition-colors">Insights</Link>
             </div>
           </div>
           <div>
             <p className="text-white/40 text-xs uppercase tracking-[0.12em] font-semibold mb-3">Unternehmen</p>
             <div className="flex flex-col gap-2.5">
-              <Link to="/preise" className="text-white/70 hover:text-white transition-colors">Preise</Link>
+              <Link to="/preise" className="text-white/70 hover:text-white transition-colors">Projektrahmen</Link>
               <Link to="/#kontakt" className="text-white/70 hover:text-white transition-colors">Kontakt</Link>
               <Link to="/impressum" className="text-white/70 hover:text-white transition-colors">Impressum</Link>
               <Link to="/datenschutz" className="text-white/70 hover:text-white transition-colors">Datenschutz</Link>
@@ -47,7 +47,7 @@ export const Footer: React.FC = () => (
 
       <div className="pt-6 flex flex-col sm:flex-row justify-between gap-3 text-xs text-white/40">
         <span>© 2026 Ainzigartig</span>
-        <span>KI, die im Alltag funktioniert.</span>
+        <span>KI & Software für konkrete Prozesse.</span>
       </div>
     </div>
   </footer>

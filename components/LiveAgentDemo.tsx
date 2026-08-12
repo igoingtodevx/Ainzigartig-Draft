@@ -27,14 +27,14 @@ async function pdfToImages(file: File, maxPages: number): Promise<{ base64: stri
   const results: { base64: string; mime_type: string }[] = [];
   for (let i = 1; i <= pageCount; i++) {
     const page = await pdf.getPage(i);
-    const viewport = page.getViewport({ scale: 1.45 });
+    const viewport = page.getViewport({ scale: 1.2 });
     const canvas = document.createElement('canvas');
     canvas.width = Math.ceil(viewport.width);
     canvas.height = Math.ceil(viewport.height);
     const ctx = canvas.getContext('2d');
     if (!ctx) continue;
     await page.render({ canvasContext: ctx, viewport, canvas }).promise;
-    const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
+    const dataUrl = canvas.toDataURL('image/jpeg', 0.72);
     const b64 = dataUrl.split(',', 2)[1] || '';
     if (b64) results.push({ base64: b64, mime_type: 'image/jpeg' });
   }
@@ -47,7 +47,10 @@ async function pdfToImages(file: File, maxPages: number): Promise<{ base64: stri
   return results;
 }
 
-const MAX_FILE_BYTES = 4 * 1024 * 1024;
+// Vercel Functions reject request bodies above 4.5 MB. Base64 and JSON add
+// overhead, so the browser stops comfortably below the platform ceiling.
+const MAX_FILE_BYTES = 2_500_000;
+const MAX_ENCODED_PAYLOAD_CHARS = 3_800_000;
 const ACCEPTED_TYPES = ['application/pdf', 'image/png', 'image/jpeg', 'image/webp'];
 
 interface KeyField {
@@ -76,7 +79,9 @@ interface AnalysisResult {
   agent_reasoning: string;
 }
 
-const SAMPLE_INVOICE = `Buerotechnik Mueller GmbH
+const SAMPLE_INVOICE = `FIKTIVES BEISPIELDOKUMENT — KEIN ECHTER BELEG
+
+Buerotechnik Mueller GmbH
 Musterstrasse 12, 80331 Muenchen
 USt-IdNr: DE123456789
 
@@ -85,7 +90,7 @@ Datum: 04.06.2025
 Faelligkeit: 04.07.2025 (30 Tage)
 
 Empfaenger:
-Ainzigartig Demo GmbH
+Beispielbetrieb (fiktiv)
 Beispielweg 7, 50667 Koeln
 
 Pos. | Beschreibung                              | Menge | Einzelpreis | Gesamt
@@ -104,7 +109,9 @@ Bank: Stadtsparkasse Muenchen
 
 Bei Rueckfragen: service@buerotechnik-mueller.de / Tel: 089-1234567`;
 
-const SAMPLE_EMAIL = `Von: Anna Schmidt <a.schmidt@webkontor-hamburg.de>
+const SAMPLE_EMAIL = `FIKTIVES BEISPIELDOKUMENT — KEIN ECHTER BELEG
+
+Von: Anna Schmidt <a.schmidt@webkontor-hamburg.de>
 An: info@mustermann-gmbh.de
 Datum: 05.06.2025, 09:42
 Betreff: Anfrage Bueromoebel — 12 Arbeitsplaetze
@@ -128,7 +135,9 @@ Anna Schmidt
 Webkontor Hamburg GmbH
 +49 40 987654`;
 
-const SAMPLE_OFFER = `ANGEBOT Nr. ANG-2025-0891
+const SAMPLE_OFFER = `FIKTIVES BEISPIELDOKUMENT — KEIN ECHTER BELEG
+
+ANGEBOT Nr. ANG-2025-0891
 Holzbau Werner GmbH | Gewerbepark 4 | 72555 Metzingen
 
 An:
@@ -247,7 +256,7 @@ export const LiveAgentDemo: React.FC = () => {
       return;
     }
     if (uploadedFile.size > MAX_FILE_BYTES) {
-      setError('Die Datei ist größer als 4 MB. Bitte verkleinern oder teilen Sie das Dokument.');
+      setError('Die Datei ist größer als 2,5 MB. Bitte verkleinern oder teilen Sie das Dokument.');
       setFile(null);
       return;
     }
@@ -265,10 +274,10 @@ export const LiveAgentDemo: React.FC = () => {
 
     try {
       // Convert PDF to images (browser-side) so the server can send them
-      // directly to gpt-4o-mini vision — no server-side PDF library needed.
+      // directly to the configured vision-capable model — no server-side PDF library needed.
       let images: { base64: string; mime_type: string }[];
       if (uploadedFile.type === 'application/pdf') {
-        images = await pdfToImages(uploadedFile, 5);
+        images = await pdfToImages(uploadedFile, 3);
         if (images.length === 0) {
           setError('PDF enthaelt keine lesbaren Seiten.');
           return;
@@ -277,6 +286,12 @@ export const LiveAgentDemo: React.FC = () => {
         const bytes = new Uint8Array(await uploadedFile.arrayBuffer());
         const b64 = uint8ToBase64(bytes);
         images = [{ base64: b64, mime_type: uploadedFile.type }];
+      }
+
+      const encodedPayloadChars = images.reduce((sum, image) => sum + image.base64.length, 0);
+      if (encodedPayloadChars > MAX_ENCODED_PAYLOAD_CHARS) {
+        setError('Das aufbereitete Dokument ist für diese Demo zu groß. Bitte weniger Seiten oder eine kleinere Datei verwenden.');
+        return;
       }
 
       const resp = await fetch('/api/live-agent-demo', {
@@ -358,14 +373,14 @@ export const LiveAgentDemo: React.FC = () => {
               onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInputRef.current?.click(); } }}
               role="button"
               tabIndex={0}
-              aria-label="Dokument auswählen: PDF, PNG, JPG oder WebP bis 4 MB"
+              aria-label="Dokument auswählen: PDF, PNG, JPG oder WebP bis 2,5 MB"
               className={`brand-card border-2 border-dashed bg-surface p-10 text-center cursor-pointer transition-all mb-8 rounded-[26px] ${
                 dragOver ? 'border-accent bg-accent/5' : 'border-faint/30 hover:border-faint/60'
               }`}
             >
               <span className="material-symbols-outlined text-4xl text-muted mb-3 block">upload_file</span>
-              <p className="text-sm text-ink mb-1">PDF, PNG, JPG oder WebP hochladen (max. 4 MB)</p>
-              <p className="text-xs text-faint">Bei PDFs verarbeitet die Demo höchstens die ersten fünf Seiten.</p>
+              <p className="text-sm text-ink mb-1">PDF, PNG, JPG oder WebP hochladen (max. 2,5 MB)</p>
+              <p className="text-xs text-faint">Bei PDFs verarbeitet die Demo höchstens die ersten drei Seiten.</p>
               <input
                 ref={fileInputRef}
                 type="file"
@@ -382,6 +397,7 @@ export const LiveAgentDemo: React.FC = () => {
             <div className="grid sm:grid-cols-3 gap-3">
               {SAMPLES.map((sample) => (
                 <button
+                  type="button"
                   key={sample.id}
                   onClick={() => runSample(sample.text)}
                   className="brand-card bg-surface p-5 text-left hover:border-accent/50 transition-all cursor-pointer group rounded-[22px]"

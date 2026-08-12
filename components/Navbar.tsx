@@ -3,9 +3,8 @@ import { Link, useLocation } from 'react-router-dom';
 
 const NAV_ITEMS = [
   { label: 'Leistungen', to: '/#services' },
-  { label: 'KI-Check', to: '/ki-analyse' },
-  { label: 'ROI-Rechner', to: '/roi-rechner' },
-  { label: 'Live Demo', to: '/live-demo' },
+  { label: 'Demos & Systeme', to: '/projekte' },
+  { label: 'ROI-Szenario', to: '/roi-rechner' },
   { label: 'Insights', to: '/insights' },
 ];
 
@@ -73,7 +72,7 @@ export const Navbar: React.FC = () => {
             to="/#kontakt"
             className="!hidden sm:!inline-flex brand-pill bg-ink text-white hover:bg-[#33312E] text-sm py-2.5 px-5"
           >
-            Erstgespräch buchen
+            Anwendungsfall einordnen
           </Link>
 
           <button
@@ -105,11 +104,11 @@ export const Navbar: React.FC = () => {
               to="/preise"
               className="flex items-center justify-between rounded-xl px-4 py-3 text-sm text-muted hover:text-ink hover:bg-surface-soft transition-colors"
             >
-              Preise
+              Projektrahmen
               <span aria-hidden="true">↗</span>
             </Link>
             <Link to="/#kontakt" className="brand-pill mt-2 w-full bg-ink text-white hover:bg-[#33312E] text-sm py-3">
-              Erstgespräch buchen
+              Anwendungsfall einordnen
             </Link>
           </div>
         </div>

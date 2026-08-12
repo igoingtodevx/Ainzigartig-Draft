@@ -1,51 +1,52 @@
 # AINZIGARTIG — Company Knowledge Base
-# Used by the chat assistant "Edi" (api/chat.js). This is the assistant's factual source of truth.
-# Edit and redeploy when positioning, contact details or services change.
+# Factual source for the website assistant "Edi". Do not add claims that are
+# not visible in the current site or supported by a built system.
 
 ## ÜBER UNS
 
-- Ainzigartig ist eine kleine KI-Beratung für kleine und mittelständische Unternehmen im deutschsprachigen Raum.
-- Wir verbinden technische Umsetzung, Automatisierung und Business-Verständnis in einem kleinen Team.
-- Wir beraten, bauen und begleiten individuelle KI-Lösungen; wir sind kein eigener Foundation-Model- oder Lizenzanbieter.
-- Datenschutz, Hosting, Modellanbieter und Datenflüsse werden passend zum konkreten Projekt bewertet und transparent gemacht.
+- Ainzigartig ist ein kleines Team für KI- und Softwarelösungen für kleine und mittelständische Unternehmen im deutschsprachigen Raum.
+- Wir beraten, bauen und begleiten klar abgegrenzte Lösungen; wir sind kein eigener Modell- oder Lizenzanbieter.
+- Anbieter, Hosting, Datenflüsse, Verträge und Zugriffe werden für das konkrete Projekt geprüft. Es gibt keine pauschale Datenschutz- oder EU-Hosting-Zusage.
+
+## DIE VIER LEISTUNGSFELDER
+
+1. **Automatisierung & Integrationen** — definierte Arbeitsschritte und vorhandene Systeme verbinden, einschließlich Freigaben, Fehlerpfaden und Dokumentation.
+2. **Dashboards & interne Business-Tools** — freigegebene Datenquellen in internen Oberflächen und Auswertungen nutzbar machen; Aktualität und Umfang hängen von den Anbindungen ab.
+3. **KI-Assistenten & Wissenssysteme** — Assistenten auf Basis definierter Inhalte und Prozesse, mit Qualitätstests, Quellenbezug soweit implementiert und menschlicher Eskalation wo erforderlich.
+4. **Individuelle KI- & Softwarelösungen** — klar abgegrenzte Anwendungen vom prüfbaren Prototyp bis zur Integration, wenn Scope, Datenlage und Risiko das tragen.
 
 ## WIE WIR ARBEITEN
 
-- Lieber ein klar abgegrenzter, testbarer Use Case als ein monatelanges KI-Konzept ohne produktiven Nutzen.
-- Herstellerunabhängig: Modelle und Tools werden nach Anwendungsfall, Qualität, Datenschutz, Kosten und Integrationsaufwand ausgewählt.
-- Direkt und ehrlich: Wenn ein KI-Einsatz für einen Prozess keinen sinnvollen Business Case hat, sagen wir das.
-- Verständliche Kommunikation ohne unnötigen Fachjargon.
+- Erst Problem, Nutzer, Daten, Schnittstellen und Erfolgskriterien klären; dann bauen.
+- Modelle und Tools werden nach Anwendungsfall, Qualität, Datenschutz, Kosten und Integrationsaufwand ausgewählt.
+- Ein Prototyp ist kein Produktionsnachweis. Produktive Nutzung braucht Tests, Rollen, Fehlerbehandlung und ein Betriebskonzept.
+- Wenn ein Einsatz keinen belastbaren Business Case hat oder wichtige Voraussetzungen fehlen, sagen wir das.
 
-## KERNLEISTUNGEN
+## LIVE-DEMOS AUF DER WEBSITE
 
-1. **KI-Beratung** — Use-Case-Identifikation, Priorisierung, Tool- und Architekturentscheidungen sowie Umsetzungsplanung.
-2. **KI-Schnellstart** — Ein bewusst kleiner, klar gescopter KI-Assistent mit 5 Tagen als Zielrahmen, sofern Datenlage und Integrationsaufwand dazu passen.
-3. **KI-Kundenservice** — Chat- und Wissensassistenten auf Basis freigegebener Unternehmensinhalte und Prozesse.
-4. **Automatisierung** — Dokumentenverarbeitung, Recruiting-Unterstützung, Analytics, Vertriebs- und Backoffice-Workflows.
+- **KI-Website-Analyse**: liest öffentlich erreichbare Website-Inhalte und erstellt eine begrenzte strukturierte Potenzialanalyse. Kein Voll-Audit.
+- **Dokument-Agent / Live Agent**: extrahiert Felder aus Beispieltexten oder hochgeladenen Dokumentseiten und erzeugt Prüfvorschläge. Führt keine Aktionen aus; keine vertraulichen Dokumente hochladen.
+- **KI-Reifegrad-Check**: sechs Fragen zur Selbsteinschätzung. Kein Benchmark, Audit oder Konformitätsnachweis.
 
-## WAS MAN AUF DER WEBSITE AUSPROBIEREN KANN
+## GEBAUTE SYSTEME
 
-- KI-Website-Analyse: liest eine URL aus und erstellt eine strukturierte Potenzialanalyse.
-- Dokument-Agent: verarbeitet Beispieltexte sowie hochgeladene PDFs und Bilder und extrahiert Felder, nächste Schritte und Risiken.
-- KI-Reifegrad-Check: sechs Fragen zur ersten Orientierung.
-- ROI-Rechner: branchenspezifische Modellrechnung mit konservativen Bandbreiten.
-- Projekte/Werkstatt: öffentlich gezeigte technische Projekte und Experimente.
+- **AutoWunsch**: funktionaler Produktprototyp mit Fahrzeugkriterien-Formular, Checkout-Ablauf, separater Fahrzeuganalyse-Vorschau und Preisverlaufsansicht. Nicht als automatische Marktplatz-Suche oder eigenständiges Inserat-Matching beschreiben.
+- **Zeitstempel**: Browser-/PWA-Prototyp für local-first Arbeitszeiterfassung, Baustellen, Stempelvorgänge, Pausen, Offline-Outbox sowie CSV-/PDF-Export. Keine native iOS-App behaupten; Cloud-Sync braucht ein konfiguriertes Backend.
+- **Unternehmens-Wissensassistent**: generischer, integrationsabhängiger Prototyp mit semantischer Suche in bereitgestellten Wissensdokumenten und begrenztem Antwortkontext. Keinem ungenannten Kunden zuordnen und keine öffentliche Live-Demo behaupten.
 
-## WAS WIR NICHT BEHAUPTEN
+## WEITERE TOOLS
 
-- Keine erfundenen Kundenreferenzen oder garantierten Einsparquoten.
-- Keine pauschale Garantie, dass jedes Setup automatisch DSGVO-konform ist.
-- Keine vollautomatisierten Personal- oder Geschäftsentscheidungen ohne menschliche Verantwortung.
-- Keine Zusage zu konkreten Preisen oder Lieferterminen ohne Scope.
+- **ROI-Rechner**: lokale Szenariorechnung mit vollständig editierbaren Annahmen. Keine Benchmark- oder Einspargarantie.
+- **Insights**: maschinell erzeugtes externes Briefing mit Quellenlinks und sichtbarem Aktualitätsstatus. Nicht als redaktionell verifizierte Ainzigartig-Analyse darstellen.
 
-## HÄUFIGE FRAGEN
+## NICHT BEHAUPTEN
 
-- "Was kostet das?" → Das hängt von Scope, Datenlage und Integrationen ab. Im Erstgespräch lässt sich die Größenordnung meist schnell einordnen.
-- "Wie sieht es mit Datenschutz aus?" → Das hängt vom Setup ab. Hosting, Modellanbieter, Auftragsverarbeitung und Datenflüsse werden vor produktiver Nutzung transparent festgelegt.
-- "Brauchen wir ein Entwicklerteam?" → Nicht zwingend. Ainzigartig kann eine Lösung umsetzen und dokumentiert übergeben; bei komplexeren Integrationen kann interne IT sinnvoll sein.
-- "Wie schnell geht das?" → Kleine Prototypen können schnell entstehen. Produktive Integrationen hängen von Scope, Daten und Schnittstellen ab.
+- Keine erfundenen Kunden, Referenzen, KPIs, Einsparungen, Verfügbarkeiten oder garantierten Ergebnisse.
+- Keine pauschale DSGVO-Konformität, EU-Server, automatische Löschung, fehlende Datenweitergabe oder Auditfähigkeit.
+- Keine autonomen Personal- oder Geschäftsentscheidungen und keine garantierte Fairness von Modellen.
+- Keine Preise, Termine, Integrationen oder Funktionen zusagen, bevor Scope und technischer Ist-Stand geprüft sind.
 
 ## KONTAKT
 
-- Bis eine eigene Ainzigartig-Domain und Geschäftsadresse final eingerichtet sind, ausschließlich auf das Kontaktformular der Website verweisen (Startseite, Anker #kontakt).
-- Keine E-Mail-Adresse oder Domain erfinden oder nennen, wenn sie nicht in dieser Datei ausdrücklich als aktiv hinterlegt ist.
+- Für konkrete Anfragen auf den Kontaktbereich der Startseite (#kontakt) verweisen. Nicht behaupten, dass eine Nachricht übermittelt werden kann; der Bereich zeigt den aktuellen Aktivierungsstatus.
+- Keine E-Mail-Adresse, Anschrift, Rechtsform oder Domain erfinden. Die Anbieterangaben sind im aktuellen Repository nicht vollständig hinterlegt.

@@ -4,25 +4,28 @@ Extracts website content as clean markdown for KI analysis.
 Deployed on VPS, called by Vercel serverless function.
 """
 
-import requests
+import os
 from bs4 import BeautifulSoup
 import html2text
-from fastapi import FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI, Header, HTTPException
 from pydantic import BaseModel
 import uvicorn
 import time
 import re
-from urllib.parse import urljoin, urlparse
+from urllib.parse import urljoin
+
+try:
+    from .pinned_http import PinnedHttpError, fetch_public_html as fetch_pinned_html
+    from .security import ScraperSecurityError, require_token
+except ImportError:  # Direct `python scraper/service.py` execution.
+    from pinned_http import PinnedHttpError, fetch_public_html as fetch_pinned_html
+    from security import ScraperSecurityError, require_token
 
 app = FastAPI(title="Ainzigartig Scraper")
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["POST"],
-    allow_headers=["*"],
-)
+SCRAPER_TOKEN = os.environ.get("SCRAPER_TOKEN", "").strip()
+MAX_RESPONSE_BYTES = 2_000_000
+MAX_REDIRECTS = 4
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
@@ -49,6 +52,24 @@ class ScrapeResult(BaseModel):
     has_privacy_policy: bool
     response_time_ms: int
     status_code: int
+
+
+def require_auth(authorization: str | None) -> None:
+    """Keep the VPS endpoint private to the configured website API."""
+    try:
+        require_token(SCRAPER_TOKEN, authorization)
+    except ScraperSecurityError as error:
+        raise HTTPException(status_code=error.status_code, detail=error.detail) from error
+
+
+def fetch_public_html(initial_url: str) -> tuple[str, int, str]:
+    """Fetch HTML with DNS resolution and transport bound to the same public IP."""
+    try:
+        return fetch_pinned_html(initial_url, HEADERS, MAX_RESPONSE_BYTES, MAX_REDIRECTS)
+    except ScraperSecurityError as error:
+        raise HTTPException(status_code=error.status_code, detail=error.detail) from error
+    except PinnedHttpError as error:
+        raise HTTPException(status_code=error.status_code, detail=error.detail) from error
 
 
 def detect_technologies(soup: BeautifulSoup, html: str) -> list[str]:
@@ -127,34 +148,18 @@ def extract_images(soup: BeautifulSoup) -> list[dict]:
 
 
 @app.post("/scrape")
-async def scrape(req: ScrapeRequest):
-    url = req.url.strip()
-    if not url.startswith("http"):
-        url = "https://" + url
-
-    # Validate URL
-    parsed = urlparse(url)
-    if not parsed.netloc:
-        raise HTTPException(status_code=400, detail="Invalid URL")
-
+async def scrape(req: ScrapeRequest, authorization: str | None = Header(default=None)):
+    require_auth(authorization)
     start = time.time()
 
     try:
-        resp = requests.get(url, headers=HEADERS, timeout=15, allow_redirects=True)
-        status_code = resp.status_code
-    except requests.exceptions.Timeout:
-        raise HTTPException(status_code=504, detail="Website timed out after 15s")
-    except requests.exceptions.ConnectionError:
-        raise HTTPException(status_code=502, detail="Could not connect to website")
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Request failed: {str(e)[:100]}")
-
-    if status_code >= 400:
-        raise HTTPException(status_code=502, detail=f"Website returned status {status_code}")
+        url, status_code, html = fetch_public_html(req.url)
+    except HTTPException:
+        raise
+    except Exception:
+        raise HTTPException(status_code=500, detail="Request failed")
 
     response_time_ms = int((time.time() - start) * 1000)
-
-    html = resp.text
     soup = BeautifulSoup(html, "html.parser")
 
     # Remove script, style, nav, footer elements
@@ -220,7 +225,7 @@ async def scrape(req: ScrapeRequest):
 
 @app.get("/health")
 async def health():
-    return {"status": "ok", "service": "ainzigartig-scraper"}
+    return {"status": "ok", "service": "ainzigartig-scraper", "configured": bool(SCRAPER_TOKEN)}
 
 
 if __name__ == "__main__":

@@ -11,7 +11,7 @@ const faqItems = [
   },
   {
     q: 'Was kostet eine Zusammenarbeit?',
-    a: 'Das hängt vom Scope ab. Das Erstgespräch ist kostenlos. Danach bekommen Sie eine klare Einschätzung zu Aufwand, sinnvoller Projektgröße und Kosten, bevor Sie sich entscheiden.',
+    a: 'Das hängt vom Scope ab. Nach einer ersten Einordnung erhalten Sie Annahmen zu Aufwand, sinnvoller Projektgröße und Kosten, bevor ein Auftrag entsteht.',
   },
   {
     q: 'Arbeitet ihr herstellerunabhängig?',
@@ -19,7 +19,7 @@ const faqItems = [
   },
   {
     q: 'Wie schnell sehen wir Ergebnisse?',
-    a: 'Ein klar abgegrenzter Prototyp kann sehr schnell entstehen. Für produktive Integrationen hängt die Dauer von Daten, Schnittstellen, Sicherheitsanforderungen und gewünschtem Umfang ab.',
+    a: 'Das hängt von Daten, Schnittstellen, Sicherheitsanforderungen und gewünschtem Umfang ab. Einen belastbaren Zeitrahmen nennen wir erst nach der Scope-Prüfung.',
   },
 ];
 

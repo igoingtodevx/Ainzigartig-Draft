@@ -12,23 +12,23 @@ const includes = [
   'Ein klar abgegrenzter KI-Use-Case',
   'Arbeit mit Ihren vorhandenen Daten',
   'Integration in einen bestehenden Ablauf',
-  '5 Tage als Zielrahmen bei passendem Scope',
+  'Zeitrahmen erst nach Scope- und Datenprüfung',
   'Feinschliff & Übergabe',
 ];
 
 export const KISchnellstart: React.FC = () => (
   <div className="min-h-screen bg-base text-ink font-body">
-    <RouteMeta title="KI-Schnellstart | Ainzigartig" description="Ein klar abgegrenzter KI-Assistent — mit Zielrahmen, wenn Scope und Datenlage passen." />
+    <RouteMeta title="KI-Schnellstart | Ainzigartig" description="Ein begrenzter, testbarer KI-Use-Case mit geklärtem Scope und sichtbaren Voraussetzungen." />
 
     <section className="pt-36 pb-20 px-6">
       <div className="max-w-[920px] mx-auto text-center">
         <p className="text-xs uppercase tracking-[0.14em] font-semibold text-light mb-3">KI-Schnellstart</p>
         <h1 className="font-editorial text-[clamp(2.8rem,6vw,4.8rem)] leading-[1.02] tracking-[-0.035em] font-normal">
-          Ein erster KI-Assistent.<br />
-          <span className="hand-underline font-body font-extrabold">Klarer Zielrahmen.</span>
+          Ein erster KI-Use-Case.<br />
+          <span className="hand-underline font-body font-extrabold">Begrenzt und testbar.</span>
         </h1>
         <p className="text-base md:text-lg text-muted max-w-2xl mx-auto leading-relaxed mt-7">
-          Kein monatelanges Vorprojekt. Wir wählen einen kleinen, sinnvollen Scope und bauen etwas, das Sie mit echten Fällen ausprobieren können.
+          Wir wählen einen kleinen, sinnvollen Scope und bauen einen Stand, den Sie mit echten Fällen ausprobieren können. Dauer und Umfang folgen erst aus Daten- und Schnittstellenprüfung.
         </p>
         <div className="mt-9 flex justify-center">
           <Link to="/#kontakt" className="brand-pill bg-ink text-white hover:bg-[#33312E] px-7 py-3.5">
@@ -43,7 +43,7 @@ export const KISchnellstart: React.FC = () => (
       <div className="max-w-[1140px] mx-auto grid lg:grid-cols-[.8fr_1.2fr] gap-10 lg:gap-16 items-start">
         <div>
           <p className="text-xs uppercase tracking-[0.12em] font-semibold text-light mb-3">Im Scope</p>
-          <h2 className="font-editorial text-3xl md:text-4xl leading-tight">Klein genug, um schnell zu lernen.</h2>
+          <h2 className="font-editorial text-3xl md:text-4xl leading-tight">Klein genug, um gezielt zu lernen.</h2>
           <p className="text-sm text-muted leading-relaxed mt-4">Der Schnellstart ist bewusst kein Enterprise-Rollout. Er soll einen echten Anwendungsfall belastbar machen.</p>
         </div>
         <div className="brand-card bg-surface p-6 md:p-8">
@@ -82,7 +82,7 @@ export const KISchnellstart: React.FC = () => (
     <section className="pb-24 px-6">
       <div className="max-w-[900px] mx-auto rounded-[30px] bg-accent p-8 md:p-12 text-center shadow-card">
         <h2 className="font-editorial text-3xl md:text-4xl">Passt der Schnellstart zu Ihrem Fall?</h2>
-        <p className="text-sm md:text-base text-ink/70 mt-3 max-w-xl mx-auto">Das lässt sich in einem kurzen Gespräch schnell klären. Wenn der Scope zu groß oder zu unscharf ist, sagen wir das direkt.</p>
+        <p className="text-sm md:text-base text-ink/70 mt-3 max-w-xl mx-auto">Im Erstgespräch prüfen wir Scope, Datenlage und offene Abhängigkeiten. Wenn der Fall zu groß oder zu unscharf ist, halten wir das in der Einordnung fest.</p>
         <Link to="/#kontakt" className="brand-pill mt-7 bg-ink text-white hover:bg-[#33312E]">Erstgespräch vereinbaren</Link>
       </div>
     </section>

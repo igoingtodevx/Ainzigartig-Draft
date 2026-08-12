@@ -22,6 +22,7 @@ const KIBeratung=lazy(()=>import('./components/KIBeratung').then(m=>({default:m.
 const KIKundenservice=lazy(()=>import('./components/KIKundenservice').then(m=>({default:m.KIKundenservice})));
 const KIRecruiting=lazy(()=>import('./components/KIRecruiting').then(m=>({default:m.KIRecruiting})));
 const AnalyticsDashboard=lazy(()=>import('./components/AnalyticsDashboard').then(m=>({default:m.AnalyticsDashboard})));
+const IndividualSolutions=lazy(()=>import('./components/IndividualSolutions').then(m=>({default:m.IndividualSolutions})));
 const ROICalculator=lazy(()=>import('./components/ROICalculator').then(m=>({default:m.ROICalculator})));
 const KISchnellstart=lazy(()=>import('./components/KISchnellstart').then(m=>({default:m.KISchnellstart})));
 const KIAudit=lazy(()=>import('./components/KIAudit').then(m=>({default:m.KIAudit})));
@@ -35,8 +36,8 @@ const NotFound=lazy(()=>import('./components/NotFound').then(m=>({default:m.NotF
 const HomePage: React.FC = () => (
   <main>
     <RouteMeta
-      title="Ainzigartig – KI-Beratung für den Mittelstand"
-      description="Ainzigartig hilft KMUs dabei, generative KI gewinnbringend und praxistauglich einzusetzen."
+      title="Ainzigartig – KI- & Softwarelösungen für KMU"
+      description="Automatisierung, interne Business-Tools, KI-Assistenten und individuelle Softwarelösungen für kleine und mittelständische Unternehmen."
     />
     <Hero />
     <LogoSlider />
@@ -90,6 +91,7 @@ const App: React.FC = () => (
           <Route path="/ki-kundenservice" element={<KIKundenservice />} />
           <Route path="/ki-recruiting" element={<KIRecruiting />} />
           <Route path="/analytics-dashboard" element={<AnalyticsDashboard />} />
+          <Route path="/individuelle-ki-softwareloesungen" element={<IndividualSolutions />} />
           <Route path="/roi-rechner" element={<ROICalculator />} />
           <Route path="/ki-schnellstart" element={<KISchnellstart />} />
           <Route path="/ki-audit" element={<KIAudit />} />

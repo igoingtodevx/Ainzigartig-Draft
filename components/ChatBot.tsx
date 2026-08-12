@@ -7,20 +7,26 @@ interface ChatMessage {
 }
 
 const SUGGESTIONS = [
-  'Was macht Ainzigartig genau?',
-  'Welche KI-Lösung passt zu meinem Unternehmen?',
-  'Wie läuft ein Projekt mit euch ab?',
-  'Was kostet eine Zusammenarbeit?',
+  'Was umfasst Automatisierung & Integrationen?',
+  'Welche internen Business-Tools baut ihr?',
+  'Wie grenzt ihr einen Wissensassistenten ab?',
+  'Welche gebauten Systeme kann ich ansehen?',
 ];
 
 const STORAGE_KEY = 'ainzigartig.chat.history.v1';
+const MAX_MESSAGE_CHARS = 800;
+const MAX_STORED_MESSAGES = 10;
 
 function loadHistory(): ChatMessage[] {
   try {
     const raw = sessionStorage.getItem(STORAGE_KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed.slice(-12) : [];
+    if (!Array.isArray(parsed)) return [];
+    return parsed
+      .filter((item) => item && (item.role === 'user' || item.role === 'model') && typeof item.content === 'string')
+      .map((item) => ({ role: item.role, content: item.content.slice(0, MAX_MESSAGE_CHARS), ts: Number(item.ts) || Date.now() }))
+      .slice(-MAX_STORED_MESSAGES);
   } catch {
     return [];
   }
@@ -28,7 +34,7 @@ function loadHistory(): ChatMessage[] {
 
 function saveHistory(msgs: ChatMessage[]) {
   try {
-    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(msgs.slice(-12)));
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(msgs.slice(-MAX_STORED_MESSAGES)));
   } catch {
     // sessionStorage may be unavailable
   }
@@ -77,7 +83,7 @@ export const ChatBot: React.FC = () => {
   }, [cooldownUntil]);
 
   async function send(text?: string) {
-    const message = (text ?? input).trim();
+    const message = (text ?? input).trim().slice(0, MAX_MESSAGE_CHARS);
     if (!message || busy || Date.now() < cooldownUntil) return;
 
     setInput('');
@@ -93,9 +99,9 @@ export const ChatBot: React.FC = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message,
-          history: nextHistory
+          history: messages
             .filter((m) => m.role !== 'model' || m.content)
-            .slice(-8)
+            .slice(-6)
             .map((m) => ({ role: m.role, content: m.content })),
         }),
       });
@@ -157,7 +163,7 @@ export const ChatBot: React.FC = () => {
               </div>
             </div>
             <span className="inline-flex items-center gap-1.5 rounded-full border border-ink/10 bg-surface px-2.5 py-1 text-[10px] uppercase tracking-[0.1em] font-semibold text-muted">
-              <span className="w-1.5 h-1.5 rounded-full bg-accent-mid" /> live
+              <span className="w-1.5 h-1.5 rounded-full bg-accent-mid" /> KI
             </span>
           </div>
 
@@ -213,6 +219,7 @@ export const ChatBot: React.FC = () => {
                 onKeyDown={onKeyDown}
                 placeholder="Frage stellen…"
                 rows={1}
+                maxLength={MAX_MESSAGE_CHARS}
                 disabled={busy}
                 className="flex-grow resize-none text-sm bg-transparent px-2 py-2 focus:outline-none placeholder:text-light disabled:opacity-50"
                 style={{ maxHeight: 96, minHeight: 38 }}

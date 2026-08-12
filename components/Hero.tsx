@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import heroVideo from '../Assets/Add_a_minimal_animation_to_the.mp4';
-import heroPoster from '../Assets/Gemini_Generated_Image_anzdlsanzdlsanzd.png';
+import heroPoster from '../Assets/Gemini_Generated_Image_anzdlsanzdlsanzd.webp';
 
 export const Hero: React.FC = () => {
   return (
@@ -35,8 +35,8 @@ export const Hero: React.FC = () => {
             </span>
           </h1>
 
-          <p className="mt-8 text-[clamp(1rem,2vw,1.28rem)] leading-relaxed text-muted font-body max-w-[680px] mx-auto">
-            Automatisierungen, interne Tools, Dashboards und KI-Assistenten für KMU — vom abgegrenzten Prozess bis zur integrierten, überprüfbaren Lösung.
+          <p className="mt-8 text-[clamp(1rem,2vw,1.28rem)] leading-relaxed text-muted font-body max-w-[760px] mx-auto">
+            Automatisierung & Integrationen, Dashboards & interne Business-Tools, KI-Assistenten & Wissenssysteme sowie individuelle KI- & Softwarelösungen für KMU.
           </p>
 
           <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
@@ -48,16 +48,14 @@ export const Hero: React.FC = () => {
               <span className="material-symbols-outlined text-[19px]" aria-hidden="true">arrow_forward</span>
             </Link>
             <Link
-              to="/#services"
+              to="/projekte#live-demos"
               className="brand-pill bg-base/55 backdrop-blur-sm text-ink hover:bg-base/80 px-7 py-3.5 text-[0.98rem] w-full sm:w-auto"
             >
-              Live-Demos testen
+              Demos & Systeme ansehen
             </Link>
           </div>
 
-          <p className="mt-4 text-xs text-light font-body">
-            Kostenloses Erstgespräch · konkrete Einordnung statt Standard-Pitch
-          </p>
+          <p className="mt-4 text-xs text-light font-body">Konkrete Einordnung · Umfang und Voraussetzungen zuerst</p>
         </div>
       </div>
     </section>

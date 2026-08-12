@@ -1,15 +1,26 @@
 [Unit]
 Description=Ainzigartig Website Scraper
-After=network.target
+Wants=network-online.target
+After=network-online.target
 
 [Service]
 Type=simple
 User=deploy
-WorkingDirectory=/home/deploy/workspace/ainzigartig/scraper
-ExecStart=/usr/bin/python3 /home/deploy/workspace/ainzigartig/scraper/service.py
+WorkingDirectory=/home/deploy/Ainzigartig-Draft-foundation
+ExecStart=/home/deploy/Ainzigartig-Draft-foundation/.venv/bin/python -m uvicorn scraper.service:app --host 127.0.0.1 --port 8501
 Restart=always
 RestartSec=5
-Environment=PYTHONPATH=/home/deploy/.local/lib/python3.12/site-packages
+EnvironmentFile=/etc/ainzigartig-scraper.env
+Environment=PYTHONDONTWRITEBYTECODE=1
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=read-only
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_INET AF_INET6
 
 [Install]
 WantedBy=multi-user.target

@@ -10,16 +10,16 @@ export const ClosingCTA: React.FC = () => (
 
         <div className="relative grid lg:grid-cols-[.82fr_1.18fr] gap-10 lg:gap-16 items-start">
           <div className="lg:pt-2">
-            <p className="text-xs uppercase tracking-[0.14em] font-bold text-ink/65 mb-3">Erstgespräch</p>
+            <p className="text-xs uppercase tracking-[0.14em] font-bold text-ink/65 mb-3">Projektanfrage</p>
             <h2 className="font-editorial text-[clamp(2.45rem,5vw,3.8rem)] leading-[1.02] tracking-[-0.03em] text-ink font-normal">
-              30 Minuten.<br />Ihre Situation.<br />Unsere Einschätzung.
+              Ihr Prozess.<br />Ihre Rahmenbedingungen.<br />Eine ehrliche Einordnung.
             </h2>
             <p className="text-sm md:text-base text-ink/70 leading-relaxed mt-5 max-w-md">
               Erzählen Sie uns kurz, wo Arbeit hängen bleibt oder wo Sie KI sinnvoll einsetzen möchten. Wir sagen konkret, was machbar ist — und was nicht.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-2">
-              {['Kostenlos', 'Unverbindlich', 'Ohne Buzzwords'].map((item) => (
+              {['Scope zuerst', 'Annahmen sichtbar', 'Kein KI-Zwang'].map((item) => (
                 <span key={item} className="rounded-full border border-ink/20 bg-base/35 px-3 py-1.5 text-xs font-semibold text-ink/75">
                   {item}
                 </span>

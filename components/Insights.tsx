@@ -12,9 +12,6 @@ type Opportunity = {
   title: string;
   what?: string;
   who?: string;
-  price?: string;
-  how?: string;
-  time_to_market?: string;
 };
 
 type Article = {
@@ -40,6 +37,11 @@ type InsightsPayload = {
   vertical?: string;
   model?: string;
   issue_url?: string;
+  source_url?: string;
+  freshness?: 'fresh' | 'stale' | 'cached';
+  is_stale?: boolean;
+  warning?: string;
+  disclosure?: string;
   issue: Brief;
 };
 
@@ -127,7 +129,7 @@ export const Insights: React.FC = () => {
 
               <div className="max-w-2xl lg:pb-2">
                 <p className="text-base md:text-lg text-muted leading-relaxed mb-6">
-                  Hier zeigen wir eine automatisch erzeugte oder hinterlegte Ausgabe unseres Industry Watchers. Inhalte sind eine redaktionell noch zu prüfende Orientierung; Datum und Quellenlinks bestimmen, wie aktuell und belastbar ein Signal ist.
+                  Hier zeigen wir ein automatisch erzeugtes externes Briefing. Es ist weder ein redaktionell verifizierter Ainzigartig-Report noch eine Handlungs- oder Investitionsempfehlung; Datum und Primärquellen müssen vor Verwendung geprüft werden.
                 </p>
                 <a
                   href={WATCHER_URL}
@@ -158,10 +160,10 @@ export const Insights: React.FC = () => {
               <div className="max-w-2xl">
                 <h1 className="font-editorial text-3xl md:text-4xl leading-tight mb-4">Der Brief ist gerade nicht eingebettet.</h1>
                 <p className="text-base text-muted leading-relaxed mb-6">
-                  Die Watcher-Seite selbst bleibt erreichbar. Statt einer technischen Fehlermeldung verlinken wir direkt auf die aktuelle Ausgabe.
+                  Die Quelle konnte nicht verlässlich eingebettet werden und es liegt kein kurzer, klar gekennzeichneter Cache vor. Deshalb zeigen wir keine alte Ersatz-Ausgabe als aktuell an.
                 </p>
                 <a href={WATCHER_URL} target="_blank" rel="noreferrer" className="brand-pill bg-ink text-white text-sm">
-                  Aktuelle Ausgabe öffnen ↗
+                  Quelle direkt prüfen ↗
                 </a>
               </div>
             </div>
@@ -169,6 +171,11 @@ export const Insights: React.FC = () => {
 
           {brief && !loading && (
             <>
+              {data?.is_stale && (
+                <div className="mt-8 rounded-[22px] border border-[#B77A36]/35 bg-accent/12 p-5 text-sm text-muted leading-relaxed" role="status">
+                  <strong className="text-ink">Aktualitätshinweis:</strong> {data.warning || `Diese Ausgabe ist als ${data.freshness === 'cached' ? 'Cache' : 'veraltet'} gekennzeichnet. Aussagen und Quellen vor Verwendung erneut prüfen.`}
+                </div>
+              )}
               <section className="py-16 md:py-24 border-b border-ink/15">
                 <div className="grid lg:grid-cols-[.72fr_1.28fr] gap-10 lg:gap-20">
                   <aside className="space-y-7">
@@ -182,6 +189,10 @@ export const Insights: React.FC = () => {
                         <p className="text-sm text-ink max-w-xs">{data.vertical}</p>
                       </div>
                     )}
+                    <div>
+                      <p className="text-[.68rem] uppercase tracking-[0.16em] font-semibold text-light mb-1">Status</p>
+                      <p className="text-sm text-ink">{data?.freshness === 'fresh' ? 'Live-Quelle · innerhalb 14 Tagen' : data?.freshness === 'cached' ? 'Zwischengespeicherte Ausgabe' : 'Ältere Live-Ausgabe'}</p>
+                    </div>
                     <div>
                       <p className="text-[.68rem] uppercase tracking-[0.16em] font-semibold text-light mb-1">Umfang</p>
                       <p className="text-sm text-ink">{trends.length} Trends · {opportunities.length} Opportunities</p>
@@ -254,8 +265,8 @@ export const Insights: React.FC = () => {
                     <div className="absolute right-[-70px] top-[-90px] w-72 h-72 rounded-full border border-ink/15" aria-hidden="true" />
                     <div className="relative z-10 grid lg:grid-cols-[.72fr_1.28fr] gap-10 lg:gap-16">
                       <div>
-                        <p className="text-xs uppercase tracking-[0.16em] font-semibold text-ink/60 mb-3">02 · Opportunities</p>
-                        <h2 className="font-editorial text-4xl md:text-5xl leading-[1.02]">Wo daraus Geschäft entsteht.</h2>
+                        <p className="text-xs uppercase tracking-[0.16em] font-semibold text-ink/60 mb-3">02 · Maschinell abgeleitete Ansatzpunkte</p>
+                        <h2 className="font-editorial text-4xl md:text-5xl leading-[1.02]">Mögliche Ansätze, noch keine Empfehlung.</h2>
                       </div>
 
                       <div className="divide-y divide-ink/20 border-y border-ink/20">
@@ -268,8 +279,6 @@ export const Insights: React.FC = () => {
                                 {opportunity.what && <p className="text-sm text-ink/70 leading-relaxed">{opportunity.what}</p>}
                                 <div className="flex flex-wrap gap-x-6 gap-y-2 mt-5 text-[.72rem] uppercase tracking-[0.08em] font-semibold text-ink/70">
                                   {opportunity.who && <span>{opportunity.who}</span>}
-                                  {opportunity.price && <span>{opportunity.price}</span>}
-                                  {opportunity.time_to_market && <span>{opportunity.time_to_market}</span>}
                                 </div>
                               </div>
                             </div>
@@ -316,8 +325,8 @@ export const Insights: React.FC = () => {
                 <section className="py-16 md:py-24">
                   <div className="bg-ink text-white rounded-[32px] px-6 py-10 md:p-14 lg:p-16 grid lg:grid-cols-[.72fr_1.28fr] gap-10 lg:gap-16">
                     <div>
-                      <p className="text-xs uppercase tracking-[0.16em] font-semibold text-white/45 mb-3">04 · Action Items</p>
-                      <h2 className="font-editorial text-4xl md:text-5xl text-white">Was daraus folgt.</h2>
+                      <p className="text-xs uppercase tracking-[0.16em] font-semibold text-white/45 mb-3">04 · Maschinell vorgeschlagene Prüfschritte</p>
+                      <h2 className="font-editorial text-4xl md:text-5xl text-white">Was man als Nächstes prüfen könnte.</h2>
                     </div>
                     <div className="divide-y divide-white/15 border-y border-white/15">
                       {actionItems.map((item, index) => (

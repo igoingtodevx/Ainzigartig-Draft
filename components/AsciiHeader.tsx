@@ -155,7 +155,7 @@ export const AsciiHeader: React.FC = () => {
         <span className="text-accent-hover ">mit generativer KI?</span>
       </h1>
       <p className="mt-6 text-base md:text-lg text-muted max-w-6xl mx-auto px-4">
-        Ainzigartig hilft kleinen und mittelständischen Unternehmen dabei, künstliche Intelligenz sinnvoll einzusetzen – mit konkreten Anwendungsfällen, die wirklich funktionieren, und einer Beratung, die auf Augenhöhe stattfindet.
+        Ainzigartig hilft kleinen und mittelständischen Unternehmen dabei, konkrete KI- und Software-Anwendungsfälle zu prüfen und technisch umzusetzen.
       </p>
 
       {/* CTA Buttons */}
@@ -164,7 +164,7 @@ export const AsciiHeader: React.FC = () => {
           href="/#kontakt"
           className="inline-flex items-center gap-2 px-8 py-3 text-sm font-bold uppercase tracking-wider bg-primary text-white border-2 border-primary hover:bg-primary-hover shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-200 font-body"
         >
-          Kostenloses Erstgespräch buchen
+          Anwendungsfall einordnen
           <span className="material-symbols-outlined text-base">calendar_month</span>
         </a>
         <a
@@ -178,9 +178,9 @@ export const AsciiHeader: React.FC = () => {
       {/* Trust Badges */}
       <div className="mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 px-4">
         {[
-          'DSGVO Konform',
-          'Made in Germany',
-          'Technische Expertise',
+          'Scope vor Versprechen',
+          'Annahmen sichtbar',
+          'Technische Umsetzung',
         ].map((badge) => (
           <span key={badge} className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-muted font-body">
             <span className="material-symbols-outlined text-accent-hover text-base">check_circle</span>
