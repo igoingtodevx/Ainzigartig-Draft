@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { RouteMeta } from './RouteMeta';
 import * as pdfjsLib from 'pdfjs-dist';
 import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
-import documentAgentCube from '../Assets/Gemini_Generated_Image_ud8jc9ud8jc9ud8j_nobg.png';
+import documentAgentCube from '../Assets/document-agent-handoff.webp';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
@@ -331,7 +331,7 @@ export const LiveAgentDemo: React.FC = () => {
                   fileInputRef.current?.click();
                 }
               }}
-              className={`cursor-pointer rounded-[24px] border-2 border-dashed bg-surface px-5 py-8 text-center shadow-soft transition-all sm:rounded-[28px] sm:px-6 sm:py-10 md:py-12 ${dragOver ? 'border-accent bg-accent/5 shadow-card' : 'border-ink/10 hover:border-accent/60 hover:shadow-card'}`}
+              className={`cursor-pointer rounded-[24px] border-2 border-dashed bg-surface px-5 py-8 text-center shadow-soft transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-base sm:rounded-[28px] sm:px-6 sm:py-10 md:py-12 ${dragOver ? 'border-accent bg-accent/5 shadow-card' : 'border-ink/10 hover:border-accent/60 hover:shadow-card'}`}
             >
               <span className="mx-auto mb-3 inline-flex h-11 w-11 items-center justify-center rounded-full bg-accent/10">
                 <span className="material-symbols-outlined text-[24px]" aria-hidden="true">upload_file</span>
