@@ -94,7 +94,7 @@ async function callLLM(messages) {
 
   try {
     const ctrl = new AbortController();
-    const to = setTimeout(() => ctrl.abort(), 10000);
+    const to = setTimeout(() => ctrl.abort(), 22000);
     const resp = await fetch(llm.endpoint, {
       method: 'POST',
       headers: {
@@ -255,5 +255,5 @@ export const config = {
   api: {
     bodyParser: { sizeLimit: '12mb' },
   },
-  maxDuration: 10,
+  maxDuration: 30,
 };
