@@ -141,6 +141,68 @@ button, a[href] { cursor: pointer; }
 .bg-gray-800, .bg-gray-900 { background-color: var(--card) !important; }
 .text-glow-cyan, .text-glow-pink { text-shadow: none !important; }
 
+/* Eye Logo Microinteraction */
+.eye-logo-animated .eye-blink-group {
+  transform-origin: 12px 8px;
+  animation: eyeBlink 10s infinite ease-in-out;
+  will-change: transform;
+}
+
+.eye-logo-animated .eye-pupil-group {
+  transform-origin: 12px 8px;
+  animation: eyeGaze 10s infinite cubic-bezier(0.45, 0, 0.25, 1);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.eye-logo-animated .eye-logo-svg {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes eyeBlink {
+  0%, 42%, 46%, 84%, 87%, 89.5%, 92.5%, 100% {
+    transform: scaleY(1);
+  }
+  44% {
+    transform: scaleY(0.08);
+  }
+  85.5% {
+    transform: scaleY(0.08);
+  }
+  91% {
+    transform: scaleY(0.08);
+  }
+}
+
+@keyframes eyeGaze {
+  0%, 20% {
+    transform: translate(0, 0);
+  }
+  23%, 37% {
+    transform: translate(-1.1px, -0.2px);
+  }
+  41%, 62% {
+    transform: translate(0, 0);
+  }
+  65%, 78% {
+    transform: translate(1.0px, -0.1px);
+  }
+  82%, 100% {
+    transform: translate(0, 0);
+  }
+}
+
+.group:hover .eye-logo-animated .eye-pupil-group,
+.eye-logo-animated:hover .eye-pupil-group {
+  animation-play-state: paused;
+  transform: translate(0, -0.4px);
+}
+
+.group:hover .eye-logo-animated .eye-logo-svg,
+.eye-logo-animated:hover .eye-logo-svg {
+  transform: scale(1.04);
+}
+
 @media print {
   html, body { background: #fff; }
   body::after, .no-print, nav, footer { display: none !important; }
@@ -156,8 +218,14 @@ button, a[href] { cursor: pointer; }
     scroll-behavior: auto !important;
   }
 
-  .process-reveal {
+  .process-reveal,
+  .eye-blink-group,
+  .eye-pupil-group,
+  .eye-logo-svg,
+  .eye-logo-animated * {
     opacity: 1 !important;
     transform: none !important;
+    animation: none !important;
+    transition: none !important;
   }
 }

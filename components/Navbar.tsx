@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { MenuIcon, CloseIcon } from './Icons';
+import { EyeLogo } from './EyeLogo';
 
 const NAV_ITEMS = [
   { label: 'Leistungen', to: '/#services' },
@@ -9,16 +10,6 @@ const NAV_ITEMS = [
   { label: 'Live Demo', to: '/live-demo' },
   { label: 'Insights', to: '/insights' },
 ];
-
-const EyeMark: React.FC = () => (
-  <span className="inline-flex items-center justify-center" aria-hidden="true">
-    <svg width="26" height="18" viewBox="0 0 24 16" fill="none">
-      <ellipse cx="12" cy="8" rx="11" ry="7" stroke="currentColor" strokeWidth="1.8" fill="#ECA867" />
-      <circle cx="12" cy="8" r="3.5" fill="#1A1918" />
-      <circle cx="10.5" cy="6.5" r="1" fill="#FFFFFF" />
-    </svg>
-  </span>
-);
 
 export const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -43,8 +34,8 @@ export const Navbar: React.FC = () => {
       }`}
     >
       <div className="max-w-[1140px] mx-auto px-6 flex items-center justify-between gap-6">
-        <Link to="/" className="flex items-center gap-2.5 text-ink shrink-0" aria-label="Ainzigartig Startseite">
-          <EyeMark />
+        <Link to="/" className="group flex items-center gap-2.5 text-ink shrink-0" aria-label="Ainzigartig Startseite">
+          <EyeLogo width={26} height={18} animated />
           <span className="font-editorial text-[1.65rem] leading-none font-semibold tracking-[-0.02em]">
             Ainzigartig
           </span>

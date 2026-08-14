@@ -1,21 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-const EyeMark: React.FC = () => (
-  <svg width="24" height="16" viewBox="0 0 24 16" fill="none" aria-hidden="true">
-    <ellipse cx="12" cy="8" rx="11" ry="7" stroke="currentColor" strokeWidth="1.8" fill="#ECA867" />
-    <circle cx="12" cy="8" r="3.5" fill="#1A1918" />
-    <circle cx="10.5" cy="6.5" r="1" fill="#FFFFFF" />
-  </svg>
-);
+import { EyeLogo } from './EyeLogo';
 
 export const Footer: React.FC = () => (
   <footer className="bg-ink text-white pt-14 pb-8 px-6">
     <div className="max-w-[1140px] mx-auto">
       <div className="grid md:grid-cols-[1.15fr_.85fr] gap-10 pb-12 border-b border-white/15">
         <div>
-          <Link to="/" className="inline-flex items-center gap-2.5 text-white">
-            <EyeMark />
+          <Link to="/" className="group inline-flex items-center gap-2.5 text-white">
+            <EyeLogo width={24} height={16} />
             <span className="font-editorial text-2xl font-semibold tracking-[-0.02em]">Ainzigartig</span>
           </Link>
           <p className="text-sm text-white/60 leading-relaxed mt-4 max-w-md">

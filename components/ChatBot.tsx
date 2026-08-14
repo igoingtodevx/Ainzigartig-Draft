@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { EyeLogo } from './EyeLogo';
 
 interface ChatMessage {
   role: 'user' | 'model';
@@ -13,14 +14,12 @@ const SUGGESTIONS = [
   'Was kostet eine Zusammenarbeit?',
 ];
 
-const STORAGE_KEY = 'ainzigartig.chat.history.v1';
+const STORAGE_KEY = 'ainzigartig_chat_history';
 
 function loadHistory(): ChatMessage[] {
   try {
     const raw = sessionStorage.getItem(STORAGE_KEY);
-    if (!raw) return [];
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed.slice(-12) : [];
+    return raw ? JSON.parse(raw) : [];
   } catch {
     return [];
   }
@@ -33,14 +32,6 @@ function saveHistory(msgs: ChatMessage[]) {
     // sessionStorage may be unavailable
   }
 }
-
-const EyeMark: React.FC = () => (
-  <svg width="25" height="17" viewBox="0 0 24 16" fill="none" aria-hidden="true">
-    <ellipse cx="12" cy="8" rx="11" ry="7" stroke="currentColor" strokeWidth="1.8" fill="#ECA867" />
-    <circle cx="12" cy="8" r="3.5" fill="#1A1918" />
-    <circle cx="10.5" cy="6.5" r="1" fill="#FFFFFF" />
-  </svg>
-);
 
 export const ChatBot: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -138,7 +129,7 @@ export const ChatBot: React.FC = () => {
         {open ? (
           <span className="material-symbols-outlined text-[22px]">close</span>
         ) : (
-          <EyeMark />
+          <EyeLogo width={25} height={17} />
         )}
       </button>
 
@@ -150,7 +141,7 @@ export const ChatBot: React.FC = () => {
         >
           <div className="px-5 py-4 border-b border-ink/10 flex items-center justify-between bg-base/70">
             <div className="flex items-center gap-3">
-              <span className="w-10 h-10 rounded-full bg-accent/30 border border-accent/60 flex items-center justify-center text-ink"><EyeMark /></span>
+              <span className="w-10 h-10 rounded-full bg-accent/30 border border-accent/60 flex items-center justify-center text-ink"><EyeLogo width={24} height={16} /></span>
               <div>
                 <p className="font-editorial text-lg leading-none text-ink">Edi</p>
                 <p className="text-[11px] text-muted mt-1.5">Ainzigartig Assistent</p>
