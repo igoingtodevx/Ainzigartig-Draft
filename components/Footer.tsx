@@ -23,20 +23,32 @@ export const Footer: React.FC = () => (
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-8 text-sm">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 text-sm">
           <div>
-            <p className="text-white/40 text-xs uppercase tracking-[0.12em] font-semibold mb-3">Entdecken</p>
+            <p className="text-white/40 text-xs uppercase tracking-[0.12em] font-semibold mb-3">Lösungen</p>
+            <div className="flex flex-col gap-2.5">
+              <Link to="/automatisierung" className="text-white/70 hover:text-white transition-colors">Automatisierung</Link>
+              <Link to="/ki-kundenservice" className="text-white/70 hover:text-white transition-colors">KI-Kundenservice</Link>
+              <Link to="/ki-beratung" className="text-white/70 hover:text-white transition-colors">KI-Beratung</Link>
+              <Link to="/ki-recruiting" className="text-white/70 hover:text-white transition-colors">KI-Recruiting</Link>
+              <Link to="/analytics-dashboard" className="text-white/70 hover:text-white transition-colors">Analytics Dashboard</Link>
+            </div>
+          </div>
+          <div>
+            <p className="text-white/40 text-xs uppercase tracking-[0.12em] font-semibold mb-3">Live-Demos</p>
             <div className="flex flex-col gap-2.5">
               <Link to="/ki-analyse" className="text-white/70 hover:text-white transition-colors">KI-Check</Link>
-              <Link to="/live-demo" className="text-white/70 hover:text-white transition-colors">Live Demo</Link>
-              <Link to="/projekte" className="text-white/70 hover:text-white transition-colors">Projekte</Link>
+              <Link to="/live-demo" className="text-white/70 hover:text-white transition-colors">Dokument-Agent</Link>
+              <Link to="/ki-audit" className="text-white/70 hover:text-white transition-colors">KI-Reifegrad</Link>
+              <Link to="/roi-rechner" className="text-white/70 hover:text-white transition-colors">ROI-Rechner</Link>
               <Link to="/insights" className="text-white/70 hover:text-white transition-colors">Insights</Link>
             </div>
           </div>
           <div>
             <p className="text-white/40 text-xs uppercase tracking-[0.12em] font-semibold mb-3">Unternehmen</p>
             <div className="flex flex-col gap-2.5">
-              <Link to="/preise" className="text-white/70 hover:text-white transition-colors">Preise</Link>
+              <Link to="/preise" className="text-white/70 hover:text-white transition-colors">Preise & Pakete</Link>
+              <Link to="/ki-schnellstart" className="text-white/70 hover:text-white transition-colors">KI-Schnellstart</Link>
               <Link to="/#kontakt" className="text-white/70 hover:text-white transition-colors">Kontakt</Link>
               <Link to="/impressum" className="text-white/70 hover:text-white transition-colors">Impressum</Link>
               <Link to="/datenschutz" className="text-white/70 hover:text-white transition-colors">Datenschutz</Link>

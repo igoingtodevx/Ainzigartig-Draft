@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { CheckIcon, ArrowRightIcon } from './Icons';
 
 type FormState = 'idle' | 'submitting' | 'success' | 'error';
 
@@ -13,6 +14,7 @@ interface ContactFormState {
 const INITIAL: ContactFormState = { name: '', email: '', company: '', service: '', message: '' };
 
 const SERVICE_OPTIONS = [
+  'Automatisierung & Integrationen',
   'KI-Beratung',
   'KI-Kundenservice',
   'KI-Website-Analyse',
@@ -73,7 +75,7 @@ export const ContactForm: React.FC = () => {
     return (
       <div className="brand-card mt-8 bg-base/80 p-7 md:p-8 text-center">
         <span className="w-12 h-12 mx-auto mb-4 rounded-full bg-accent/25 border border-accent/50 flex items-center justify-center">
-          <span className="material-symbols-outlined text-ink">check</span>
+          <CheckIcon className="w-6 h-6 text-ink" />
         </span>
         <p className="font-editorial text-2xl text-ink mb-2">Vielen Dank.</p>
         <p className="text-sm text-muted leading-relaxed max-w-md mx-auto">
@@ -129,11 +131,11 @@ export const ContactForm: React.FC = () => {
       {errorMsg && <p className="text-xs text-red-700 px-1" role="alert">{errorMsg}</p>}
 
       <div className="pt-2 flex flex-col sm:flex-row sm:items-center gap-4">
-        <button type="submit" disabled={submitting} className="brand-pill bg-ink text-white hover:bg-[#33312E] disabled:opacity-50 disabled:cursor-not-allowed px-7 py-3.5 text-sm shrink-0">
+        <button type="submit" disabled={submitting} className="brand-pill bg-ink text-white hover:bg-[#33312E] disabled:opacity-50 disabled:cursor-not-allowed px-7 py-3.5 text-sm shrink-0 flex items-center justify-center gap-2">
           {submitting ? (
             <><span className="inline-block w-3.5 h-3.5 border border-white border-t-transparent rounded-full animate-spin" /> Wird gesendet…</>
           ) : (
-            <>Anfrage senden <span className="material-symbols-outlined text-[18px]">arrow_forward</span></>
+            <><span>Anfrage senden</span> <ArrowRightIcon className="w-4 h-4" /></>
           )}
         </button>
         <p className="text-xs text-light leading-relaxed">Unverbindlich. Wir sagen auch offen, wenn KI für den Fall keinen Sinn ergibt.</p>

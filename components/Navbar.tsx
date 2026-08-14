@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { MenuIcon, CloseIcon } from './Icons';
 
 const NAV_ITEMS = [
   { label: 'Leistungen', to: '/#services' },
+  { label: 'Automatisierung', to: '/automatisierung' },
   { label: 'KI-Check', to: '/ki-analyse' },
-  { label: 'ROI-Rechner', to: '/roi-rechner' },
   { label: 'Live Demo', to: '/live-demo' },
   { label: 'Insights', to: '/insights' },
 ];
@@ -83,7 +84,7 @@ export const Navbar: React.FC = () => {
             aria-expanded={menuOpen}
             className="lg:hidden w-11 h-11 rounded-full border border-ink/30 flex items-center justify-center bg-base/70 text-ink transition-colors hover:bg-surface"
           >
-            <span className="material-symbols-outlined text-[22px]">{menuOpen ? 'close' : 'menu'}</span>
+            {menuOpen ? <CloseIcon className="w-5 h-5 text-ink" /> : <MenuIcon className="w-5 h-5 text-ink" />}
           </button>
         </div>
       </div>

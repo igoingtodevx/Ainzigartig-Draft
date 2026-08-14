@@ -18,6 +18,7 @@ import { ErrorBoundary } from './components/ErrorBoundary';
 
 const Impressum=lazy(()=>import('./components/Impressum').then(m=>({default:m.Impressum})));
 const Datenschutz=lazy(()=>import('./components/Datenschutz').then(m=>({default:m.Datenschutz})));
+const Automatisierung=lazy(()=>import('./components/Automatisierung').then(m=>({default:m.Automatisierung})));
 const KIBeratung=lazy(()=>import('./components/KIBeratung').then(m=>({default:m.KIBeratung})));
 const KIKundenservice=lazy(()=>import('./components/KIKundenservice').then(m=>({default:m.KIKundenservice})));
 const KIRecruiting=lazy(()=>import('./components/KIRecruiting').then(m=>({default:m.KIRecruiting})));
@@ -35,13 +36,13 @@ const NotFound=lazy(()=>import('./components/NotFound').then(m=>({default:m.NotF
 const HomePage: React.FC = () => (
   <main>
     <RouteMeta
-      title="Ainzigartig – KI-Beratung für den Mittelstand"
-      description="Ainzigartig hilft KMUs dabei, generative KI gewinnbringend und praxistauglich einzusetzen."
+      title="Ainzigartig – KI-Beratung & Automatisierung für den Mittelstand"
+      description="Ainzigartig hilft KMUs dabei, Automatisierung und generative KI praxistauglich und gewinnbringend einzusetzen."
     />
     <Hero />
     <LogoSlider />
-    <HomeProcess />
     <Services />
+    <HomeProcess />
     <CaseStudies />
     <TeamSection />
     <InsightsTeaser />
@@ -86,6 +87,7 @@ const App: React.FC = () => (
           <Route path="/" element={<HomePage />} />
           <Route path="/impressum" element={<Impressum />} />
           <Route path="/datenschutz" element={<Datenschutz />} />
+          <Route path="/automatisierung" element={<Automatisierung />} />
           <Route path="/ki-beratung" element={<KIBeratung />} />
           <Route path="/ki-kundenservice" element={<KIKundenservice />} />
           <Route path="/ki-recruiting" element={<KIRecruiting />} />

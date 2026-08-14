@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import heroVideo from '../Assets/Add_a_minimal_animation_to_the.mp4';
 import heroPoster from '../Assets/Gemini_Generated_Image_anzdlsanzdlsanzd.png';
 import heroSystemIllustration from '../Assets/homepage-hero-handoff.webp';
+import { ArrowRightIcon } from './Icons';
 
 const HeroSystemPreview: React.FC = () => (
   <figure className="relative hidden h-[510px] xl:flex flex-col items-center justify-center">
@@ -10,6 +11,10 @@ const HeroSystemPreview: React.FC = () => (
     <img
       src={heroSystemIllustration}
       alt="Illustrative Oberfläche mit Automatisierungs-Workflow, Dashboard und KI-Assistent"
+      width={440}
+      height={350}
+      loading="eager"
+      decoding="sync"
       className="relative z-10 w-full max-w-[440px] object-contain drop-shadow-[0_24px_42px_rgba(26,25,24,.10)]"
     />
     <figcaption className="relative z-10 mt-2 rounded-full border border-ink/10 bg-base/70 px-3 py-1 text-[0.6rem] tracking-[0.08em] text-muted backdrop-blur-sm">
@@ -58,16 +63,16 @@ export const Hero: React.FC = () => {
             <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
               <Link
                 to="/#kontakt"
-                className="brand-pill bg-ink text-white hover:bg-[#33312E] px-7 py-3.5 text-[0.98rem] w-full sm:w-auto"
+                className="brand-pill bg-ink text-white hover:bg-[#33312E] px-7 py-3.5 text-[0.98rem] w-full sm:w-auto flex items-center justify-center gap-2"
               >
-                Prozess besprechen
-                <span className="material-symbols-outlined text-[19px]" aria-hidden="true">arrow_forward</span>
+                <span>Prozess besprechen</span>
+                <ArrowRightIcon className="w-4 h-4" />
               </Link>
               <Link
                 to="/#services"
                 className="brand-pill bg-base/50 backdrop-blur-sm text-ink hover:bg-base px-7 py-3.5 text-[0.98rem] w-full sm:w-auto"
               >
-                Live-Demos testen
+                Lösungen entdecken
               </Link>
             </div>
 

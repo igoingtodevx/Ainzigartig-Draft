@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { ArrowRightIcon } from './Icons';
 
 const work = [
   {
@@ -26,7 +27,7 @@ const work = [
 ];
 
 export const CaseStudies: React.FC = () => (
-  <section className="py-24 md:py-32 bg-[#F3EFEA] border-y border-ink/10">
+  <section id="demos" className="py-24 md:py-32 bg-[#F3EFEA] border-y border-ink/10 scroll-mt-24">
     <div className="max-w-[1140px] mx-auto px-6">
       <div className="grid lg:grid-cols-[.72fr_1.28fr] gap-10 lg:gap-16 items-start">
         <div className="lg:sticky lg:top-28">
@@ -52,13 +53,15 @@ export const CaseStudies: React.FC = () => (
                 <h3 className="font-editorial text-2xl text-ink leading-tight">{item.title}</h3>
                 <p className="text-sm text-muted leading-relaxed mt-2 max-w-xl">{item.description}</p>
               </div>
-              <span className="material-symbols-outlined text-ink/50 group-hover:text-ink group-hover:translate-x-1 transition-all duration-300" aria-hidden="true">arrow_forward</span>
+              <span className="w-8 h-8 rounded-full flex items-center justify-center text-ink/50 group-hover:text-ink transition-colors mt-1" aria-hidden="true">
+                <ArrowRightIcon className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+              </span>
             </Link>
           ))}
 
           <Link to="/insights" className="inline-flex items-center gap-2 mt-3 text-sm font-semibold text-ink hover:text-accent-hover transition-colors">
-            Kuratierte KI-Insights ansehen
-            <span className="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_forward</span>
+            <span>Kuratierte KI-Insights ansehen</span>
+            <ArrowRightIcon className="w-4 h-4" />
           </Link>
         </div>
       </div>

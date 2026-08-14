@@ -21,7 +21,7 @@ This is the only deployment URL documented here. API features may still be unava
 
 ## Implemented scope
 
-- Multi-route marketing site, including `/ki-beratung`, `/ki-kundenservice`, `/ki-recruiting`, `/analytics-dashboard`, `/roi-rechner`, `/ki-schnellstart`, `/ki-audit`, `/preise`, `/ki-analyse`, `/live-demo`, `/projekte`, `/insights`, `/impressum`, and `/datenschutz`.
+- Multi-route marketing site, including `/automatisierung`, `/ki-beratung`, `/ki-kundenservice`, `/ki-recruiting`, `/analytics-dashboard`, `/roi-rechner`, `/ki-schnellstart`, `/ki-audit`, `/preise`, `/ki-analyse`, `/live-demo`, `/projekte`, `/insights`, `/impressum`, and `/datenschutz`.
 - `/api/chat`: the “Edi” assistant, with input validation, a six-message history window, cooldown/hourly in-memory rate limiting, and an OpenAI/Vercel AI Gateway provider path.
 - `/api/analyze`: accepts a website URL, calls the configured scraper, and asks the configured LLM for structured analysis.
 - `/api/live-agent-demo`: analyzes sample text or up to five client-rendered document images and returns structured JSON.

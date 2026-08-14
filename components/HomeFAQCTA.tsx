@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { PlusIcon } from './Icons';
 
 const faqItems = [
   {
@@ -48,7 +49,7 @@ export const HomeFAQ: React.FC = () => {
                 >
                   <span className="font-editorial text-lg md:text-xl text-ink leading-snug">{item.q}</span>
                   <span className={`w-9 h-9 rounded-full border border-ink/15 flex items-center justify-center shrink-0 transition-transform duration-300 ${open ? 'rotate-45 bg-accent/25' : 'bg-base'}`}>
-                    <span className="material-symbols-outlined text-[20px]">add</span>
+                    <PlusIcon className="w-5 h-5 text-ink" />
                   </span>
                 </button>
                 <div className={`grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(.16,1,.3,1)] ${open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
