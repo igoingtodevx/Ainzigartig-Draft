@@ -15,13 +15,14 @@ export const ClosingCTA: React.FC = () => (
               30 Minuten.<br />Ihre Situation.<br />Unsere Einschätzung.
             </h2>
             <p className="text-sm md:text-base text-ink/70 leading-relaxed mt-5 max-w-md">
-              Erzählen Sie uns kurz, wo Arbeit hängen bleibt oder wo Sie KI sinnvoll einsetzen möchten. Wir sagen konkret, was machbar ist — und was nicht.
+              Erzählen Sie uns kurz, wo Arbeit hängen bleibt oder wo Sie KI sinnvoll einsetzen möchten. Wir sagen Ihnen konkret, was machbar ist und was nicht.
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-2">
-              {['Kostenlos', 'Unverbindlich', 'Ohne Buzzwords'].map((item) => (
-                <span key={item} className="rounded-full border border-ink/20 bg-base/35 px-3 py-1.5 text-xs font-semibold text-ink/75">
-                  {item}
+            <div className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-semibold text-ink/75">
+              {['Kostenlos', 'Unverbindlich', 'Ohne Buzzwords'].map((item, idx) => (
+                <span key={item} className="flex items-center gap-2">
+                  {idx > 0 && <span className="w-1 h-1 rounded-full bg-ink/30" aria-hidden="true" />}
+                  <span>{item}</span>
                 </span>
               ))}
             </div>

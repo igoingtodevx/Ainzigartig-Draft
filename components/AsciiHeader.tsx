@@ -155,7 +155,7 @@ export const AsciiHeader: React.FC = () => {
         <span className="text-accent-hover ">mit generativer KI?</span>
       </h1>
       <p className="mt-6 text-base md:text-lg text-muted max-w-6xl mx-auto px-4">
-        Ainzigartig hilft kleinen und mittelständischen Unternehmen dabei, künstliche Intelligenz sinnvoll einzusetzen – mit konkreten Anwendungsfällen, die wirklich funktionieren, und einer Beratung, die auf Augenhöhe stattfindet.
+        Ainzigartig hilft kleinen und mittelständischen Unternehmen dabei, künstliche Intelligenz sinnvoll einzusetzen: mit konkreten Anwendungsfällen, die wirklich funktionieren, und einer Beratung, die auf Augenhöhe stattfindet.
       </p>
 
       {/* CTA Buttons */}

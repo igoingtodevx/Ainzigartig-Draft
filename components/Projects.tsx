@@ -29,7 +29,7 @@ export const Projects: React.FC = () => (
         <div className="max-w-2xl">
           <h2 className="font-editorial text-3xl md:text-4xl leading-tight mb-4">Kuratiert statt vollgestopft.</h2>
           <p className="text-base text-muted leading-relaxed mb-7">
-            Die bisherige automatische Repo-Liste ist entfernt. Sobald die Auswahl feststeht, kommen hier nur nachvollziehbare eigene Tools, Experimente und veröffentlichbare Arbeiten hinein — mit korrekter Beschreibung und eindeutigem Status.
+            Die bisherige automatische Repo-Liste ist entfernt. Sobald die Auswahl feststeht, kommen hier nur nachvollziehbare eigene Tools, Experimente und veröffentlichbare Arbeiten hinein: mit korrekter Beschreibung und eindeutigem Status.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link to="/live-demo" className="brand-pill bg-ink text-white hover:bg-[#33312E] text-sm">

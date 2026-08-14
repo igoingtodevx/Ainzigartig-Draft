@@ -45,7 +45,7 @@ const Hero: React.FC = () => (
       </h1>
 
       <p className="text-muted text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-body mb-10">
-        Ein KI-Chatbot, der Ihre Wissensbasis kennt, kann wiederkehrende Anfragen automatisiert beantworten – auch außerhalb Ihrer Servicezeiten, wenn Kanal und Betrieb dafür eingerichtet sind. Ihr Team kümmert sich um die Fälle, bei denen menschliche Aufmerksamkeit wirklich gebraucht wird.
+        Ein KI-Chatbot, der Ihre Wissensbasis kennt, kann wiederkehrende Anfragen automatisiert beantworten, auch außerhalb Ihrer Servicezeiten, wenn Kanal und Betrieb dafür eingerichtet sind. Ihr Team kümmert sich um die Fälle, bei denen menschliche Aufmerksamkeit wirklich gebraucht wird.
       </p>
 
       {/* CTAs */}
@@ -119,7 +119,7 @@ const painCards = [
   {
     emoji: '🌙',
     title: 'Nach 17 Uhr sind Sie unerreichbar',
-    text: 'Kunden haben Fragen wann sie wollen – nicht nur während Ihrer Öffnungszeiten. Wer keine Antwort bekommt, sucht sie beim Wettbewerb.',
+    text: 'Kunden haben Fragen wann sie wollen, nicht nur während Ihrer Öffnungszeiten. Wer keine Antwort bekommt, sucht sie beim Wettbewerb.',
     color: 'pink' as const,
   },
   {
@@ -151,7 +151,7 @@ const Problem: React.FC = () => (
         und trotzdem warten Kunden zu lange.
       </SectionHeadline>
       <LeadText>
-        Wachstum bedeutet mehr Anfragen. Mehr Anfragen bedeuten mehr Personalaufwand. Irgendwann funktioniert das nicht mehr – weder für Ihr Team noch für Ihre Kunden.
+        Wachstum bedeutet mehr Anfragen. Mehr Anfragen bedeuten mehr Personalaufwand. Irgendwann funktioniert das nicht mehr: weder für Ihr Team noch für Ihre Kunden.
       </LeadText>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12 text-left">
@@ -175,17 +175,17 @@ const Problem: React.FC = () => (
 const leistungen = [
   {
     title: 'Training auf Ihre Wissensbasis',
-    text: 'Handbücher, FAQs, Produktseiten, Tickethistorie – wir integrieren alles, was Ihr Team wissen muss. Der Bot antwortet auf Basis Ihrer echten Inhalte, nicht auf Basis von Vermutungen.',
+    text: 'Handbücher, FAQs, Produktseiten, Tickethistorie: Wir integrieren alles, was Ihr Team wissen muss. Der Bot antwortet auf Basis Ihrer echten Inhalte, nicht auf Basis von Vermutungen.',
     icon: 'model_training',
   },
   {
     title: 'Nahtlose Übergabe an Ihr Team',
-    text: 'Komplexe oder sensible Anfragen leitet der Bot automatisch an einen menschlichen Mitarbeiter weiter – mit vollständigem Gesprächskontext. Kein Kunde muss sich zweimal erklären.',
+    text: 'Komplexe oder sensible Anfragen leitet der Bot automatisch an einen menschlichen Mitarbeiter weiter, mit vollständigem Gesprächskontext. Kein Kunde muss sich zweimal erklären.',
     icon: 'swap_horiz',
   },
   {
     title: 'Mehrkanal-Integration',
-    text: 'Website-Chat, WhatsApp, E-Mail-Triage – der Assistent ist dort, wo Ihre Kunden sind.',
+    text: 'Website-Chat, WhatsApp, E-Mail-Triage: Der Assistent ist dort, wo Ihre Kunden sind.',
     icon: 'devices',
   },
   {
@@ -195,12 +195,12 @@ const leistungen = [
   },
   {
     title: 'Messbare Ergebnisse von Anfang an',
-    text: 'Ticketvolumen, Lösungsrate, Kundenzufriedenheit – Sie sehen in einem Dashboard, was der Bot leistet. Kein Bauchgefühl, sondern Zahlen.',
+    text: 'Ticketvolumen, Lösungsrate, Kundenzufriedenheit: Sie sehen in einem Dashboard, was der Bot leistet. Kein Bauchgefühl, sondern Zahlen.',
     icon: 'monitoring',
   },
   {
     title: 'Kontinuierliche Verbesserung',
-    text: 'Was der Bot nicht beantworten kann, wird protokolliert. Wir analysieren diese Lücken regelmäßig und trainieren nach – der Assistent wird mit der Zeit besser.',
+    text: 'Was der Bot nicht beantworten kann, wird protokolliert. Wir analysieren diese Lücken regelmäßig und trainieren nach. Der Assistent wird mit der Zeit besser.',
     icon: 'trending_up',
   },
 ];
@@ -211,7 +211,7 @@ const Loesung: React.FC = () => (
       <SectionLabel>Die Lösung</SectionLabel>
       <SectionHeadline>Ein Chatbot, der Ihr Unternehmen wirklich kennt.</SectionHeadline>
       <LeadText>
-        Kein generischer Bot mit vorgefertigten Antworten. Wir trainieren den Assistenten auf Ihre Daten – Ihre FAQs, Ihre Produktdokumentation, Ihre internen Prozesse. Das Ergebnis: Antworten, die klingen als kämen sie von Ihrem besten Mitarbeiter.
+        Kein generischer Bot mit vorgefertigten Antworten. Wir trainieren den Assistenten auf Ihre Daten: Ihre FAQs, Ihre Produktdokumentation, Ihre internen Prozesse. Das Ergebnis: Antworten, die klingen als kämen sie von Ihrem besten Mitarbeiter.
       </LeadText>
 
       {/* Leistungen grid */}
@@ -241,7 +241,7 @@ const Loesung: React.FC = () => (
         <span className="text-4xl">🛡️</span>
         <div>
           <h4 className="text-sm font-bold text-[#B77A36] font-editorial mb-2 uppercase tracking-wider">
-            Ihre Kundendaten gehören Ihnen – und bleiben bei Ihnen.
+            Ihre Kundendaten gehören Ihnen und bleiben bei Ihnen.
           </h4>
           <p className="text-muted text-sm leading-relaxed font-body">
             Speicherort, Anbieter, Datenflüsse und Zugriffsrechte werden vor einer produktiven Anbindung gemeinsam geprüft und dokumentiert. Eine pauschale DSGVO-Zusage ersetzt keine organisations- und anwendungsspezifische Bewertung.
@@ -268,12 +268,12 @@ const steps = [
   {
     num: '03',
     title: 'Testphase & Feintuning (Woche 3–4)',
-    text: 'Vor dem Go-live testen wir gemeinsam mit Ihnen – mit echten Fragen aus Ihrer Tickethistorie. Was nicht stimmt, wird angepasst. Erst wenn Sie zufrieden sind, geht es live.',
+    text: 'Vor dem Go-live testen wir gemeinsam mit Ihnen anhand echter Fragen aus Ihrer Tickethistorie. Was nicht stimmt, wird angepasst. Erst wenn Sie zufrieden sind, geht es live.',
   },
   {
     num: '04',
     title: 'Go-live & laufende Optimierung',
-    text: 'Der Assistent ist live. Wir beobachten die ersten Wochen eng, analysieren Lücken und passen nach. Auf Wunsch übernehmen wir den laufenden Betrieb – oder übergeben an Ihr Team.',
+    text: 'Der Assistent ist live. Wir beobachten die ersten Wochen eng, analysieren Lücken und passen nach. Auf Wunsch übernehmen wir den laufenden Betrieb oder übergeben an Ihr Team.',
   },
 ];
 
@@ -282,12 +282,13 @@ const Prozess: React.FC = () => (
     <div className="max-w-4xl mx-auto text-center">
       <SectionLabel>Wie es läuft</SectionLabel>
       <SectionHeadline>
-        In vier Wochen live –<br className="hidden sm:block" />
+        In vier Wochen live:<br className="hidden sm:block" />
         ohne IT-Projekt.
       </SectionHeadline>
       <LeadText>
         Sie brauchen kein eigenes Entwicklerteam und keine aufwendige Infrastruktur. Wir bringen alles mit und übergeben ein fertiges, laufendes System.
       </LeadText>
+
 
       <div className="mt-14 space-y-0 text-left relative">
         {/* vertical line */}
@@ -318,7 +319,7 @@ const useCases = [
     category: 'Bestellungen & Lieferung',
     icon: 'local_shipping',
     title: 'Lieferstatus abfragen, Retouren einleiten, Lieferadressen ändern',
-    text: 'Eine Anbindung an Ihr Shopsystem ist je nach Schnittstelle möglich – dann kann der Bot aktuelle Daten statt statischer Textbausteine verwenden.',
+    text: 'Eine Anbindung an Ihr Shopsystem ist je nach Schnittstelle möglich, sodass der Bot aktuelle Daten statt statischer Textbausteine verwenden kann.',
     result: 'Häufigste Anfragekategorie im E-Commerce & Handel',
     color: 'cyan' as const,
   },
@@ -326,7 +327,7 @@ const useCases = [
     category: 'Produkt- & Servicefragen',
     icon: 'inventory_2',
     title: 'Technische Spezifikationen, Kompatibilität, Anwendungsfragen',
-    text: 'Der Bot kennt Ihren Produktkatalog besser als jeder neue Mitarbeiter – und vergisst nichts.',
+    text: 'Der Bot kennt Ihren Produktkatalog besser als jeder neue Mitarbeiter und vergisst nichts.',
     result: 'Besonders wertvoll bei erklärungsbedürftigen Produkten',
     color: 'pink' as const,
   },
@@ -334,7 +335,7 @@ const useCases = [
     category: 'Vertragliches & Konditionen',
     icon: 'gavel',
     title: 'Preise, Laufzeiten, Kündigungsfristen, Zahlungsmodalitäten',
-    text: 'Standardisierte, rechtlich abgestimmte Antworten – kein Mitarbeiter der „es falsch erklärt".',
+    text: 'Standardisierte, rechtlich abgestimmte Antworten statt Missverständnissen im Detail.',
     result: 'Reduziert auch Rückfragen und Beschwerden',
     color: 'yellow' as const,
   },
@@ -350,7 +351,7 @@ const useCases = [
     category: 'Interne Helpdesk-Nutzung',
     icon: 'business_center',
     title: 'IT-Anfragen, HR-Fragen, Prozesswissen für Mitarbeiter',
-    text: 'Der gleiche Ansatz funktioniert auch intern – als Wissensassistent für Ihr Team.',
+    text: 'Der gleiche Ansatz funktioniert auch intern: als Wissensassistent für Ihr Team.',
     result: 'Onboarding und Support intern deutlich entlastet',
     color: 'pink' as const,
   },
@@ -378,7 +379,7 @@ const UseCases: React.FC = () => (
       <SectionLabel>Typische Anwendungsfälle</SectionLabel>
       <SectionHeadline>Was Ihr Chatbot vom ersten Tag an übernimmt.</SectionHeadline>
       <LeadText>
-        Das sind die Anfragen, die Ihr Team täglich von der eigentlichen Arbeit abhalten – und die ein trainierter Assistent sofort und zuverlässig beantwortet.
+        Das sind die Anfragen, die Ihr Team täglich von der eigentlichen Arbeit abhalten und die ein trainierter Assistent sofort und zuverlässig beantwortet.
       </LeadText>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-14 text-left">
@@ -417,9 +418,9 @@ const targetAudience = [
 ];
 
 const notFor = [
-  'Unternehmen mit unter 5 Support-Anfragen täglich – der Aufwand wäre größer als der Nutzen, das sagen wir Ihnen lieber direkt.',
-  'Wer einen „fertigen Bot von der Stange" sucht, der morgen läuft – der Zeitrahmen hängt von Scope, Daten und Anbindungen ab.',
-  'Unternehmen, die keine Wissensbasis haben und auch nicht bereit sind, eine aufzubauen – ohne strukturiertes Wissen kann kein Assistent gut antworten.',
+  'Unternehmen mit unter 5 Support-Anfragen täglich, da der Aufwand größer wäre als der Nutzen. Das sagen wir Ihnen lieber direkt.',
+  'Wer einen „fertigen Bot von der Stange" sucht, der morgen läuft: Der Zeitrahmen hängt von Scope, Daten und Anbindungen ab.',
+  'Unternehmen, die keine Wissensbasis haben und auch nicht bereit sind, eine aufzubauen: Ohne strukturiertes Wissen kann kein Assistent gut antworten.',
 ];
 
 const Zielgruppe: React.FC = () => (
@@ -514,7 +515,7 @@ const Vergleich: React.FC = () => (
 const faqItems = [
   {
     q: 'Was passiert, wenn der Bot eine Frage nicht beantworten kann?',
-    a: 'Der Assistent erkennt, wenn eine Anfrage außerhalb seines Wissens liegt oder eskaliert werden muss – und leitet dann automatisch an einen menschlichen Mitarbeiter weiter. Inklusive vollständigem Gesprächsverlauf, damit der Kunde nicht alles wiederholen muss.',
+    a: 'Der Assistent erkennt, wenn eine Anfrage außerhalb seines Wissens liegt oder eskaliert werden muss, und leitet dann automatisch an einen menschlichen Mitarbeiter weiter. Inklusive vollständigem Gesprächsverlauf, damit der Kunde nicht alles wiederholen muss.',
   },
   {
     q: 'Wo werden meine Daten verarbeitet?',
@@ -522,19 +523,19 @@ const faqItems = [
   },
   {
     q: 'Muss ich meine bestehende Software ersetzen?',
-    a: 'Nein. Wir integrieren den Assistenten in Ihre bestehenden Kanäle – Website, WhatsApp, Help-Center oder E-Mail-Triage. Kein System muss ausgetauscht werden.',
+    a: 'Nein. Wir integrieren den Assistenten in Ihre bestehenden Kanäle wie Website, WhatsApp, Help-Center oder E-Mail-Triage. Kein System muss ausgetauscht werden.',
   },
   {
     q: 'Was brauche ich, um loszustarten?',
-    a: 'Im Idealfall eine strukturierte Wissensbasis – FAQs, Produktdokumentation, interne Prozessbeschreibungen. Falls diese noch nicht vorhanden sind, helfen wir Ihnen beim Aufbau. Das ist Teil unserer Leistung.',
+    a: 'Im Idealfall eine strukturierte Wissensbasis aus FAQs, Produktdokumentation und internen Prozessbeschreibungen. Falls diese noch nicht vorhanden sind, helfen wir Ihnen beim Aufbau. Das ist Teil unserer Leistung.',
   },
   {
     q: 'Wie schnell sehen wir erste Ergebnisse?',
-    a: 'Bereits in der Testphase – also vor dem offiziellen Go-live – sehen Sie anhand echter Beispielanfragen, wie der Assistent antwortet. Nach dem Launch sind Kennzahlen wie Lösungsrate und Ticketreduktion ab Tag 1 messbar.',
+    a: 'Bereits in der Testphase, also vor dem offiziellen Go-live, sehen Sie anhand echter Beispielanfragen, wie der Assistent antwortet. Nach dem Launch sind Kennzahlen wie Lösungsrate und Ticketreduktion ab Tag 1 messbar.',
   },
   {
     q: 'Was kostet das?',
-    a: 'Das hängt von Umfang, Datenvolumen und Integrationstiefe ab. Wir arbeiten auf Projektbasis für den Aufbau und optional im Retainer für laufende Optimierung. Zahlen legen wir transparent auf den Tisch – im Erstgespräch, bevor Sie sich entscheiden.',
+    a: 'Das hängt von Umfang, Datenvolumen und Integrationstiefe ab. Wir arbeiten auf Projektbasis für den Aufbau und optional im Retainer für laufende Optimierung. Zahlen legen wir transparent auf den Tisch: im Erstgespräch, bevor Sie sich entscheiden.',
   },
 ];
 
@@ -596,7 +597,7 @@ const FinalCTA: React.FC = () => (
         <span className="text-accent-hover ">für Ihren Support leisten kann.</span>
       </h2>
       <p className="text-muted font-body text-sm md:text-base mb-8 max-w-xl mx-auto">
-        In einer kostenlosen Demo zeigen wir Ihnen – anhand Ihrer eigenen Branche und Anfragen – wie ein trainierter Assistent antwortet. Kein generisches Beispiel, sondern etwas das sich nach Ihrem Unternehmen anfühlt.
+        In einer kostenlosen Demo zeigen wir Ihnen anhand Ihrer eigenen Branche und Anfragen, wie ein trainierter Assistent antwortet. Kein generisches Beispiel, sondern etwas das sich nach Ihrem Unternehmen anfühlt.
       </p>
 
       <Link

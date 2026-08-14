@@ -18,7 +18,7 @@ const includes = [
 
 export const KISchnellstart: React.FC = () => (
   <div className="min-h-screen bg-base text-ink font-body">
-    <RouteMeta title="KI-Schnellstart | Ainzigartig" description="Ein klar abgegrenzter KI-Assistent — mit Zielrahmen, wenn Scope und Datenlage passen." />
+    <RouteMeta title="KI-Schnellstart | Ainzigartig" description="Ein klar abgegrenzter KI-Assistent mit verlässlichem Zielrahmen, wenn Scope und Datenlage passen." />
 
     <section className="pt-36 pb-20 px-6">
       <div className="max-w-[920px] mx-auto text-center">

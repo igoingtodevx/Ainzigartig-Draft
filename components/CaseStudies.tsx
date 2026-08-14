@@ -36,7 +36,7 @@ export const CaseStudies: React.FC = () => (
             Lieber zeigen als behaupten.
           </h2>
           <p className="text-base text-muted leading-relaxed mt-4 max-w-md">
-            Ein Teil unserer Arbeit lässt sich direkt ausprobieren. So sehen Sie, wie wir KI-Systeme denken und bauen — bevor wir über ein Projekt sprechen.
+            Ein Teil unserer Arbeit lässt sich direkt ausprobieren. So sehen Sie, wie wir KI-Systeme denken und bauen, bevor wir über ein Projekt sprechen.
           </p>
         </div>
 

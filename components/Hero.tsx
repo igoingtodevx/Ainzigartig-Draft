@@ -17,7 +17,7 @@ const HeroSystemPreview: React.FC = () => (
       decoding="sync"
       className="relative z-10 w-full max-w-[440px] object-contain drop-shadow-[0_24px_42px_rgba(26,25,24,.10)]"
     />
-    <figcaption className="relative z-10 mt-2 rounded-full border border-ink/10 bg-base/70 px-3 py-1 text-[0.6rem] tracking-[0.08em] text-muted backdrop-blur-sm">
+    <figcaption className="relative z-10 mt-2 text-[0.68rem] tracking-[0.08em] uppercase font-semibold text-light">
       Illustrative Beispielansicht
     </figcaption>
   </figure>
@@ -44,7 +44,7 @@ export const Hero: React.FC = () => {
       <div className="relative z-10 max-w-[1240px] mx-auto px-6 w-full">
         <div className="grid xl:grid-cols-[minmax(0,1fr)_420px] items-center gap-10 xl:gap-14">
           <div className="max-w-[790px] mx-auto xl:mx-0 text-center">
-            <p className="inline-flex items-center gap-2 rounded-full border border-accent/60 bg-base/60 backdrop-blur-sm px-4 py-1.5 text-xs font-semibold tracking-[0.08em] uppercase text-ink mb-7">
+            <p className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.14em] uppercase text-light mb-7">
               <span className="w-2 h-2 rounded-full bg-accent" />
               KI-Beratung & Implementierung für KMU
             </p>
@@ -57,7 +57,7 @@ export const Hero: React.FC = () => {
             </h1>
 
             <p className="mt-8 text-[clamp(1rem,2vw,1.22rem)] leading-relaxed text-muted font-body max-w-[660px] mx-auto">
-              Automatisierungen, interne Tools, Dashboards und KI-Assistenten für KMU — vom abgegrenzten Prozess bis zur integrierten, überprüfbaren Lösung.
+              Automatisierungen, interne Tools, Dashboards und KI-Assistenten für KMU: vom abgegrenzten Prozess bis zur integrierten, überprüfbaren Lösung.
             </p>
 
             <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">

@@ -141,7 +141,7 @@ export const Services: React.FC = () => (
                   <span className="font-editorial text-2xl text-accent-mid leading-none tabular">
                     {area.number}
                   </span>
-                  <span className="text-[0.68rem] uppercase tracking-[0.12em] font-semibold text-light border border-ink/10 rounded-full px-3 py-1 bg-surface-soft">
+                  <span className="text-[0.68rem] uppercase tracking-[0.14em] font-semibold text-light">
                     {area.badge}
                   </span>
                 </div>

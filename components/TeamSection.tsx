@@ -16,7 +16,7 @@ export const TeamSection: React.FC = () => (
           Von Leuten aus der Praxis
         </h2>
         <p className="text-base md:text-lg text-muted mt-4 leading-relaxed">
-          Technische Umsetzung, Business-Verständnis und Automatisierung in einem kleinen Team — ohne Übergaben durch fünf Agentur-Ebenen.
+          Technische Umsetzung, Business-Verständnis und Automatisierung in einem kleinen Team, ohne Übergaben durch fünf Agentur-Ebenen.
         </p>
       </header>
 
@@ -55,7 +55,7 @@ export const TeamSection: React.FC = () => (
         </div>
 
         <div className="brand-card relative overflow-hidden bg-[#F3EFEA] min-h-[420px] md:min-h-[520px] flex items-end justify-center px-6 pt-8">
-          <div className="absolute top-6 left-6 inline-flex items-center gap-2 rounded-full border border-accent/45 bg-base/70 px-3 py-1.5 text-xs font-semibold text-ink">
+          <div className="absolute top-6 left-6 inline-flex items-center gap-2 text-xs font-semibold tracking-[0.1em] uppercase text-ink">
             <span className="w-2 h-2 bg-accent rounded-full" />
             Klein. Direkt. Technisch.
           </div>

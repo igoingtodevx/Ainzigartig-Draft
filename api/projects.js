@@ -40,19 +40,19 @@ const CURATED = {
     live_url: '',
   },
   'lukas-script-pipeline': {
-    tagline: 'Skript-zu-Video Pipeline. Voice-over, B-Roll, Captions — alles aus einem Markdown-Dokument.',
+    tagline: 'Skript-zu-Video Pipeline: Voice-over, B-Roll und Captions aus einem Markdown-Dokument.',
     category: 'Content',
     status: 'beta',
     live_url: '',
   },
   'zuegig_omo': {
-    tagline: 'Umzugs-Orchestrator. Anfrage, Angebot, Buchung, Tracking — auf einer Seite, ohne Telefon-Marathon.',
+    tagline: 'Umzugs-Orchestrator: Anfrage, Angebot, Buchung und Tracking auf einer Seite, ohne Telefon-Marathon.',
     category: 'Operations',
     status: 'beta',
     live_url: '',
   },
   'zugig-app-Undeep': {
-    tagline: 'Mobility as a Service. Eine App für alle Wege — ÖPNV, Bike, Auto, Carsharing, geteilt gebucht und bezahlt.',
+    tagline: 'Mobility as a Service: Eine App für alle Wege wie ÖPNV, Bike, Auto oder Carsharing, geteilt gebucht und bezahlt.',
     category: 'Product',
     status: 'beta',
     live_url: '',

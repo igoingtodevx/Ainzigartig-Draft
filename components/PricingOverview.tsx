@@ -80,9 +80,12 @@ export const PricingOverview: React.FC = () => (
 
     <section className="pb-24 px-6">
       <div className="max-w-[1140px] mx-auto">
-        <div className="flex flex-wrap justify-center gap-2 mb-10">
-          {tierOrder.map((tier) => (
-            <span key={tier} className="rounded-full border border-ink/15 bg-surface px-4 py-2 text-xs font-semibold text-muted">{tier}</span>
+        <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-2 mb-10 text-xs font-semibold uppercase tracking-[0.14em] text-light">
+          {tierOrder.map((tier, idx) => (
+            <span key={tier} className="flex items-center gap-2">
+              {idx > 0 && <span className="w-1 h-1 rounded-full bg-ink/20" aria-hidden="true" />}
+              <span>{tier}</span>
+            </span>
           ))}
         </div>
 

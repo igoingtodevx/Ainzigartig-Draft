@@ -41,7 +41,7 @@ const Hero: React.FC = () => (
       </h1>
 
       <p className="text-muted text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-body mb-10">
-        Wir helfen kleinen und mittelständischen Unternehmen dabei, konkrete KI-Anwendungen zu finden und umzusetzen – die wirklich Zeit sparen, Kosten senken und Ihr Team entlasten. Kein Buzzword-Bingo, kein Pilotprojekt, das im Nichts endet.
+        Wir helfen kleinen und mittelständischen Unternehmen dabei, konkrete KI-Anwendungen zu finden und umzusetzen, die wirklich Zeit sparen, Kosten senken und Ihr Team entlasten. Kein Buzzword-Bingo, kein Pilotprojekt, das im Nichts endet.
       </p>
 
       {/* CTAs */}
@@ -65,7 +65,7 @@ const Hero: React.FC = () => (
       {/* Trust bar */}
       <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-xs md:text-sm text-muted font-body">
         {[
-          'Kein Sales-Pitch – echtes Gespräch',
+          'Kein Sales-Pitch: echtes Gespräch',
           'Datenschutz von Anfang an mitgedacht',
           'Herstellerunabhängig',
           '30 Min. kostenlos',
@@ -106,7 +106,7 @@ const painCards = [
   {
     emoji: '🤷',
     title: 'Kein Ansprechpartner auf Augenhöhe',
-    text: 'Große Beratungen sind zu teuer, Freelancer kennen Ihre Branche nicht – und YouTube-Videos lösen Ihr konkretes Problem nicht.',
+    text: 'Große Beratungen sind zu teuer, Freelancer kennen Ihre Branche nicht, und YouTube-Videos lösen Ihr konkretes Problem nicht.',
     color: 'cyan' as const,
   },
 ];
@@ -126,7 +126,7 @@ const Problem: React.FC = () => (
         Kaum einer sagt Ihnen, was Sie damit konkret anfangen sollen.
       </SectionHeadline>
       <LeadText>
-        Als KMU haben Sie weder Zeit noch Budget, um monatelang zu experimentieren. Sie brauchen keine Theorie – Sie brauchen Ergebnisse.
+        Als KMU haben Sie weder Zeit noch Budget, um monatelang zu experimentieren. Sie brauchen keine Theorie, sondern Ergebnisse.
       </LeadText>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12 text-left">
@@ -150,12 +150,12 @@ const Problem: React.FC = () => (
 const leistungen = [
   {
     title: 'KI-Potenzialanalyse',
-    text: 'Wir schauen uns Ihre Prozesse an und priorisieren, wo KI den größten Unterschied macht – praxisnah, ohne Zeitverschwendung.',
+    text: 'Wir schauen uns Ihre Prozesse an und priorisieren, wo KI den größten Unterschied macht: praxisnah, ohne Zeitverschwendung.',
     icon: 'query_stats',
   },
   {
     title: 'Use-Case-Entwicklung',
-    text: 'Konkrete Anwendungsfälle für Ihr Unternehmen – nicht von der Stange, sondern aus Ihrem Alltag heraus entwickelt.',
+    text: 'Konkrete Anwendungsfälle für Ihr Unternehmen, nicht von der Stange, sondern aus Ihrem Alltag heraus entwickelt.',
     icon: 'build',
   },
   {
@@ -186,7 +186,7 @@ const Angebot: React.FC = () => (
       <SectionLabel>Was wir anbieten</SectionLabel>
       <SectionHeadline>KI-Beratung, die sich im Alltag bezahlt macht.</SectionHeadline>
       <LeadText>
-        Wir analysieren Ihr Unternehmen, identifizieren die Stellen mit dem größten Hebel – und begleiten Sie bei der Umsetzung. Schritt für Schritt.
+        Wir analysieren Ihr Unternehmen, identifizieren die Stellen mit dem größten Hebel und begleiten Sie bei der Umsetzung. Schritt für Schritt.
       </LeadText>
 
       {/* Package box */}
@@ -242,7 +242,7 @@ const steps = [
   {
     num: '02',
     title: 'Potenzialanalyse & Priorisierung',
-    text: 'Wir analysieren Ihre Prozesse, identifizieren konkrete Hebelpunkte für KI und erstellen eine priorisierte Roadmap – nach Aufwand und Wirkung sortiert.',
+    text: 'Wir analysieren Ihre Prozesse, identifizieren konkrete Hebelpunkte für KI und erstellen eine priorisierte Roadmap, nach Aufwand und Wirkung sortiert.',
   },
   {
     num: '03',
@@ -252,7 +252,7 @@ const steps = [
   {
     num: '04',
     title: 'Umsetzung & Übergabe',
-    text: 'Entweder begleiten wir die Implementierung direkt oder übergeben mit klarer Dokumentation an Ihr Team. Ihr Unternehmen soll eigenständig werden – nicht dauerhaft von uns abhängig sein.',
+    text: 'Entweder begleiten wir die Implementierung direkt oder übergeben mit klarer Dokumentation an Ihr Team. Ihr Unternehmen soll eigenständig werden und nicht dauerhaft von uns abhängig sein.',
   },
 ];
 
@@ -260,7 +260,7 @@ const Prozess: React.FC = () => (
   <section className="py-20 px-4">
     <div className="max-w-4xl mx-auto text-center">
       <SectionLabel>Wie es läuft</SectionLabel>
-      <SectionHeadline>Von 0 auf Umsetzung – ohne Umwege.</SectionHeadline>
+      <SectionHeadline>Von 0 auf Umsetzung: ohne Umwege.</SectionHeadline>
       <LeadText>
         Kein endloses Onboarding. Kein Konzept, das in der Schublade landet. Wir arbeiten schnell und direkt.
       </LeadText>
@@ -306,7 +306,7 @@ const useCases = [
     category: 'Kundenservice',
     icon: 'support_agent',
     title: 'Eingehende Anfragen automatisch vorqualifizieren',
-    text: 'E-Mails und Kontaktformulare werden automatisch kategorisiert, priorisiert und mit Antwortvorschlägen versehen – Ihr Team antwortet schneller, mit weniger Aufwand.',
+    text: 'E-Mails und Kontaktformulare werden automatisch kategorisiert, priorisiert und mit Antwortvorschlägen versehen. Ihr Team antwortet schneller, mit weniger Aufwand.',
     result: 'Weniger manuelle Triage und Wiederholungsarbeit',
     color: 'cyan' as const,
   },
@@ -314,7 +314,7 @@ const useCases = [
     category: 'Marketing & Content',
     icon: 'edit_note',
     title: 'Konsistente Inhalte in Ihrer Markenstimme',
-    text: 'Social Media Posts, Newsletter, Produktbeschreibungen – KI generiert Entwürfe auf Basis Ihrer Tonalität. Ihr Team verfeinert, statt bei Null anzufangen.',
+    text: 'Social Media Posts, Newsletter, Produktbeschreibungen: KI generiert Entwürfe auf Basis Ihrer Tonalität. Ihr Team verfeinert, statt bei Null anzufangen.',
     result: 'Schneller von der Idee zum bearbeitbaren Entwurf',
     color: 'pink' as const,
   },
@@ -322,7 +322,7 @@ const useCases = [
     category: 'Vertrieb & CRM',
     icon: 'trending_up',
     title: 'Leads automatisch nachfassen',
-    text: 'Interessenten die sich nicht melden werden zu einem definierten Zeitpunkt automatisch und personalisiert kontaktiert – ohne manuelle Arbeit Ihres Vertriebsteams.',
+    text: 'Interessenten die sich nicht melden werden zu einem definierten Zeitpunkt automatisch und personalisiert kontaktiert, ohne manuelle Arbeit Ihres Vertriebsteams.',
     result: 'Höhere Conversion, weniger Leads verloren',
     color: 'yellow' as const,
   },
@@ -330,7 +330,7 @@ const useCases = [
     category: 'Interne Prozesse',
     icon: 'menu_book',
     title: 'Wissen im Unternehmen nutzbar machen',
-    text: 'Handbücher, FAQs, Verträge – ein interner KI-Assistent beantwortet Mitarbeiterfragen sofort und korrekt, ohne dass jemand suchen muss.',
+    text: 'Handbücher, FAQs, Verträge: Ein interner KI-Assistent beantwortet Mitarbeiterfragen sofort und korrekt, ohne dass jemand suchen muss.',
     result: 'Onboarding & Support deutlich entlastet',
     color: 'cyan' as const,
   },
@@ -338,7 +338,7 @@ const useCases = [
     category: 'Buchhaltung & Verwaltung',
     icon: 'receipt_long',
     title: 'Dokumente automatisch verarbeiten',
-    text: 'Eingangsrechnungen, Lieferscheine, Formulare – KI extrahiert relevante Daten und überträgt sie in Ihre Systeme. Fehlerquote sinkt, Aufwand auch.',
+    text: 'Eingangsrechnungen, Lieferscheine, Formulare: KI extrahiert relevante Daten und überträgt sie in Ihre Systeme. Fehlerquote sinkt, Aufwand auch.',
     result: 'Stunden pro Woche eingespart',
     color: 'pink' as const,
   },
@@ -346,7 +346,7 @@ const useCases = [
     category: 'Analyse & Reporting',
     icon: 'monitoring',
     title: 'Daten verstehen ohne Data Scientist',
-    text: 'Umsatzdaten, Kundenfeedback, Website-Auswertungen – KI hilft Ihnen, relevante Muster zu erkennen und bessere Entscheidungen zu treffen.',
+    text: 'Umsatzdaten, Kundenfeedback, Website-Auswertungen: KI hilft Ihnen, relevante Muster zu erkennen und bessere Entscheidungen zu treffen.',
     result: 'Klarere Entscheidungsgrundlagen',
     color: 'yellow' as const,
   },
@@ -376,7 +376,7 @@ const UseCases: React.FC = () => (
       <SectionLabel>Beispiele aus der Praxis</SectionLabel>
       <SectionHeadline>Was KI für KMU konkret leisten kann.</SectionHeadline>
       <LeadText>
-        Das sind reale Anwendungsfälle – keine Zukunftsmusik, keine Millionen-Budgets nötig.
+        Das sind reale Anwendungsfälle: keine Zukunftsmusik, keine Millionen-Budgets nötig.
       </LeadText>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-14 text-left">

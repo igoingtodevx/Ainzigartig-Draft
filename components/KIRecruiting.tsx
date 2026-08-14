@@ -113,7 +113,7 @@ const painCards = [
   {
     emoji: '📬',
     title: 'Bewerbungsflut ohne System',
-    text: 'Eine Stellenanzeige, viele Bewerbungen. Welche Profile passen wirklich? Das herauszufinden kostet Zeit – pro Stelle, pro Runde.',
+    text: 'Eine Stellenanzeige, viele Bewerbungen. Welche Profile passen wirklich? Das herauszufinden kostet Zeit: pro Stelle und pro Runde.',
     color: 'yellow' as const,
   },
   {
@@ -125,13 +125,13 @@ const painCards = [
   {
     emoji: '🎲',
     title: 'Vorauswahl ist Bauchgefühl',
-    text: 'Wer die CVs sichtet, entscheidet subjektiv – beeinflusst von Tagesform, Formulierungen und unbewussten Mustern. Passende Kandidaten fallen durch, unpassende kommen weiter.',
+    text: 'Wer die CVs sichtet, entscheidet subjektiv, beeinflusst von Tagesform, Formulierungen und unbewussten Mustern. Passende Kandidaten fallen durch, unpassende kommen weiter.',
     color: 'pink' as const,
   },
   {
     emoji: '🔁',
     title: 'Immer wieder von vorne',
-    text: 'Jede neue Stelle, dasselbe Prozedere. Keine strukturierte Wissensbasis, keine Lernkurve – obwohl sich viele Anforderungsprofile kaum unterscheiden.',
+    text: 'Jede neue Stelle, dasselbe Prozedere. Keine strukturierte Wissensbasis, keine Lernkurve, obwohl sich viele Anforderungsprofile kaum unterscheiden.',
     color: 'yellow' as const,
   },
 ];
@@ -151,7 +151,7 @@ const Problem: React.FC = () => (
         Die besten Kandidaten warten keine Wochen.
       </SectionHeadline>
       <LeadText>
-        Der Arbeitsmarkt hat sich gedreht. Gute Bewerber entscheiden sich innerhalb von Tagen – für das Unternehmen, das zuerst antwortet und am professionellsten auftritt. Wer langsam ist, verliert.
+        Der Arbeitsmarkt hat sich gedreht. Gute Bewerber entscheiden sich innerhalb von Tagen für das Unternehmen, das zuerst antwortet und am professionellsten auftritt. Wer langsam ist, verliert.
       </LeadText>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12 text-left">
@@ -175,27 +175,27 @@ const Problem: React.FC = () => (
 const leistungen = [
   {
     title: 'Automatisches CV-Screening',
-    text: 'Jede eingehende Bewerbung wird sofort analysiert – Qualifikationen, Erfahrung, Lücken im Lebenslauf, Übereinstimmung mit dem Anforderungsprofil. Ihr Team sieht auf einen Blick, wer passt und warum.',
+    text: 'Jede eingehende Bewerbung wird sofort analysiert: Qualifikationen, Erfahrung, Lücken im Lebenslauf sowie die Übereinstimmung mit dem Anforderungsprofil. Ihr Team sieht auf einen Blick, wer passt und warum.',
     icon: 'document_scanner',
   },
   {
     title: 'Intelligentes Kandidaten-Matching',
-    text: 'Das System lernt, was bei Ihnen eine gute Besetzung ausmacht – und gewichtet Kriterien entsprechend. Je mehr Stellen Sie besetzen, desto präziser wird das Matching.',
+    text: 'Das System lernt, was bei Ihnen eine gute Besetzung ausmacht, und gewichtet Kriterien entsprechend. Je mehr Stellen Sie besetzen, desto präziser wird das Matching.',
     icon: 'psychology',
   },
   {
     title: 'Automatisierte Erstkommunikation',
-    text: 'Eingangsbestätigungen, Statusupdates, Einladungen zur nächsten Runde – Bewerber erhalten schnelle, professionelle Rückmeldungen ohne manuellen Aufwand. Ihre Candidate Experience verbessert sich deutlich.',
+    text: 'Eingangsbestätigungen, Statusupdates, Einladungen zur nächsten Runde: Bewerber erhalten schnelle, professionelle Rückmeldungen ohne manuellen Aufwand. Ihre Candidate Experience verbessert sich deutlich.',
     icon: 'mail',
   },
   {
     title: 'Strukturierte Kandidatenprofile',
-    text: 'Statt 80 verschiedene PDF-Formate zu lesen, sieht Ihr Team einheitliche, vergleichbare Profile – mit KI-generierter Zusammenfassung und Stärken-Schwächen-Einschätzung.',
+    text: 'Statt 80 verschiedene PDF-Formate zu lesen, sieht Ihr Team einheitliche, vergleichbare Profile inklusive KI-generierter Zusammenfassung und Stärken-Schwächen-Einschätzung.',
     icon: 'person_apron',
   },
   {
     title: 'Integration in Ihr ATS',
-    text: 'Ob Personio, Workday, SAP SuccessFactors oder ein eigenes System – wir integrieren die KI in Ihre bestehende HR-Infrastruktur. Kein neues Tool, das parallel geführt werden muss.',
+    text: 'Ob Personio, Workday, SAP SuccessFactors oder ein eigenes System: Wir integrieren die KI in Ihre bestehende HR-Infrastruktur. Kein neues Tool, das parallel geführt werden muss.',
     icon: 'hub',
   },
   {
@@ -214,7 +214,7 @@ const Loesung: React.FC = () => (
         Ihr Team trifft die Entscheidungen.
       </SectionHeadline>
       <LeadText>
-        Unser System liest, versteht und bewertet Bewerbungsunterlagen auf Basis Ihrer konkreten Anforderungen – nicht auf Basis von Keywords allein, sondern inhaltlich. Die besten Matches landen oben, der Rest bleibt transparent nachvollziehbar.
+        Unser System liest, versteht und bewertet Bewerbungsunterlagen auf Basis Ihrer konkreten Anforderungen, nicht auf Basis von Keywords allein, sondern inhaltlich. Die besten Matches landen oben, der Rest bleibt transparent nachvollziehbar.
       </LeadText>
 
       {/* Leistungen grid */}
@@ -244,10 +244,10 @@ const Loesung: React.FC = () => (
         <span className="text-4xl">🛡️</span>
         <div>
           <h4 className="text-sm font-bold text-[#B77A36] font-editorial mb-2 uppercase tracking-wider">
-            Bewerberdaten sind Personaldaten – und besonders schützenswert.
+            Bewerberdaten sind Personaldaten und besonders schützenswert.
           </h4>
           <p className="text-muted text-sm leading-relaxed font-body">
-            Wir arbeiten ausschließlich mit EU-Servern, ohne Datenweitergabe an Dritte. Löschroutinen nach DSGVO-Vorgaben sind automatisch integriert. Jede Implementierung wird dokumentiert und ist auditfähig – für Ihren Datenschutzbeauftragten und Ihren Betriebsrat.
+            Wir arbeiten ausschließlich mit EU-Servern, ohne Datenweitergabe an Dritte. Löschroutinen nach DSGVO-Vorgaben sind automatisch integriert. Jede Implementierung wird dokumentiert und ist auditfähig: für Ihren Datenschutzbeauftragten und Ihren Betriebsrat.
           </p>
         </div>
       </div>
@@ -266,12 +266,12 @@ const steps = [
   {
     num: '02',
     title: 'Systemaufbau & Integration (Woche 1–2)',
-    text: 'Das KI-System wird an Ihren Bewerbungseingang und – falls vorhanden – Ihr ATS angebunden. Screening-Logik, Matching-Gewichtung und Kommunikationsautomation werden konfiguriert.',
+    text: 'Das KI-System wird an Ihren Bewerbungseingang und (falls vorhanden) Ihr ATS angebunden. Screening-Logik, Matching-Gewichtung und Kommunikationsautomation werden konfiguriert.',
   },
   {
     num: '03',
     title: 'Testlauf mit echten Bewerbungen',
-    text: 'Bevor das System live geht, testen wir es anhand zurückliegender Bewerbungen – Stellen, die Sie bereits besetzt haben. So sehen Sie konkret, wie das System entschieden hätte, und wir feinjustieren wo nötig.',
+    text: 'Bevor das System live geht, testen wir es anhand zurückliegender Bewerbungen für Stellen, die Sie bereits besetzt haben. So sehen Sie konkret, wie das System entschieden hätte, und wir feinjustieren wo nötig.',
   },
   {
     num: '04',
@@ -289,7 +289,7 @@ const Prozess: React.FC = () => (
         Ergebnisse ab der ersten Stelle.
       </SectionHeadline>
       <LeadText>
-        Kein monatelanges Einführungsprojekt. Wir analysieren Ihre bestehenden Prozesse, integrieren die KI in Ihre Infrastruktur und trainieren das System auf Ihre Anforderungsprofile – schnell und ohne großen internen Aufwand.
+        Kein monatelanges Einführungsprojekt. Wir analysieren Ihre bestehenden Prozesse, integrieren die KI in Ihre Infrastruktur und trainieren das System auf Ihre Anforderungsprofile: schnell und ohne großen internen Aufwand.
       </LeadText>
 
       <div className="mt-14 space-y-0 text-left relative">
@@ -320,7 +320,7 @@ const useCases = [
     category: 'Volumenrecruiting',
     icon: 'groups',
     title: 'Viele Bewerbungen, viele gleiche Stellen',
-    text: 'Lager, Produktion, Vertrieb, Pflege – überall wo viele ähnliche Stellen besetzt werden müssen, spart automatisches Screening am meisten Zeit.',
+    text: 'Lager, Produktion, Vertrieb, Pflege: Überall wo viele ähnliche Stellen besetzt werden müssen, spart automatisches Screening am meisten Zeit.',
     result: 'Besonders wirksam bei 10+ Einstellungen pro Quartal',
     color: 'yellow' as const,
   },
@@ -352,7 +352,7 @@ const useCases = [
     category: 'Interne Talentpools',
     icon: 'database',
     title: 'Kandidaten aus alten Prozessen wieder aktivieren',
-    text: 'Viele Unternehmen haben Bewerberdaten aus vergangenen Prozessen – aber kein System, um diese sinnvoll zu nutzen. KI durchsucht bestehende Pools auf neue Stellen automatisch.',
+    text: 'Viele Unternehmen haben Bewerberdaten aus vergangenen Prozessen, aber oft kein System, um diese sinnvoll zu nutzen. KI durchsucht bestehende Pools auf neue Stellen automatisch.',
     result: 'Weniger externe Ausschreibungen nötig',
     color: 'cyan' as const,
   },
@@ -380,7 +380,7 @@ const UseCases: React.FC = () => (
       <SectionLabel>Typische Anwendungsfälle</SectionLabel>
       <SectionHeadline>Wo KI im Recruiting den größten Unterschied macht.</SectionHeadline>
       <LeadText>
-        Vom Handwerksbetrieb mit saisonalem Bedarf bis zum Mittelständler mit dutzenden offenen Stellen gleichzeitig – die Hebelpunkte sind überall ähnlich.
+        Vom Handwerksbetrieb mit saisonalem Bedarf bis zum Mittelständler mit dutzenden offenen Stellen gleichzeitig: Die Hebelpunkte sind überall ähnlich.
       </LeadText>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-14 text-left">
@@ -419,9 +419,9 @@ const targetAudience = [
 ];
 
 const notFor = [
-  'Unternehmen, die weniger als 1–2 Stellen pro Quartal besetzen – der Aufwand rechnet sich erst bei gewissem Volumen, das sagen wir Ihnen lieber offen.',
-  'Wer hofft, den HR-Bereich vollständig zu automatisieren – KI übernimmt die Vorauswahl, die Entscheidung bleibt beim Menschen. Das ist auch gut so.',
-  'Unternehmen ohne klare Anforderungsprofile für ihre Stellen – ohne definierte Kriterien kann kein Matching-Modell sinnvoll arbeiten. Wir helfen beim Aufbau, aber es braucht Ihre Beteiligung.',
+  'Unternehmen, die weniger als 1–2 Stellen pro Quartal besetzen: Der Aufwand rechnet sich erst bei gewissem Volumen. Das sagen wir Ihnen lieber offen.',
+  'Wer hofft, den HR-Bereich vollständig zu automatisieren: KI übernimmt die Vorauswahl, die Entscheidung bleibt beim Menschen. Das ist auch gut so.',
+  'Unternehmen ohne klare Anforderungsprofile für ihre Stellen: Ohne definierte Kriterien kann kein Matching-Modell sinnvoll arbeiten. Wir helfen beim Aufbau, aber es braucht Ihre Beteiligung.',
 ];
 
 const Zielgruppe: React.FC = () => (
@@ -516,15 +516,15 @@ const Vergleich: React.FC = () => (
 const faqItems = [
   {
     q: 'Trifft die KI die finale Einstellungsentscheidung?',
-    a: 'Nein – und das ist Absicht. Die KI übernimmt die Vorauswahl und liefert strukturierte Entscheidungsgrundlagen. Die finale Entscheidung liegt immer beim Menschen. Das ist nicht nur ethisch richtig, sondern auch rechtlich der einzig sinnvolle Weg.',
+    a: 'Nein, und das ist Absicht. Die KI übernimmt die Vorauswahl und liefert strukturierte Entscheidungsgrundlagen. Die finale Entscheidung liegt immer beim Menschen. Das ist nicht nur ethisch richtig, sondern auch rechtlich der einzig sinnvolle Weg.',
   },
   {
     q: 'Werden Bewerber benachteiligt, weil eine KI entscheidet?',
-    a: 'Das Gegenteil ist oft der Fall. KI-gestütztes Screening bewertet auf Basis definierter, transparenter Kriterien – ohne Tagesform, ohne unbewusste Muster, ohne Einfluss von Formulierungen oder Namen. Das macht den Prozess fairer, nicht weniger fair.',
+    a: 'Das Gegenteil ist oft der Fall. KI-gestütztes Screening bewertet auf Basis definierter, transparenter Kriterien: ohne Tagesform, ohne unbewusste Muster, ohne Einfluss von Formulierungen oder Namen. Das macht den Prozess fairer, nicht weniger fair.',
   },
   {
     q: 'Wie werden Bewerberdaten verarbeitet und wann gelöscht?',
-    a: 'Ausschließlich auf EU-Servern, mit automatischen Löschroutinen nach dem Ende des Bewerbungsverfahrens – entsprechend den DSGVO-Vorgaben und den Fristen, die Sie festlegen. Alles ist dokumentiert und auditfähig.',
+    a: 'Ausschließlich auf EU-Servern, mit automatischen Löschroutinen nach dem Ende des Bewerbungsverfahrens, entsprechend den DSGVO-Vorgaben und den Fristen, die Sie festlegen. Alles ist dokumentiert und auditfähig.',
   },
   {
     q: 'Funktioniert das auch, wenn wir kein ATS haben?',
@@ -532,11 +532,11 @@ const faqItems = [
   },
   {
     q: 'Was passiert, wenn unsere Anforderungsprofile sich ändern?',
-    a: 'Das Matching-Modell kann jederzeit angepasst werden. Neue Kriterien, geänderte Gewichtungen, neue Stellentypen – wir aktualisieren das Modell und testen es, bevor es wieder live geht.',
+    a: 'Das Matching-Modell kann jederzeit angepasst werden. Neue Kriterien, geänderte Gewichtungen, neue Stellentypen: Wir aktualisieren das Modell und testen es, bevor es wieder live geht.',
   },
   {
     q: 'Was kostet das?',
-    a: 'Der Aufbau wird auf Projektbasis abgerechnet, der laufende Betrieb optional im Retainer. Die genauen Kosten hängen von Integrationstiefe und Stellenvolumen ab. Zahlen legen wir transparent im Erstgespräch auf den Tisch – bevor Sie sich entscheiden.',
+    a: 'Der Aufbau wird auf Projektbasis abgerechnet, der laufende Betrieb optional im Retainer. Die genauen Kosten hängen von Integrationstiefe und Stellenvolumen ab. Zahlen legen wir transparent im Erstgespräch auf den Tisch, bevor Sie sich entscheiden.',
   },
 ];
 
@@ -598,7 +598,7 @@ const FinalCTA: React.FC = () => (
         <span className="text-[#B77A36]">Ihre nächste Stelle schneller besetzt.</span>
       </h2>
       <p className="text-muted font-body text-sm md:text-base mb-8 max-w-xl mx-auto">
-        In einer kostenlosen Demo zeigen wir Ihnen anhand einer echten Stellenbeschreibung aus Ihrer Branche, wie das Screening und Matching funktioniert. Kein generisches Beispiel – etwas, das sich nach Ihrem Unternehmen anfühlt.
+        In einer kostenlosen Demo zeigen wir Ihnen anhand einer echten Stellenbeschreibung aus Ihrer Branche, wie das Screening und Matching funktioniert. Kein generisches Beispiel, sondern etwas, das sich nach Ihrem Unternehmen anfühlt.
       </p>
 
       <Link

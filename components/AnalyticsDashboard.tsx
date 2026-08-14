@@ -44,7 +44,7 @@ const Hero: React.FC = () => (
       </h1>
 
       <p className="text-muted text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-body mb-10">
-        Unser Analytics Dashboard bündelt Ihre Vertriebs- und Recruiting-Daten in einem zentralen Überblick – mit KI-gestützten Analysen, die Kontext zu den Zahlen liefern. Welche Quellen angebunden werden und wie aktuell die Daten sind, hängt von Ihrem Setup ab.
+        Unser Analytics Dashboard bündelt Ihre Vertriebs- und Recruiting-Daten in einem zentralen Überblick, inklusive KI-gestützter Analysen, die Kontext zu den Zahlen liefern. Welche Quellen angebunden werden und wie aktuell die Daten sind, hängt von Ihrem Setup ab.
       </p>
 
       {/* CTAs */}
@@ -112,25 +112,25 @@ const painCards = [
   {
     emoji: '📊',
     title: 'Reporting ist ein Halbtagsjob',
-    text: 'Jede Woche dasselbe: Daten aus verschiedenen Systemen exportieren, in Excel zusammenführen, formatieren, präsentieren. Das kostet Zeit, die niemand hat – und produziert Ergebnisse, die beim Lesen schon überholt sind.',
+    text: 'Jede Woche dasselbe: Daten aus verschiedenen Systemen exportieren, in Excel zusammenführen, formatieren, präsentieren. Das kostet Zeit, die niemand hat, und produziert Ergebnisse, die beim Lesen schon überholt sind.',
     color: 'pink' as const,
   },
   {
     emoji: '🔦',
     title: 'Entscheidungen im Dunkeln',
-    text: 'Welcher Vertriebskanal bringt wirklich die besten Leads? Welche Stelle kostet am meisten Zeit bis zur Besetzung? Ohne strukturierte Auswertung sind das Bauchentscheidungen – keine Strategieentscheidungen.',
+    text: 'Welcher Vertriebskanal bringt wirklich die besten Leads? Welche Stelle kostet am meisten Zeit bis zur Besetzung? Ohne strukturierte Auswertung sind das Bauchentscheidungen statt fundierter Strategieentscheidungen.',
     color: 'cyan' as const,
   },
   {
     emoji: '🗂️',
     title: 'Daten in Silos',
-    text: 'Vertrieb hat seine Zahlen, HR hat ihre Zahlen, das Management sieht etwas anderes. Niemand hat dasselbe Bild – und Abstimmungen enden in langen Diskussionen darüber, welche Zahlen die richtigen sind.',
+    text: 'Vertrieb hat seine Zahlen, HR hat ihre Zahlen, das Management sieht etwas anderes. Niemand hat dasselbe Bild, und Abstimmungen enden in langen Diskussionen darüber, welche Zahlen die richtigen sind.',
     color: 'yellow' as const,
   },
   {
     emoji: '⏰',
     title: 'Zu spät informiert',
-    text: 'Probleme werden sichtbar, wenn der Schaden schon entstanden ist. Ein Einbruch in der Pipeline, ein ungewöhnlicher Rückgang bei Bewerbungen – wer das erst im Monatsmeeting erfährt, reagiert zu spät.',
+    text: 'Probleme werden sichtbar, wenn der Schaden schon entstanden ist. Ein Einbruch in der Pipeline, ein ungewöhnlicher Rückgang bei Bewerbungen: Wer das erst im Monatsmeeting erfährt, reagiert zu spät.',
     color: 'pink' as const,
   },
 ];
@@ -150,7 +150,7 @@ const Problem: React.FC = () => (
         Und nirgendwo.
       </SectionHeadline>
       <LeadText>
-        CRM, ATS, Excel, E-Mail, Controlling – Ihre relevanten Zahlen stecken in Dutzenden verschiedenen Quellen. Bis jemand alles zusammengetragen und ausgewertet hat, sind die Erkenntnisse schon wieder veraltet.
+        CRM, ATS, Excel, E-Mail, Controlling: Ihre relevanten Zahlen stecken in Dutzenden verschiedenen Quellen. Bis jemand alles zusammengetragen und ausgewertet hat, sind die Erkenntnisse schon wieder veraltet.
       </LeadText>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12 text-left">
@@ -174,7 +174,7 @@ const Problem: React.FC = () => (
 const leistungen = [
   {
     title: 'Datenaggregation nach Bedarf',
-    text: 'Alle relevanten Datenquellen – CRM, ATS, ERP, Marketing-Tools, Excel-Importe – werden automatisch zusammengeführt. Kein manuelles Zusammenklicken, keine veralteten Reports.',
+    text: 'Alle relevanten Datenquellen (CRM, ATS, ERP, Marketing-Tools, Excel-Importe) werden automatisch zusammengeführt. Kein manuelles Zusammenklicken, keine veralteten Reports.',
     icon: 'sync',
   },
   {
@@ -184,22 +184,22 @@ const leistungen = [
   },
   {
     title: 'Individuell konfigurierbare Ansichten',
-    text: 'Vertriebsleiter, HR-Verantwortliche und Geschäftsführung sehen jeweils das, was für sie relevant ist – keine überladenen Dashboards, keine irrelevanten Metriken, kein Information Overload.',
+    text: 'Vertriebsleiter, HR-Verantwortliche und Geschäftsführung sehen jeweils das, was für sie relevant ist: ohne überladene Dashboards, ohne irrelevante Metriken und ohne Information Overload.',
     icon: 'dashboard_customize',
   },
   {
     title: 'Automatisiertes Reporting',
-    text: 'Wöchentliche oder monatliche Reports werden automatisch generiert und verteilt – im Format das Ihr Management erwartet. Was früher Stunden gedauert hat, passiert auf Knopfdruck.',
+    text: 'Wöchentliche oder monatliche Reports werden automatisch generiert und verteilt, genau im Format, das Ihr Management erwartet. Was früher Stunden gedauert hat, passiert auf Knopfdruck.',
     icon: 'summarize',
   },
   {
     title: 'Hinweise und Alerts nach Setup',
-    text: 'Definieren Sie Schwellwerte – und das System informiert Sie sofort, wenn etwas aus dem Rahmen fällt. Bevor es zum Problem wird.',
+    text: 'Definieren Sie Schwellwerte: Das System informiert Sie sofort, wenn etwas aus dem Rahmen fällt, bevor es zum Problem wird.',
     icon: 'notifications_active',
   },
   {
     title: 'Integration in Ihre bestehende Systemlandschaft',
-    text: 'Wir bauen nichts neu, was Sie schon haben. Das Dashboard sitzt auf Ihren bestehenden Daten auf – HubSpot, Salesforce, Personio, SAP, Google Sheets oder proprietäre Systeme.',
+    text: 'Wir bauen nichts neu, was Sie schon haben. Das Dashboard sitzt auf Ihren bestehenden Daten auf: HubSpot, Salesforce, Personio, SAP, Google Sheets oder proprietäre Systeme.',
     icon: 'hub',
   },
 ];
@@ -260,7 +260,7 @@ const steps = [
   {
     num: '01',
     title: 'Datenmapping & Zieldefinition (Woche 1)',
-    text: 'Welche Systeme, welche KPIs, welche Entscheidungen sollen das Dashboard unterstützen? Wir klären, welche Daten vorhanden sind, wo sie liegen und was am Ende auf dem Bildschirm stehen soll – für jede Nutzergruppe separat.',
+    text: 'Welche Systeme, welche KPIs, welche Entscheidungen sollen das Dashboard unterstützen? Wir klären, welche Daten vorhanden sind, wo sie liegen und was am Ende auf dem Bildschirm stehen soll, für jede Nutzergruppe separat.',
   },
   {
     num: '02',
@@ -270,7 +270,7 @@ const steps = [
   {
     num: '03',
     title: 'Review & Feintuning',
-    text: 'Bevor das Dashboard live geht, durchlaufen wir es gemeinsam mit Ihnen – mit echten Daten aus Ihrer Vergangenheit. Stimmt die Logik? Stimmen die Visualisierungen? Was fehlt noch?',
+    text: 'Bevor das Dashboard live geht, durchlaufen wir es gemeinsam mit Ihnen anhand echter Daten aus Ihrer Vergangenheit. Stimmt die Logik? Stimmen die Visualisierungen? Was fehlt noch?',
   },
   {
     num: '04',
@@ -288,7 +288,7 @@ const Prozess: React.FC = () => (
         zu klaren Entscheidungsgrundlagen.
       </SectionHeadline>
       <LeadText>
-        Kein monatelanges BI-Projekt. Wir haben klare Prozesse für den Aufbau – und bringen Erfahrung aus vergleichbaren Implementierungen mit.
+        Kein monatelanges BI-Projekt. Wir haben klare Prozesse für den Aufbau und bringen Erfahrung aus vergleichbaren Implementierungen mit.
       </LeadText>
 
       <div className="mt-14 space-y-0 text-left relative">
@@ -319,7 +319,7 @@ const useCases = [
     category: 'Vertrieb & Pipeline',
     icon: 'trending_up',
     title: 'Wo hakt es im Verkaufsprozess wirklich?',
-    text: 'Pipeline-Entwicklung, Conversion je Stufe, Forecasts, Performance je Mitarbeiter und Region – in der Aktualisierung, die Ihre Anbindungen ermöglichen.',
+    text: 'Pipeline-Entwicklung, Conversion je Stufe, Forecasts, Performance je Mitarbeiter und Region, in der Aktualisierung, die Ihre Anbindungen ermöglichen.',
     result: 'Früher eingreifen, bevor Deals verloren gehen',
     color: 'pink' as const,
   },
@@ -327,7 +327,7 @@ const useCases = [
     category: 'Recruiting-Controlling',
     icon: 'group_add',
     title: 'Welche Kanäle bringen die besten Bewerber?',
-    text: 'Time-to-hire, Kosten pro Einstellung, Qualität je Quelle, Abbruchquoten im Prozess – alles auf einen Blick, vergleichbar über Stellen und Zeiträume.',
+    text: 'Time-to-hire, Kosten pro Einstellung, Qualität je Quelle, Abbruchquoten im Prozess: alles auf einen Blick, vergleichbar über Stellen und Zeiträume.',
     result: 'Budget gezielter einsetzen, Prozesse optimieren',
     color: 'cyan' as const,
   },
@@ -335,7 +335,7 @@ const useCases = [
     category: 'Management-Reporting',
     icon: 'summarize',
     title: 'Überblick für die Geschäftsführung ohne Aufwand',
-    text: 'Automatisch generierte Zusammenfassungen der wichtigsten Kennzahlen – wöchentlich, monatlich, quartalsweise. Kein Aufbereiten mehr, nur noch Entscheiden.',
+    text: 'Automatisch generierte Zusammenfassungen der wichtigsten Kennzahlen: wöchentlich, monatlich, quartalsweise. Kein Aufbereiten mehr, nur noch Entscheiden.',
     result: 'Meetings kürzer, Entscheidungen fundierter',
     color: 'yellow' as const,
   },
@@ -343,7 +343,7 @@ const useCases = [
     category: 'Frühwarnsystem',
     icon: 'notifications_active',
     title: 'Abweichungen erkennen bevor sie eskalieren',
-    text: 'Einbruch in der Lead-Qualität, ungewöhnliche Absprungrate im Bewerbungsprozess, Umsatzausreißer in einzelnen Regionen – das System schlägt Alarm, bevor die Monatszahlen das zeigen.',
+    text: 'Einbruch in der Lead-Qualität, ungewöhnliche Absprungrate im Bewerbungsprozess, Umsatzausreißer in einzelnen Regionen: Das System schlägt Alarm, bevor die Monatszahlen das zeigen.',
     result: 'Probleme lösen statt erklären',
     color: 'pink' as const,
   },
@@ -377,7 +377,7 @@ const UseCases: React.FC = () => (
   <section className="py-20 px-4">
     <div className="max-w-6xl mx-auto text-center">
       <SectionLabel>Typische Anwendungsfälle</SectionLabel>
-      <SectionHeadline>Was Sie mit dem Dashboard konkret sehen – und entscheiden können.</SectionHeadline>
+      <SectionHeadline>Was Sie mit dem Dashboard konkret sehen und entscheiden können.</SectionHeadline>
       <LeadText>
         Das Dashboard ist kein Selbstzweck. Es beantwortet die Fragen, die Sie sich heute mit viel Aufwand selbst zusammensuchen müssen.
       </LeadText>
@@ -410,7 +410,7 @@ const UseCases: React.FC = () => (
 /* ───────────── ZIELGRUPPE ───────────── */
 
 const targetAudience = [
-  { emoji: '📈', text: 'Sie regelmäßig Entscheidungen treffen, die auf Daten basieren sollten – aber nicht können' },
+  { emoji: '📈', text: 'Sie regelmäßig Entscheidungen treffen, die auf Daten basieren sollten, aber nicht können' },
   { emoji: '🗂️', text: 'Ihre relevanten Zahlen in mehreren Systemen oder Excel-Dateien verteilt sind' },
   { emoji: '⏳', text: 'Ihr Team Stunden pro Woche mit manueller Report-Erstellung verbringt' },
   { emoji: '🔍', text: 'Sie das Gefühl haben, Probleme zu spät zu erkennen' },
@@ -418,9 +418,9 @@ const targetAudience = [
 ];
 
 const notFor = [
-  'Unternehmen, die noch keine strukturierten Daten haben und zunächst saubere Prozesse brauchen – ohne Datenbasis kann kein Dashboard sinnvolle Antworten liefern. Wir sagen das lieber direkt.',
-  'Wer ein fertiges Standard-BI-Tool sucht – dafür gibt es günstigere Lösungen. Was wir aufbauen, ist auf Ihre Systeme, Ihre KPIs und Ihre Entscheidungslogik zugeschnitten.',
-  'Unternehmen, bei denen Datentransparenz intern politisch heikel ist und nicht wirklich gewollt wird – ein Dashboard entfaltet seinen Nutzen nur, wenn die Erkenntnisse auch genutzt werden.',
+  'Unternehmen, die noch keine strukturierten Daten haben und zunächst saubere Prozesse brauchen: Ohne Datenbasis kann kein Dashboard sinnvolle Antworten liefern. Wir sagen das lieber direkt.',
+  'Wer ein fertiges Standard-BI-Tool sucht: Dafür gibt es standardisierte Lösungen. Was wir aufbauen, ist auf Ihre Systeme, Ihre KPIs und Ihre Entscheidungslogik zugeschnitten.',
+  'Unternehmen, bei denen Datentransparenz intern politisch heikel ist und nicht wirklich gewollt wird: Ein Dashboard entfaltet seinen Nutzen nur, wenn die Erkenntnisse auch genutzt werden.',
 ];
 
 const Zielgruppe: React.FC = () => (
@@ -515,11 +515,11 @@ const Vergleich: React.FC = () => (
 const faqItems = [
   {
     q: 'Welche Systeme können angebunden werden?',
-    a: 'Die meisten gängigen CRM-, ATS-, ERP- und Marketing-Systeme lassen sich anbinden – HubSpot, Salesforce, Personio, SAP, Pipedrive, Google Analytics, und viele mehr. Auch Excel-Exporte oder CSV-Dateien können als Datenquelle dienen. Was genau möglich ist, klären wir im Erstgespräch.',
+    a: 'Die meisten gängigen CRM-, ATS-, ERP- und Marketing-Systeme lassen sich anbinden: HubSpot, Salesforce, Personio, SAP, Pipedrive, Google Analytics und viele mehr. Auch Excel-Exporte oder CSV-Dateien können als Datenquelle dienen. Was genau möglich ist, klären wir im Erstgespräch.',
   },
   {
     q: 'Brauchen wir eine eigene IT-Abteilung oder Data Engineers?',
-    a: 'Nein. Wir übernehmen den gesamten technischen Aufbau. Ihr Team muss das Dashboard am Ende nur bedienen – und das ist so gestaltet, dass keine technischen Kenntnisse nötig sind.',
+    a: 'Nein. Wir übernehmen den gesamten technischen Aufbau. Ihr Team muss das Dashboard am Ende nur bedienen; das ist so gestaltet, dass keine technischen Kenntnisse nötig sind.',
   },
   {
     q: 'Wie aktuell sind die Daten im Dashboard?',
@@ -531,11 +531,11 @@ const faqItems = [
   },
   {
     q: 'Was passiert, wenn sich unsere Systeme oder Anforderungen ändern?',
-    a: 'Das Dashboard ist kein statisches Konstrukt. Neue Datenquellen, neue KPIs, neue Abteilungen – wir erweitern und passen an. Auf Wunsch übernehmen wir das im Rahmen eines laufenden Betreuungsmodells.',
+    a: 'Das Dashboard ist kein statisches Konstrukt. Neue Datenquellen, neue KPIs, neue Abteilungen: Wir erweitern und passen an. Auf Wunsch übernehmen wir das im Rahmen eines laufenden Betreuungsmodells.',
   },
   {
     q: 'Was kostet das?',
-    a: 'Der Aufbau wird auf Projektbasis abgerechnet – abhängig von der Anzahl der Datenquellen, der Komplexität der Dashboards und dem Grad der Individualisierung. Laufende Betreuung optional im Retainer. Konkrete Zahlen gibt es im Erstgespräch, transparent und ohne versteckte Posten.',
+    a: 'Der Aufbau wird auf Projektbasis abgerechnet, abhängig von der Anzahl der Datenquellen, der Komplexität der Dashboards und dem Grad der Individualisierung. Laufende Betreuung optional im Retainer. Konkrete Zahlen gibt es im Erstgespräch, transparent und ohne versteckte Posten.',
   },
 ];
 
@@ -597,7 +597,7 @@ const FinalCTA: React.FC = () => (
         <span className="text-accent-hover ">aussehen könnten.</span>
       </h2>
       <p className="text-muted font-body text-sm md:text-base mb-8 max-w-xl mx-auto">
-        In einer kostenlosen Demo bauen wir einen exemplarischen Blick auf Ihre Datensituation – mit echten Beispielen aus Ihrer Branche. Sie sehen konkret, welche Fragen das Dashboard beantwortet und welche Daten dafür nötig wären.
+        In einer kostenlosen Demo bauen wir einen exemplarischen Blick auf Ihre Datensituation mit echten Beispielen aus Ihrer Branche. Sie sehen konkret, welche Fragen das Dashboard beantwortet und welche Daten dafür nötig wären.
       </p>
 
       <Link

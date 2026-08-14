@@ -7,7 +7,7 @@ const steps = [
   {
     number: '1',
     title: 'Kennenlernen',
-    text: 'Wir lernen Ihren Business Case kennen und erstellen eine saubere Case-Analyse. Gemeinsam mit Ihnen entwickeln wir konkrete Use Cases für KI in Ihrem Unternehmen — ausgehend von echten Prozessen, nicht von einer generischen Tool-Liste.',
+    text: 'Wir lernen Ihren Business Case kennen und erstellen eine saubere Case-Analyse. Gemeinsam mit Ihnen entwickeln wir konkrete Use Cases für KI in Ihrem Unternehmen: ausgehend von echten Prozessen, nicht von einer generischen Tool-Liste.',
     image: analyzeIllustration,
     alt: 'Illustration zum Kennenlernen und Analysieren',
   },
@@ -69,7 +69,7 @@ export const HomeProcess: React.FC = () => {
             Vom Problem zur Lösung.
           </h2>
           <p className="text-base md:text-lg text-muted leading-relaxed mt-5 max-w-2xl mx-auto">
-            Kein sechsmonatiges Transformationsprogramm. Erst verstehen wir den relevanten Prozess, dann priorisieren wir nach Nutzen — und erst danach bauen wir.
+            Kein sechsmonatiges Transformationsprogramm. Erst verstehen wir den relevanten Prozess, dann priorisieren wir nach Nutzen, und erst danach bauen wir.
           </p>
         </header>
 

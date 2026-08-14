@@ -30,7 +30,7 @@ export const Automatisierung: React.FC = () => {
               Automatisierung &amp; Systemintegrationen
             </h1>
             <p className="font-editorial text-[clamp(1.2rem,2.2vw,1.6rem)] leading-[1.45] text-muted mb-10">
-              Wir verbinden Ihre bestehende Software, eliminieren manuelle Dateneingaben und bauen verlässliche Ende-zu-Ende-Workflows. Deterministische Logik als Fundament — KI nur dort, wo Sprache oder unstrukturierte Daten verarbeitet werden müssen.
+              Wir verbinden Ihre bestehende Software, eliminieren manuelle Dateneingaben und bauen verlässliche Ende-zu-Ende-Workflows. Deterministische Logik als Fundament, KI nur dort, wo Sprache oder unstrukturierte Daten verarbeitet werden müssen.
             </p>
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
@@ -54,7 +54,7 @@ export const Automatisierung: React.FC = () => {
           <div className="mt-16 pt-8 border-t border-ink/10 grid grid-cols-2 md:grid-cols-4 gap-6">
             <div>
               <p className="font-editorial text-2xl md:text-3xl text-ink">Regelbasiert</p>
-              <p className="text-xs text-muted mt-1">Nachvollziehbare Kernlogik – KI nur dort, wo sie sinnvoll ergänzt.</p>
+              <p className="text-xs text-muted mt-1">Nachvollziehbare Kernlogik: KI nur dort, wo sie sinnvoll ergänzt.</p>
             </div>
             <div>
               <p className="font-editorial text-2xl md:text-3xl text-ink">Iterativ</p>
@@ -85,7 +85,7 @@ export const Automatisierung: React.FC = () => {
                 Viele KI-Projekte scheitern, weil versucht wird, Standard-Regeln mit generativen Sprachmodellen zu lösen. Das erzeugt unnötige Kosten, Latenzen und Fehlerquellen.
               </p>
               <p className="text-base text-muted leading-relaxed">
-                Unser Ansatz: Wenn eine Schnittstelle, eine Datenbankabfrage oder eine simple Wenn-Dann-Bedingung reicht, bauen wir genau das. KI setzen wir als Spezialwerkzeug ein — z.&nbsp;B. um Freitext zu strukturieren, PDFs auszulesen oder semantische Zuordnungen zu treffen.
+                Unser Ansatz: Wenn eine Schnittstelle, eine Datenbankabfrage oder eine simple Wenn-Dann-Bedingung reicht, bauen wir genau das. KI setzen wir gezielt als Spezialwerkzeug ein, zum Beispiel um Freitext zu strukturieren, PDFs auszulesen oder semantische Zuordnungen zu treffen.
               </p>
             </div>
 
@@ -238,7 +238,7 @@ export const Automatisierung: React.FC = () => {
             <article className="border border-ink/12 rounded-[20px] bg-surface p-7 md:p-8 flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-[0.68rem] uppercase tracking-[0.12em] font-semibold text-light border border-ink/10 rounded-full px-3 py-1 bg-surface-soft">
+                  <span className="text-[0.68rem] uppercase tracking-[0.14em] font-semibold text-light">
                     Eingangsverarbeitung
                   </span>
                   <span className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center text-ink">
@@ -263,7 +263,7 @@ export const Automatisierung: React.FC = () => {
             <article className="border border-ink/12 rounded-[20px] bg-surface p-7 md:p-8 flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-[0.68rem] uppercase tracking-[0.12em] font-semibold text-light border border-ink/10 rounded-full px-3 py-1 bg-surface-soft">
+                  <span className="text-[0.68rem] uppercase tracking-[0.14em] font-semibold text-light">
                     Vertrieb &amp; CRM
                   </span>
                   <span className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center text-ink">
@@ -288,7 +288,7 @@ export const Automatisierung: React.FC = () => {
             <article className="border border-ink/12 rounded-[20px] bg-surface p-7 md:p-8 flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-[0.68rem] uppercase tracking-[0.12em] font-semibold text-light border border-ink/10 rounded-full px-3 py-1 bg-surface-soft">
+                  <span className="text-[0.68rem] uppercase tracking-[0.14em] font-semibold text-light">
                     Service &amp; Tickets
                   </span>
                   <span className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center text-ink">
@@ -313,7 +313,7 @@ export const Automatisierung: React.FC = () => {
             <article className="border border-ink/12 rounded-[20px] bg-surface p-7 md:p-8 flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-[0.68rem] uppercase tracking-[0.12em] font-semibold text-light border border-ink/10 rounded-full px-3 py-1 bg-surface-soft">
+                  <span className="text-[0.68rem] uppercase tracking-[0.14em] font-semibold text-light">
                     Backoffice &amp; Legacy
                   </span>
                   <span className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center text-ink">

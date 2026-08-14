@@ -65,11 +65,11 @@ async function pdfToImages(file: File, maxPages: number) {
   return images;
 }
 
-const SAMPLE_INVOICE = `FIKTIVES BEISPIELDOKUMENT — KEIN ECHTER BELEG\n\nBuerotechnik Mueller GmbH\nRECHNUNG Nr. RE-2025-1042\nDatum: 04.06.2025\nFaelligkeit: 04.07.2025\nEmpfaenger: Beispielbetrieb GmbH\nNetto: 660,50 EUR\nMwSt: 125,50 EUR\nBrutto: 786,00 EUR\nZahlungsziel: 30 Tage`;
+const SAMPLE_INVOICE = `FIKTIVES BEISPIELDOKUMENT · KEIN ECHTER BELEG\n\nBuerotechnik Mueller GmbH\nRECHNUNG Nr. RE-2025-1042\nDatum: 04.06.2025\nFaelligkeit: 04.07.2025\nEmpfaenger: Beispielbetrieb GmbH\nNetto: 660,50 EUR\nMwSt: 125,50 EUR\nBrutto: 786,00 EUR\nZahlungsziel: 30 Tage`;
 
-const SAMPLE_EMAIL = `FIKTIVES BEISPIELDOKUMENT — KEIN ECHTER BELEG\n\nBetreff: Anfrage Bueromoebel — 12 Arbeitsplaetze\nUmzug zum 01.08.2025. Gewuenscht: Lieferung und Aufbau bis 25.07.2025, zwei Tranchen und optional Leasing. Rueckmeldung bis 13.06.`;
+const SAMPLE_EMAIL = `FIKTIVES BEISPIELDOKUMENT · KEIN ECHTER BELEG\n\nBetreff: Anfrage Bueromoebel (12 Arbeitsplaetze)\nUmzug zum 01.08.2025. Gewuenscht: Lieferung und Aufbau bis 25.07.2025, zwei Tranchen und optional Leasing. Rueckmeldung bis 13.06.`;
 
-const SAMPLE_OFFER = `FIKTIVES BEISPIELDOKUMENT — KEIN ECHTER BELEG\n\nANGEBOT Nr. ANG-2025-0891\nDachstuhl: 34.080 EUR netto\nFassade: 16.110 EUR netto\nGesamt brutto: 59.726,10 EUR\nGueltig bis 30.06.2025\nLieferzeit: 8-10 Wochen\nZahlungsziel: 14 Tage`;
+const SAMPLE_OFFER = `FIKTIVES BEISPIELDOKUMENT · KEIN ECHTER BELEG\n\nANGEBOT Nr. ANG-2025-0891\nDachstuhl: 34.080 EUR netto\nFassade: 16.110 EUR netto\nGesamt brutto: 59.726,10 EUR\nGueltig bis 30.06.2025\nLieferzeit: 8-10 Wochen\nZahlungsziel: 14 Tage`;
 
 const SAMPLES = [
   { id: 'invoice', label: 'Rechnung prüfen', icon: 'receipt_long', text: SAMPLE_INVOICE },
@@ -284,13 +284,16 @@ export const LiveAgentDemo: React.FC = () => {
       <section className="px-5 pt-28 pb-8 sm:px-6 md:pt-36 md:pb-10">
         <div className="mx-auto grid max-w-[1100px] gap-8 lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:gap-10">
           <div className="text-center lg:text-left">
-            <span className="mb-5 inline-flex rounded-full border border-accent/40 bg-accent/10 px-4 py-1.5 text-[0.68rem] font-bold uppercase tracking-[.14em] sm:mb-6 sm:text-xs">Live Agent Demo</span>
+            <p className="mb-5 text-xs uppercase tracking-[0.14em] font-semibold text-light flex items-center justify-center lg:justify-start gap-2 sm:mb-6">
+              <span className="w-2 h-2 rounded-full bg-accent" />
+              Live Agent Demo
+            </p>
             <h1 className="font-editorial text-[clamp(2.45rem,10vw,4.8rem)] leading-[.96] tracking-[-.03em]">
               Schauen Sie unseren<br />
               <span className="text-accent">Dokument-Agent arbeiten.</span>
             </h1>
             <p className="mx-auto mt-5 max-w-2xl text-[0.98rem] leading-relaxed text-muted sm:mt-6 sm:text-base md:text-lg lg:mx-0">
-              Rechnung, E-Mail, Angebot oder Vertrag — der Agent liest, strukturiert und schlägt nächste Schritte vor. Die Ergebnisse sind KI-generierte Prüfvorschläge und sollten vor geschäftlichen Entscheidungen kontrolliert werden.
+              Rechnung, E-Mail, Angebot oder Vertrag: Der Agent liest, strukturiert und schlägt nächste Schritte vor. Die Ergebnisse sind KI-generierte Prüfvorschläge und sollten vor geschäftlichen Entscheidungen kontrolliert werden.
             </p>
             <div className="mt-5 flex flex-wrap justify-center gap-x-4 gap-y-2.5 sm:mt-6 lg:justify-start">
               <Chip icon="description">PDF · PNG · JPG · WebP</Chip>
