@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { Analytics } from '@vercel/analytics/react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
-import { LogoSlider } from './components/LogoSlider';
 import { HomeProcess } from './components/HomeProcess';
 import { Services } from './components/Services';
 import { CaseStudies } from './components/CaseStudies';
@@ -40,7 +39,6 @@ const HomePage: React.FC = () => (
       description="Ainzigartig hilft KMUs dabei, Automatisierung und generative KI praxistauglich und gewinnbringend einzusetzen."
     />
     <Hero />
-    <LogoSlider />
     <Services />
     <HomeProcess />
     <CaseStudies />
