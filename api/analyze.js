@@ -16,6 +16,53 @@ function sendJson(res, status, data) {
   return res.status(status).json(data);
 }
 
+// Every successful analysis costs a scrape plus a multi-thousand-token LLM
+// call, so this endpoint gets its own per-IP budget.
+const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000;
+const MAX_REQUESTS_PER_HOUR = 10;
+const COOLDOWN_MS = 5000;
+const rateLimitMap = new Map();
+
+function getClientIP(req) {
+  return (
+    req.headers['x-forwarded-for']?.split(',')[0]?.trim() ||
+    req.headers['client-ip'] ||
+    'unknown'
+  );
+}
+
+function checkRateLimit(ip) {
+  const now = Date.now();
+  const record = rateLimitMap.get(ip);
+
+  if (!record) {
+    rateLimitMap.set(ip, { count: 1, firstRequest: now, lastRequest: now });
+    return { allowed: true };
+  }
+
+  if (now - record.lastRequest < COOLDOWN_MS) {
+    const waitSeconds = Math.ceil((COOLDOWN_MS - (now - record.lastRequest)) / 1000);
+    return { allowed: false, message: `Kurze Pause — bitte ${waitSeconds} Sekunden warten.` };
+  }
+
+  if (now - record.firstRequest > RATE_LIMIT_WINDOW_MS) {
+    rateLimitMap.set(ip, { count: 1, firstRequest: now, lastRequest: now });
+    return { allowed: true };
+  }
+
+  if (record.count >= MAX_REQUESTS_PER_HOUR) {
+    const resetIn = Math.ceil((RATE_LIMIT_WINDOW_MS - (now - record.firstRequest)) / 60000);
+    return {
+      allowed: false,
+      message: `Du hast das stündliche Kontingent verbraucht. Versuch's in ${resetIn} Minuten nochmal.`,
+    };
+  }
+
+  record.count++;
+  record.lastRequest = now;
+  return { allowed: true };
+}
+
 function normalizePublicUrl(input) {
   let value = String(input || '').trim();
   if (!value) throw new Error('Bitte geben Sie eine Website-Adresse ein.');
@@ -79,8 +126,18 @@ function parseJson(text) {
 }
 
 export default async function handler(req, res) {
+  if (req.method === 'OPTIONS') {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    return res.status(204).end();
+  }
   if (req.method === 'GET') return sendJson(res, 200, { status: 'ok', service: 'analyze', configured: !!getLLMConfig() });
   if (req.method !== 'POST') { res.setHeader('Allow', 'GET, POST'); return sendJson(res, 405, { error: 'Diese Methode wird nicht unterstützt.', code: 'METHOD_NOT_ALLOWED' }); }
+
+  const rate = checkRateLimit(getClientIP(req));
+  if (!rate.allowed) return sendJson(res, 429, { error: rate.message, code: 'RATE_LIMITED' });
+
   let body;
   try { body = await readBody(req); } catch { return sendJson(res, 400, { error: 'Ungültiges Request-Format.', code: 'INVALID_JSON' }); }
   let url;

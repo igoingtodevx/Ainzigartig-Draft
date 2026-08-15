@@ -13,6 +13,8 @@ from pydantic import BaseModel
 import uvicorn
 import time
 import re
+import socket
+from ipaddress import ip_address
 from urllib.parse import urljoin, urlparse
 
 app = FastAPI(title="Ainzigartig Scraper")
@@ -126,6 +128,43 @@ def extract_images(soup: BeautifulSoup) -> list[dict]:
     return images[:30]
 
 
+def _host_resolves_to_private(hostname: str) -> bool:
+    """True when the hostname resolves to any private/loopback/link-local/
+    reserved address. Prevents SSRF into internal services via DNS names."""
+    try:
+        infos = socket.getaddrinfo(hostname, None)
+    except socket.gaierror:
+        return False  # let requests produce its own connection error
+    for info in infos:
+        try:
+            ip = ip_address(info[4][0])
+        except ValueError:
+            continue
+        if (
+            ip.is_private or ip.is_loopback or ip.is_link_local
+            or ip.is_reserved or ip.is_multicast or ip.is_unspecified
+        ):
+            return True
+    return False
+
+
+def _validate_public_url(url: str) -> None:
+    """Reject non-public targets, including credentials in the URL."""
+    parsed = urlparse(url)
+    if parsed.scheme not in ("http", "https") or not parsed.netloc:
+        raise HTTPException(status_code=400, detail="Invalid URL")
+    if parsed.username or parsed.password:
+        raise HTTPException(status_code=400, detail="URLs with credentials are not allowed")
+    hostname = parsed.hostname or ""
+    if hostname == "localhost" or hostname.endswith(".local"):
+        raise HTTPException(status_code=400, detail="Private or internal addresses are not allowed")
+    if _host_resolves_to_private(hostname):
+        raise HTTPException(status_code=400, detail="Private or internal addresses are not allowed")
+
+
+MAX_REDIRECTS = 3
+
+
 @app.post("/scrape")
 async def scrape(req: ScrapeRequest):
     url = req.url.strip()
@@ -139,15 +178,30 @@ async def scrape(req: ScrapeRequest):
 
     start = time.time()
 
-    try:
-        resp = requests.get(url, headers=HEADERS, timeout=15, allow_redirects=True)
-        status_code = resp.status_code
-    except requests.exceptions.Timeout:
-        raise HTTPException(status_code=504, detail="Website timed out after 15s")
-    except requests.exceptions.ConnectionError:
-        raise HTTPException(status_code=502, detail="Could not connect to website")
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Request failed: {str(e)[:100]}")
+    # Fetch with manual redirect handling so every hop is re-validated:
+    # a public URL that redirects to 127.0.0.1/169.254.169.254 must not be
+    # followed.
+    resp = None
+    current_url = url
+    for _ in range(MAX_REDIRECTS + 1):
+        _validate_public_url(current_url)
+        try:
+            resp = requests.get(current_url, headers=HEADERS, timeout=15, allow_redirects=False)
+        except requests.exceptions.Timeout:
+            raise HTTPException(status_code=504, detail="Website timed out after 15s")
+        except requests.exceptions.ConnectionError:
+            raise HTTPException(status_code=502, detail="Could not connect to website")
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Request failed: {str(e)[:100]}")
+
+        if resp.status_code in (301, 302, 303, 307, 308) and resp.headers.get("location"):
+            current_url = urljoin(current_url, resp.headers["location"])
+            continue
+        break
+    else:
+        raise HTTPException(status_code=502, detail="Too many redirects")
+
+    status_code = resp.status_code
 
     if status_code >= 400:
         raise HTTPException(status_code=502, detail=f"Website returned status {status_code}")

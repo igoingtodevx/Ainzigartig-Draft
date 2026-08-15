@@ -84,7 +84,10 @@ export const ChatBot: React.FC = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message,
+          // Exclude the message just added: the API appends body.message
+          // itself, so sending it in history too would duplicate it.
           history: nextHistory
+            .slice(0, -1)
             .filter((m) => m.role !== 'model' || m.content)
             .slice(-8)
             .map((m) => ({ role: m.role, content: m.content })),
@@ -93,6 +96,10 @@ export const ChatBot: React.FC = () => {
 
       const data = await resp.json().catch(() => ({}));
       if (!resp.ok) {
+        // Roll the just-added bubble back and restore the input so a retry
+        // doesn't duplicate the message and the text isn't lost.
+        setMessages(messages);
+        setInput(message);
         setError(data?.error || `Fehler ${resp.status}`);
         if (resp.status === 429) setCooldownUntil(Date.now() + 6000);
         return;

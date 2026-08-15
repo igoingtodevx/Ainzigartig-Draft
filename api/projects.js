@@ -71,7 +71,7 @@ async function fetchRepos() {
 
   const resp = await fetch(
     `https://api.github.com/users/${USERNAME}/repos?per_page=100&type=owner&sort=updated`,
-    { headers }
+    { headers, signal: AbortSignal.timeout(8000) }
   );
   if (!resp.ok) {
     throw new Error(`GitHub API ${resp.status}`);
@@ -82,6 +82,7 @@ async function fetchRepos() {
 function sendJson(res, status, data) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=86400');
   res.status(status).json(data);
 }
 
@@ -131,7 +132,14 @@ export default async function handler(req, res) {
     res.setHeader('X-Cache', 'MISS');
     return sendJson(res, 200, cache.data);
   } catch (e) {
-    return sendJson(res, 502, { error: `Projekte konnten nicht geladen werden: ${String(e).slice(0, 200)}` });
+    console.error('Projects upstream error:', e?.message || e);
+    // Serve the last known good list instead of an error box when GitHub is
+    // slow or rate-limited — the page keeps working for visitors.
+    if (cache.data) {
+      res.setHeader('X-Cache', 'STALE');
+      return sendJson(res, 200, cache.data);
+    }
+    return sendJson(res, 502, { error: 'Projekte konnten nicht geladen werden.' });
   }
 }
 

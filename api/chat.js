@@ -152,11 +152,10 @@ function validateInput(message) {
 
 export default async function handler(req, res) {
   if (req.method === 'OPTIONS') {
-    return res.status(204)
-      .setHeader('Access-Control-Allow-Origin', '*')
-      .setHeader('Access-Control-Allow-Headers', 'Content-Type')
-      .setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
-      .end();
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    return res.status(204).end();
   }
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
   if (process.env.CHAT_ENABLED === 'false') return res.status(503).json({ error: 'Chat ist derzeit deaktiviert.' });
@@ -180,13 +179,25 @@ export default async function handler(req, res) {
     return res.status(503).json({ error: 'KI-Service ist in dieser Umgebung noch nicht aktiviert.' });
   }
 
-  const history = (body.history || []).slice(-MAX_CONTEXT_MESSAGES);
+  // History is untrusted client input: require an array, cap length and
+  // content size, and whitelist roles. The frontend sends role 'model' for
+  // assistant turns; map it so the model sees its own answers as assistant.
+  const MAX_HISTORY_CHARS = 2000;
+  const history = Array.isArray(body.history)
+    ? body.history.slice(-MAX_CONTEXT_MESSAGES)
+    : [];
   const messages = [
     { role: 'system', content: SYSTEM_PROMPT },
-    ...history.map((msg) => ({
-      role: msg.role === 'assistant' ? 'assistant' : 'user',
-      content: msg.content,
-    })),
+    ...history
+      .map((msg) => {
+        const content = typeof msg?.content === 'string' ? msg.content.trim() : '';
+        if (!content) return null;
+        return {
+          role: msg.role === 'assistant' || msg.role === 'model' ? 'assistant' : 'user',
+          content: content.slice(0, MAX_HISTORY_CHARS),
+        };
+      })
+      .filter(Boolean),
     { role: 'user', content: body.message },
   ];
 

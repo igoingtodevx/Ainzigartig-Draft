@@ -179,6 +179,53 @@ function sendJson(res, status, data) {
   res.status(status).json(data);
 }
 
+// Vision uploads are the most expensive calls on the site (up to 5 images
+// per request), so this endpoint needs the same per-IP budget as /api/chat.
+const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000;
+const MAX_REQUESTS_PER_HOUR = 20;
+const COOLDOWN_MS = 5000;
+const rateLimitMap = new Map();
+
+function getClientIP(req) {
+  return (
+    req.headers['x-forwarded-for']?.split(',')[0]?.trim() ||
+    req.headers['client-ip'] ||
+    'unknown'
+  );
+}
+
+function checkRateLimit(ip) {
+  const now = Date.now();
+  const record = rateLimitMap.get(ip);
+
+  if (!record) {
+    rateLimitMap.set(ip, { count: 1, firstRequest: now, lastRequest: now });
+    return { allowed: true };
+  }
+
+  if (now - record.lastRequest < COOLDOWN_MS) {
+    const waitSeconds = Math.ceil((COOLDOWN_MS - (now - record.lastRequest)) / 1000);
+    return { allowed: false, message: `Kurze Pause — bitte ${waitSeconds} Sekunden warten.` };
+  }
+
+  if (now - record.firstRequest > RATE_LIMIT_WINDOW_MS) {
+    rateLimitMap.set(ip, { count: 1, firstRequest: now, lastRequest: now });
+    return { allowed: true };
+  }
+
+  if (record.count >= MAX_REQUESTS_PER_HOUR) {
+    const resetIn = Math.ceil((RATE_LIMIT_WINDOW_MS - (now - record.firstRequest)) / 60000);
+    return {
+      allowed: false,
+      message: `Du hast das stündliche Kontingent verbraucht. Versuch's in ${resetIn} Minuten nochmal.`,
+    };
+  }
+
+  record.count++;
+  record.lastRequest = now;
+  return { allowed: true };
+}
+
 function validateImage(img) {
   if (!img || typeof img !== 'object') return 'Bild-Eintrag fehlt.';
   if (typeof img.base64 !== 'string' || !img.base64) return 'base64 fehlt.';
@@ -208,6 +255,9 @@ export default async function handler(req, res) {
   }
 
   if (req.method !== 'POST') return sendJson(res, 405, { error: 'Method not allowed' });
+
+  const rate = checkRateLimit(getClientIP(req));
+  if (!rate.allowed) return sendJson(res, 429, { error: rate.message });
 
   try {
     const body = typeof req.body === 'string' ? JSON.parse(req.body) : (req.body || {});

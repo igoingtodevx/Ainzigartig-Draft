@@ -40,6 +40,7 @@ export const ContactForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (state === 'submitting') return; // no duplicate sends on double Enter
     setErrorMsg(null);
 
     if (!data.name.trim() || !data.email.trim() || !data.message.trim()) {

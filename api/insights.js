@@ -102,12 +102,26 @@ async function fetchBrief() {
   }
 }
 
+function stripHtml(value) {
+  if (typeof value !== 'string') return '';
+  return value
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'")
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 function shapeBrief(raw) {
   // Slim it down for the watch-light embed: keep only what /insights needs.
   // Pass through all trends / opportunities / top_articles / action_items
   // that the LLM generated — the client component decides what to render.
   if (!raw || !raw.brief) return null;
   const b = raw.brief;
+  // Upstream sends the summary as HTML and, historically, used the key
+  // "executivo_summary" (typo). Emit the corrected key for the frontend and
+  // keep the legacy key so existing consumers don't break.
+  const summaryPlain = stripHtml(b.executive_summary);
   return {
     generated_at: raw.generated_at,
     vertical: raw.vertical,
@@ -119,7 +133,8 @@ function shapeBrief(raw) {
     issue: {
       headline: b.headline,
       subheadline: b.subheadline,
-      executivo_summary: b.executive_summary,
+      executive_summary: summaryPlain,
+      executivo_summary: summaryPlain,
       // All trends (7-9) — client decides how many to render
       trends: (b.trends || []).map((t) => ({
         title: t.title,
@@ -127,14 +142,15 @@ function shapeBrief(raw) {
         what: t.what,
         why: t.why,
       })),
-      // All opportunities (6-8)
+      // All opportunities (6-8). Upstream changed the field name from
+      // "time-to-market"/"time_to_market" to "time" — accept all three.
       opportunities: (b.opportunities || []).map((o) => ({
         title: o.title,
         what: o.what,
         who: o.who,
         how: o.how,
         price: o.price,
-        time_to_market: o['time-to-market'] || o.time_to_market,
+        time_to_market: o['time-to-market'] || o.time_to_market || o.time,
       })),
       // All top_articles (up to 15) — client decides how many to show
       top_articles: (b.top_articles || []).map((a) => ({
@@ -143,6 +159,7 @@ function shapeBrief(raw) {
         source: a.source,
         date: a.date,
         why: a.why,
+        tags: a.tags,
       })),
       // All action_items
       action_items: b.action_items || [],
@@ -154,11 +171,11 @@ function shapeBrief(raw) {
 export default async function handler(req, res) {
   if (req.method === 'OPTIONS') {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, HEAD, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     return res.status(200).end();
   }
-  if (req.method !== 'GET') {
+  if (req.method !== 'GET' && req.method !== 'HEAD') {
     return sendJson(res, 405, { error: 'Method not allowed' });
   }
 
@@ -183,9 +200,10 @@ export default async function handler(req, res) {
       const fallbackGen = Date.parse(EMERGENCY_SNAPSHOT.generated_at);
       if (!isNaN(upstreamGen) && !isNaN(fallbackGen) && fallbackGen > upstreamGen) {
         res.setHeader('X-Cache', 'EMERGENCY-SNAPSHOT');
-        res.setHeader('X-Cache-Reason', `Upstream stale: ${shaped.generated_at} < ${EMERGENCY_SNAPSHOT.generated_at}`);
-        // still cache the upstream so we don't hammer it
-        cache = { at: now, data: shaped, stale: true };
+        res.setHeader('X-Cache-Reason', 'upstream-stale');
+        // Cache the data we actually serve so follow-up requests within the
+        // TTL are consistent with this response.
+        cache = { at: now, data: EMERGENCY_SNAPSHOT, stale: true };
         return sendJson(res, 200, EMERGENCY_SNAPSHOT);
       }
     }
@@ -194,15 +212,16 @@ export default async function handler(req, res) {
     res.setHeader('X-Cache', 'MISS');
     return sendJson(res, 200, shaped);
   } catch (e) {
+    console.error('Insights upstream error:', e?.message || e);
     // Stale cache fallback
     if (cache.data && now - cache.at < STALE_TTL_SEC * 1000) {
       res.setHeader('X-Cache', 'STALE');
-      res.setHeader('X-Cache-Reason', String(e).slice(0, 120));
+      res.setHeader('X-Cache-Reason', 'upstream-unavailable');
       return sendJson(res, 200, cache.data);
     }
     // Emergency embedded snapshot — last line of defense
     res.setHeader('X-Cache', 'EMERGENCY-SNAPSHOT');
-    res.setHeader('X-Cache-Reason', String(e).slice(0, 120));
+    res.setHeader('X-Cache-Reason', 'upstream-unavailable');
     return sendJson(res, 200, EMERGENCY_SNAPSHOT);
   }
 }
