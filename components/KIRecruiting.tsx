@@ -210,7 +210,7 @@ const Loesung: React.FC = () => (
     <div className="max-w-5xl mx-auto text-center">
       <SectionLabel>Die Lösung</SectionLabel>
       <SectionHeadline>
-        KI übernimmt die Vorauswahl.<br className="hidden sm:block" />
+        KI übernimmt die Vorauswahl.<br className="hidden sm:block" />{' '}
         Ihr Team trifft die Entscheidungen.
       </SectionHeadline>
       <LeadText>
@@ -285,7 +285,7 @@ const Prozess: React.FC = () => (
     <div className="max-w-4xl mx-auto text-center">
       <SectionLabel>Wie es läuft</SectionLabel>
       <SectionHeadline>
-        Aufgesetzt in zwei Wochen.<br className="hidden sm:block" />
+        Aufgesetzt in zwei Wochen. <br className="hidden sm:block" />
         Ergebnisse ab der ersten Stelle.
       </SectionHeadline>
       <LeadText>
@@ -594,7 +594,7 @@ const FinalCTA: React.FC = () => (
       <SectionLabel>Jetzt starten</SectionLabel>
 
       <h2 className="text-2xl md:text-3xl font-bold text-ink font-editorial mb-4 mt-2">
-        Sehen Sie live, wie KI<br className="hidden sm:block" />
+        Sehen Sie live, wie KI<br className="hidden sm:block" />{' '}
         <span className="text-[#B77A36]">Ihre nächste Stelle schneller besetzt.</span>
       </h2>
       <p className="text-muted font-body text-sm md:text-base mb-8 max-w-xl mx-auto">

@@ -414,7 +414,7 @@ const FinalCTA: React.FC = () => (
       <span className="absolute bottom-3 right-3 text-accent-hover/30 text-2xl font-body select-none" aria-hidden="true">]</span>
 
       <h2 className="text-2xl md:text-3xl font-bold text-ink font-editorial mb-4">
-        Bereit, KI in Ihrem Unternehmen<br className="hidden sm:block" />
+        Bereit, KI in Ihrem Unternehmen<br className="hidden sm:block" />{' '}
         <span className="text-accent-hover ">konkret einzusetzen?</span>
       </h2>
       <p className="text-muted font-body text-sm md:text-base mb-8 max-w-xl mx-auto">

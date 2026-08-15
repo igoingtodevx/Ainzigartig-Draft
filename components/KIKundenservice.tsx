@@ -99,7 +99,7 @@ const StatBar: React.FC = () => (
     <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
       {stats.map((s) => (
         <div key={s.label} className="text-center border border-ink/10 bg-surface/40 backdrop-blur-sm p-5">
-          <div className={`text-3xl md:text-4xl font-bold font-editorial mb-1 ${s.color}`}>{s.value}</div>
+          <div className={`text-2xl md:text-4xl font-bold font-editorial mb-1 ${s.color}`}>{s.value}</div>
           <p className="text-light text-xs font-body leading-snug">{s.label}</p>
         </div>
       ))}
@@ -282,7 +282,7 @@ const Prozess: React.FC = () => (
     <div className="max-w-4xl mx-auto text-center">
       <SectionLabel>Wie es läuft</SectionLabel>
       <SectionHeadline>
-        In vier Wochen live:<br className="hidden sm:block" />
+        In vier Wochen live: <br className="hidden sm:block" />
         ohne IT-Projekt.
       </SectionHeadline>
       <LeadText>
@@ -593,7 +593,7 @@ const FinalCTA: React.FC = () => (
       <SectionLabel>Jetzt starten</SectionLabel>
 
       <h2 className="text-2xl md:text-3xl font-bold text-ink font-editorial mb-4 mt-2">
-        Sehen Sie live, was ein Chatbot<br className="hidden sm:block" />
+        Sehen Sie live, was ein Chatbot<br className="hidden sm:block" />{' '}
         <span className="text-accent-hover ">für Ihren Support leisten kann.</span>
       </h2>
       <p className="text-muted font-body text-sm md:text-base mb-8 max-w-xl mx-auto">

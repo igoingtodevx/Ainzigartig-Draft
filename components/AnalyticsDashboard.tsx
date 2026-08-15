@@ -209,7 +209,7 @@ const Loesung: React.FC = () => (
     <div className="max-w-5xl mx-auto text-center">
       <SectionLabel>Die Lösung</SectionLabel>
       <SectionHeadline>
-        Ein Dashboard. Alle relevanten Zahlen.<br className="hidden sm:block" />
+        Ein Dashboard. Alle relevanten Zahlen. <br className="hidden sm:block" />
         Und eine KI, die Ihnen erklärt, was sie bedeuten.
       </SectionHeadline>
       <LeadText>
@@ -284,7 +284,7 @@ const Prozess: React.FC = () => (
     <div className="max-w-4xl mx-auto text-center">
       <SectionLabel>Wie es läuft</SectionLabel>
       <SectionHeadline>
-        Von Datenchaos<br className="hidden sm:block" />
+        Von Datenchaos <br className="hidden sm:block" />
         zu klaren Entscheidungsgrundlagen.
       </SectionHeadline>
       <LeadText>
@@ -593,7 +593,7 @@ const FinalCTA: React.FC = () => (
       <SectionLabel>Jetzt starten</SectionLabel>
 
       <h2 className="text-2xl md:text-3xl font-bold text-ink font-editorial mb-4 mt-2">
-        Sehen Sie live, wie Ihre Daten<br className="hidden sm:block" />
+        Sehen Sie live, wie Ihre Daten<br className="hidden sm:block" />{' '}
         <span className="text-accent-hover ">aussehen könnten.</span>
       </h2>
       <p className="text-muted font-body text-sm md:text-base mb-8 max-w-xl mx-auto">

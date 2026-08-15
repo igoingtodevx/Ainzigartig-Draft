@@ -289,8 +289,8 @@ export const LiveAgentDemo: React.FC = () => {
               Live Agent Demo
             </p>
             <h1 className="font-editorial text-[clamp(2.45rem,10vw,4.8rem)] leading-[.96] tracking-[-.03em]">
-              Schauen Sie unseren<br />
-              <span className="text-accent">Dokument-Agent arbeiten.</span>
+              Schauen Sie unserem<br />
+              <span className="text-accent">Dokument-Agenten bei der Arbeit zu.</span>
             </h1>
             <p className="mx-auto mt-5 max-w-2xl text-[0.98rem] leading-relaxed text-muted sm:mt-6 sm:text-base md:text-lg lg:mx-0">
               Rechnung, E-Mail, Angebot oder Vertrag: Der Agent liest, strukturiert und schlägt nächste Schritte vor. Die Ergebnisse sind KI-generierte Prüfvorschläge und sollten vor geschäftlichen Entscheidungen kontrolliert werden.
