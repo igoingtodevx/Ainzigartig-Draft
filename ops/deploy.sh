@@ -55,14 +55,17 @@ if [ "$RESTART_ONLY" = "--restart-only" ]; then
 fi
 
 # 1. Build the release from a clean checkout of the requested ref.
+# GitHub refuses `clone --branch <sha>` (branch-name lookup only), so SHA refs
+# are built from the local repo archive — byte-exact to the commit. Branch/tag
+# refs still prefer the remote clone; a full clone is the last resort.
 WORK="$(mktemp -d /tmp/ainzigartig-release.XXXXXX)"
 trap 'rm -rf "${WORK}"' EXIT
-echo "Cloning ${REF} into ${WORK}"
-git clone --depth 1 --branch "${REF}" https://github.com/igoingtodevx/Ainzigartig-Draft.git "${WORK}/src" 2>/dev/null \
-  || git -C "$(dirname "$0")/.." archive "${REF}" | tar -x -C "${WORK}" && mv "${WORK}/src" "${WORK}/app"
-mkdir -p "${WORK}/app"
-if [ ! -f "${WORK}/app/package.json" ]; then
-  # fallback: clone without depth limits
+echo "Building ${REF} into ${WORK}"
+if git clone --depth 1 --branch "${REF}" https://github.com/igoingtodevx/Ainzigartig-Draft.git "${WORK}/src" 2>/dev/null; then
+  mv "${WORK}/src" "${WORK}/app"
+elif mkdir -p "${WORK}/src" && git -C "$(dirname "$0")/.." archive "${REF}" | tar -x -C "${WORK}/src"; then
+  mv "${WORK}/src" "${WORK}/app"
+else
   git clone https://github.com/igoingtodevx/Ainzigartig-Draft.git "${WORK}/clone"
   git -C "${WORK}/clone" checkout "${REF}"
   mv "${WORK}/clone" "${WORK}/app"
