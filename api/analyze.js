@@ -1,5 +1,7 @@
 // Vercel Serverless Function: evidence-led website analysis.
-const SCRAPER_URL = process.env.SCRAPER_URL || 'http://138.68.96.190:8501';
+// Kein Hardcode-Fallback mehr: Die Scraper-Adresse kommt ausschließlich aus
+// der Umgebung, damit kein fester VPS-Single-Point-of-Failure im Code liegt.
+const SCRAPER_URL = process.env.SCRAPER_URL || '';
 const MAX_BODY_BYTES = 8_000;
 
 function getLLMConfig() {
@@ -73,7 +75,9 @@ function normalizePublicUrl(input) {
   if (!['http:', 'https:'].includes(parsed.protocol)) throw new Error('Es sind nur HTTP- und HTTPS-Adressen erlaubt.');
   if (parsed.username || parsed.password) throw new Error('Website-Adressen mit Zugangsdaten werden nicht unterstützt.');
   parsed.hash = '';
-  const hostname = parsed.hostname.toLowerCase().replace(/\.$/, '');
+  // IPv6-Hostnames kommen mit Klammern aus new URL() — ohne Strip würden
+  // sie am Vergleich vorbeirutschen und Loopback-Adressen passieren lassen.
+  const hostname = parsed.hostname.toLowerCase().replace(/\.$/, '').replace(/^\[|\]$/g, '');
   const blocked = hostname === 'localhost' || hostname.endsWith('.local') || hostname === '0.0.0.0' || hostname === '::1' ||
     /^(127\.|10\.|169\.254\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.)/.test(hostname);
   if (blocked) throw new Error('Lokale oder interne Adressen können nicht analysiert werden.');
@@ -142,6 +146,8 @@ export default async function handler(req, res) {
   try { body = await readBody(req); } catch { return sendJson(res, 400, { error: 'Ungültiges Request-Format.', code: 'INVALID_JSON' }); }
   let url;
   try { url = normalizePublicUrl(body.url); } catch (error) { return sendJson(res, 400, { error: error.message, code: 'INVALID_URL' }); }
+
+  if (!SCRAPER_URL) return sendJson(res, 503, { error: 'Der Analyse-Dienst ist in dieser Umgebung nicht aktiviert.', code: 'SCRAPER_NOT_CONFIGURED' });
 
   let scrapeResponse;
   try {
