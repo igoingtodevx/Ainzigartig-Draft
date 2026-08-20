@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 /* ───────────────────────────────────────────────────────────────────────────
    InsightsTeaser — Kompakter 1-Section-Appetithappen für die Home-Page.
@@ -90,8 +91,8 @@ export const InsightsTeaser: React.FC = () => {
               </p>
             )}
           </div>
-          <a
-            href="/insights"
+          <Link
+            to="/insights"
             className="text-sm text-accent font-body group inline-flex items-center gap-2 self-start md:self-end shrink-0"
           >
             <span className="underline decoration-1 underline-offset-4 group-hover:decoration-2 transition-all duration-200">
@@ -100,7 +101,7 @@ export const InsightsTeaser: React.FC = () => {
             <span className="transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true">
               →
             </span>
-          </a>
+          </Link>
         </div>
       </div>
     </section>
