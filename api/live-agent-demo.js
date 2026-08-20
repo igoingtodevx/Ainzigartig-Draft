@@ -186,6 +186,20 @@ const MAX_REQUESTS_PER_HOUR = 20;
 const COOLDOWN_MS = 5000;
 const rateLimitMap = new Map();
 
+// Same reasoning as api/chat.js: this is the most expensive endpoint on the
+// site (vision calls, up to 5 images), so a missing origin check lets any
+// foreign page burn the OPENAI_API_KEY budget via a blind fetch().
+const ALLOWED_ORIGINS = new Set([
+  'https://ainzigartig.sejerlaenner.tech',
+  'https://ainzigartig.vercel.app',
+  'http://localhost:5173',
+  'http://localhost:3010',
+]);
+
+function isAllowedOrigin(origin) {
+  return !origin || ALLOWED_ORIGINS.has(origin);
+}
+
 function getClientIP(req) {
   return (
     req.headers['x-forwarded-for']?.split(',')[0]?.trim() ||
@@ -237,8 +251,11 @@ function validateImage(img) {
 }
 
 export default async function handler(req, res) {
+  const origin = req.headers.origin;
+  if (!isAllowedOrigin(origin)) return sendJson(res, 403, { error: 'Origin not allowed' });
+  if (origin) res.setHeader('Access-Control-Allow-Origin', origin);
+
   if (req.method === 'OPTIONS') {
-    res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     return res.status(200).end();

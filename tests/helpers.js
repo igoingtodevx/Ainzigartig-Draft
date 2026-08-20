@@ -24,10 +24,15 @@ export function mockRes() {
 }
 
 export function mockReq(overrides = {}) {
+  const { headers: headerOverrides, ...rest } = overrides;
   return {
     method: 'POST',
-    headers: { 'x-forwarded-for': `test-ip-${Math.random().toString(36).slice(2)}` },
     body: {},
-    ...overrides,
+    ...rest,
+    headers: {
+      'x-forwarded-for': `test-ip-${Math.random().toString(36).slice(2)}`,
+      origin: 'https://ainzigartig.sejerlaenner.tech',
+      ...headerOverrides,
+    },
   };
 }

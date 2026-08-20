@@ -12,6 +12,18 @@ for (const key of ['OPENAI_API_KEY', 'AI_GATEWAY_API_KEY', 'VERCEL_OIDC_TOKEN'])
 const { default: handler } = await import('../api/chat.js');
 const { mockRes, mockReq } = await import('./helpers.js');
 
+test('fremder Origin → 403, kein Provider-Call', async () => {
+  const res = mockRes();
+  await handler(mockReq({ headers: { origin: 'https://evil-site.example' }, body: { message: 'Was kostet eine KI-Beratung?' } }), res);
+  assert.equal(res.code, 403);
+});
+
+test('fehlender Origin-Header wird toleriert (nicht-Browser-Client)', async () => {
+  const res = mockRes();
+  await handler(mockReq({ headers: { origin: undefined }, body: { message: 'Was kostet eine KI-Beratung?' } }), res);
+  assert.equal(res.code, 503);
+});
+
 test('OPTIONS wird mit 204 beantwortet', async () => {
   const res = mockRes();
   await handler(mockReq({ method: 'OPTIONS' }), res);
