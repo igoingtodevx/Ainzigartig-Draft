@@ -16,6 +16,21 @@ const COOLDOWN_MS = 5000;
 
 const rateLimitMap = new Map();
 
+// Browser fetch() always sends Origin on POST, even same-origin (Fetch spec:
+// unsafe methods always carry Origin). Foreign sites embedding a fetch() to
+// this endpoint would burn the OPENAI_API_KEY budget before the CORS check
+// even blocks them from reading the response, so reject at the server.
+const ALLOWED_ORIGINS = new Set([
+  'https://ainzigartig.sejerlaenner.tech',
+  'https://ainzigartig.vercel.app',
+  'http://localhost:5173',
+  'http://localhost:3010',
+]);
+
+function isAllowedOrigin(origin) {
+  return !origin || ALLOWED_ORIGINS.has(origin);
+}
+
 function getLLMConfig() {
   const openaiKey = process.env.OPENAI_API_KEY || '';
   if (openaiKey) {
@@ -151,8 +166,11 @@ function validateInput(message) {
 }
 
 export default async function handler(req, res) {
+  const origin = req.headers.origin;
+  if (!isAllowedOrigin(origin)) return res.status(403).json({ error: 'Origin not allowed' });
+  if (origin) res.setHeader('Access-Control-Allow-Origin', origin);
+
   if (req.method === 'OPTIONS') {
-    res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     return res.status(204).end();
