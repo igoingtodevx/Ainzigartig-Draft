@@ -39,6 +39,12 @@ function timeAgo(iso: string): string {
   return `vor ${Math.floor(days / 7)} Wochen`;
 }
 
+function issueLabel(iso: string): string {
+  if (!iso) return 'Ausgabe';
+  const days = Math.floor((Date.now() - new Date(iso).getTime()) / (1000 * 60 * 60 * 24));
+  return days < 7 ? 'Diese Woche' : 'Ausgabe';
+}
+
 const SIGNAL_DOT: Record<string, string> = {
   hoch: '●', mittel: '◐', niedrig: '○',
 };
@@ -68,7 +74,7 @@ export const InsightsTeaser: React.FC = () => {
           <div className="flex-1 min-w-0">
             <div className="flex flex-wrap items-baseline gap-x-3u gap-y-1u mb-3u">
               <span className="text-[10px] font-body uppercase tracking-[0.18em] text-ink tabular">
-                Diese Woche · № {issueWeek(data.generated_at)}
+                {issueLabel(data.generated_at)} · № {issueWeek(data.generated_at)}
               </span>
               <span className="text-[10px] font-body uppercase tracking-[0.18em] text-muted tabular">
                 {timeAgo(data.generated_at)}

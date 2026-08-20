@@ -17,6 +17,7 @@ export default {
         ink: '#1A1918',
         muted: '#52504C',
         faint: '#7A7873',
+        light: '#7A7873',
         accent: '#ECA867',
         'accent-mid': '#E3944C',
         'accent-hover': '#D9823A',

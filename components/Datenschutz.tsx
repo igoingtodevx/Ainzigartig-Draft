@@ -25,7 +25,7 @@ export const Datenschutz: React.FC = () => (
         <section>
           <h2 className="font-editorial text-2xl mb-2">Was technisch bereits feststeht</h2>
           <ul className="space-y-3 text-sm text-muted leading-relaxed">
-            <li className="flex gap-3"><span className="text-accent-hover">01</span><span>Die Website wird über Vercel bereitgestellt.</span></li>
+            <li className="flex gap-3"><span className="text-accent-hover">01</span><span>Die Website läuft auf einem eigenen, selbst betriebenen Server (VPS) hinter einem Reverse Proxy — nicht über Vercel.</span></li>
             <li className="flex gap-3"><span className="text-accent-hover">02</span><span>Der integrierte Assistent „Edi“ nutzt aktuell serverseitig die OpenAI API.</span></li>
             <li className="flex gap-3"><span className="text-accent-hover">03</span><span>Weitere KI-Demos können Inhalte an externe Modell-APIs übermitteln, wenn ein Besucher die jeweilige Funktion aktiv nutzt.</span></li>
             <li className="flex gap-3"><span className="text-accent-hover">04</span><span>Das Kontaktformular übermittelt die eingegebenen Kontaktdaten an das serverseitige Kontakt-Backend.</span></li>
