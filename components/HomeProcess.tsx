@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import analyzeIllustration from '../Assets/svg/Gemini_Generated_Image_tn5b60tn5b60tn5b.svg';
-import prioritizeIllustration from '../Assets/Generated image 2.png';
-import implementIllustration from '../Assets/Generated image 1.png';
+import prioritizeIllustration from '../Assets/Generated image 2.webp';
+import implementIllustration from '../Assets/Generated image 1.webp';
 
 const steps = [
   {

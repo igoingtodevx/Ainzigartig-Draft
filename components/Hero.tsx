@@ -1,9 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import heroVideo from '../Assets/Add_a_minimal_animation_to_the.mp4';
-import heroPoster from '../Assets/Gemini_Generated_Image_anzdlsanzdlsanzd.png';
+import heroPoster from '../Assets/Gemini_Generated_Image_anzdlsanzdlsanzd.webp';
 import heroSystemIllustration from '../Assets/homepage-hero-handoff.webp';
 import { ArrowRightIcon } from './Icons';
+
+function usePrefersReducedMotion(): boolean {
+  const [reduced, setReduced] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
+  useEffect(() => {
+    const mql = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const onChange = () => setReduced(mql.matches);
+    mql.addEventListener('change', onChange);
+    return () => mql.removeEventListener('change', onChange);
+  }, []);
+  return reduced;
+}
 
 const HeroSystemPreview: React.FC = () => (
   <figure className="relative hidden h-[510px] xl:flex flex-col items-center justify-center">
@@ -24,19 +37,31 @@ const HeroSystemPreview: React.FC = () => (
 );
 
 export const Hero: React.FC = () => {
+  const prefersReducedMotion = usePrefersReducedMotion();
+
   return (
     <section className="relative min-h-[100svh] flex items-center overflow-hidden pt-24 pb-14">
-      <video
-        className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none"
-        autoPlay
-        loop
-        muted
-        playsInline
-        poster={heroPoster}
-        aria-hidden="true"
-      >
-        <source src={heroVideo} type="video/mp4" />
-      </video>
+      {prefersReducedMotion ? (
+        <img
+          src={heroPoster}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none"
+          aria-hidden="true"
+        />
+      ) : (
+        <video
+          className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          poster={heroPoster}
+          aria-hidden="true"
+        >
+          <source src={heroVideo} type="video/mp4" />
+        </video>
+      )}
 
       <div className="absolute inset-0 bg-white/40 pointer-events-none" />
       <div className="absolute inset-0 bg-gradient-to-b from-base/20 via-transparent to-base/50 pointer-events-none" />
