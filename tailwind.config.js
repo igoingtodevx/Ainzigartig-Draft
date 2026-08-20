@@ -17,6 +17,7 @@ export default {
         ink: '#1A1918',
         muted: '#52504C',
         faint: '#7A7873',
+        light: '#7A7873',
         accent: '#ECA867',
         'accent-mid': '#E3944C',
         'accent-hover': '#D9823A',
@@ -46,6 +47,7 @@ export default {
       },
       spacing: {
         unit: '8px',
+        '1u': '8px',
         '2u': '16px',
         '3u': '24px',
         '4u': '32px',
@@ -79,11 +81,16 @@ export default {
           '0%, 100%': { opacity: '1' },
           '50%': { opacity: '0' },
         },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
       },
       animation: {
         reveal: 'reveal .8s cubic-bezier(.16,1,.3,1) forwards',
         marquee: 'marquee 34s linear infinite',
         blink: 'blink 1s step-end infinite',
+        float: 'float 6s ease-in-out infinite',
       },
     },
   },

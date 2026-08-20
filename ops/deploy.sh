@@ -34,8 +34,8 @@ EOF
 
 if [ "$RESTART_ONLY" = "--restart-only" ]; then
   echo "Recreating container against current release (env re-read)"
-  docker rm -f ainzigartig-app >/dev/null
-  docker run -d --name ainzigartig-app \
+  sudo docker rm -f ainzigartig-app >/dev/null
+  sudo docker run -d --name ainzigartig-app \
     --network host \
     --restart unless-stopped \
     -v "${CURRENT}:/app:ro" \
@@ -98,8 +98,8 @@ sudo cp -r "${WORK}/app" "${RELEASE}"
 sudo ln -sfn "${RELEASE}" "${CURRENT}"
 
 # 4. Recreate the container against the new release.
-docker rm -f ainzigartig-app >/dev/null
-docker run -d --name ainzigartig-app \
+sudo docker rm -f ainzigartig-app >/dev/null
+sudo docker run -d --name ainzigartig-app \
   --network host \
   --restart unless-stopped \
   -v "${CURRENT}:/app:ro" \

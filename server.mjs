@@ -11,11 +11,14 @@ const SOCKET_PATH = process.env.SOCKET_PATH || '';
 // Live-agent-demo accepts up to 5 images of 4 MB each (base64 ≈ 27 MB),
 // so the global body cap must sit above that.
 const MAX_BODY_BYTES = 24 * 1024 * 1024;
+// 'projects' intentionally omitted: /projekte no longer consumes this API
+// (see components/Projects.tsx), so it's unreachable on the VPS by design.
+// api/projects.js itself stays in the repo — it's still wired into
+// vercel.json for the separate legacy Vercel deployment.
 const API_MODULES = new Map([
   ['chat', './api/chat.js'],
   ['live-agent-demo', './api/live-agent-demo.js'],
   ['analyze', './api/analyze.js'],
-  ['projects', './api/projects.js'],
   ['contact', './api/contact.js'],
   ['insights', './api/insights.js'],
 ]);
@@ -90,29 +93,47 @@ function safeStaticPath(urlPath) {
 }
 
 async function serveStatic(request, response) {
-  const requested = safeStaticPath(new URL(request.url, `http://${request.headers.host || 'localhost'}`).pathname);
+  const pathname = new URL(request.url, `http://${request.headers.host || 'localhost'}`).pathname;
+  const requested = safeStaticPath(pathname);
   if (!requested) {
     response.writeHead(400, { 'Content-Type': 'text/plain; charset=utf-8' });
     response.end('Bad request');
     return;
   }
 
+  // A path with a file extension always names a real asset (JS/CSS/image/...);
+  // it never falls back to the SPA shell. Extensionless paths are client-side
+  // routes (e.g. /insights) and get index.html so React Router can take over.
+  const looksLikeAsset = path.extname(pathname) !== '';
+
   let filePath = requested;
   try {
     const stat = await fs.stat(filePath);
-    if (!stat.isFile()) filePath = path.join(DIST_ROOT, 'index.html');
+    if (!stat.isFile()) throw new Error('not a file');
   } catch {
+    if (looksLikeAsset) {
+      response.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
+      response.end('Not found');
+      return;
+    }
     filePath = path.join(DIST_ROOT, 'index.html');
   }
 
   try {
     const body = await fs.readFile(filePath);
     const type = CONTENT_TYPES[path.extname(filePath).toLowerCase()] || 'application/octet-stream';
-    response.writeHead(200, {
+    const headers = {
       'Content-Type': type,
       'Content-Length': body.length,
       'X-Content-Type-Options': 'nosniff',
-    });
+    };
+    // Vite content-hashes everything under /assets/, so it's safe to cache
+    // those responses forever; a changed file gets a new URL. Everything
+    // else (index.html, robots.txt, sitemap.xml, ...) must revalidate.
+    headers['Cache-Control'] = pathname.startsWith('/assets/')
+      ? 'public, max-age=31536000, immutable'
+      : 'no-cache';
+    response.writeHead(200, headers);
     response.end(body);
   } catch {
     response.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });

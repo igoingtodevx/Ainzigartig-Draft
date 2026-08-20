@@ -163,6 +163,7 @@ def _validate_public_url(url: str) -> None:
 
 
 MAX_REDIRECTS = 3
+MAX_RESPONSE_BYTES = 5 * 1024 * 1024  # 5MB — far more than any real page's HTML needs
 
 
 @app.post("/scrape")
@@ -186,7 +187,7 @@ async def scrape(req: ScrapeRequest):
     for _ in range(MAX_REDIRECTS + 1):
         _validate_public_url(current_url)
         try:
-            resp = requests.get(current_url, headers=HEADERS, timeout=15, allow_redirects=False)
+            resp = requests.get(current_url, headers=HEADERS, timeout=15, allow_redirects=False, stream=True)
         except requests.exceptions.Timeout:
             raise HTTPException(status_code=504, detail="Website timed out after 15s")
         except requests.exceptions.ConnectionError:
@@ -195,7 +196,9 @@ async def scrape(req: ScrapeRequest):
             raise HTTPException(status_code=500, detail=f"Request failed: {str(e)[:100]}")
 
         if resp.status_code in (301, 302, 303, 307, 308) and resp.headers.get("location"):
-            current_url = urljoin(current_url, resp.headers["location"])
+            location = resp.headers["location"]
+            resp.close()
+            current_url = urljoin(current_url, location)
             continue
         break
     else:
@@ -204,11 +207,30 @@ async def scrape(req: ScrapeRequest):
     status_code = resp.status_code
 
     if status_code >= 400:
+        resp.close()
         raise HTTPException(status_code=502, detail=f"Website returned status {status_code}")
+
+    # Reject early on a declared oversized body, then enforce the same cap
+    # while actually reading it — Content-Length can be absent or wrong.
+    declared_length = resp.headers.get("content-length")
+    if declared_length is not None:
+        try:
+            if int(declared_length) > MAX_RESPONSE_BYTES:
+                resp.close()
+                raise HTTPException(status_code=502, detail="Website response too large")
+        except ValueError:
+            pass
+
+    raw = bytearray()
+    for chunk in resp.iter_content(chunk_size=65536):
+        raw.extend(chunk)
+        if len(raw) > MAX_RESPONSE_BYTES:
+            resp.close()
+            raise HTTPException(status_code=502, detail="Website response too large")
 
     response_time_ms = int((time.time() - start) * 1000)
 
-    html = resp.text
+    html = raw.decode(resp.encoding or "utf-8", errors="replace")
     soup = BeautifulSoup(html, "html.parser")
 
     # Remove script, style, nav, footer elements

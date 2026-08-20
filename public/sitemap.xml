@@ -1,91 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://ainzigartig.vercel.app/</loc>
+    <loc>https://ainzigartig.sejerlaenner.tech/</loc>
     <lastmod>2026-06-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://ainzigartig.vercel.app/automatisierung</loc>
+    <loc>https://ainzigartig.sejerlaenner.tech/automatisierung</loc>
     <lastmod>2026-08-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://ainzigartig.vercel.app/ki-beratung</loc>
+    <loc>https://ainzigartig.sejerlaenner.tech/ki-beratung</loc>
     <lastmod>2026-06-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ainzigartig.vercel.app/ki-kundenservice</loc>
+    <loc>https://ainzigartig.sejerlaenner.tech/ki-kundenservice</loc>
     <lastmod>2026-06-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ainzigartig.vercel.app/ki-recruiting</loc>
+    <loc>https://ainzigartig.sejerlaenner.tech/ki-recruiting</loc>
     <lastmod>2026-06-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ainzigartig.vercel.app/analytics-dashboard</loc>
+    <loc>https://ainzigartig.sejerlaenner.tech/analytics-dashboard</loc>
     <lastmod>2026-06-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ainzigartig.vercel.app/roi-rechner</loc>
+    <loc>https://ainzigartig.sejerlaenner.tech/roi-rechner</loc>
     <lastmod>2026-06-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ainzigartig.vercel.app/ki-schnellstart</loc>
+    <loc>https://ainzigartig.sejerlaenner.tech/ki-schnellstart</loc>
     <lastmod>2026-06-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ainzigartig.vercel.app/ki-audit</loc>
+    <loc>https://ainzigartig.sejerlaenner.tech/ki-audit</loc>
     <lastmod>2026-06-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ainzigartig.vercel.app/preise</loc>
+    <loc>https://ainzigartig.sejerlaenner.tech/preise</loc>
     <lastmod>2026-06-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ainzigartig.vercel.app/ki-analyse</loc>
+    <loc>https://ainzigartig.sejerlaenner.tech/ki-analyse</loc>
     <lastmod>2026-06-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ainzigartig.vercel.app/live-demo</loc>
+    <loc>https://ainzigartig.sejerlaenner.tech/live-demo</loc>
     <lastmod>2026-06-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ainzigartig.vercel.app/projekte</loc>
+    <loc>https://ainzigartig.sejerlaenner.tech/insights</loc>
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ainzigartig.sejerlaenner.tech/projekte</loc>
     <lastmod>2026-06-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ainzigartig.vercel.app/impressum</loc>
+    <loc>https://ainzigartig.sejerlaenner.tech/impressum</loc>
     <lastmod>2026-06-14</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://ainzigartig.vercel.app/datenschutz</loc>
+    <loc>https://ainzigartig.sejerlaenner.tech/datenschutz</loc>
     <lastmod>2026-06-14</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
